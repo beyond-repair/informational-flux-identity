@@ -1,0 +1,53 @@
+{
+  "divergence_free": {
+    "div_max_abs": 0,
+    "div_sum": 0,
+    "net": 0,
+    "signed": {
+      "left": 0,
+      "right": 11,
+      "bottom": -2,
+      "top": -9
+    },
+    "absolute": {
+      "left": 0,
+      "right": 349,
+      "bottom": 2,
+      "top": 15
+    },
+    "absolute_total": 366,
+    "aft_absolute_fraction": [
+      349,
+      366
+    ]
+  },
+  "boundary_source_17": {
+    "div_max_abs": 17,
+    "div_sum": 17,
+    "net": 17,
+    "signed": {
+      "left": 0,
+      "right": 28,
+      "bottom": -2,
+      "top": -9
+    },
+    "absolute": {
+      "left": 0,
+      "right": 332,
+      "bottom": 2,
+      "top": 15
+    },
+    "absolute_total": 349,
+    "aft_absolute_fraction": [
+      332,
+      349
+    ]
+  },
+  "one_dimensional": {
+    "constant_flux_equal_ends": 0,
+    "constant_flux_unequal_ends": 24,
+    "variable_flux_match": true,
+    "constant_equal_match": true,
+    "constant_unequal_match": true
+  }
+}

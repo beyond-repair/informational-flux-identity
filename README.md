@@ -165,3 +165,8 @@ python3 scripts/flux_identity.py
 ```
 
 The script writes `witness.json` and exits nonzero if the integers quoted above move.
+
+## Sequel
+
+On the combinatorial gasket, harmonic corner currents are a neutral dipole and shrink by exactly \(3/5\) at each refinement. The proof and the exact triple for boundary data \((1,-1/2,0)\) are in [GASKET.md](GASKET.md). Run `python3 scripts/gasket_corner_current.py`.
+

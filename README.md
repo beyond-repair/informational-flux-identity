@@ -1,3 +1,36 @@
+<div align="center">
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║   ATOMIC DREAM LABS  ·  BEYOND-REPAIR                        ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+# Informational Flux Identity
+
+### Closed-surface identity. Signed flux equals summed divergence. No selected W. No thrust.
+
+[![Lifecycle](https://img.shields.io/badge/●_RESEARCH-a855f7?style=for-the-badge&labelColor=0f0f23)](https://github.com/beyond-repair/ADL-Governance)
+[![Claim](https://img.shields.io/badge/Claim_≤1-22c55e?style=for-the-badge&labelColor=0f0f23)](https://github.com/beyond-repair/ADL-Governance/blob/main/docs/CLAIM_VALIDATION.md)
+[![Governance](https://img.shields.io/badge/ADL--Governance-7c3aed?style=for-the-badge&labelColor=0f0f23)](https://github.com/beyond-repair/ADL-Governance)
+
+```
+LIFECYCLE   RESEARCH
+CLAIM       ≤ 1   mathematical identity
+NOT CLAIMED thrust · continuum limit · selected W
+```
+
+</div>
+
+---
+## ▌ STATUS
+
+Classification follows [ADL-Governance](https://github.com/beyond-repair/ADL-Governance). A README facelift does not raise claim level. Physics and pharmacology stay at the evidenced cap. CI green is not experimental validation.
+
+---
+
+## ▌ PRESERVED BODY
+
 # Informational flux identity
 
 Closed-surface constraint on the frozen Coherence Drive residual. No value of \(W\) is selected. No thrust is predicted. No continuum limit is taken.
@@ -170,3 +203,13 @@ The script writes `witness.json` and exits nonzero if the integers quoted above 
 
 On the combinatorial gasket, harmonic corner currents are a neutral dipole and shrink by exactly \(3/5\) at each refinement. The proof and the exact triple for boundary data \((1,-1/2,0)\) are in [GASKET.md](GASKET.md). Run `python3 scripts/gasket_corner_current.py`.
 
+---
+
+<div align="center">
+
+**REWRITE · BUILD · TRANSCEND**
+
+**William (Brian) Ware** · [Atomic Dream Labs](https://github.com/beyond-repair)  
+Governing source: [ADL-Governance](https://github.com/beyond-repair/ADL-Governance) · [Claim levels 0–5](https://github.com/beyond-repair/ADL-Governance/blob/main/docs/CLAIM_VALIDATION.md)
+
+</div>

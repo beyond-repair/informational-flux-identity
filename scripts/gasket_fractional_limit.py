@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Audit-norm limit for spectral L^α on the combinatorial gasket.
 
-Witness for Theorem J, Theorem K, and Kept Failures J.1 and J.2 in GASKET.md.
+Witness for Theorems J, K, L and Kept Failures J.1–J.3 in GASKET.md.
 The norm is the audit norm: combinatorial corner currents of the L^α-Dirichlet
 solution, the same net_flux as sierpinski-geometry-045. Not a thrust claim.
 
@@ -220,6 +220,34 @@ def main(through: int = 7) -> None:
     if through >= 7:
         assert contractions[4] > 0.67
 
+    # Theorem L: energy sandwich at every computed α=0.45 level.
+    # ||F_frac|| ≥ w_min ||F|| and ||F|| ≤ κ √Q, with w_min = α 4^{α-1}.
+    w_min_45 = 0.45 * (4.0 ** (0.45 - 1.0))
+    kappa_45 = (math.sqrt(21.0) / 5.0) * math.sqrt(2.0 / w_min_45)
+    for rec in seq:
+        assert rec["nF_frac"] + 1e-9 >= w_min_45 * rec["nF"], (
+            rec["nF_frac"],
+            w_min_45 * rec["nF"],
+        )
+        assert rec["nF"] <= kappa_45 * math.sqrt(rec["Q"]) + 1e-9, (
+            rec["nF"],
+            kappa_45 * math.sqrt(rec["Q"]),
+        )
+        # Pairing Q = (7/5) I_a^α identifies energy with fractional currents.
+        Ia_f = float(rec["If"][0])
+        assert abs(rec["Q"] - (7.0 / 5.0) * Ia_f) < 1e-7 * max(1.0, abs(rec["Q"]))
+        assert abs(rec["nF_frac"] - Ia_f * math.sqrt(21.0) / 5.0) < 1e-8
+
+    # Kept Failure J.3: Q_{0.45} ratios do not stay ≤ 0.95.
+    Qs = [rec["Q"] for rec in seq]
+    q_ratios = [Qs[i] / Qs[i - 1] for i in range(1, len(Qs))]
+    print("Q_0.45", [f"{q:.10f}" for q in Qs])
+    print("Q_ratios_0.45", [f"{r:.10f}" for r in q_ratios])
+    assert q_ratios[3] > 0.95  # level 4 → 5
+    assert q_ratios[4] > 0.96  # level 5 → 6
+    if through >= 7:
+        assert q_ratios[5] > 0.97  # level 6 → 7 (witnessed when run that far)
+
     # Harmonic graph energy is the closed form; at α=0.45 the harmonic
     # comparison energy Q(u_H) is larger at level 6 than at level 2
     # (so it is not a vanishing upper bound on this range).
@@ -273,6 +301,8 @@ def main(through: int = 7) -> None:
 
     print("theorem_J_not_infinity", True)
     print("theorem_K_above_threshold_to_zero", True)
+    print("theorem_L_energy_controls_audit_norm", True)
+    print("kept_failure_J3_no_uniform_Q_ratio_0.95", True)
     print("alpha_0.45_zero_vs_positive", "OPEN")
     print("not_thrust", True)
 

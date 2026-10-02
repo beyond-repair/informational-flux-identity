@@ -308,6 +308,62 @@ Corner currents stay on the Schur line \((1,-4/5,-1/5)\) and sum to roundoff. Th
 \]
 The contraction has already exceeded \(5^{-0.45}\) by \(\delta_6/\delta_5\). Rejecting the contraction rejects that particular sufficient condition for a positive limit. It does not prove the limit is \(0\).
 
+## Theorem L. Dirichlet energy controls the audit norm for every \(\alpha\in(0,1)\)
+
+**ASSUMPTION.** Spectral calculus as in item 4. The audit norm \(\|F\|\) and the fractional-current norm \(\|F_{\mathrm{frac}}\|\) are as in Theorem J. Write \(Q_{\alpha}(u)=u^{T}L^{\alpha}u\) for the \(L^{\alpha}\)-Dirichlet minimizer \(u\) with corner data \((1,-1/2,0)\), and write \(w_{\min}(\alpha)=\alpha\,4^{\alpha-1}\) for the neighbor-weight lower bound of Theorem J.
+
+**THEOREM L.** For every \(\alpha\in(0,1)\) and every level \(n\ge 1\),
+
+\[
+\|F_{\mathrm{frac}}(n,\alpha)\|
+  \ge w_{\min}(\alpha)\,\|F(n,\alpha)\|,
+\qquad
+\|F(n,\alpha)\|
+  \le \kappa(\alpha)\,\sqrt{Q_{\alpha}(u_{n})},
+\]
+where
+\[
+\kappa(\alpha)
+  = \frac{\sqrt{21}}{5}
+    \sqrt{\frac{2}{w_{\min}(\alpha)}}.
+\]
+In particular \(Q_{\alpha}(u_{n})\to 0\) implies \(\|F_{\mathrm{frac}}(n,\alpha)\|\to 0\) and \(\|F(n,\alpha)\|\to 0\). Equivalently, a strictly positive \(\liminf_{n}\|F(n,\alpha)\|\) forces
+\[
+\liminf_{n} Q_{\alpha}(u_{n})>0
+\quad\text{and}\quad
+\liminf_{n}\|F_{\mathrm{frac}}(n,\alpha)\|>0.
+\]
+
+**Proof.** Off-diagonal signs and the bound \(w_{cp}\ge w_{\min}(\alpha)\) are the integral lemmas of Theorem J. The maximum principle gives \(u\le 1\), so the corner of value \(1\) has nonnegative gaps to every other vertex. Keeping only the two combinatorial neighbors of that corner,
+\[
+I_{a}^{\alpha}
+  = \sum_{j\neq a} w_{aj}(1-u_{j})
+  \ge w_{\min}(\alpha)\bigl((1-u_{p})+(1-u_{q})\bigr)
+  = w_{\min}(\alpha)\,I_{a}.
+\]
+Schur's lemma (Theorem H) puts both current triples on the line \((1,-4/5,-1/5)\), and the centroid computation of Theorem J converts the inequality of scalars into \(\|F_{\mathrm{frac}}\|\ge w_{\min}\|F\|\).
+
+For the energy upper bound on \(\|F\|\), the same two edges sit inside the Dirichlet form:
+\[
+Q_{\alpha}(u)
+  \ge w_{\min}(\alpha)\,(g_{1}^{2}+g_{2}^{2})
+  \ge \frac{w_{\min}(\alpha)}{2}\,I_{a}^{2},
+\]
+so \(I_{a}\le\sqrt{2Q_{\alpha}/w_{\min}}\) and \(\|F\|=I_{a}\sqrt{21}/5\). The pairing \(Q_{\alpha}=(7/5)I_{a}^{\alpha}\) (Theorem K) identifies vanishing of \(Q_{\alpha}\) with vanishing of \(\|F_{\mathrm{frac}}\|\), and the weight comparison passes that vanishing to \(\|F\|\).
+
+**NOT THIS.** The comparison does not force \(Q_{0.45}(u_{n})\to 0\). Theorem K's harmonic majorant still grows at \(\alpha=0.45\), and the actual minimizer energy is a different sequence. Zero versus a positive finite audit-norm limit remains OPEN; Theorem L only says that a positive audit-norm limit would need a positive energy liminf, and that energy collapse would settle the limit at \(0\).
+
+**KEPT FAILURE J.3 (no uniform \(0.95\) decay of \(Q_{\alpha}\)).** The law "\(Q_{0.45}(u_{n+1})/Q_{0.45}(u_{n})\le 0.95\) for every \(n\), hence \(Q\to 0\) and therefore \(\|F\|\to 0\) by Theorem L" is false. The minimizer energies at levels \(1\) through \(6\) are
+\[
+Q_{0.45}(u_{n})
+  \approx(1.531826,\;1.302067,\;1.163731,\;1.079672,\;1.027393,\;0.994015),
+\]
+with successive ratios
+\[
+(0.850010,\;0.893757,\;0.927768,\;0.951580,\;0.967512).
+\]
+The ratio from level \(4\) to level \(5\) is already \(0.95158>0.95\). Rejecting the ratio bound rejects that route to \(\|F\|\to 0\). It does not prove a positive limit.
+
 ## Conjecture J.1
 
 **CONJECTURE, not a theorem.** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and
@@ -327,10 +383,10 @@ and the successive drops after level \(3\) contract by a factor \(<1/2\). **CONJ
 
 ## What this does not say
 
-- **NOT A LIMIT THEOREM AT \(\alpha=0.45\).** Levels \(1\) through \(7\) still have increasing ratios, now past \(0.97\). Theorem J excludes \(+\infty\). Theorem K gives \(\|F\|\to 0\) only for \(\alpha>\log 3/\log 5\). Neither decides zero versus positive at \(\alpha=0.45\). Conjecture J.1 is not a theorem. Kept Failures J.1 and J.2 reject two sufficient conditions that would have closed it.
+- **NOT A LIMIT THEOREM AT \(\alpha=0.45\).** Levels \(1\) through \(7\) still have increasing ratios, now past \(0.97\). Theorem J excludes \(+\infty\). Theorem K gives \(\|F\|\to 0\) only for \(\alpha>\log 3/\log 5\). Theorem L says energy collapse would force \(\|F\|\to 0\) at every \(\alpha\in(0,1)\), including \(0.45\), but does not prove energy collapse. Neither decides zero versus positive at \(\alpha=0.45\). Conjecture J.1 is not a theorem. Kept Failures J.1, J.2, and J.3 reject three sufficient conditions that would have closed it.
 - **NOT A RESIDUAL.** Their tilt diagnostic sets \((Lu)_i=1\) on the interior. Theorem F then says the corner currents sum to \(-(N-3)\), the source that was inserted. That sum grows like \(3^n\). It is not a force left after the source is removed.
 - **FAILED as a continuum thrust for the combinatorial harmonic case.** Under Theorem G, \(\|F(n)\|\to 0\) for every fixed corner triple. The combinatorial harmonic limit does not keep a finite audit vector.
-- **OPEN.** Whether \(\|F(n)\|\) for \(L^{0.45}\) tends to \(0\) or to a positive finite limit. Divergence is excluded (Theorem J). Neutrality is settled (Theorem H). For \(\alpha>\log 3/\log 5\) the same audit norm tends to \(0\) (Theorem K). Geometric weights \(1/d^2\) on this build are settled (Theorem I): that audit norm diverges. None of this is thrust.
+- **OPEN.** Whether \(\|F(n)\|\) for \(L^{0.45}\) tends to \(0\) or to a positive finite limit. Divergence is excluded (Theorem J). Neutrality is settled (Theorem H). For \(\alpha>\log 3/\log 5\) the same audit norm tends to \(0\) (Theorem K). Energy controls the audit norm at every \(\alpha\in(0,1)\) (Theorem L), so energy collapse would force \(\|F\|\to 0\), and a positive audit-norm liminf would force a positive energy liminf; whether either vanishes is OPEN. Geometric weights \(1/d^2\) on this build are settled (Theorem I): that audit norm diverges. None of this is thrust.
 - **OPEN.** The Stage 2 question from the rectangle note, whether an informational tensor on the \(0.45\) mesh has nonzero integrated divergence after the Maxwell piece is removed. Theorem F says the harmonic combinatorial gasket does not supply that divergence.
 
 ## Reproduce
@@ -342,4 +398,4 @@ python3 scripts/gasket_geometric_currents.py
 python3 scripts/gasket_fractional_limit.py
 ```
 
-The first script exits nonzero unless the level-1 triple is \((3/2,-6/5,-3/10)\) and levels 2, 3, 4 match the factor \((3/5)^{n-1}\), including one arbitrary corner triple at levels 1 and 2. The second exits nonzero unless fractional currents at \(\alpha=0.45\) stay neutral through level 4, the level-2 audit norm matches \(1.165909\) within \(5\cdot 10^{-3}\), the refinement ratios differ from \(3/5\) by more than \(0.15\), and the \(\alpha=1\) control recovers Theorem G. The third exits nonzero unless geometric \(1/d^2\) currents match \(4^n\) times the combinatorial ones through level 5, the audit norm equals \((12/5)^n\sqrt{21}/2\), and every successive ratio equals \(12/5\). The fourth exits nonzero unless, through level \(7\), the \(\alpha=0.45\) audit norm matches the level-2 lock \(1.165909\), stays neutral and inside the Theorem J cap, breaks both the \(0.95\) ratio law and the \(5^{-0.45}\) gap contraction, and the \(\alpha=0.9\) norm stays under the explicit Theorem K bound. `python3 scripts/gasket_fractional_limit.py 8` recomputes one level higher; the default witness does not.
+The first script exits nonzero unless the level-1 triple is \((3/2,-6/5,-3/10)\) and levels 2, 3, 4 match the factor \((3/5)^{n-1}\), including one arbitrary corner triple at levels 1 and 2. The second exits nonzero unless fractional currents at \(\alpha=0.45\) stay neutral through level 4, the level-2 audit norm matches \(1.165909\) within \(5\cdot 10^{-3}\), the refinement ratios differ from \(3/5\) by more than \(0.15\), and the \(\alpha=1\) control recovers Theorem G. The third exits nonzero unless geometric \(1/d^2\) currents match \(4^n\) times the combinatorial ones through level 5, the audit norm equals \((12/5)^n\sqrt{21}/2\), and every successive ratio equals \(12/5\). The fourth exits nonzero unless, through level \(7\), the \(\alpha=0.45\) audit norm matches the level-2 lock \(1.165909\), stays neutral and inside the Theorem J cap, breaks both the \(0.95\) ratio law and the \(5^{-0.45}\) gap contraction, obeys the Theorem L energy sandwich (\(\|F_{\mathrm{frac}}\|\ge w_{\min}\|F\|\) and \(\|F\|\le\kappa\sqrt{Q}\)), breaks the \(0.95\) decay law for \(Q_{0.45}\), and the \(\alpha=0.9\) norm stays under the explicit Theorem K bound. `python3 scripts/gasket_fractional_limit.py 8` recomputes one level higher; the default witness does not.

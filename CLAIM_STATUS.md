@@ -1,6 +1,6 @@
 # Claim status
 
-**Sweep:** 168 (2026-10-01)
+**Sweep:** 169 (2026-10-02)
 **Classification:** RESEARCH
 **Claim ceiling:** 1 (finite-rectangle algebraic identity plus an explicit integer witness)
 
@@ -12,5 +12,6 @@
 | 1D summation-by-parts identity | VERIFIED in script asserts |
 | Laboratory thrust, selected W, continuum limit, gasket force | NOT CLAIMED |
 | Fractional gasket audit norm limit | OPEN (GASKET.md; not elevated) |
+| Geometric \(1/d^2\) harmonic audit norm on finest-edge build | VERIFIED diverge as \((12/5)^n\sqrt{21}/2\) (Theorem I; `scripts/gasket_geometric_currents.py`) |
 
 Parent index remains `coherence-drive` (RESEARCH). This repository does not replace it.

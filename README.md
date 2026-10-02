@@ -201,7 +201,7 @@ The script writes `witness.json` and exits nonzero if the integers quoted above 
 
 ## Sequel
 
-On the combinatorial gasket, harmonic corner currents are a neutral dipole and shrink by exactly \(3/5\) at each refinement. For the spectral fractional operator \(L^{0.45}\), corner currents stay neutral (Theorem H) but the refinement ratios are not \(3/5\) (Kept Failure H.1); whether the fractional audit norm has a nonzero limit remains OPEN. Proofs and witnesses are in [GASKET.md](GASKET.md). Run `python3 scripts/gasket_corner_current.py` and `python3 scripts/gasket_fractional_currents.py`.
+On the combinatorial gasket, harmonic corner currents are a neutral dipole and shrink by exactly \(3/5\) at each refinement. For the spectral fractional operator \(L^{0.45}\), corner currents stay neutral (Theorem H) but the refinement ratios are not \(3/5\) (Kept Failure H.1); whether the fractional audit norm has a nonzero finite limit remains OPEN. For geometric weights \(1/d^2\) on the same finest-edge build, Theorem I gives exact growth by \(12/5\) each refinement so \(\|F\|\to\infty\) (Kept Failure I.1: no finite nonzero geometric audit limit). Proofs and witnesses are in [GASKET.md](GASKET.md). Run `python3 scripts/gasket_corner_current.py`, `python3 scripts/gasket_fractional_currents.py`, and `python3 scripts/gasket_geometric_currents.py`.
 
 ---
 

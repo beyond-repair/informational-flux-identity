@@ -14,6 +14,7 @@
 | Fractional audit norm, \(\alpha=0.45\), zero vs positive | OPEN; divergence excluded by Theorem J; energy controls the norm (Theorem L; `scripts/gasket_fractional_limit.py`); log 3/log 5 gap contraction rejected at level 10 (Kept Failure J.4; `scripts/gasket_fractional_level10.py`). Not thrust. |
 | Fractional audit norm for \(\alpha>\log 3/\log 5\) | VERIFIED tends to 0 (Theorem K; same script). Not thrust. |
 | Geometric \(1/d^2\) harmonic audit norm on finest-edge build | VERIFIED diverge as \((12/5)^n\sqrt{21}/2\) (Theorem I; `scripts/gasket_geometric_currents.py`) |
+| Hessian reading \((\nabla\Psi)^{ij}=\partial^i\partial^j\Psi\): \(\mathcal{G}_i=\oint\Delta\Psi\,n_i\); zero for static massless \(A_0\) on a vacuum surface | VERIFIED (Theorem M, Kept Failure M.1; continuum proof in README, exact integer witness `scripts/hessian_flux_reduction.py`). One reading only; quadratic reading and the 0.45 mesh solve OPEN. Not thrust. |
 | Installable `flux-identity` CLI (`witness`, `check`, `reproduce`, `list`) and test suite | RUNS (pytest; `reproduce` executes every reproduction script; CI command `python -m unittest tests/test_flux_identity.py` now collects 3 tests). Tooling only; claim ceiling unchanged |
 
 Parent index remains `coherence-drive` (RESEARCH). This repository does not replace it.

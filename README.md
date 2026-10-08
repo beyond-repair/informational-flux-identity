@@ -177,13 +177,41 @@ A first attempt at the second corollary claimed that a nonconstant array with ze
 
 So a spatially varying weight does not by itself create an interior source. A nonzero sum is either the endpoint term \(c\,(w_n-w_0)\) or a nonzero edge-difference of \(s\), and both sit in the identity.
 
+## Theorem M. Under the Hessian reading, \(\mathcal{G}\) sees only \(\Delta\Psi\) on the surface
+
+**ASSUMPTION M (reading, not a change to the freeze).** The frozen chain writes \((\nabla\Psi_{\mathrm{info}})^{ij}\) without saying which rank-2 object it is. This section takes the Hessian reading \((\nabla\Psi_{\mathrm{info}})^{ij}=\partial^i\partial^j\Psi_{\mathrm{info}}\). The quadratic reading \(\partial^i\Psi\,\partial^j\Psi-\tfrac12\delta^{ij}|\nabla\Psi|^2\) is a different object and is not covered here. Stage 1 is not edited; no value of \(W\), \(\chi_{\mathrm{vac}}\), or \(\kappa\) enters.
+
+**THEOREM M (continuum).** Let \(V\subset\mathbb{R}^d\) be a bounded Lipschitz domain with boundary \(S\) and outward normal \(n\), and let \(\Psi\) be \(C^3\) on an open neighbourhood \(U\) of \(S\). Nothing is assumed about \(\Psi\) inside \(V\) away from \(U\): sources, singularities, and an asymmetric device are all allowed there. Then
+\[
+\mathcal{G}_i=\oint_S \partial_i\partial_j\Psi\,n_j\,dA=\oint_S \Delta\Psi\,n_i\,dA .
+\]
+
+**Proof.** Take a smooth \(\chi\) with \(\chi=1\) near \(S\) and \(\operatorname{supp}\chi\subset U\), and set \(\Phi=\chi\Psi\), extended by \(0\). Then \(\Phi\) is \(C^3\) on a neighbourhood of \(\bar V\) and agrees with \(\Psi\) to third order on \(S\). The divergence theorem twice, with \(\partial_j\partial_j\partial_i=\partial_i\Delta\), gives \(\oint_S\partial_i\partial_j\Phi\,n_j=\int_V\partial_i\Delta\Phi=\oint_S\Delta\Phi\,n_i\). Replace \(\Phi\) by \(\Psi\) on \(S\).
+
+**Corollaries, inside Assumption M.**
+
+1. If \(\Delta\Psi=0\) on \(S\), then \(\mathcal{G}=0\), for every interior source distribution and every interior asymmetry. The integrated divergence of the Hessian is the boundary integral of \(\Delta\Psi\), so a source inside \(V\) is invisible to \(\mathcal{G}\) unless it reaches the surface.
+2. **KEPT FAILURE M.1.** Under C6 (\(\Psi_{\mathrm{info}}=A_0\)) with static massless fields (electrostatics), \(\Delta A_0=-\rho/\varepsilon_0=0\) on any closed surface drawn in vacuum around the device. So \(\mathcal{G}=0\) and \(\Delta F=W\chi_{\mathrm{vac}}\mathcal{G}=0\) for every \(W\) and every \(\kappa\) in C5. The route "Hessian reading plus C5 plus static massless C6" cannot give a nonzero residual on a vacuum surface. This is a failure of that route, not of Stage 2.
+3. If \(\Psi\) obeys a screened (Proca-type) equation \((\Delta-m^2)\Psi=0\) on \(S\), then \(\mathcal{G}_i=m^2\oint_S\Psi\,n_i\,dA\). So on a source-free surface where the field equation is screened rather than Laplace, the surviving \(\mathcal{G}\) is the mass term itself. No \(m\) is selected and no number is claimed.
+
+**THEOREM M (discrete, exact on integers).** On the \(N_x\times N_y\) cell rectangle of Theorem A, take any potential \(P\) on the vertices \([-1,N_x+1]\times[-1,N_y+1]\), set \(g^i=D_iP\) (forward difference), and let row \(i\) of the array be the face fluxes of \(g^i\): \(F^x=g^i_{x,y}-g^i_{x-1,y}\), \(F^y=g^i_{x,y}-g^i_{x,y-1}\). With \(\Delta\) the five-point Laplacian,
+\[
+\mathcal{G}_x=\sum_{y=0}^{N_y-1}\bigl(\Delta P_{N_x,y}-\Delta P_{0,y}\bigr),\qquad
+\mathcal{G}_y=\sum_{x=0}^{N_x-1}\bigl(\Delta P_{x,N_y}-\Delta P_{x,0}\bigr).
+\]
+**Proof.** The cell divergence of row \(i\) is \(\Delta g^i=D_i\Delta P\), because constant-coefficient differences commute. Theorem A turns the signed flux into the cell sum, and the sum of \(D_i\Delta P\) telescopes in direction \(i\).
+
+**Witness, computed by `scripts/hessian_flux_reduction.py`** on an \(8\times 8\) rectangle. The identity holds on \(200\) seeded random integer potentials. A lopsided interior lump (values \(7,11,-2\) in the left half and \(13,5\) in the right half, \(\Delta P=0\) on every boundary layer) has summed absolute cell divergence \(398\) in row \(x\) and \(422\) in row \(y\), and \(\mathcal{G}=(0,0)\) exactly. The potential \(P=x^3\) has \(\Delta P=6x\) and gives \(\mathcal{G}=(384,0)=(6N_xN_y,0)\). A column with \(\Delta P=P=1\) on the right boundary layer gives \(\mathcal{G}_x=8\), the discrete \(m^2\oint\Psi\,n_x\) with \(m^2=1\). The script exits nonzero if any of these integers moves.
+
+**NOT THIS.** Theorem M does not compute \(\Psi_{\mathrm{info}}\) on the frozen \(0.45\) mesh, does not decide which rank-2 reading the freeze intends, and does not say the quadratic reading gives zero. It narrows the Stage 2 question under the Hessian reading to one quantity: \(\Delta\Psi_{\mathrm{info}}\) on the enclosing surface. A nonzero \(\mathcal{G}\) is not thrust.
+
 ## What was tried and does not follow
 
 - **FAILED as a derivation of thrust.** Nothing above produces a nonzero \(\Delta F\) for a divergence-free informational tensor. The mathematics does not fail at a hidden algebraic step. The net is zero because the sum telescopes.
 - **FAILED as a derivation of \(0.08\) or \(0.23\).** Those numerals never enter.
 - **FAILED as a reading of the informational fork protocol.** The inequality \(T_{\mathrm{Red}} > T_{\mathrm{CIS}}\times 10^3\) is not a stress tensor and supplies no \(\mathrm{div}\,F\). It is not used.
 - **NOT DERIVED.** Einstein gravity from entanglement. The essay in [-Entanglement-and-Emergence](https://github.com/beyond-repair/-Entanglement-and-Emergence) remains an essay. The only entanglement-facing consequence here is conditional: if an entanglement stress is divergenceless, Theorem A says its closed-surface signed flux is zero. Whether any concrete entanglement stress is divergenceless is **OPEN**.
-- **OPEN.** Whether \((\nabla\Psi_{\mathrm{info}})^{ij}\) on the frozen \(0.45\) mesh has \(\sum\mathrm{div} \neq 0\) after the Maxwell piece is removed. That is a Stage 2 computation, not a symbolic gap.
+- **OPEN.** Whether \((\nabla\Psi_{\mathrm{info}})^{ij}\) on the frozen \(0.45\) mesh has \(\sum\mathrm{div} \neq 0\) after the Maxwell piece is removed. That is a Stage 2 computation, not a symbolic gap. Under the Hessian reading, Theorem M reduces it to whether \(\Delta\Psi_{\mathrm{info}}\neq 0\) on the enclosing surface; with static massless \(\Psi=A_0\) on a vacuum surface it is \(0\) (Kept Failure M.1). The quadratic reading is not covered.
 - **OPEN.** Distributional flux on the infinite gasket. Theorem A is the finite rectangle. It does not pass to a limit that has not been constructed.
 - **OPEN.** The renormalized local propagator for \(W(x)\), already open in the Ware derivation ledger. Theorem E constrains the force ledger of a variable weight. It does not construct \(Z_{\mathrm{ren}}\).
 
@@ -195,6 +223,7 @@ No laboratory force, no energy-extraction law, no selected \(W\), no confirmatio
 
 ```bash
 python3 scripts/flux_identity.py
+python3 scripts/hessian_flux_reduction.py
 ```
 
 The script writes `witness.json` and exits nonzero if the integers quoted above move.
@@ -210,7 +239,7 @@ python3 -m venv .venv && . .venv/bin/activate
 pip install -e ".[test]"        # numpy, plus pytest and scipy for the tests
 
 flux-identity witness           # Theorem B witness: net 0, right-face share 349/366; +17 source gives net 17
-flux-identity reproduce         # runs every reproduction script below in a scratch copy; prints 7/7 passed
+flux-identity reproduce         # runs every reproduction script below in a scratch copy; prints 8/8 passed
 flux-identity reproduce --matrix-free-level 5   # also runs the SciPy matrix-free audit at level 5
 flux-identity list              # what each script checks
 python -m pytest                # identity, CLI, reproduction, and matrix-free vs dense checks

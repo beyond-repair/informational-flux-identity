@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "informational-flux-identity"
+version = "0.1.0"
+description = "Closed-surface flux identity: signed flux equals summed divergence. Not thrust."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+matrix-free = ["scipy>=1.10"]
+test = ["pytest>=7", "scipy>=1.10"]
+
+[project.scripts]
+flux-identity = "informational_flux.cli:main"
+
+[tool.setuptools]
+packages = ["informational_flux"]
+
+[tool.setuptools.package-dir]
+informational_flux = "scripts"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

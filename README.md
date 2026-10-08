@@ -199,6 +199,27 @@ python3 scripts/flux_identity.py
 
 The script writes `witness.json` and exits nonzero if the integers quoted above move.
 
+## Run it
+
+Python 3.10+ and NumPy. SciPy is only needed for the optional matrix-free audit.
+
+```bash
+git clone https://github.com/beyond-repair/informational-flux-identity.git
+cd informational-flux-identity
+python3 -m venv .venv && . .venv/bin/activate
+pip install -e ".[test]"        # numpy, plus pytest and scipy for the tests
+
+flux-identity witness           # Theorem B witness: net 0, right-face share 349/366; +17 source gives net 17
+flux-identity reproduce         # runs every reproduction script below in a scratch copy; prints 7/7 passed
+flux-identity reproduce --matrix-free-level 5   # also runs the SciPy matrix-free audit at level 5
+flux-identity list              # what each script checks
+python -m pytest                # identity, CLI, reproduction, and matrix-free vs dense checks
+```
+
+`flux-identity check FILE.json` applies Theorem A to your own integer face-flux array. Give either `{"fx": [[...]], "fy": [[...]]}` with `fx` of shape `(nx+1, ny)` and `fy` of shape `(nx, ny+1)`, or `{"potential": [[...]]}` on the `(nx+1) x (ny+1)` vertex grid (always divergence-free). It prints the summed divergence, the signed and absolute flux on each face, and whether the two totals agree. Use `-` to read from stdin and `--json` for machine output.
+
+Exit codes: `0` ok, `1` a recorded figure moved or a reproduction script failed, `2` bad input. Without installing, `python3 -m scripts witness` works from the checkout root, and the original `python3 scripts/<name>.py` commands are unchanged. `flux-identity reproduce` runs on a temporary copy, so it never rewrites the committed `witness.json`. The level-9 and level-10 scripts check recorded digits from long matrix-free runs; they do not redo those runs. None of this output is thrust.
+
 ## Sequel
 
 On the combinatorial gasket, harmonic corner currents are a neutral dipole and shrink by exactly \(3/5\) at each refinement. For the spectral fractional operator, corner currents stay neutral (Theorem H) but do not inherit the factor \(3/5\) (Kept Failure H.1). The audit norm at \(\alpha=0.45\) does not tend to infinity (Theorem J); whether it tends to \(0\) or to a positive finite limit is OPEN (Conjecture J.1 is not a theorem; Kept Failures J.1–J.3 reject three ways of closing it). Dirichlet energy controls that audit norm at every \(\alpha\in(0,1)\) (Theorem L), so energy collapse would force the limit to \(0\), but collapse is not proved at \(\alpha=0.45\). For \(\alpha>\log 3/\log 5\) that same audit norm tends to \(0\) (Theorem K). For geometric weights \(1/d^2\) on the same finest-edge build, Theorem I gives exact growth by \(12/5\) so \(\|F\|\to\infty\) (Kept Failure I.1). None of these norms is thrust. Proofs and witnesses are in [GASKET.md](GASKET.md). Run `python3 scripts/gasket_corner_current.py`, `python3 scripts/gasket_fractional_currents.py`, `python3 scripts/gasket_geometric_currents.py`, and `python3 scripts/gasket_fractional_limit.py`.

@@ -11,7 +11,7 @@
 | Adding 17 to one boundary edge makes div sum and signed net both 17 | VERIFIED (script asserts; not re-run in CI this pass beyond unit tests of the identity) |
 | 1D summation-by-parts identity | VERIFIED in script asserts |
 | Laboratory thrust, selected W, continuum limit, gasket force | NOT CLAIMED |
-| Fractional audit norm, \(\alpha=0.45\), zero vs positive | OPEN; divergence excluded by Theorem J; energy controls the norm (Theorem L; `scripts/gasket_fractional_limit.py`). Not thrust. |
+| Fractional audit norm, \(\alpha=0.45\), zero vs positive | OPEN; divergence excluded by Theorem J; energy controls the norm (Theorem L; `scripts/gasket_fractional_limit.py`); log 3/log 5 gap contraction rejected at level 10 (Kept Failure J.4; `scripts/gasket_fractional_level10.py`). Not thrust. |
 | Fractional audit norm for \(\alpha>\log 3/\log 5\) | VERIFIED tends to 0 (Theorem K; same script). Not thrust. |
 | Geometric \(1/d^2\) harmonic audit norm on finest-edge build | VERIFIED diverge as \((12/5)^n\sqrt{21}/2\) (Theorem I; `scripts/gasket_geometric_currents.py`) |
 

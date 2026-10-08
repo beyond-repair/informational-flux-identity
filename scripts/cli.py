@@ -39,6 +39,7 @@ SCRIPTS = [
     ("hessian_flux_reduction.py", [], "Theorem M: Hessian reading reduces G to the surface Laplacian; Kept Failure M.1"),
     ("quadratic_flux_reduction.py", [], "Theorem N: quadratic reading gives G = int d_i Psi Lap Psi; Kept Failure N.1"),
     ("general_reading_flux.py", [], "Theorem O: every two-derivative reading reduces to a trace flux; Kept Failure O.1"),
+    ("linear_reading_flux.py", [], "Theorem P: every linear reading of any order reduces to oint r(Lap) Psi n; Kept Failures P.1, P.2"),
     ("gasket_corner_current.py", [], "harmonic gasket corner currents: neutral dipole scaling by 3/5"),
     ("gasket_fractional_currents.py", [], "Theorem H: fractional corner currents neutral; Kept Failure H.1 (no 3/5)"),
     ("gasket_geometric_currents.py", [], "Theorem I: geometric 1/d^2 currents grow by 12/5"),

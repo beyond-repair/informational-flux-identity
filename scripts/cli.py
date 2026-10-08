@@ -37,6 +37,7 @@ EXPECTED_ABSOLUTE = {"left": 0, "right": 349, "bottom": 2, "top": 15}
 SCRIPTS = [
     ("flux_identity.py", [], "Theorems A, B, E: rectangle witness 349/366, +17 source, 1D summation by parts"),
     ("hessian_flux_reduction.py", [], "Theorem M: Hessian reading reduces G to the surface Laplacian; Kept Failure M.1"),
+    ("quadratic_flux_reduction.py", [], "Theorem N: quadratic reading gives G = int d_i Psi Lap Psi; Kept Failure N.1"),
     ("gasket_corner_current.py", [], "harmonic gasket corner currents: neutral dipole scaling by 3/5"),
     ("gasket_fractional_currents.py", [], "Theorem H: fractional corner currents neutral; Kept Failure H.1 (no 3/5)"),
     ("gasket_geometric_currents.py", [], "Theorem I: geometric 1/d^2 currents grow by 12/5"),

@@ -205,13 +205,38 @@ So a spatially varying weight does not by itself create an interior source. A no
 
 **NOT THIS.** Theorem M does not compute \(\Psi_{\mathrm{info}}\) on the frozen \(0.45\) mesh, does not decide which rank-2 reading the freeze intends, and does not say the quadratic reading gives zero. It narrows the Stage 2 question under the Hessian reading to one quantity: \(\Delta\Psi_{\mathrm{info}}\) on the enclosing surface. A nonzero \(\mathcal{G}\) is not thrust.
 
+## Theorem N. Under the quadratic reading, \(\mathcal{G}\) is a volume integral of \(\partial_i\Psi\,\Delta\Psi\)
+
+**ASSUMPTION N (reading, not a change to the freeze).** This section takes the quadratic reading \((\nabla\Psi_{\mathrm{info}})^{ij}=Q^{ij}:=\partial^i\Psi\,\partial^j\Psi-\tfrac12\delta^{ij}|\nabla\Psi|^2\). It is the second reading named in Theorem M and is a different object from the Hessian. \(\chi_{\mathrm{vac}}\) stays outside the integral, as the frozen chain writes it. Stage 1 is not edited; no value of \(W\), \(\chi_{\mathrm{vac}}\), \(\kappa\), or \(m\) enters.
+
+**THEOREM N (continuum).** For \(\Psi\in C^2\), \(\partial_jQ^{ij}=\partial_i\Psi\,\Delta\Psi\). So for a bounded Lipschitz domain \(V\subset\mathbb{R}^d\) with boundary \(S\) and \(\Psi\in C^2(\bar V)\),
+\[
+\mathcal{G}_i=\oint_S Q^{ij}n_j\,dA=\int_V \partial_i\Psi\,\Delta\Psi\,dV .
+\]
+If \(\Delta\Psi=0\) on the shell between two nested closed surfaces, \(\mathcal{G}\) is the same on both.
+
+**Proof.** \(\partial_j(\partial_i\Psi\,\partial_j\Psi)=\partial_i\partial_j\Psi\,\partial_j\Psi+\partial_i\Psi\,\Delta\Psi\) and \(\partial_i(\tfrac12|\nabla\Psi|^2)=\partial_j\Psi\,\partial_i\partial_j\Psi\). Subtract, then apply the divergence theorem; on the shell the integrand is \(0\).
+
+**Corollaries, inside Assumption N.**
+
+1. **KEPT FAILURE N.1.** Under C6 (\(\Psi_{\mathrm{info}}=A_0\)) with static massless fields, \(\partial_iA_0=-E_i\), so \(\varepsilon_0Q^{ij}=\varepsilon_0(E^iE^j-\tfrac12\delta^{ij}|E|^2)\), which is exactly the Maxwell electrostatic stress. Under this route the informational tensor *is* the Maxwell piece divided by \(\varepsilon_0\); after the Maxwell piece is removed, nothing is left, identically. Without removing it, \(\Delta A_0=-\rho/\varepsilon_0\) gives \(\mathcal{G}_i=\varepsilon_0^{-1}\int_V\rho\,E_i\,dV\), the ordinary Coulomb force on the enclosed charge. For an isolated device (bounded, compactly supported, Hölder \(\rho\) inside \(S\), no charge outside), that self-force is \(\varepsilon_0^{-1}\iint\rho(x)\rho(y)\,(x-y)/(4\pi\varepsilon_0|x-y|^3)\,dx\,dy=0\): the integrand is absolutely integrable and odd under \(x\leftrightarrow y\). So \(\mathcal{G}=0\) and \(\Delta F=0\) for every \(W\) and every \(\kappa\), for every interior asymmetry. With charges outside \(S\), \(\mathcal{G}\) is the classical Coulomb force on the inside, whose reaction sits on the outside charges. The route "quadratic reading plus C5 plus static massless C6" cannot give a residual. This is a failure of that route, not of Stage 2.
+2. **Screened (Proca-type) equation.** If \((\Delta-m^2)\Psi=-\rho/\varepsilon_0\), then \(\partial_i\Psi\,\Delta\Psi=\rho E_i/\varepsilon_0+\tfrac12m^2\partial_i(\Psi^2)\), so
+\[
+\mathcal{G}_i=\varepsilon_0^{-1}\int_V\rho\,E_i\,dV+\tfrac{m^2}{2}\oint_S\Psi^2\,n_i\,dA .
+\]
+The tensor \(Q^{ij}-\tfrac12m^2\Psi^2\delta^{ij}\) is divergence-free wherever \((\Delta-m^2)\Psi=0\). For an isolated source the Yukawa kernel is radial, so the self-force term is \(0\) by the same odd-integrand argument, and \(\mathcal{G}_i=\tfrac{m^2}{2}\oint_S\Psi^2n_i\,dA\). That term is nonzero for an asymmetric source, depends on which surface is drawn, and is \(O(e^{-2mR})\) on a sphere of radius \(R\) around the source, so it tends to \(0\) as the surface recedes. It is the flux of the mass term that the quadratic reading leaves out, not an interior source. No \(m\) is selected and no number is claimed.
+
+**Witness, computed by `scripts/quadratic_flux_reduction.py`.** Exact (rational arithmetic) on the box \([0,2]\times[-1,1]\times[0,3]\): \(\oint Q\,n=\int\partial_i\Psi\,\Delta\Psi\) for \(60/60\) seeded random cubic integer polynomials, and \(\Psi=x^3\) gives \(\mathcal{G}_x=432\). The harmonic \(\Psi=x^3-3xy^2+2yz\) gives \(\mathcal{G}=(0,0,0)\) exactly while row \(x\) carries \(907/5\) and \(173/5\) on the two \(x\)-faces and \(-90\), \(-126\) on the \(y\)-faces (total absolute \(432\)). Quadrature (\(96\) Gauss–Legendre by \(192\) azimuthal nodes, \(4\pi\varepsilon_0=1\)) on the sphere \(R=2\) around the asymmetric point-charge cluster \(q=(3,-1,2)\): \(|\mathcal{G}|=3.0\times10^{-14}\) against \(\oint|Q^{xj}n_j|=15.131871\). Point charges are allowed here because the sphere lies in vacuum and replacing each charge by a small uniform ball leaves the exterior field unchanged. Adding a charge \(1.5\) at \((4,1,-0.5)\), outside the sphere, gives \(\mathcal{G}=4\pi F_{\mathrm{Coulomb}}\) to \(10^{-10}\) relative, with \(\mathcal{G}_x=-2.9694050402\). With Yukawa potentials at \(m=0.7\) and no outside charge, \(\mathcal{G}=\tfrac{m^2}{2}\oint\Psi^2n\) to \(10^{-10}\) relative at \(R=2,3,5\), with \(|\mathcal{G}|=1.524401,\ 0.3233750,\ 0.01713515\). The script exits nonzero if any of these figures moves.
+
+**NOT THIS.** Theorem N does not compute \(\Psi_{\mathrm{info}}\) on the frozen \(0.45\) mesh and does not decide which rank-2 reading the freeze intends. Together with Theorem M it covers the two readings named so far; under both, static massless C6 on a vacuum surface gives \(\mathcal{G}=0\) for an isolated device. A nonzero \(\mathcal{G}\) under screening is a surface-dependent mass-term flux. None of this is thrust.
+
 ## What was tried and does not follow
 
 - **FAILED as a derivation of thrust.** Nothing above produces a nonzero \(\Delta F\) for a divergence-free informational tensor. The mathematics does not fail at a hidden algebraic step. The net is zero because the sum telescopes.
 - **FAILED as a derivation of \(0.08\) or \(0.23\).** Those numerals never enter.
 - **FAILED as a reading of the informational fork protocol.** The inequality \(T_{\mathrm{Red}} > T_{\mathrm{CIS}}\times 10^3\) is not a stress tensor and supplies no \(\mathrm{div}\,F\). It is not used.
 - **NOT DERIVED.** Einstein gravity from entanglement. The essay in [-Entanglement-and-Emergence](https://github.com/beyond-repair/-Entanglement-and-Emergence) remains an essay. The only entanglement-facing consequence here is conditional: if an entanglement stress is divergenceless, Theorem A says its closed-surface signed flux is zero. Whether any concrete entanglement stress is divergenceless is **OPEN**.
-- **OPEN.** Whether \((\nabla\Psi_{\mathrm{info}})^{ij}\) on the frozen \(0.45\) mesh has \(\sum\mathrm{div} \neq 0\) after the Maxwell piece is removed. That is a Stage 2 computation, not a symbolic gap. Under the Hessian reading, Theorem M reduces it to whether \(\Delta\Psi_{\mathrm{info}}\neq 0\) on the enclosing surface; with static massless \(\Psi=A_0\) on a vacuum surface it is \(0\) (Kept Failure M.1). The quadratic reading is not covered.
+- **OPEN.** Whether \((\nabla\Psi_{\mathrm{info}})^{ij}\) on the frozen \(0.45\) mesh has \(\sum\mathrm{div} \neq 0\) after the Maxwell piece is removed. That is a Stage 2 computation, not a symbolic gap. Under the Hessian reading, Theorem M reduces it to whether \(\Delta\Psi_{\mathrm{info}}\neq 0\) on the enclosing surface; with static massless \(\Psi=A_0\) on a vacuum surface it is \(0\) (Kept Failure M.1). Under the quadratic reading, Theorem N makes \(\mathcal{G}\) the volume integral of \(\partial_i\Psi\,\Delta\Psi\); with static massless \(\Psi=A_0\) that tensor is the Maxwell stress over \(\varepsilon_0\), so nothing remains after the Maxwell piece is removed, and an isolated device gives \(\mathcal{G}=0\) (Kept Failure N.1). A reading other than these two, and any \(\Psi_{\mathrm{info}}\) not equal to \(A_0\), are not covered.
 - **OPEN.** Distributional flux on the infinite gasket. Theorem A is the finite rectangle. It does not pass to a limit that has not been constructed.
 - **OPEN.** The renormalized local propagator for \(W(x)\), already open in the Ware derivation ledger. Theorem E constrains the force ledger of a variable weight. It does not construct \(Z_{\mathrm{ren}}\).
 
@@ -224,6 +249,7 @@ No laboratory force, no energy-extraction law, no selected \(W\), no confirmatio
 ```bash
 python3 scripts/flux_identity.py
 python3 scripts/hessian_flux_reduction.py
+python3 scripts/quadratic_flux_reduction.py
 ```
 
 The script writes `witness.json` and exits nonzero if the integers quoted above move.
@@ -239,7 +265,7 @@ python3 -m venv .venv && . .venv/bin/activate
 pip install -e ".[test]"        # numpy, plus pytest and scipy for the tests
 
 flux-identity witness           # Theorem B witness: net 0, right-face share 349/366; +17 source gives net 17
-flux-identity reproduce         # runs every reproduction script below in a scratch copy; prints 8/8 passed
+flux-identity reproduce         # runs every reproduction script below in a scratch copy; prints 9/9 passed
 flux-identity reproduce --matrix-free-level 5   # also runs the SciPy matrix-free audit at level 5
 flux-identity list              # what each script checks
 python -m pytest                # identity, CLI, reproduction, and matrix-free vs dense checks

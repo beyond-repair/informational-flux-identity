@@ -43,6 +43,7 @@ SCRIPTS = [
     ("nonlinear_reading_flux.py", [], "Theorem Q: every shift-invariant polynomial reading is zero or surface-dependent; Kept Failure Q.1"),
     ("nonshift_reading_flux.py", [], "Theorem R: non-shift-invariant polynomial readings are still zero or surface-dependent; Kept Failure R.1"),
     ("screened_reading_flux.py", [], "Theorem T: screened polynomial readings leave only surface-dependent mass flux; Kept Failure T.1"),
+    ("first_derivative_reading_flux.py", [], "Theorem U: first-derivative readings (non-polynomial allowed) are zero or surface-dependent; Kept Failure U.1"),
     ("gasket_corner_current.py", [], "harmonic gasket corner currents: neutral dipole scaling by 3/5"),
     ("gasket_fractional_currents.py", [], "Theorem H: fractional corner currents neutral; Kept Failure H.1 (no 3/5)"),
     ("gasket_geometric_currents.py", [], "Theorem I: geometric 1/d^2 currents grow by 12/5"),

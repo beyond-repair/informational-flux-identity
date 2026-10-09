@@ -50,6 +50,7 @@ SCRIPTS = [
     ("gasket_geometric_currents.py", [], "Theorem I: geometric 1/d^2 currents grow by 12/5"),
     ("gasket_uniform_weights.py", [], "Theorem S: uniform multiplicative weights trichotomy; Kept Failure S.1"),
     ("gasket_multiscale_weights.py", [], "Theorem W: multi-scale multiplicative weights geometric-series trichotomy; Kept Failure W.1"),
+    ("gasket_multiscale_fractional.py", [], "Theorem X: multi-scale spectral L^alpha neutrality; Kept Failures X.1-X.2"),
     ("gasket_fractional_limit.py", [], "Theorems J, K, L: fractional audit norm bounded, decays above log3/log5"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),

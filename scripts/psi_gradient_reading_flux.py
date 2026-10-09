@@ -564,8 +564,13 @@ check(all(mags_pseudo[k + 1] < 0.6 * mags_pseudo[k] for k in range(4)),
       "dilation: |G_pseudo-Maxwell| decreases ~O(R^{-2})")
 check(mags_pseudo[-1] < 0.1,
       f"dilation: |G_pseudo|(R=64) = {mags_pseudo[-1]:.3e} -> 0")
-check(all(mags_soft[k + 1] < 0.6 * mags_soft[k] for k in range(4)),
-      "dilation: |G_soft E⊗E/(1+Psi^2)| decreases ~O(R^{-2})")
+# Soft E⊗E/(1+Psi^2) is not yet asymptotic at R=4 (Psi still O(1) on parts of
+# the sphere); from R=8 onward |G| quarters each doubling and R^2|G| stabilizes.
+r2_soft = [mags_soft[k] * (4.0 * 2**k)**2 for k in range(5)]  # R=4,8,16,32,64
+check(all(mags_soft[k + 1] < 0.6 * mags_soft[k] for k in range(1, 4)),
+      "dilation: |G_soft E⊗E/(1+Psi^2)| decreases ~O(R^{-2}) for R>=8")
+check(r2_soft[-1] > 0.5 * r2_soft[-2] and r2_soft[-1] < 1.5 * r2_soft[-2],
+      f"dilation: R^2|G_soft| stabilizes (R=32->{r2_soft[-2]:.3g}, R=64->{r2_soft[-1]:.3g})")
 check(mags_soft[-1] < 0.05,
       f"dilation: |G_soft|(R=64) = {mags_soft[-1]:.3e} -> 0")
 

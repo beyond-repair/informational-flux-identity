@@ -57,6 +57,7 @@ SCRIPTS = [
     ("gasket_fractional_energy_floor.py", [], "Theorem AA: energy floor for L^alpha below alpha=1/2 (Loewner-Heinz path bound); Kept Failure AA.1"),
     ("gasket_fractional_share.py", [], "Theorem AB: combinatorial/fractional share sigma=rho/w_n; Kept Failure AB.1"),
     ("gasket_fractional_capacity_floor.py", [], "Theorem AC: energy floor for every alpha<log3/log5 (cell resistance + spectral mass); Kept Failure AC.1"),
+    ("gasket_fractional_endpoint.py", [], "Theorem AD: exact pairing Q*R_alpha=7/3; at alpha=log3/log5 energy and audit norm -> 0 like 1/n; Kept Failure AD.1"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),
 ]

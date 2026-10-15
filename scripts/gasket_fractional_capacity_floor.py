@@ -157,7 +157,7 @@ def main() -> int:
     print()
     print("Theorem AC: Q_alpha(u_n) >= (9/4)/C_AC(alpha) > 0 at every level for every alpha < log3/log5.")
     print("Kept Failure AC.1: no level-uniform energy floor for alpha > log3/log5 (Theorem K).")
-    print("alpha = log3/log5 itself, and ||F(n,0.45)|| zero vs positive, stay OPEN. Not thrust.")
+    print("alpha = log3/log5 itself is settled by Theorem AD (collapse); ||F(n,0.45)|| zero vs positive stays OPEN. Not thrust.")
     if failures:
         print(f"\n{len(failures)} check(s) failed")
         return 1

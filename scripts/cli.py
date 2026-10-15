@@ -55,6 +55,7 @@ SCRIPTS = [
     ("gasket_multiscale_fractional.py", [], "Theorem X: multi-scale spectral L^alpha neutrality; Kept Failures X.1-X.2"),
     ("gasket_fractional_limit.py", [], "Theorems J, K, L: fractional audit norm bounded, decays above log3/log5"),
     ("gasket_fractional_energy_floor.py", [], "Theorem AA: energy floor for L^alpha below alpha=1/2 (Loewner-Heinz path bound); Kept Failure AA.1"),
+    ("gasket_fractional_share.py", [], "Theorem AB: combinatorial/fractional share sigma=rho/w_n; Kept Failure AB.1"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),
 ]

@@ -46,6 +46,7 @@ SCRIPTS = [
     ("first_derivative_reading_flux.py", [], "Theorem U: first-derivative readings (non-polynomial allowed) are zero or surface-dependent; Kept Failure U.1"),
     ("psi_gradient_reading_flux.py", [], "Theorem V: Psi-dependent first-derivative isotropic readings stay Maxwell or surface-dependent; Kept Failure V.1"),
     ("position_dependent_reading_flux.py", [], "Theorem Y: position-dependent first-derivative isotropic readings stay Maxwell or surface-dependent; Kept Failure Y.1"),
+    ("hemitropic_reading_flux.py", [], "Theorem Z: pseudotensor first-derivative readings stay Maxwell, a boundary-only curl, or surface-dependent; Kept Failure Z.1"),
     ("gasket_corner_current.py", [], "harmonic gasket corner currents: neutral dipole scaling by 3/5"),
     ("gasket_fractional_currents.py", [], "Theorem H: fractional corner currents neutral; Kept Failure H.1 (no 3/5)"),
     ("gasket_geometric_currents.py", [], "Theorem I: geometric 1/d^2 currents grow by 12/5"),

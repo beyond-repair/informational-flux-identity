@@ -66,6 +66,8 @@ SCRIPTS = [
     ("gasket_fractional_wpq_harnack.py", [], "Theorem AJ: keep w_pq cross term; H_AJ=(4^a-a 4^(a-1))/2; ||F(n,0.45)||>=0.055599; Kept Failure AJ.1"),
     ("gasket_fractional_moment_jensen.py", [], "Theorem AK: spec(L) in [0,6] + two-moment Jensen; ||F(n,0.45)||>=0.058941; Kept Failure AK.1: live neighbor-Harnack chain < 0.70"),
     ("gasket_fractional_path_ceiling.py", [], "Theorem AL: Hermite-Hadamard path ceiling R_inf; ||F_frac||>=0.111208, ||F(n,0.45)||>=0.078019; Kept Failure AL.1: sharp path ceiling < 0.70"),
+    ("gasket_fractional_cycle_ceiling.py", [], "Theorem AM: boundary-cycle resistance ceiling via Fourier; ||F_frac||>=0.209685, ||F(n,0.45)||>=0.147106; Kept Failure AM.1"),
+    ("gasket_fractional_fence_ceiling.py", [], "Theorem AN: boundary-fence Bloch ceiling; ||F_frac||>=0.305377, ||F(n,0.45)||>=0.214239; Kept Failure AN.1"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),
 ]

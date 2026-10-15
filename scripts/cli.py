@@ -60,6 +60,7 @@ SCRIPTS = [
     ("gasket_fractional_endpoint.py", [], "Theorem AD: exact pairing Q*R_alpha=7/3; at alpha=log3/log5 energy and audit norm -> 0 like 1/n; Kept Failure AD.1"),
     ("gasket_fractional_degree_share.py", [], "Theorem AE: degree-gap factorization of rho; sharp w_n<=8^a/2; Kept Failure AE.1"),
     ("gasket_fractional_lambda_floor.py", [], "Theorem AF: uniform floor lambda_n>=a 2^(-1-a) (Jensen a 2^(a-1)); ||F||->0 forces gamma_n->inf; Kept Failure AF.1"),
+    ("gasket_fractional_lambda_ceiling.py", [], "Theorem AG: uniform ceiling lambda_n<=1-a(1-a)/2^(3-a); ||F||->0 iff gamma_n->inf; Kept Failure AG.1"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),
 ]

@@ -63,6 +63,7 @@ SCRIPTS = [
     ("gasket_fractional_lambda_ceiling.py", [], "Theorem AG: uniform ceiling lambda_n<=1-a(1-a)/2^(3-a); ||F||->0 iff gamma_n->inf; Kept Failure AG.1"),
     ("gasket_fractional_gamma_ceiling.py", [], "Theorem AH: kernel comparison + neighbor Harnack ceil gamma_n; ||F(n,a)||>0 floor for a<log3/log5 (6.44e-4 at 0.45); Kept Failure AH.1"),
     ("gasket_fractional_harnack_sum.py", [], "Theorem AI: two-neighbor heat-kernel sum w_pj+w_qj>=2w_aj; Harnack 4^a/2; ||F(n,0.45)||>=0.051988; Kept Failure AI.1"),
+    ("gasket_fractional_wpq_harnack.py", [], "Theorem AJ: keep w_pq cross term; H_AJ=(4^a-a 4^(a-1))/2; ||F(n,0.45)||>=0.055599; Kept Failure AJ.1"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),
 ]

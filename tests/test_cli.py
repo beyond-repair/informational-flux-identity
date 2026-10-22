@@ -172,6 +172,34 @@ class EndpointShiftTests(unittest.TestCase):
             self.assertIn("0.70307046242185742992904816", (ROOT / doc).read_text())
 
 
+class SupercriticalShiftTests(unittest.TestCase):
+    def test_theorem_az_supercritical_law(self):
+        """Theorem AZ: recorded A, C, nu, K at alpha=0.8 reproduce R_0.8(m) and the audit norm (fast float check).
+
+        The full interval certificate runs in `reproduce` (about 6 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_supercritical_shift as az
+        from mpmath import mp, mpf
+
+        mp.dps = 40
+        a = mpf("0.8")
+        rho = mpf(5) ** a / 3
+        cR, A = mpf("0.4983719948274884072103"), mpf("2.3964097039792205270396")
+        C, nu, K = mpf("-1.7432571783920757239547"), mpf("-0.7274453844421553283990"), mpf("0.6878667584139920685497")
+        self.assertLess(abs(cR / (rho - 1) - A), mpf(10) ** -21)
+        self.assertLess(abs(C / A - nu), mpf(10) ** -21)
+        for m in (10, 20):
+            R, s = az.float_RS(m, a)
+            F = mp.sqrt(21) / 3 * s / R
+            self.assertLess(abs(R - A * rho ** m - C), 5 * rho ** m * 5 ** (-0.65 * m))   # Theorem AZ (1)
+            self.assertLess(abs((rho ** m + nu) * F - K), 5 * 5 ** (-0.65 * m))           # Theorem AZ (4)
+            self.assertGreater(rho ** m * (rho ** m * F - K), mpf("0.5"))               # Kept Failure AZ.1: approach from above
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_supercritical_shift.py", names)
+        for doc in ("GASKET.md", "README.md", "CLAIM_STATUS.md"):
+            self.assertIn("1.74325717839207572395", (ROOT / doc).read_text())
+
+
 class EntryPointTests(unittest.TestCase):
     def test_python_m_scripts(self):
         proc = subprocess.run([sys.executable, "-m", "scripts", "list"], cwd=ROOT, capture_output=True, text=True)

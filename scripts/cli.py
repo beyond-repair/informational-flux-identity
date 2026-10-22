@@ -78,6 +78,7 @@ SCRIPTS = [
     ("gasket_fractional_rate_constants.py", [], "Theorem AT: certified rate constants c_R(0.45)=0.49780265076356035..., c_S(0.45)=0.92709263856946138..., c_R(gamma)=0.51716583463050524...; c_F for ||F||-L; Kept Failure AT.1 (log-periodic s^(1-gamma) r_inf)"),
     ("gasket_fractional_log_mean.py", [], "Theorem AU: proves Conjecture AT.2, c_R(gamma)=(2 sin(pi gamma)/pi) ln5 <Theta>; certified <Theta>=0.600954251168773607823705150099994..., c_R(gamma) to 34 digits; Mellin poles 1-gamma+2pi i k/ln5, theta_hat_1..4 nonzero; Kept Failure AU.1"),
     ("gasket_fractional_endpoint_shift.py", [], "Theorem AY: certified intercept C_gamma=0.703070462421857429929048..., R_gamma(m)=c_R m+C_gamma+O(5e-28) for m>=60; level shift nu_gamma=1.359468115..., sigma_inf(gamma)=1.151918611674..., (n+nu)||F(n,gamma)||->K_gamma=3.402360763832... exponentially; Kept Failure AY.1 (unshifted n||F|| converges only like 1/n)"),
+    ("gasket_fractional_supercritical_shift.py", [], "Theorem AZ: alpha>log3/log5: R_a(n)=A rho^n+C_a+O(rho^n 5^-0.65n), intercept C_a=(2 sin pi a/pi) M(1-a) (Mellin transform of r_inf continued across the pole at gamma); (rho^n+nu)||F(n,a)||->K_a; certified C_0.8=-1.743257178392075723954..., nu_0.8=-0.727445384442..., K_0.8=0.687866758413992...; Kept Failure AZ.1 (shift sign opposite to the endpoint)"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),
 ]

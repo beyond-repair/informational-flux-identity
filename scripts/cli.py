@@ -47,6 +47,7 @@ SCRIPTS = [
     ("psi_gradient_reading_flux.py", [], "Theorem V: Psi-dependent first-derivative isotropic readings stay Maxwell or surface-dependent; Kept Failure V.1"),
     ("position_dependent_reading_flux.py", [], "Theorem Y: position-dependent first-derivative isotropic readings stay Maxwell or surface-dependent; Kept Failure Y.1"),
     ("hemitropic_reading_flux.py", [], "Theorem Z: pseudotensor first-derivative readings stay Maxwell, a boundary-only curl, or surface-dependent; Kept Failure Z.1"),
+    ("nonlocal_reading_flux.py", [], "Theorem AV: nonlocal (convolution / fractional) Maxwell-form readings: conserved on vacuum iff K=c delta; otherwise surface-dependent, ->0 under dilation, total 0 (Newton); exact G=-(64/3pi)q^2R^3b/(R^2-b^2)^4 for (-Lap)^(1/2); Kept Failure AV.1"),
     ("gasket_corner_current.py", [], "harmonic gasket corner currents: neutral dipole scaling by 3/5"),
     ("gasket_fractional_currents.py", [], "Theorem H: fractional corner currents neutral; Kept Failure H.1 (no 3/5)"),
     ("gasket_geometric_currents.py", [], "Theorem I: geometric 1/d^2 currents grow by 12/5"),

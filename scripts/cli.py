@@ -49,6 +49,7 @@ SCRIPTS = [
     ("hemitropic_reading_flux.py", [], "Theorem Z: pseudotensor first-derivative readings stay Maxwell, a boundary-only curl, or surface-dependent; Kept Failure Z.1"),
     ("nonlocal_reading_flux.py", [], "Theorem AV: nonlocal (convolution / fractional) Maxwell-form readings: conserved on vacuum iff K=c delta; otherwise surface-dependent, ->0 under dilation, total 0 (Newton); exact G=-(64/3pi)q^2R^3b/(R^2-b^2)^4 for (-Lap)^(1/2); Kept Failure AV.1"),
     ("slow_tail_reading_flux.py", [], "Theorem AW: slow-tail (-Lap)^(-tau) readings: literal reading diverges for tau>=(1+l)/2; surface-independent G is 0 for every tau, surface-dependent for non-integer tau; marginal tau=3/4 gives (16/9)Q^2(c-x_Q), dipole tau=5/4 (16/75)(|p|^2c-8(p.c)p); Kept Failure AW.1"),
+    ("multipole_marginal_flux.py", [], "Theorem AX: proves Conjecture AW.4: marginal tau_l=(3+2l)/4 gives G=Mc exactly on every enclosing sphere, M closed form for all l (quadrupole M=(16/81)(trA)^2I+(32/735)tr(A0^2)I-(512/2205)A0^2); literal reading never exists there; Kept Failure AX.1: P*+d_x^5 gives a centre- and radius-free nonzero sphere value, cubes differ"),
     ("gasket_corner_current.py", [], "harmonic gasket corner currents: neutral dipole scaling by 3/5"),
     ("gasket_fractional_currents.py", [], "Theorem H: fractional corner currents neutral; Kept Failure H.1 (no 3/5)"),
     ("gasket_geometric_currents.py", [], "Theorem I: geometric 1/d^2 currents grow by 12/5"),

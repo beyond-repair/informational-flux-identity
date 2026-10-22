@@ -73,6 +73,7 @@ SCRIPTS = [
     ("gasket_fractional_decimation_rate.py", [], "Theorem AR: exact rates R(n+1)-R(n)~c_R(5^a/3)^n, sigma gap ~c_S(5^(a-1)/3)^n; slope c_R(gamma)=0.517166 at log3/log5; sigma_inf>=2*4^-a; Kept Failure AR.1"),
     ("gasket_fractional_limit_digits.py", [], "Theorem AS: complete-monotone interpolation sandwich certifies L(0.45) in [0.82113862713346,0.82113862713352]; L(0.10)>1.410 proves Conjecture J.2; Kept Failure AS.1"),
     ("gasket_fractional_rate_constants.py", [], "Theorem AT: certified rate constants c_R(0.45)=0.49780265076356035..., c_S(0.45)=0.92709263856946138..., c_R(gamma)=0.51716583463050524...; c_F for ||F||-L; Kept Failure AT.1 (log-periodic s^(1-gamma) r_inf)"),
+    ("gasket_fractional_log_mean.py", [], "Theorem AU: proves Conjecture AT.2, c_R(gamma)=(2 sin(pi gamma)/pi) ln5 <Theta>; certified <Theta>=0.600954251168773607823705150099994..., c_R(gamma) to 34 digits; Mellin poles 1-gamma+2pi i k/ln5, theta_hat_1..4 nonzero; Kept Failure AU.1"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),
 ]

@@ -71,6 +71,7 @@ SCRIPTS = [
     ("gasket_fractional_moment_share.py", [], "Theorem AP: exact share sigma=(L^(1-a))_aa+omega; Radau corner-moment floor sigma>=1.310267; ||F(n,0.45)||>=0.274743 (AM) / 0.415238 (AO); Kept Failure AP.1"),
     ("gasket_fractional_decimation.py", [], "Theorem AQ: exact spectral decimation r_{n+1}(s)=Phi_s(r_n(s(s+5))); R_a(n) up, sigma_n down; ||F(n,0.45)|| decreases to L in [0.819255,0.822959] (Conjecture J.1); Kept Failure AQ.1"),
     ("gasket_fractional_decimation_rate.py", [], "Theorem AR: exact rates R(n+1)-R(n)~c_R(5^a/3)^n, sigma gap ~c_S(5^(a-1)/3)^n; slope c_R(gamma)=0.517166 at log3/log5; sigma_inf>=2*4^-a; Kept Failure AR.1"),
+    ("gasket_fractional_limit_digits.py", [], "Theorem AS: complete-monotone interpolation sandwich certifies L(0.45) in [0.82113862713346,0.82113862713352]; L(0.10)>1.410 proves Conjecture J.2; Kept Failure AS.1"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),
 ]

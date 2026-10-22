@@ -68,6 +68,7 @@ SCRIPTS = [
     ("gasket_fractional_path_ceiling.py", [], "Theorem AL: Hermite-Hadamard path ceiling R_inf; ||F_frac||>=0.111208, ||F(n,0.45)||>=0.078019; Kept Failure AL.1: sharp path ceiling < 0.70"),
     ("gasket_fractional_cycle_ceiling.py", [], "Theorem AM: boundary-cycle resistance ceiling via Fourier; ||F_frac||>=0.209685, ||F(n,0.45)||>=0.147106; Kept Failure AM.1"),
     ("gasket_fractional_fence_ceiling.py", [], "Theorem AN: boundary-fence Bloch ceiling; ||F_frac||>=0.305377, ||F(n,0.45)||>=0.214239; Kept Failure AN.1"),
+    ("gasket_fractional_moment_share.py", [], "Theorem AP: exact share sigma=(L^(1-a))_aa+omega; Radau corner-moment floor sigma>=1.310267; ||F(n,0.45)||>=0.274743 (AM) / 0.415238 (AO); Kept Failure AP.1"),
     ("gasket_fractional_level9.py", [], "recorded level-9 matrix-free audit norm (checks recorded digits)"),
     ("gasket_fractional_level10.py", [], "Kept Failure J.4: log3/log5 gap contraction rejected at level 10 (recorded digits)"),
 ]

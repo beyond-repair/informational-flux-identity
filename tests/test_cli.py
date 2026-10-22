@@ -144,6 +144,22 @@ class MultipoleMarginalTests(unittest.TestCase):
         self.assertNotIn("FAIL", proc.stdout)
 
 
+class MeshMaxwellResidualTests(unittest.TestCase):
+    def test_theorem_ba_mesh_residual(self):
+        """Theorem BA: certified kappa_1..3(0.45) < 0, Maxwell piece sums to 0, torus control; Kept Failure BA.1."""
+        proc = subprocess.run([sys.executable, str(ROOT / "scripts" / "mesh_maxwell_residual.py"), "3"], capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, proc.stdout[-3000:])
+        self.assertIn("kappa_n(0.45) in [-10.7382395418199659874", proc.stdout)
+        self.assertIn("torus one-sided cell stencil: D != 0 certified (Kept Failure BA.1)", proc.stdout)
+        self.assertIn("all Theorem BA checks passed; nothing here is thrust", proc.stdout)
+        self.assertNotIn("FAIL", proc.stdout)
+        sys.path.insert(0, str(ROOT / "scripts"))
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("mesh_maxwell_residual.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("18.526339511158477727", (ROOT / doc).read_text())
+
+
 class EndpointShiftTests(unittest.TestCase):
     def test_theorem_ay_level_shift(self):
         """Theorem AY: recorded C_gamma, nu_gamma, K_gamma reproduce the endpoint audit norm (fast float check).

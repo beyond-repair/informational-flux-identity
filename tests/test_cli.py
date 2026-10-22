@@ -269,6 +269,37 @@ class MeshNoncentralityMonotoneTests(unittest.TestCase):
             self.assertIn("5.48553067", (ROOT / doc).read_text())
 
 
+class MeshNoncentralityConvexTests(unittest.TestCase):
+    def test_theorem_bf_convex_constant(self):
+        """Theorem BF: sympy identities, coarse cells (1/100, level 40): point enclosures of F'(0), F''(0), F'(1)
+        and F'' > 0 on the first eps-interval (fast).  The full 40-interval certificate runs in `reproduce` (about 2 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import mesh_noncentrality_convex as bf
+        from mpmath import iv
+
+        bf.FAILS.clear()
+        bf.symbolic_checks()
+        self.assertEqual(bf.FAILS, [])
+        cells, _ = bf.build_cells(den=100, N=40)
+        tail = bf.tail_consts()
+
+        def fd(E, s0):
+            N, G = bf.moments(cells, E, s0[0], s0[1], 3, den=100, tail=tail)
+            return bf.F_derivs(E, N, G)
+
+        r0 = fd(iv.mpf(0), (9, 4))
+        self.assertTrue(r0[1].a < 2.70632481 and 2.70903118 < r0[1].b and r0[1].b - r0[1].a < 0.1)
+        self.assertTrue(0 < r0[2].a < 1.5308 < r0[2].b)
+        r1 = fd(iv.mpf(1), (14, 4))
+        self.assertTrue(r1[1].a < 4.227515 and 4.341285 < r1[1].b and r1[2].a > 0)
+        self.assertGreater(fd(iv.mpf([0, 0.025]), (9, 4))[2].a, 0)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("mesh_noncentrality_convex.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BF", (ROOT / doc).read_text())
+            self.assertIn("0.52046", (ROOT / doc).read_text())
+
+
 class EndpointShiftTests(unittest.TestCase):
     def test_theorem_ay_level_shift(self):
         """Theorem AY: recorded C_gamma, nu_gamma, K_gamma reproduce the endpoint audit norm (fast float check).

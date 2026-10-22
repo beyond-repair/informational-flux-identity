@@ -160,6 +160,38 @@ class MeshMaxwellResidualTests(unittest.TestCase):
             self.assertIn("18.526339511158477727", (ROOT / doc).read_text())
 
 
+class MeshMaxwellLimitTests(unittest.TestCase):
+    def test_theorem_bb_kappa_decimation(self):
+        """Theorem BB: exact decomposition of kappa_n, decimation products, recorded limit K(0.45) (fast float check).
+
+        The interval certificate of K (Theorem AS sandwich) and of the cross parts runs in `reproduce` (about 2-3 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import mesh_maxwell_limit as bb
+        import mesh_maxwell_residual as ba_mod
+
+        bb.FAILS.clear()
+        bb.symbolic_checks()
+        bb.exact_checks()
+        self.assertEqual(bb.FAILS, [])
+        for n in (1, 2, 3, 4):
+            d = bb.dense_level(n)
+            k, ks, kc = bb.kap(d)
+            self.assertLess(abs(2**n * k - ba_mod.float_kappa(n)[0]), 1e-9 * 2**n)
+            self.assertLess(abs(2**n * ks - d["kself"]), 1e-9 * 2**n)
+            self.assertTrue(0 < d["Y"] <= 5.0**-n * d["R"] / 2)
+            self.assertTrue(0 < d["E"] <= bb.ebound(n, 0.45))
+            self.assertGreater(kc, 0)                                   # Kept Failure BB.1
+        K = -0.854646905120886
+        q = bb.quad_level(20, "0.45")
+        k20 = float(bb.kap(q)[0])
+        rho = 5**0.45 / 3
+        self.assertLess(abs(k20 - K + 1.08302 * rho**20), 1e-5)        # 2^-n kappa_n -> K at rate rho^n
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("mesh_maxwell_limit.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("0.8546469051208", (ROOT / doc).read_text())
+
+
 class EndpointShiftTests(unittest.TestCase):
     def test_theorem_ay_level_shift(self):
         """Theorem AY: recorded C_gamma, nu_gamma, K_gamma reproduce the endpoint audit norm (fast float check).

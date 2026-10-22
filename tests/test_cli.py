@@ -192,6 +192,29 @@ class MeshMaxwellLimitTests(unittest.TestCase):
             self.assertIn("0.8546469051208", (ROOT / doc).read_text())
 
 
+class MeshCentredStencilTests(unittest.TestCase):
+    def test_theorem_bc_centred_stencil(self):
+        """Theorem BC: reflection law, no odd stencil on V_n, Green-Gauss rule = BA at levels 1-2; Kept Failure BC.1.
+
+        Levels 3-4 and the E_n/Y_n recursion table run in `reproduce` (about 1.5 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import mesh_centred_stencil as bc
+
+        bc.FAILS.clear()
+        bc.symbolic_checks()
+        bc.ratio_product_check()
+        bc.combinatorics(levels=range(1, 5))
+        rows = bc.interval_checks((1, 2))
+        self.assertEqual(bc.FAILS, [])
+        self.assertLess(abs(float(rows[1][0].mid) + 0.3917585210483279), 1e-13)
+        self.assertLess(abs(float(rows[2][0].mid) + 0.277452251033554), 1e-13)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("mesh_centred_stencil.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Kept Failure BC.1", (ROOT / doc).read_text())
+        self.assertIn("0.2038773766517652", (ROOT / "README.md").read_text())
+
+
 class EndpointShiftTests(unittest.TestCase):
     def test_theorem_ay_level_shift(self):
         """Theorem AY: recorded C_gamma, nu_gamma, K_gamma reproduce the endpoint audit norm (fast float check).

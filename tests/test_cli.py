@@ -144,6 +144,34 @@ class MultipoleMarginalTests(unittest.TestCase):
         self.assertNotIn("FAIL", proc.stdout)
 
 
+class EndpointShiftTests(unittest.TestCase):
+    def test_theorem_ay_level_shift(self):
+        """Theorem AY: recorded C_gamma, nu_gamma, K_gamma reproduce the endpoint audit norm (fast float check).
+
+        The full interval certificate runs in `reproduce` (about 3-4 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_endpoint_shift as ay
+        from mpmath import mp, mpf
+
+        mp.dps = 30
+        g = mp.log(3) / mp.log(5)
+        kap = 2 * mp.sin(mp.pi * g) / mp.pi
+        c = mp.log(5) * mpf(ay.AU_THETA[0])
+        Cg, nu, K = mpf("0.70307046242185742992904816"), mpf("1.35946811514371162883271469"), mpf("3.40236076383265507999048519")
+        self.assertLess(abs(Cg / (kap * c) - nu), mpf(10) ** -25)
+        for m in (10, 20):
+            Jm, sm = ay.float_level(m, g)
+            F = mp.sqrt(21) / 3 * sm / (kap * Jm)
+            self.assertLess(abs(kap * (Jm - m * c) - Cg), 5 * 5 ** (-0.65 * m))       # R_gamma(m) - c_R m - C_gamma
+            self.assertLess(abs((m + nu) * F - K), 5 * 5 ** (-0.65 * m))           # level-shift law
+            self.assertLess(m * F - K, -0.2)                                       # Kept Failure AY.1: no shift is off by ~nu K/m
+        self.assertLess(ay.tail_log10(60), -1e17)
+        names = [s for s, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_endpoint_shift.py", names)
+        for doc in ("GASKET.md", "README.md", "CLAIM_STATUS.md"):
+            self.assertIn("0.70307046242185742992904816", (ROOT / doc).read_text())
+
+
 class EntryPointTests(unittest.TestCase):
     def test_python_m_scripts(self):
         proc = subprocess.run([sys.executable, "-m", "scripts", "list"], cwd=ROOT, capture_output=True, text=True)

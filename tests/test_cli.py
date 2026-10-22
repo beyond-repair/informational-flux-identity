@@ -125,6 +125,15 @@ class ReproduceTests(unittest.TestCase):
         self.assertAlmostEqual(f_value, dense, places=9)
 
 
+class SlowTailReadingTests(unittest.TestCase):
+    def test_theorem_aw_marginal_values(self):
+        """Theorem AW: tau=3/4 one-charge G=(16/9)q^2 b on every radius; dipole tau=5/4 closed form."""
+        proc = subprocess.run([sys.executable, str(ROOT / "scripts" / "slow_tail_reading_flux.py")], capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, proc.stdout[-3000:])
+        self.assertIn("J_(3/4) = 4b/3 for every R>b", proc.stdout)
+        self.assertIn("all Theorem AW checks passed; nothing here is thrust", proc.stdout)
+        self.assertNotIn("FAIL", proc.stdout)
+
 class EntryPointTests(unittest.TestCase):
     def test_python_m_scripts(self):
         proc = subprocess.run([sys.executable, "-m", "scripts", "list"], cwd=ROOT, capture_output=True, text=True)

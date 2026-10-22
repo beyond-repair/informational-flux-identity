@@ -215,6 +215,37 @@ class MeshCentredStencilTests(unittest.TestCase):
         self.assertIn("0.2038773766517652", (ROOT / "README.md").read_text())
 
 
+class MeshNoncentralityLimitTests(unittest.TestCase):
+    def test_theorem_bd_noncentrality_limit(self):
+        """Theorem BD: e_n=(2-t_n)y_n, b_n closed form, bracket at levels 1-2, coarse c(0.45) enclosure (fast).
+
+        The fine c(0.45), c(0.8) enclosures and the recursion table run in `reproduce` (about 4-5 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import mesh_noncentrality_limit as bd
+        from mpmath import iv
+
+        bd.FAILS.clear()
+        bd.symbolic_checks()
+        bd.exact_checks()
+        bd.dense_checks(levels=(1, 2, 3))
+        self.assertEqual(bd.FAILS, [])
+        iv.dps = 30
+        B = bd.B_const(iv.mpf("0.45"), iv)
+        self.assertLess(abs(float(B.mid) - 115.196453544), 1e-6)
+        for n in (2, 4):
+            mt = float(bd.quad_mean_t(n))
+            d = bd.bb.dense_level(n)
+            self.assertLess(abs(d["E"] / d["Y"] - (2 - mt)), 1e-8)
+            self.assertTrue(2 / (3**n + 1) < mt <= 2 / (3**n + 1) + float(B.b) / 3**n)
+        c, _ = bd.c_bracket("0.45", N=40, tau0=1e-12, tau1=625, r2=1.01, M=6, k=8)
+        self.assertTrue(2 < c.a < 3.7255634 < c.b < 2 + float(B.a))
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("mesh_noncentrality_limit.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Kept Failure BD.1", (ROOT / doc).read_text())
+            self.assertIn("3.72198897", (ROOT / doc).read_text())
+
+
 class EndpointShiftTests(unittest.TestCase):
     def test_theorem_ay_level_shift(self):
         """Theorem AY: recorded C_gamma, nu_gamma, K_gamma reproduce the endpoint audit norm (fast float check).

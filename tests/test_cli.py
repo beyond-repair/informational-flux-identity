@@ -246,6 +246,29 @@ class MeshNoncentralityLimitTests(unittest.TestCase):
             self.assertIn("3.72198897", (ROOT / doc).read_text())
 
 
+class MeshNoncentralityMonotoneTests(unittest.TestCase):
+    def test_theorem_be_monotone_constant(self):
+        """Theorem BE: symmetrised kernel, J_a limits, d_n decreasing in alpha at level 2, coarse S and c(0+) (fast).
+
+        The fine S and c(0+) enclosures run in `reproduce` (about 4-5 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import mesh_noncentrality_monotone as be
+
+        be.FAILS.clear()
+        be.symbolic_checks()
+        be.level_monotone(levels=(2,))
+        self.assertEqual(be.FAILS, [])
+        S, _ = be.S_bracket(N=40, r2=1.01)
+        self.assertTrue(S.a < 2.70632481 / 3 and 2.70903118 / 3 < S.b and S.b - S.a < 0.02)
+        c0, _ = be.bd.c_bracket("0", N=40, tau0=1e-12, tau1=625, r2=1.01, M=6, k=8)
+        self.assertTrue(3.73 < c0.a < 5.48553067 and 5.50249013 < c0.b < 6)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("mesh_noncentrality_monotone.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Kept Failure BE.1", (ROOT / doc).read_text())
+            self.assertIn("5.48553067", (ROOT / doc).read_text())
+
+
 class EndpointShiftTests(unittest.TestCase):
     def test_theorem_ay_level_shift(self):
         """Theorem AY: recorded C_gamma, nu_gamma, K_gamma reproduce the endpoint audit norm (fast float check).

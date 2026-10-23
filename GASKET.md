@@ -2391,7 +2391,7 @@ where \(\eta_N=\alpha_1+\beta\,\eta_{N-1}\circ p\) and \(\eta_0=-\tfrac12\). Thi
 **What stays open.**
 - *The limit.* Existence of \(C_\delta=\lim\rho^n(\delta_N-\delta_N^{(n)})\) and its independence of \(N\). The floats put it near \(0.6025\), about \(4.9\) times the certified floor \(0.1240\).
 - *Small \(N\).* \(1\le N\le8\) at \(0.8\): the bracket fails there because the deficit ceiling exceeds \(g\). The floats suggest the sign still holds.
-- *Other exponents.* \(\alpha\ne0.8\) (the argument is general; only the certificate is at \(0.8\)).
+- *Other exponents.* \(\alpha\ne0.8\) (the argument is general; only the certificate is at \(0.8\)). Settled for large \(N\) at every \(\alpha\in(\gamma,1)\) by Theorem BM below, with certified thresholds at \(0.7\), \(0.75\), \(0.85\), \(0.9\), \(0.95\).
 - *Monotone \(\omega_k\).* Floats show \(\omega_k\) increasing in \(y\) for \(k=0,1,3,6,10,20\). Not proved, and not needed here.
 - *Other items.* Closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); BH.7, BF.2, and the Stage 2 question.
 
@@ -2404,6 +2404,59 @@ where \(\eta_N=\alpha_1+\beta\,\eta_{N-1}\circ p\) and \(\eta_0=-\tfrac12\). Thi
 - *Exact rationals:* the \(1-\eta_N\) series against BJ's recursion; monotonicity at sample points (\(N=1\)–\(6\)); the orbit lemma.
 - *`arb`:* BI.4 and BK.4 re-run; \(L(0)\), \(L(1/10)\), \(J(1/10)\), \(I_9,\dots,I_{13}\), \(Q\), \(I_0\); the brackets and \(c_N\).
 - *Floats:* \(\delta_{10}^{(n)}\) for \(n=10\)–\(40\) against \(n=100\).
+
+The script exits nonzero if any check fails.
+
+## Theorem BM. The sharpness of Theorem BL holds at every \(\alpha\in(\gamma,1)\) for all large \(N\), with certified thresholds \(N_0(0.7)=61\), \(N_0(0.75)=16\), \(N_0(0.85)=7\), \(N_0(0.9)=6\), \(N_0(0.95)=5\)
+
+Theorem BL proved that BK's rate \(\rho^{-n}\) is attained, but its certificate was only at \(\alpha=0.8\) (for \(N\ge9\)). BL listed \(\alpha\ne0.8\) as open and noted that the argument itself is general. This theorem closes that item qualitatively and makes it explicit at five more exponents. No new identity is needed. BL.2–BL.4 hold for every \(\alpha\in(\gamma,1)\), and the \(N\)-uniform ceiling BL.4(ii) tends to \(0\) like \(\rho^{-N}\) at every such \(\alpha\). The rest is finiteness of the inputs and an `arb` re-run of BL's certificate at the new exponents.
+
+**Setting.** As in Theorem BL: \(\delta_N^{(k)}=\langle G_k\rangle_{\mu_k}\) is the data-free corner deficit at the level-\(N\) corner neighbours, \(\delta_N=\lim_k\delta_N^{(k)}\), and \(L(y_0)\), \(J(y_0)\), \(I_N\), \(Q\), \(I_0\), \(D'_k\) are as defined in BL.2–BL.4. **Assumptions used as stated:** BL.1–BL.4 (stated there for every \(\alpha\in(\gamma,1)\)); BK.4 (\(J_\alpha<\infty\) for \(\alpha>\gamma\), since \(2\gamma>\alpha\) at \(y\to0\) and \(\alpha>0\) at \(y\to\infty\); \(D'_\infty\le D'_0+J_\alpha/(1-\rho^{-1})\); \(J_\alpha\) is re-run live at each exponent); BI.4 (\(G=0.6031\), re-run live).
+
+**THEOREM BM.**
+
+1. **BM.1 (qualitative; every \(\alpha\in(\gamma,1)\), every \(y_0>0\)).**
+   - *Inputs are finite and positive.* \(L(y_0)>0\), because \(\omega_{\rm lo}=(1+y/5)^{\alpha}/B\) with \(0<B=1-y(y+4)/(3(y+2)(y+5))<1\) for \(y>0\). \(J(y_0)\le J_\alpha<\infty\) (BK.4). \(Q<\infty\): its head integrand is at most \(K_St^{-\alpha}\), integrable at \(0\) since \(\alpha<1\), and its tail \(t^{\gamma-1-\alpha}\) is integrable at \(\infty\) since \(\alpha>\gamma\). \(I_0<\infty\) for the same reason, and \(D'_N\ge D'_0>0\).
+   - *The bracket's positive side does not degenerate.* The \(j=0\) term of BL.1's positive series gives \(g_N:=1-\eta_N(p(y_0))\ge p(y_0)/(p(y_0)+2)>0\) for every \(N\ge1\).
+   - *The ceiling vanishes.* By BL.4(ii), \(\sup_{k\ge N}\delta_N^{(k)}\le\Delta_N:=(GQ\rho^{-N}+\tfrac32(3/5)^NI_0)/D'_0\to0\), since \(\rho=5^\alpha/3>1\).
+   - *Conclusion.* There is an \(N_0(\alpha)\) with \((g_N-\Delta_N)L(y_0)-\Delta_NJ(y_0)>0\) for every \(N\ge N_0(\alpha)\). So by BL.2 and BL's summation, for every \(N\ge N_0(\alpha)\) and every \(n\ge N\),
+     \[
+     \delta_N^{(n+1)}>\delta_N^{(n)},\qquad c_N\rho^{-n}\le\delta_N-\delta_N^{(n)}\le\tfrac32\frac{J_\alpha}{(1-\rho^{-1})D'_0}\,\rho^{-n},
+     \]
+     with \(c_N>0\) and \(\liminf_Nc_N\ge\dfrac{p(y_0)}{p(y_0)+2}\cdot\dfrac{L(y_0)}{D'_\infty(1-\rho^{-1})}>0\). For symmetric data this gives \(\sup_{V_n}|u_n-\bar u|\ge c_{N_0}\|x\|_\infty\rho^{-n}\) for \(n\ge N_0\). **Hence the order \(\rho^{-n}\) of BK.4 is exact at every \(\alpha\in(\gamma,1)\).** This is the sharpness half of Conjecture BL.6 at every exponent above \(\gamma\), for large \(N\).
+2. **BM.2 (certified thresholds; python-flint `arb`, outward rounding).** BL's certificate (BL.5) is re-run at five exponents. The direct ceiling BL.4(i) covers \(N_0\le N<N_u\). The \(N\)-uniform ceiling BL.4(ii) is checked at \(N_u\), and since it is monotone in \(N\) it covers every \(N\ge N_u\).
+
+   | \(\alpha\) | \(y_0\) | \(L(y_0)\ge\) | \(J(y_0)\le\) | \(J_\alpha\le\) | \(D'_\infty\le\) | \(Q\le\) | direct \(N\) | uniform from | \(c_{N_0}\ge\) | \(c_N\ge\) (\(N\ge N_u\)) | \(\liminf c_N\ge\) |
+   |---|---|---|---|---|---|---|---|---|---|---|---|
+   | 0.7 | 1/10 | 0.454305 | 0.142156 | 1.345626 | 50.543638 | 64.214389 | 61 | 62 | \(7.006\cdot10^{-3}\) | \(2.044\cdot10^{-3}\) | 0.1902 |
+   | 0.75 | 1/10 | 0.387944 | 0.158853 | 1.256914 | 14.176949 | 23.250101 | 16–17 | 18 | \(1.130\cdot10^{-2}\) | \(1.278\cdot10^{-2}\) | 0.1555 |
+   | 0.85 | 1/50 | 0.297166 | 0.079980 | 1.136750 | 7.533153 | 21.442153 | 7–9 | 10 | \(2.304\cdot10^{-3}\) | \(1.330\cdot10^{-2}\) | 0.0636 |
+   | 0.9 | 1/10 | 0.255428 | 0.230594 | 1.101281 | 7.512586 | 29.483613 | 6–7 | 8 | \(1.948\cdot10^{-2}\) | \(8.936\cdot10^{-3}\) | 0.0673 |
+   | 0.95 | 1/10 | 0.225980 | 0.265862 | 1.081479 | 10.164569 | 60.060836 | 5–7 | 8 | \(1.060\cdot10^{-2}\) | \(1.246\cdot10^{-2}\) | 0.0371 |
+
+   So, for every \(N\ge N_0(\alpha)\) and every \(n\ge N\), \(\delta_N^{(n)}\) strictly increases in \(n\) and \(c_N\rho^{-n}\le\delta_N-\delta_N^{(n)}\le C^{\rm up}_\alpha\rho^{-n}\), with ceilings \(C^{\rm up}_\alpha\le40.6260,\ 9.4106,\ 2.6545,\ 1.4794,\ 0.6559\) (BK.3–BK.4). Together with BL (\(\alpha=0.8\), \(N_0=9\)), the certified thresholds are \(N_0=61,16,9,7,6,5\) at \(\alpha=0.7,0.75,0.8,0.85,0.9,0.95\).
+
+**Proof of BM.1.** The finiteness and positivity items are the lemmas listed (sympy for \(B\), the \(j=0\) term and the head exponent; BK.4 for \(J_\alpha\)). BL.4(ii) bounds \(\delta_N^{(k)}\) for every \(k\ge N\) with \(D'_N\ge D'_0\). Since \(g_N\ge g_*:=p(y_0)/(p(y_0)+2)\) and \(\Delta_N\to0\), the bracket is \(\ge(g_*-\Delta_N)L(y_0)-\Delta_NJ(y_0)>0\) once \(\Delta_N<g_*L/(L+J)\). Summing BL.2 over \(k\ge n\) with \(D'_{k+1}\le D'_\infty<\infty\) gives \(c_N\). The limit of \(c_N\) uses \(\Delta_N\to0\). \(\square\)
+
+**Proof of BM.2.** The same cells as BL.5 (ratio \(1.001\) for \(L\), \(J(y_0)\), \(J_\alpha\); \(1.002\) for \(I_N\) and \(Q\); 96 bits, outward). The \(g\) used for \(N\ge N_u\) is BL.1's series truncated at \(j<\min(N_u,40)\), a floor for every \(N\ge N_u\); the \(\liminf\) column uses the truncation at \(j<40\). The values of \(y_0\) were chosen by a coarse float scan over \(\{1/50,1/20,1/10,1/5,2/5\}\); the certificate does not depend on how they were chosen. \(\square\)
+
+**Why \(N_0\) grows as \(\alpha\downarrow\gamma\).** \(\Delta_N\asymp\rho^{-N}/D'_N\) and \(\rho\to1\) as \(\alpha\to\gamma\) (\(\rho(0.7)=1.02839\)). So the ceiling decays slowly, and \(N_0(\alpha)\to\infty\) in this argument. This is a limit of the method, not evidence against sharpness at small \(N\).
+
+**Evidence (floats; consistency only).** At \(\alpha=0.9\), \(N=6\): \(\rho^n(\delta^{(60)}-\delta^{(n)})=0.3277,0.3488,0.3597,0.3659,0.3659,0.3648,0.3643\) at \(n=6,7,8,10,12,16,20\). The sequence \(\delta_6^{(n)}\) increases, and every value lies in \([c_6,1.4794]\). The limit is not BL's \(0.6025\), so if \(C_\delta\) exists it depends on \(\alpha\), as Conjecture BL.6 already allows.
+
+**What stays open.**
+- *Small \(N\).* \(N<N_0(\alpha)\): \(1\le N\le8\) at \(0.8\), \(1\le N\le60\) at \(0.7\), and so on. The bracket fails there because the deficit ceiling is too close to \(g\). The floats suggest the sign still holds.
+- *Uniformity in \(\alpha\).* BM.1 is pointwise in \(\alpha\). No certificate covers an interval of \(\alpha\), and no explicit formula for \(N_0(\alpha)\) is given.
+- *The limit.* Conjecture BL.6: existence of \(C_\delta(\alpha)=\lim\rho^n(\delta_N-\delta_N^{(n)})\) (floats \(0.6025\) at \(0.8\), \(\approx0.364\) at \(0.9\)).
+- *Other items.* Monotone \(\omega_k\); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2, and the Stage 2 question.
+
+**NOT THIS.** Theorem BM extends a lower bound on the convergence error of one graph Dirichlet extension of a discrete fractional operator on the combinatorial gasket to other exponents. It is a statement about functions on graphs, not a field, a flux or a force. No flux functional on the infinite gasket is constructed, and Stage 1 is not touched. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_rate_sharpness_alpha.py`** (about 1 min; needs sympy, mpmath, python-flint).
+- *Sympy:* BL's identities re-run; \(2\gamma>1\); \(\omega_{\rm lo}>1\); the \(j=0\) floor of \(1-\eta_N\); \(Q\)'s head exponent.
+- *Exact rationals:* BL.1's series and monotonicity re-run.
+- *`arb`:* BI.4 re-run; at \(\alpha=0.7,0.75,0.85,0.9,0.95\): \(J_\alpha\), \(L(0)\), \(L(y_0)\), \(J(y_0)\), \(I_N\) for the direct range, \(Q\), \(I_0\); the brackets, \(c_N\) and \(\liminf c_N\).
+- *Floats:* \(\delta_6^{(n)}\) at \(\alpha=0.9\) for \(n=6\)–\(20\) against \(n=60\).
 
 The script exits nonzero if any check fails.
 

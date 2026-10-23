@@ -534,3 +534,39 @@ class FractionalRateSharpnessTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BL", (ROOT / doc).read_text())
             self.assertIn("0.1240", (ROOT / doc).read_text())
+
+
+class FractionalRateSharpnessAlphaTests(unittest.TestCase):
+    def test_theorem_bm_rate_sharpness_alpha(self):
+        """Theorem BM: sympy lemmas and a coarse (still rigorous, looser) N-uniform certificate at alpha = 0.9, y0 = 1/10,
+        N = 9. The fine certificates at five exponents and the floats run in `reproduce` (about 1 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_rate_sharpness_alpha as bm
+        import gasket_fractional_rate_sharpness as bl
+        import gasket_fractional_uniform_rate as bk
+        from flint import arb
+
+        bm.FAILS.clear()
+        bm.symbolic_checks()
+        self.assertEqual(bm.FAILS, [])
+        G = arb("0.6031")
+        al = "0.9"
+        a = arb(al)
+        rho = arb(5) ** a / 3
+        Ly, _ = bl.L_lower(al, "0.1", ratio="1.01")
+        L0, _ = bl.L_lower(al, "1e-10", ratio="1.01")
+        Jy, _ = bl.J_upper(al, G, "0.1", ratio="1.01")
+        Q = bl.Q_upper(al, ratio="1.02")
+        _, D0, _, _ = bk.constants(al, arb(1))
+        N = 9
+        Dl = D0 + L0 * (1 - rho ** (-N)) / (1 - 1 / rho)
+        I0 = __import__("gasket_fractional_corner_sharpness").I_closed(al, arb(1), G)
+        Du = (G * Q * rho ** (-N) + arb(3) / 2 * (arb(3) / 5) ** N * I0) / Dl
+        p0 = arb("0.1") * (arb("0.1") + 5)
+        _, g = bl.one_minus_eta_series(p0, N)
+        br = (g - Du) * Ly - Du * Jy
+        self.assertTrue(float(br.lower()) > 0)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_rate_sharpness_alpha.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BM", (ROOT / doc).read_text())

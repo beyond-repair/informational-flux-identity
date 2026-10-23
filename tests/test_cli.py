@@ -497,3 +497,40 @@ class FractionalUniformRateTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BK", (ROOT / doc).read_text())
             self.assertIn("6.2192", (ROOT / doc).read_text())
+
+
+class FractionalRateSharpnessTests(unittest.TestCase):
+    def test_theorem_bl_rate_sharpness(self):
+        """Theorem BL: sympy identities, exact rationals for the eta_N series and monotonicity, and a coarse version of the
+        N-uniform certificate (coarse cells are still rigorous, only looser). The fine certificate, the direct N = 9..13
+        cases and the floats run in `reproduce` (about 3 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_rate_sharpness as bl
+        from flint import arb
+
+        bl.FAILS.clear()
+        bl.symbolic_checks()
+        bl.exact_checks()
+        self.assertEqual(bl.FAILS, [])
+        G = arb("0.6031")
+        a = arb("0.8")
+        rho = arb(5) ** a / 3
+        Ly, _ = bl.L_lower("0.8", "0.1", ratio="1.01")
+        L0, _ = bl.L_lower("0.8", "1e-10", ratio="1.01")
+        Jy, _ = bl.J_upper("0.8", G, "0.1", ratio="1.01")
+        Q = bl.Q_upper("0.8", ratio="1.02")
+        self.assertTrue(0.32 < float(Ly.lower()) <= 0.334504 and 0.178544 <= float(Jy.upper()) < 0.19 and 19.525 <= float(Q.upper()) < 19.6)
+        D0 = arb(3) ** (-a) * arb.pi() / (arb.pi() * a).sin()
+        N = 14
+        Dl = D0 + L0 * (1 - rho ** (-N)) / (1 - 1 / rho)
+        I0 = __import__("gasket_fractional_corner_sharpness").I_closed("0.8", arb(1), G)
+        Du = (G * Q * rho ** (-N) + arb(3) / 2 * (arb(3) / 5) ** N * I0) / Dl
+        p0 = arb("0.1") * (arb("0.1") + 5)
+        _, g = bl.one_minus_eta_series(p0, N)
+        br = (g - Du) * Ly - Du * Jy
+        self.assertTrue(float(br.lower()) > 0.05)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_rate_sharpness.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BL", (ROOT / doc).read_text())
+            self.assertIn("0.1240", (ROOT / doc).read_text())

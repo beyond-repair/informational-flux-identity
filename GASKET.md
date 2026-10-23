@@ -2625,7 +2625,7 @@ since the integrand is \(\ge0\) and is \(>0\) off \(y_c\). So \(\delta_N^{(k+1)}
 **Evidence (floats; consistency only).** At \(\alpha=0.001,0.005,0.01,0.0167\) and \(k=3,6,10\) (mpmath, 30 digits), \(\omega_k\) is not monotone on \([0,Y_\alpha]\) (BO.1's dip). Its maximum there is \(1.545267\), \(1.550555\), \(1.557624\), \(1.569019\), the same at all three levels, against \(\rho^{-1}=2.995176\), \(2.975955\), \(2.952103\), \(2.920441\). It increases on \([Y_\alpha,10^6Y_\alpha]\). The deficit was computed by BI's quadrature with the heavy \(s^{-1-\alpha}\) tail beyond \(s=10^{12}\) done analytically (\(r_n=1/s-2/s^2+6/s^3-\dots\)). That tail is what stalled BO's float run. At \(\alpha=0.01\), \(N=1\), \(\delta_1^{(n)}=0.9984276\), \(0.9993087\), \(0.9997270\), \(0.9999009\), \(0.9999655\), \(0.9999882\) for \(n=1\)–\(6\), increasing toward \(1\) as BP.5 says. \(N=2\) and \(\alpha=0.001\) behave the same way. The same code reproduces BN's \(\delta_1^{(8)}(0.8)=0.9487\).
 
 **What stays open.**
-- *Rates below \(\gamma\).* BP gives monotonicity only. How fast \(1-\delta_N^{(n)}\) goes to \(0\) for \(\alpha<\gamma\) (floats at \(\alpha=0.01\), \(N=1\): successive ratios of \(1-\delta_1^{(n)}\) are \(0.44,0.40,0.36,0.35,0.34\), approaching \(\rho=0.3387\ldots\)) is not proved.
+- *Rates below \(\gamma\).* BP gives monotonicity only. How fast \(1-\delta_N^{(n)}\) goes to \(0\) for \(\alpha<\gamma\) (floats at \(\alpha=0.01\), \(N=1\): successive ratios of \(1-\delta_1^{(n)}\) are \(0.44,0.40,0.36,0.35,0.34\), approaching \(\rho=0.3387\ldots\)) is not proved. (Answered by Theorem BQ below: the order is exactly \(\rho^n\) at every level, and \(\rho^{-n}(1-\delta_N^{(n)})\to C_N>0\).)
 - *A closed form for \(a^*\).* Still open. BP shows that \(a^*\) is a threshold for the weight only, not for the deficit.
 - *The limit.* Conjecture BL.6's limit part: existence and \(N\)-independence of \(C_\delta(\alpha)\).
 - *Other items.* A certificate uniform over an interval of \(\alpha\); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
@@ -2637,6 +2637,78 @@ since the integrand is \(\ge0\) and is \(>0\) off \(y_c\). So \(\delta_N^{(k+1)}
 - *Exact rationals:* \(r_{k+1}>r_k\) at five points for \(k=0\)–\(3\); \(B-C/p\le d_k\le B\) and \(d_k>5/8\); BN.1's Stieltjes checks re-run.
 - *Arb:* \(e^{1/(2e)}<15/8\).
 - *Floats:* the head maxima and tail monotonicity of \(\omega_k\) above; \(\delta_N^{(n)}\) at \(\alpha=0.01,0.001\) and the \(0.8\) control.
+
+The script exits nonzero if any check fails.
+
+## Theorem BQ. Below \(\log3/\log5\) the corner deficit approaches \(1\) at the exact rate \(\rho^n\) at every level: \(c_N\rho^n<1-\delta_N^{(n)}<C'_N\rho^n\) for every \(n\), \(\rho^{-n}(1-\delta_N^{(n)})\to C_N(\alpha)>0\), with \(C_1(0.45)\in[0.0718892,0.0719611]\) (Kept Failure BQ.1: the renormalised deficit is neither monotone nor one-sided)
+
+Theorem BP proved that \(\delta_N^{(n)}\) increases strictly in \(n\) for every \(\alpha\in(0,1)\), to \(1\) when \(\alpha\le\gamma\). It left the rate below \(\gamma\) open. The floats there showed successive ratios of \(1-\delta_1^{(n)}\) of \(0.44,0.40,0.36,0.35,0.34\) at \(\alpha=0.01\), approaching \(\rho=0.3387\ldots\). This theorem gives that rate. The tool is BK.1's transfer applied to the numerator of \(1-\delta_N^{(n)}\) rather than to the ratio. The numerator then increases, because the weight is \(\ge1\) and the neighbour profile \(\eta_N\) is positive. The denominator \(D_n\) increases to a finite limit below \(\gamma\). Squeezing the ratio between the two gives a two-sided bound \(\asymp\rho^n\) at every level, not only in the limit. The limit itself is Theorem BG.3 specialised to the corner neighbour. What is new is the bound at every level, the monotone numerator, and certified constants.
+
+**Setting.** As in Theorems BG, BJ, BK, BL and BP: Assumption 4, \(r_n\) the corner resolvent, \(p(y)=y(y+5)\), \(\rho=5^\alpha/3\), \(\gamma=\log3/\log5\), \(D_n=\int_0^\infty s^{-\alpha}r_n\,ds\), \(D'_n=\rho^{-n}D_n\), \(\mathcal R_n(\tau)=(3/5)^nr_n(5^{-n}\tau)\to\mathcal R\), \(\psi_k(t)=p^k(5^{-k}t)\uparrow\psi\), \(\omega_n\) BK.1's one-level weight, and \(\eta_N\) the neighbour profile (\(\eta_1=1/(2(z+5))\), \(\eta_N=\alpha_1+\beta\,\eta_{N-1}\circ p\)). For \(N\ge1\) and \(n\ge N\), BG.1 and BJ.4 (symmetric data) give
+\[
+1-\delta_N^{(n)}=\frac{\int_0^\infty s^{-\alpha}r_n(s)\,\eta_N(p^{n-N}s)\,ds}{D_n}=\frac{\rho^n\,\mathcal N_N^{(n)}}{D_n},\qquad
+\mathcal N_N^{(n)}=\int_0^\infty\tau^{-\alpha}\mathcal R_n(\tau)\,\eta_N\bigl(\psi_{n-N}(5^{-N}\tau)\bigr)\,d\tau ,
+\]
+and we write \(V_N^{(n)}=\rho^{-n}(1-\delta_N^{(n)})=\mathcal N_N^{(n)}/D_n\). **Assumptions used as stated (not re-run here):** AQ (3) (\(r_n\uparrow r_\infty\) pointwise); BG.1, BG.3 (the profile and its dominated limit \(P_N=\int\tau^{-\alpha}\mathcal R\,\eta_N(\psi(5^{-N}\tau))\,d\tau\)); BH.2/BJ.4 (\(\eta_N\le\eta\le2/(2+z)\)); BI.4 (\(G=0.6031\), so \(\mathcal R_n\le\min(\tfrac13,G\tau^{\gamma-1})\) and \(r_\infty\le\min(1/s,Gs^{\gamma-1})\)); BJ.1 (\(1/r_k-1/r_\infty=\prod_{i<k}\beta(p^is)(1+2\eta(p^ks))\)); BJ.3 (\(s^{1-\gamma}r_\infty\in[0.600945014,0.600963487]\) on \((0,p(10^{-12})]\)); BK.1–BK.4 (transfer, \(\omega_n\ge(1+y/5)^\alpha\), \(\omega_{\rm hi}\) and its head and tail lemmas); BL.1 (\(\eta_N\) positive and strictly decreasing); AY (only in the derived part of BQ.2). Stage 1 is not edited. No \(W\), \(0.08\), \(0.23\), or \(30\,\mu\)N/kW enters.
+
+**THEOREM BQ.**
+
+1. **BQ.1 (the numerator increases; every \(\alpha\in(0,1)\), \(N\ge1\), \(n\ge N\)).**
+   \[
+   \mathcal N_N^{(n+1)}-\mathcal N_N^{(n)}=\rho^{-n}\int_0^\infty(\omega_n(y)-1)\,\eta_N\bigl(p^{n+1-N}(y)\bigr)\,p^{-\alpha}r_n(p)\,p'\,dy>0 ,
+   \]
+   so \(\mathcal N_N^{(n)}\) increases strictly to \(P_N<\infty\).
+2. **BQ.2 (exact order \(\rho^n\) at every level; \(\alpha<\gamma\)).** For every \(N\ge1\) and \(n>m\ge N\),
+   \[
+   \frac{\mathcal N_N^{(m)}}{D_\infty}\,\rho^n\;<\;1-\delta_N^{(n)}\;<\;\frac{P_N}{D_m}\,\rho^n ,
+   \]
+   and \(V_N^{(n)}\to C_N(\alpha)=P_N/D_\infty\in(0,\infty)\). Hence \((1-\delta_N^{(n+1)})/(1-\delta_N^{(n)})\to\rho\), which is BP's float observation. *Derived (AY as stated):* at \(\alpha=\gamma\), \(n(1-\delta_N^{(n)})\to\frac{2\sin\pi\gamma}{\pi}P_N/c_R(\gamma)\).
+3. **BQ.3 (certified, \(N=1\); python-flint `arb`, outward).** The table gives \(\mathcal N_1^{(n)}\) for \(n=1,\ldots,6\) and \(30\) (strictly increasing, as BQ.1 says), \(D_n\) for \(n=1,\ldots,6\), \(D_\infty\), and \(E_{30}\ge P_1-\mathcal N_1^{(30)}\):
+
+   | \(\alpha\) | \(D_\infty\) | \(E_{30}\le\) | \(C_1(\alpha)\) | every \(n\ge1\): \(V_1^{(n)}\in\) | every \(n\ge30\): \(V_1^{(n)}\in\) |
+   |---|---|---|---|---|---|
+   | \(0.01\) | \([99.77849,99.79345]\) | \(2.99\cdot10^{-6}\) | \([0.0078312,0.0078363]\) | \([0.004622,0.007867]\) | \([0.0078312,0.0078365]\) |
+   | \(0.1\) | \([10.01691,10.02179]\) | \(3.56\cdot10^{-8}\) | \([0.0606923,0.0607522]\) | \([0.036684,0.063702]\) | \([0.0606923,0.0607864]\) |
+   | \(0.3\) | \([4.035386,4.037405]\) | \(4.10\cdot10^{-12}\) | \([0.0933210,0.0934143]\) | \([0.060971,0.116634]\) | \([0.0933210,0.0944433]\) |
+   | \(0.45\) | \([4.000301,4.002302]\) | \(9.52\cdot10^{-14}\) | \([0.0718892,0.0719611]\) | \([0.050648,0.118859]\) | \([0.0718892,0.0771286]\) |
+
+   For example, \(0.050648\,\rho^n<1-\delta_1^{(n)}(0.45)<0.118859\,\rho^n\) for every \(n\ge1\), with \(\rho=0.68772568\ldots\). The \(D_\infty(0.45)\) bracket contains Theorem AS's \([4.0013017734819,4.001301773482]\).
+
+**KEPT FAILURE BQ.1 (the renormalised deficit is not monotone and not one-sided).** Claim: \(V_1^{(n)}=\rho^{-n}(1-\delta_1^{(n)})\) is monotone in \(n\), or at least stays on one side of its limit. BP's floats at \(\alpha=0.01\), where the ratios of \(1-\delta_1^{(n)}\) stay above \(\rho\), suggest an increasing sequence. This is false. **Witnesses (certified enclosures):**
+- \(\alpha=0.45\): \(V^{(1)}\in[0.083656,0.083739]\), \(V^{(2)}\in[0.086386,0.086473]\), \(V^{(3)}\in[0.084972,0.085057]\). So \(V^{(1)}<V^{(2)}>V^{(3)}\), and \(V^{(2)}>C_1(0.45)\): the limit is approached from above. Further values are \(V^{(4)},V^{(5)},V^{(6)}\in[0.081965,0.082047],[0.079086,0.079165],[0.076874,0.076951]\).
+- \(\alpha=0.3\): \(V^{(3)}\le0.092755<0.093321\le C_1\) and \(V^{(4)}\ge0.094315>0.093414\ge C_1\). The sequence crosses its limit.
+- \(\alpha=0.01\): \(V^{(1)}\le0.004643<C_1\), and \(V^{(1)}<\cdots<V^{(6)}\) (certified). Here the approach starts from below.
+
+The rate is exactly \(\rho^n\), but the sign of \(V^{(n)}-C_1\) depends on \(\alpha\) and on \(n\). A heuristic reading, not proved: \(V^{(n+1)}/V^{(n)}=(\mathcal N^{(n+1)}/\mathcal N^{(n)})(D_n/D_{n+1})\) is a competition between the numerator's gain, which comes from the region \(y\lesssim5^{N-n}\) where \(\omega_n-1\) is small, and the denominator's gain \(D_{n+1}-D_n\), which is of order \(\rho^n\) (AR). Which one wins first depends on \(\alpha\). This is not proved.
+
+**Proof of BQ.1.**
+- *Transfer.* BK.1's substitution \(\tau=5^{n+1}y\), \(\tau'=5^np(y)\) gives \(\tau^{-\alpha}\mathcal R_{n+1}(\tau)\,d\tau=\omega_n(\tau')\,\tau'^{-\alpha}\mathcal R_n(\tau')\,d\tau'\). The neighbour factor of level \(n+1\) at \(\tau\) is \(\eta_N(p^{n+1-N}(y))\), which is the level-\(n\) factor at \(\tau'\). So \(\mathcal N^{(n+1)}=\int\omega_nF_n\,d\nu_n\) and \(\mathcal N^{(n)}=\int F_n\,d\nu_n\), with \(d\nu_n=\tau'^{-\alpha}\mathcal R_n\,d\tau'=\rho^{-n}p^{-\alpha}r_n(p)p'\,dy\) (BK.4).
+- *Sign.* \(\omega_n\ge(1+y/5)^\alpha>1\) for \(y>0\) (BK.2). \(F_n>0\), because \(\eta_1=1/(2(z+5))\) and \(\eta_N\ge\alpha_1>1/(2(z+5))\) for \(N\ge2\) by induction (sympy: \(\alpha_1-\tfrac1{2(z+5)}=\tfrac{z+6}{2(z+2)(z+5)}\)).
+- *Limit.* \(\mathcal N^{(n)}\to P_N\) is BG.3's dominated convergence, with \(h_N=x_a\eta_N\) at the neighbour. \(P_N\le\tfrac13\int\tau^{-\alpha}\min(1,2\cdot5^N/\tau)\,d\tau<\infty\). \(\square\)
+
+**Proof of BQ.2.** \(r_n\uparrow r_\infty\), with strict increase on an open set (AQ (3)), so \(D_m\le D_n<D_\infty\). For \(\alpha<\gamma\), \(D_\infty=\int s^{-\alpha}r_\infty\le\int s^{-\alpha}\min(1/s,Gs^{\gamma-1})<\infty\). With BQ.1, \(\mathcal N^{(m)}<\mathcal N^{(n)}<P_N\). Divide. The limit follows from \(\mathcal N^{(n)}\to P_N\) and \(D_n\to D_\infty\). \(P_N>0\) because its integrand is positive. At \(\gamma\), \(\rho=1\) and \(D_n/n\to\pi c_R(\gamma)/(2\sin\pi\gamma)\) (AY, as in BG.3). \(\square\)
+
+**Proof of BQ.3.** Everything is computed in python-flint `arb` (64 bits, outward).
+- *\(\mathcal N_1^{(n)}\).* The integrand is decreasing in \(\tau\): \(r_n\) is Stieltjes, and \(\eta_1\circ\psi_{n-1}\) is decreasing (BL.1). On geometric cells of ratio \(1.0005\) on \([10^{-16},10^{24}]\), the lower sum uses right endpoints and the upper sum uses left endpoints. \(r_n\) is AQ's recursion along the exact orbit. The head uses \(\mathcal R_n\le\tfrac13\) and \(\eta\le1\). The tail uses \(\mathcal R_n\le G\tau^{\gamma-1}\), \(\eta_N(z)\le2/z\) and \(z\ge5^{-N}\tau\), which gives \(2G5^NT^{\gamma-1-\alpha}/(1+\alpha-\gamma)\).
+- *\(D_n\).* Cells of ratio \(1.0005\) on \([10^{-32},10^{16}]\). The head lies between \(r_n(\varepsilon)\) and \(r_n(0)=\tfrac13(5/3)^n\). The tail lies between \(1/(3+s)\) and \(1/s\).
+- *\(D_\infty\).* The lower bound uses \(r_\infty\ge r_k\) with \(k=\min(60,\text{orbit cap }10^{100})\) at right endpoints, and \(g\ge0.600945014\) below \(10^{-32}\). The upper bound uses \(r_\infty(a)\le\min\bigl(Ga^{\gamma-1},\,1/a,\,1/L_k(a)\bigr)\) at left endpoints, where \(L_k=1/r_k-\prod_{i<k}\beta(p^ia)(1+4/(2+p^ka))\) (BJ.1 with \(\eta\le2/(2+z)\)) and \(G\) is replaced by \(0.600963487\) below \(p(10^{-12})\). The head is \(g_{\rm hi}\varepsilon^{\gamma-\alpha}/(\gamma-\alpha)\) and the tail is \(T^{-\alpha}/\alpha\).
+- *\(E_{30}\).* By BQ.1 and Tonelli, \(P_1-\mathcal N^{(30)}=\sum_{k\ge30}\rho^{-k}\int(\omega_k-1)\eta_1(p^{k}y)\,p^{-\alpha}r_k(p)p'\,dy\). Bound it with \(\omega_k\le\omega_{\rm hi}\) and \(r_k\le\bar r\) (BK.4), and with \(\eta_1(p^ky)\le2/(2+5^ky)\le\min(1,2\cdot5^{-k}/y)\). The \(k\)-sum is geometric in closed form. On cells of ratio \(1.005\) on \([10^{-60},10^6]\), the whole integrand is evaluated on the cell ball. The head uses BK.4's lemma \(\omega_{\rm hi}-1\le c\,y^\gamma\), the bound \(\min(1,x)\le x^\theta\) with \(\theta=(1+\gamma-\alpha)/2\), and \(q=\rho^{-1}5^{-\theta}<1\). The tail uses BK.4's \(Ky^{-\alpha-1}\) and the \(1/y\) decay of the \(k\)-sum.
+- *Brackets.* \(C_1\in[\mathcal N^{(30)}_{\rm lo}/D_\infty^{\rm hi},(\mathcal N^{(30)}_{\rm hi}+E_{30})/D_\infty^{\rm lo}]\). For every \(n\ge30\) the bracket is \([\mathcal N^{(30)}_{\rm lo}/D_\infty^{\rm hi},(\mathcal N^{(30)}_{\rm hi}+E_{30})/D_6^{\rm lo}]\). For every \(n\ge1\) it is \([\mathcal N^{(1)}_{\rm lo}/D_\infty^{\rm hi},(\mathcal N^{(30)}_{\rm hi}+E_{30})/D_1^{\rm lo}]\). For \(n\le6\), \(V^{(n)}\in[\mathcal N^{(n)}_{\rm lo}/D_n^{\rm hi},\mathcal N^{(n)}_{\rm hi}/D_n^{\rm lo}]\). \(\square\)
+
+**Evidence (floats; consistency only).** Recursion quadrature at \(0.45\), \(N=1\) (BP's tail-split code): \(V^{(n)}=0.0836976,0.0864295,0.0850147,0.0820056,0.0769125,0.0742613,0.0724387,0.0719507\) at \(n=1,2,3,4,6,8,12,20\). These agree with the certified \(V^{(1)},V^{(2)}\), and \(V^{(20)}\) lies in the certified \(C_1\) bracket. In scratch runs (not in the script), at \(0.3\) the sequence peaks at \(n=4\)–\(5\) and decreases to \(0.0933678\) at \(n=20\), and at \(0.01\) it is still increasing at \(n=20\) (\(0.00783371\)).
+
+**What stays open.**
+- *Eventual monotonicity.* Whether \(V_N^{(n)}\) is eventually monotone, and in which direction. Floats suggest eventually decreasing at \(0.3\) and \(0.45\). At \(0.01\) it is still increasing at \(n=20\).
+- *Other \(N\) and \(\alpha\).* Closed forms for \(C_N(\alpha)\) and \(P_N\). The \(N\)-dependence of \(C_N\), including its matching with BH's layer profile. Certificates for \(N\ge2\) or uniform in \(\alpha\) (BQ.1–BQ.2 hold for every \(N\) and every \(\alpha<\gamma\), but the numbers are only for \(N=1\) at four exponents).
+- *Carried over.* A closed form for \(a^*\); Conjecture BL.6's limit part (existence and \(N\)-independence of \(C_\delta\) above \(\gamma\)); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem BQ is a convergence rate for the corner-neighbour value of one graph Dirichlet extension of a discrete fractional operator on the combinatorial gasket, below the exponent where corners are polar. It is a statement about functions on graphs, not a field, a flux or a force. No flux functional is constructed, and Stage 1 is not touched. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_deficit_rate_small_alpha.py`** (about 2.5 min; needs sympy, mpmath, python-flint).
+- *Sympy:* \(\eta_1=1/(2(z+5))\); \(\alpha_1-1/(2(z+5))\); the \(\rho^{-n}\) scaling; BK.1's Jacobians; the geometric sums of \(E_M\); \(1+2\eta\le1+4/(2+z)\).
+- *Exact rationals:* \(1/(2(z+5))\le\eta_N\le2/(2+z)\), strictly decreasing, for \(N=1\)–\(5\); \(\tfrac35r_{n+1}(y)/r_n(p)=1/(\tfrac53(\beta-er_n(p)))\ge1+2y/5\) for \(n=0\)–\(3\); \(r_{k+1}>r_k\).
+- *Arb:* \(\mathcal N_1^{(n)}\), \(D_n\), \(D_\infty\), \(E_{30}\) and all brackets at \(\alpha=0.01,0.1,0.3,0.45\); the Kept Failure BQ.1 witnesses; consistency with AS's \(D_\infty(0.45)\).
+- *Floats:* \(V^{(n)}(0.45)\) by quadrature.
 
 The script exits nonzero if any check fails.
 

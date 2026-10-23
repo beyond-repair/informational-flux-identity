@@ -633,3 +633,20 @@ class FractionalDeficitSmallAlphaTests(unittest.TestCase):
         self.assertIn("gasket_fractional_deficit_small_alpha.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BP", (ROOT / doc).read_text())
+
+
+class FractionalDeficitRateSmallAlphaTests(unittest.TestCase):
+    def test_theorem_bq_deficit_rate_small_alpha(self):
+        """Theorem BQ: sympy lemmas and exact-rational checks of the monotone numerator.
+        The arb certificates (about 2.5 min) run in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_deficit_rate_small_alpha as bq
+
+        bq.FAILS.clear()
+        bq.symbolic_checks()
+        bq.exact_checks()
+        self.assertEqual(bq.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_deficit_rate_small_alpha.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BQ", (ROOT / doc).read_text())

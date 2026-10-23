@@ -2783,6 +2783,87 @@ Theorem BQ proved \(\rho^{-n}(1-\delta_N^{(n)})\to C_N(\alpha)=P_N/D_\infty\) fo
 
 The script exits nonzero if any check fails.
 
+## Theorem BS. Below \(\log3/\log5\), \(\rho^NC_N\) reaches \(c_\infty\) at the exact rate \(\rho^N\): \(c_\infty-\rho^NC_N=\rho^N\chi_N\) with \(\chi_N\to\chi_\infty\in(0,\infty)\), \(\chi_\infty(0.45)\in[0.633344,0.633869]\); and an exact reciprocal identity \(1/\mathcal R=1/Q_\infty+\Phi\) gives certified \(C_N\) for every \(N=1,\ldots,6\)
+
+Theorem BR proved that \(\rho^NC_N\) increases to a finite limit \(c_\infty(\alpha)\). It left open how fast, and it certified \(C_N\) only through BQ's \(C_1\). This theorem answers both. The tool is a scaled limit of BJ.1. BJ.1 is an exact identity for \(1/r_k-1/r_\infty\) at one level. Rescaled by \(5^{-M}\) and with \(M\to\infty\), it becomes an exact identity between the rescaled resolvent \(\mathcal R\) and the rescaled \(r_\infty\). The correction is an explicit product \(\Phi\) built from \(\psi\), \(\beta\) and \(\eta\). That identity does two things. It writes \(c_\infty-\rho^NC_N\) as \(\rho^N\) times two explicit integrals: one increases to a finite positive limit, and the other decays like \((3/5)^N\). And because \(\Phi\) is explicit, it pins \(\mathcal R\) to the same relative accuracy as BJ.3's \(g\)-bracket, so \(P_N\) and \(C_N\) can be certified directly for every \(N\). No AT.1 input is needed for either.
+
+**Setting.** As in Theorems BG, BH, BJ, BQ and BR: \(p(z)=z(z+5)\), \(\alpha_1=(z+4)/((z+2)(z+5))\), \(\beta=(z+6)/((z+2)(z+5))\), \(\eta_0=-\tfrac12\), \(\eta_N=\alpha_1+\beta\,\eta_{N-1}\circ p\), \(\eta=\lim\eta_N\), \(\rho=5^\alpha/3\), \(\gamma=\log3/\log5\), \(\psi_k(v)=p^k(5^{-k}v)\uparrow\psi(v)\), \(r_\infty=\lim r_n\), \(\mathcal R(u)=\lim_M(3/5)^Mr_M(5^{-M}u)\), \(D_\infty=\lim D_n\). For \(\alpha<\gamma\) and \(N\ge1\), \(P_N=\int_0^\infty u^{-\alpha}\mathcal R(u)\,\eta_N(\psi(5^{-N}u))\,du\), \(C_N=P_N/D_\infty\) (BQ.2), and \(c_\infty=\lim_N\rho^NC_N\) (BR.4). **Assumptions used as stated (not re-run here):** AQ (3) (\(r_n\uparrow r_\infty\); \(r_n\) and \(r_\infty\) nonincreasing); BD.4 (\(\psi_k\uparrow\psi\), \(\psi(5v)=p(\psi(v))\), \(\psi(v)\ge v\)); BJ.6's \(\psi(v)\le ve^{v/10}\); BG.3 (\(\mathcal R=\lim\mathcal R_M\), \(\mathcal R\le\tfrac13\)); BH.2 (\(\eta=\alpha_1+\beta\,\eta\circ p\), \(\eta=\eta_N+\prod_{i<N}\beta(p^iz)(\tfrac12+\eta(p^Nz))\), \(0<\eta\le2/(2+z)\), \(\eta\) strictly decreasing); BJ.1 (\(1/r_k-1/r_\infty=\prod_{i<k}\beta(p^is)(1+2\eta(p^ks))\)); BJ.3 (\(g=s^{1-\gamma}r_\infty\in[0.600945014,0.600963487]\) on \((0,p(10^{-12})]\)); BL.1 (\(\eta_N\) strictly decreasing); BQ.2–BQ.3 (\(C_N=P_N/D_\infty\), the \(D_\infty\) routine); BR.4 (\(\rho^NP_N=\int t^{-\alpha}Q_N(t)\eta_N(\psi(t))\,dt\) with \(Q_N(t)=(5/3)^N\mathcal R(5^Nt)\), and \(c_\infty D_\infty=\lim\rho^NP_N\)). Stage 1 is not edited. No \(W\), \(0.08\), \(0.23\), or \(30\,\mu\)N/kW enters.
+
+**THEOREM BS.**
+
+1. **BS.1 (scaled reciprocal identity; every \(u>0\), no \(\alpha\)).** The limit \(Q_\infty(u)=\lim_M(3/5)^Mr_\infty(5^{-M}u)\) exists (AT.1 is not used), and
+   \[
+   \frac1{\mathcal R(u)}-\frac1{Q_\infty(u)}=\Phi(u):=\bigl(1+2\eta(\psi(u))\bigr)\prod_{k\ge1}\tfrac53\,\beta\bigl(\psi(5^{-k}u)\bigr)\ \in(0,3].
+   \]
+   So \(\mathcal R=Q_\infty/(1+Q_\infty\Phi)\) exactly. \(Q_\infty\) is nonincreasing, \(Q_\infty(5u)=\tfrac35Q_\infty(u)\) (so \(u^{1-\gamma}Q_\infty(u)\) is multiplicatively \(5\)-periodic), and \(g_{\rm lo}u^{\gamma-1}\le Q_\infty(u)\le g_{\rm hi}u^{\gamma-1}\) for **every** \(u>0\). BR's \(Q_N\) satisfies the exact form of BJ.2's bracket, \(1/Q_N(t)=1/Q_\infty(t)+(3/5)^N\Phi(5^Nt)\), so \(Q_N\uparrow Q_\infty\) and \(c_\infty D_\infty=\int_0^\infty t^{-\alpha}Q_\infty(t)\,\eta(\psi(t))\,dt\) (this replaces BR.4's AT.1-derived formula).
+2. **BS.2 (exact correction; every \(\alpha\in(0,\gamma)\), \(N\ge1\)).** \(c_\infty-\rho^NC_N=\rho^N\chi_N\) with \(\chi_N=(A_N+B_N)/D_\infty\),
+   \[
+   A_N=\int_0^\infty u^{-\alpha}h(u)\,\eta\bigl(\psi(5^{-N}u)\bigr)du,\quad h=Q_\infty-\mathcal R=\frac{Q_\infty^2\Phi}{1+Q_\infty\Phi}>0,\qquad
+   B_N=\int_0^\infty u^{-\alpha}\mathcal R(u)\prod_{k=1}^N\beta\bigl(\psi(5^{-k}u)\bigr)\bigl(\tfrac12+\eta(\psi(u))\bigr)du .
+   \]
+   \(A_N\) strictly increases to \(J=\int_0^\infty u^{-\alpha}h\,du\in(0,\infty)\), and \(0<B_{N+1}\le\tfrac35B_N\). Hence \(\chi_N\to\chi_\infty=J/D_\infty\), and for every \(N\ge N_0\ge1\)
+   \[
+   \frac{A_{N_0}}{D_\infty}\ \le\ \chi_N\ \le\ \frac{J+B_{N_0}}{D_\infty},\qquad
+   C_N=c_\infty\rho^{-N}-\chi_\infty+o(1).
+   \]
+   So \(\rho^NC_N\) increases to \(c_\infty\) at the exact rate \(\rho^N\): not faster, since \(\chi_N\ge A_1/D_\infty>0\), and not slower, since \(\chi_N\) is bounded. Also \(\chi_N-\chi_\infty\le(3/5)^{N-1}B_1/D_\infty\).
+3. **BS.3 (certified; python-flint `arb`, outward).** \(\chi_\infty\), the every-\(N\) brackets, and individual \(C_N\), \(\rho^NC_N\), \(\chi_N\) for \(N=1,\ldots,6\):
+
+   | \(\alpha\) | \(J\) | \(\chi_\infty\) | every \(N\ge1\): \(\chi_N\in\) | every \(N\ge6\): \(\chi_N\in\) | \(C_1\) (BQ.3: independent) |
+   |---|---|---|---|---|---|
+   | \(0.01\) | \([1.601547,1.601948]\) | \([0.016049,0.016055]\) | \([0.007204,0.031845]\) | \([0.015188,0.016918]\) | \([0.0078322,0.0078352]\) (\([0.0078312,0.0078363]\)) |
+   | \(0.1\) | \([1.565803,1.566193]\) | \([0.156240,0.156355]\) | \([0.076806,0.288250]\) | \([0.148669,0.163943]\) | \([0.0607006,0.0607439]\) (\([0.0606923,0.0607522]\)) |
+   | \(0.3\) | \([1.770981,1.771427]\) | \([0.438643,0.438973]\) | \([0.267164,0.684584]\) | \([0.423044,0.454603]\) | \([0.0933338,0.0934015]\) (\([0.0933210,0.0934143]\)) |
+   | \(0.45\) | \([2.534835,2.535667]\) | \([0.633344,0.633869]\) | \([0.460246,0.858579]\) | \([0.618141,0.649097]\) | \([0.0718991,0.0719511]\) (\([0.0718892,0.0719611]\)) |
+
+   At \(\alpha=0.45\), for \(N=1,\ldots,6\):
+
+   | \(N\) | \(C_N\) | \(\rho^NC_N\) | \(\chi_N\) |
+   |---|---|---|---|
+   | 1 | \([0.071899,0.071951]\) | \([0.049447,0.049483]\) | \([0.684795,0.685352]\) |
+   | 2 | \([0.458110,0.458442]\) | \([0.216671,0.216828]\) | \([0.642187,0.642715]\) |
+   | 3 | \([0.964854,0.965556]\) | \([0.313839,0.314068]\) | \([0.635065,0.635589]\) |
+   | 4 | \([1.692718,1.693950]\) | \([0.378657,0.378932]\) | \([0.633687,0.634211]\) |
+   | 5 | \([2.749351,2.751355]\) | \([0.422967,0.423275]\) | \([0.633413,0.633937]\) |
+   | 6 | \([4.285424,4.288550]\) | \([0.453404,0.453735]\) | \([0.633358,0.633882]\) |
+
+   The script prints the same table at \(\alpha=0.01,0.1,0.3\). Every \(C_1\) lies inside BQ.3's independent bracket, which came from a level-\(30\) numerator and \(E_{30}\). The new brackets are tighter. Every \(c_\infty=D_\infty^{-1}\int u^{-\alpha}Q_\infty\eta(\psi(u))\) enclosure meets BR.5's. The identity \(c_\infty D_\infty=\rho^N(P_N+A_N+B_N)\) holds between independent enclosures for \(N=1\)–\(6\) at all four exponents. At \(0.45\), \(A_N+B_N\), and so \(\chi_N\), is certified strictly decreasing for \(N=1,\ldots,5\). The widths of \(C_N\) are set mostly by \(D_\infty\) (relative \(5\cdot10^{-4}\)).
+4. **Conjecture BS.4 (floats and BS.3 only).** \(\chi_N\) strictly decreases in \(N\) at every \(\alpha\in(0,\gamma)\), so \(\rho^NC_N\) approaches \(c_\infty\) from below with a monotone renormalised gap. The quadrature gaps \(\chi_N-\chi_\infty(0.45)\approx0.0515,0.0088,0.0017\) at \(N=1,2,3\) shrink by about a factor \(5\) per step. This is faster than the proved \((3/5)^N\) on the \(B_N\) side. No rate for \(J-A_N\) is proved.
+
+*Derived (AT.1 as used in BH.6, as stated).* \(D_\infty=\lim D_n=\int s^{-\alpha}r_\infty=J_r\) by monotone convergence (AQ (3)). If \(u^{1-\gamma}Q_\infty(u)=\Theta_{AT}(\psi(u))\) (BH.6's pointwise limit), then BS.1's formula for \(c_\infty\) is BH.6's formula for the far-field layer constant. So \(c_\infty(\alpha)=\theta_\infty^{\rm BH}(\alpha)\), and BH.6's float \(\theta_\infty(0.45)\approx0.52061\) inherits BR.5's certified bracket \([0.520387,0.520824]\). This settles BR's open "matching with BH's layer" at the derived level only.
+
+**Proof of BS.1.** Put \(s=5^{-M}u\) in BJ.1 and multiply by \((5/3)^M\). Since \(p^i(5^{-M}u)=\psi_i(5^{i-M}u)\), and with \(k=M-i\),
+\[
+\frac1{\mathcal R_M(u)}-\frac1{A_M(u)}=\bigl(1+2\eta(\psi_M(u))\bigr)\prod_{k=1}^M\tfrac53\,\beta\bigl(\psi_{M-k}(5^{-k}u)\bigr),\qquad
+\mathcal R_M(u)=(\tfrac35)^Mr_M(5^{-M}u),\ A_M(u)=(\tfrac35)^Mr_\infty(5^{-M}u).
+\]
+The product structure is checked in exact rationals: \(1/r_M-1/r_{M+L}=\prod_{i<M}\beta(p^is)(1/r_0-1/r_L)(p^Ms)\) for \(M=0\)–\(3\) and \(L=1,2\). As \(M\to\infty\), \(1/\mathcal R_M\to1/\mathcal R\) (BG.3; \(\mathcal R>0\) by BJ.2's floor). \(\psi_M(u)\uparrow\psi(u)\), and \(\eta\) is continuous, as a uniform limit (\(|\eta-\eta_N|\le\tfrac32(3/5)^N\)). Each factor of the product lies in \((0,1]\). Indeed \(1-\tfrac53\beta(x)=x(3x+16)/(3x^2+21x+30)\in[0,x(3x+16)/30]\) (sympy). For fixed \(k\) the factor tends to \(\phi_k=\tfrac53\beta(\psi(5^{-k}u))\), and it is \(\ge\phi_k\) because \(\psi_j\le\psi\) and \(\beta\) is decreasing. Since \(\psi(5^{-k}u)\le5^{-k}ue^{u/10}\), \(\sum_k-\log\phi_k<\infty\). Dominated convergence on the sums of logarithms gives the limit \(\Phi(u)\). Hence \(1/A_M\) converges. For large \(M\), \(5^{-M}u\le p(10^{-12})\), so BJ.3 and \((3/5)^M(5^{-M}u)^{\gamma-1}=u^{\gamma-1}\) (sympy) give \(A_M(u)\in[g_{\rm lo},g_{\rm hi}]u^{\gamma-1}\). So the limit \(Q_\infty\) exists and obeys the same bracket. \(A_{M+1}(5u)=\tfrac35A_M(u)\) gives the scaling. \(r_\infty\) is nonincreasing, so \(Q_\infty\) is too. \(\Phi\le3\) because every factor is \(\le1\) and \(\eta\le1\). Finally, \(1/Q_N(t)=(3/5)^N/\mathcal R(5^Nt)\), with the identity at \(u=5^Nt\) and the scaling, gives \(1/Q_N=1/Q_\infty+(3/5)^N\Phi(5^N\cdot)\downarrow1/Q_\infty\). Then BR.4's monotone-convergence argument (\(Q_N\uparrow\), \(\eta_N\uparrow\)) gives \(c_\infty D_\infty=\int t^{-\alpha}Q_\infty\,\eta\circ\psi\). \(\square\)
+
+**Proof of BS.2.** Put \(t=5^{-N}u\). Then \(\rho^{-N}t^{-\alpha}(5/3)^Ndt=u^{-\alpha}du\) (sympy). With \(Q_\infty(5^{-N}u)=(5/3)^NQ_\infty(u)\) this gives \(\rho^{-N}c_\infty D_\infty=\int u^{-\alpha}Q_\infty(u)\,\eta(\psi(5^{-N}u))\,du\), and \(P_N=\int u^{-\alpha}\mathcal R(u)\,\eta_N(\psi(5^{-N}u))\,du\) by definition. Subtract, using \(Q_\infty\eta-\mathcal R\eta_N=(Q_\infty-\mathcal R)\eta+\mathcal R(\eta-\eta_N)\). In BH.2's remainder at \(z=\psi(5^{-N}u)\), \(p^iz=\psi(5^{i-N}u)\) (BD.4). This gives \(A_N+B_N\), with \(h=Q_\infty^2\Phi/(1+Q_\infty\Phi)\) from BS.1 (sympy). *Monotonicity.* \(\eta\circ\psi(5^{-N}u)\) strictly increases in \(N\), since \(\eta\) is strictly decreasing and \(\psi\) strictly increasing. It tends to \(\eta(0)=1\), since \(\eta_N(0)=1-\tfrac9{10}(3/5)^{N-1}\) (exact). So \(A_N\uparrow J\) by monotone convergence. \(B_{N+1}\le\beta(0)B_N=\tfrac35B_N\). *Finiteness.* Near \(0\), \(h\le Q_\infty\le g_{\rm hi}u^{\gamma-1}\), integrable against \(u^{-\alpha}\) exactly because \(\alpha<\gamma\). Near \(\infty\), \(h\le Q_\infty^2\Phi\le3g_{\rm hi}^2u^{2\gamma-2}\prod_{k=1,2}\tfrac53\beta(5^{-k}u)\le3g_{\rm hi}^2\tfrac{25}9\cdot125\,u^{2\gamma-4}\) (\(\beta(x)\le1/x\), sympy). \(B_1\le\int u^{-\alpha}\min(\tfrac13,g_{\rm hi}u^{\gamma-1})\min(\tfrac35,5/u)\tfrac32<\infty\). *Bracket.* \(A_{N_0}\le A_N\le J\) and \(B_N\le B_{N_0}\) for \(N\ge N_0\). \(\square\)
+
+**Proof of BS.3.** Everything is computed in python-flint `arb` (64 bits, outward).
+- *Pointwise enclosures.* At each grid point \(u\), take \(K\ge6\) with \(v=5^{-K}u\le10^{-12}\). Start from \(\psi(v)\in[v,ve^{v/10}]\) (BD.4, BJ.6) and climb with \(\psi(5x)=p(\psi(x))\). This brackets \(\psi(5^{-k}u)\) for \(k=0,\ldots,K\) with exact \(p\)-chains. \(\eta(\psi(u))\) is bracketed by \(\eta_K\le\eta\le\eta_K+\prod_{i<K}\beta(p^iz)(\tfrac12+2/(2+p^Kz))\), with \(K\) adaptive (at least \(8\) steps past \(p^kz>1000\)). The exact recursion \(\eta=\alpha_1+\beta\,\eta\circ p\) then carries the bracket down the chains to \(\eta(\psi(5^{-N}u))\). \(\eta_N(\psi(5^{-N}u))\) is computed along the same chains from \(\eta_0=-\tfrac12\). \(\Phi\) uses the truncated product on the lower chain (upper bound) and, on the upper chain, the factor \(1-S\) with \(S=(16w/4+3w^2/24)/30\), \(w=ve^{v/10}\), for the omitted \(k>K\) (lower bound; \(\prod(1-c_k)\ge1-\sum c_k\), \(\sum5^{-j}=\tfrac14\), \(\sum25^{-j}=\tfrac1{24}\)). \(Q_\infty\in[g_{\rm lo},g_{\rm hi}]u^{\gamma-1}\). \(h\) is increasing in \(Q\) and \(\Phi\), and \(\mathcal R=1/(1/Q+\Phi)\) is increasing in \(Q\) and decreasing in \(\Phi\) (sympy derivatives). So the bracket ends combine monotonically.
+- *Integrals.* All true integrands are positive and nonincreasing in \(u\) (\(Q_\infty\), \(\mathcal R\), \(\Phi\), \(\eta\circ\psi\), \(\eta_N\circ\psi\), \(\beta\circ\psi\)). Upper sums use left endpoints and lower sums right endpoints. The geometric grid has ratio \(1.003\) on \([10^{-20},10^{-6}]\), \(1.0002\) on \([10^{-6},10^8]\) and \(1.003\) on \([10^8,10^{10}]\) (173499 points). *Heads* \((0,10^{-20}]\): \(h\in[Q-\tfrac13,Q]\), \(\mathcal R\le\tfrac13\), \(\prod\beta\le(3/5)^N\). *Tails* \([T,\infty)\): \(h\le3g_{\rm hi}^2\tfrac{25}9\cdot125\,u^{2\gamma-4}\), and \(\psi(v)/v\) is nondecreasing, so \(\psi(5^{-k}u)\ge(u/T)\psi(5^{-k}T)\), with \(\eta,\eta_N\le2/z\) and \(\beta\le1/z\).
+- *\(D_\infty\).* BQ.3's routine, unchanged.
+- *Consistency.* BQ.3's \(C_1\), BR.5's \(c_\infty\), the identity \(c_\infty D_\infty=\rho^N(P_N+A_N+B_N)\), and BR.4's increase of \(\rho^NP_N\). These are checked as overlaps of independent enclosures. \(\square\)
+
+**Evidence (floats; consistency only).** With \(Q_\infty\approx\langle\Theta\rangle u^{\gamma-1}\) (AU's mean \(0.6009542511\)) and mpmath quadrature at \(\alpha=0.45\): \(c_\infty=0.5206069\), \(\chi_\infty=0.6336061\), \(C_1=0.0719251\), \(C_2=0.4582760\), \(C_3=0.9652051\), and \(\chi_N=0.6850727,0.6424505,0.6353262\) at \(N=1,2,3\) (in the script). A scratch run gave \(\chi_4=0.633949\) and \(\chi_6=0.633620\), so the gaps to \(\chi_\infty\) are \(0.0515,0.0088,0.0017,0.00034\) at \(N=1\)–\(4\), consistent with Conjecture BS.4. BR's scratch \(\rho^NV_N^{(N+14)}(0.45)=0.217094,0.314296\) at \(N=2,3\) sit close to the certified \(\rho^NC_N\) above, as they should for \(n=N+14\).
+
+**What stays open.**
+- *Closed forms.* \(u^{1-\gamma}Q_\infty(u)\) is a log-periodic function known only to lie in \([g_{\rm lo},g_{\rm hi}]\). So \(c_\infty\), \(C_N\), \(P_N\) and \(\chi_\infty\) are characterised exactly in terms of one unknown periodic function and explicit \(\Phi\), \(\eta\), \(\psi\), but they have no closed form. A rate for \(J-A_N\), and Conjecture BS.4. Brackets uniform in \(\alpha\): BS.1–BS.2 hold for every \(\alpha\in(0,\gamma)\), but the certificates are pointwise in \(\alpha\). Tighter \(D_\infty\), which now limits every \(C_N\).
+- *From BQ.* Eventual monotonicity of \(V_N^{(n)}\) in \(n\).
+- *Carried over.* A closed form for \(a^*\); Conjecture BL.6's limit part (existence and \(N\)-independence of \(C_\delta\) above \(\gamma\)); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem BS is a statement about how fast one renormalised corner-neighbour constant of a graph Dirichlet extension of a discrete fractional operator on the combinatorial gasket approaches its depth limit. It also gives an exact identity for one rescaled resolvent. It is a statement about functions on graphs, not a field, a flux or a force. No flux functional is constructed, and Stage 1 is not touched. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_deficit_correction.py`** (about 3 min; needs sympy, mpmath, python-flint).
+- *Sympy:* \(1-\tfrac53\beta=x(3x+16)/(3x^2+21x+30)\); \(\beta\le1/x\); the \(u^{\gamma-1}\) scaling of BJ.3's bracket; \(Q_\infty(5u)=\tfrac35Q_\infty(u)\); \(h=Q^2\Phi/(1+Q\Phi)\) and its monotonicity in \(Q\) and \(\Phi\); the \(t=5^{-N}u\) scaling; the \(A_N+B_N\) split; the geometric tail constants; the head integrals; \(\eta_N(0)=1-\tfrac9{10}(3/5)^{N-1}\).
+- *Exact rationals:* the two-level product identity \(1/r_M-1/r_{M+L}=\prod_{i<M}\beta(p^is)(1/r_0-1/r_L)(p^Ms)\); \(r_k(0)=(5/3)^k/3\); \(\tfrac53\beta\le1\) and \(\beta\le1/x\).
+- *Arb:* \(J\), \(A_N\), \(B_N\), \(P_N\) (\(N=1\)–\(6\)), \(c_\infty D_\infty\) and \(D_\infty\) at \(\alpha=0.01,0.1,0.3,0.45\); all brackets and consistency checks above.
+- *Floats:* \(c_\infty\), \(\chi_\infty\), \(C_N\), \(\chi_N\) at \(0.45\), \(N=1\)–\(3\).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

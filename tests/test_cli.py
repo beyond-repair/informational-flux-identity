@@ -667,3 +667,20 @@ class FractionalDeficitDepthTests(unittest.TestCase):
         self.assertIn("gasket_fractional_deficit_depth.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BR", (ROOT / doc).read_text())
+
+
+class FractionalDeficitCorrectionTests(unittest.TestCase):
+    def test_theorem_bs_deficit_correction(self):
+        """Theorem BS: sympy lemmas (Phi factors, h monotonicity, scalings, A_N + B_N split) and exact rationals (two-level
+        product identity behind the scaled BJ.1). The arb certificates (about 3 min) run in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_deficit_correction as bs
+
+        bs.FAILS.clear()
+        bs.symbolic_checks()
+        bs.exact_checks()
+        self.assertEqual(bs.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_deficit_correction.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BS", (ROOT / doc).read_text())

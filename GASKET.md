@@ -2972,6 +2972,77 @@ Theorem BT left two items about its profile \(F(u)=u^{1-\gamma}Q_\infty(u)=\Thet
 
 The script exits nonzero if any check fails.
 
+## Theorem BV. The profile \(F=\theta\) is holomorphic and bounded on the strip \(|\operatorname{Im}t|<\pi/\ln5\), so \(|\hat\theta_k|\le B_k\le eG^*(1+4\pi|k|/\ln5)\,e^{-2\pi^2|k|/\ln5}\); \(\hat\theta_5,\dots,\hat\theta_{11}\ne0\); \(F\) has exactly one maximum and one minimum per period, located to \(10^{-54}\) (Kept Failure BV.5: they are not half a period apart)
+
+**Setting.** As in Theorems BS–BU: \(r_k(s)=\tfrac12v^T(L_k+s)^{-1}v\), \(r_\infty=\lim r_k\), \(Q_\infty(u)=\lim_M(3/5)^Mr_\infty(5^{-M}u)\), \(\gamma=\log3/\log5\), \(F(u)=u^{1-\gamma}Q_\infty(u)=\theta(u)\), \(F(5u)=F(u)\). Write \(t=\log_5u\), so \(F\) is a \(1\)-periodic function of \(t\), and \(\hat\theta_k=\int_0^1F(5^t)e^{-2\pi ikt}\,dt=a_k-ib_k\) (AU's normalisation), \(F=\langle F\rangle+2\sum_{k\ge1}(a_k\cos2\pi kt+b_k\sin2\pi kt)\). \(G^*=\max F\). **Assumptions:** AQ (3) (\(r_k\uparrow r_\infty\) on \((0,\infty)\)); BN.1 (\(r_k=\sum_iw_i/(\lambda_i+s)\), \(w_i,\lambda_i\ge0\)); BS.1 (existence of \(Q_\infty\)); BT.2 (\(F(5u)=F(u)\)); BU.1 (\(F=\theta\)); BU.3 (\(G^*\le0.6009615785983\)); AU (3)'s certified routine (AQ (4) node enclosures, AS (2) interpolation sandwich, the AT.1 orbit lemma, AU's \(\psi\) and endpoint corrections), imported unchanged and re-run with more cells. All as stated. For consistency only: AU's table and BU.3/BU.4's brackets. Stage 1 is not edited. No \(W\), \(0.08\), \(0.23\), or \(30\,\mu\)N/kW enters.
+
+**THEOREM BV.**
+
+1. **BV.1 (sector bound).** Every Stieltjes function \(f(z)=c+\int d\mu(\lambda)/(\lambda+z)\), \(c\ge0\), \(\mu\ge0\) on \([0,\infty)\), satisfies \(|f(z)|\le f(|z|)/\cos(\varphi/2)\) for \(z=|z|e^{i\varphi}\), \(|\varphi|<\pi\).
+2. **BV.2 (continuation).** \(r_\infty\) and \(Q_\infty\) continue holomorphically to \(\mathbb C\setminus(-\infty,0]\) with the same bound. So \(F(t)=5^{(1-\gamma)t}Q_\infty(5^t)\) is holomorphic and \(1\)-periodic on \(S=\{|\operatorname{Im}t|<\pi/\ln5\}\), and
+   \[
+   |F(x+iy)|\le\frac{F(x)}{\cos(y\ln5/2)}\le\frac{G^*}{\cos(y\ln5/2)} .
+   \]
+   In particular \(F\) is real-analytic.
+3. **BV.3 (decay of the modes; BU's open "decay rate", upper half).** For every \(k\ne0\), with \(T_k=4\pi|k|/\ln5\),
+   \[
+   |\hat\theta_k|\le B_k=G^*\sqrt{1+T_k^2}\,e^{-T_k\arctan T_k}\le e\,G^*(1+T_k)\,e^{-2\pi^2|k|/\ln5},
+   \]
+   so \(\limsup|\hat\theta_k|^{1/|k|}\le e^{-2\pi^2/\ln5}=4.7155\cdot10^{-6}\). Equivalently, AU (2)'s residues of the Mellin transform of \(r_\infty\) at \(1-\gamma\pm i\omega k\) decay at least at this rate. This is exactly the rate the floats of BT/BU suggested.
+4. **BV.4 (certified; AU's routine, outward-rounded `mpmath.iv` at 170 digits, 384 cells, sandwich \(b=u=20/21\), depth \(5^{-140}\), node cap \(10^{130}\)).** \(\langle F\rangle\) to radius \(4.1\cdot10^{-63}\), and \(a_k,b_k\) for \(k\le11\) to radius \(8.2\cdot10^{-63}\):
+
+| \(k\) | \(a_k\) | \(b_k\) | \(\lvert\hat\theta_k\rvert\ge\) | \(B_k\) | \(\lvert\hat\theta_k\rvert e^{2\pi^2k/\ln5}\) |
+|---|---|---|---|---|---|
+| 5 | \(1.43682897682\cdot10^{-27}\) | \(-9.05475087838\cdot10^{-28}\) | \(1.698341\cdot10^{-27}\) | \(1.4870\cdot10^{-25}\) | \(0.728\) |
+| 6 | \(-3.25583867317\cdot10^{-33}\) | \(-7.98359194922\cdot10^{-33}\) | \(8.621962\cdot10^{-33}\) | \(8.4143\cdot10^{-31}\) | \(0.784\) |
+| 7 | \(-4.31465378795\cdot10^{-38}\) | \(-2.43242062331\cdot10^{-39}\) | \(4.321505\cdot10^{-38}\) | \(4.6289\cdot10^{-36}\) | \(0.834\) |
+| 8 | \(-5.50475216207\cdot10^{-44}\) | \(1.55340459757\cdot10^{-43}\) | \(1.648056\cdot10^{-43}\) | \(2.4945\cdot10^{-41}\) | \(0.674\) |
+| 9 | \(8.38526711281\cdot10^{-49}\) | \(3.79766118274\cdot10^{-49}\) | \(9.205158\cdot10^{-49}\) | \(1.3233\cdot10^{-46}\) | \(0.799\) |
+| 10 | \(4.12559211982\cdot10^{-54}\) | \(-2.89164189910\cdot10^{-54}\) | \(5.038065\cdot10^{-54}\) | \(6.9334\cdot10^{-52}\) | \(0.927\) |
+| 11 | \(-3.03451509014\cdot10^{-60}\) | \(-1.78263934544\cdot10^{-59}\) | \(1.807336\cdot10^{-59}\) | \(3.5964\cdot10^{-57}\) | \(0.706\) |
+
+   So \(\hat\theta_k\ne0\) for every \(k\le11\) (AU: \(k\le4\)), and \(M\) has genuine simple poles at \(1-\gamma\pm i\omega k\) for these \(k\). The rows \(k\le4\) reproduce AU's 22-digit table. \(|\hat\theta_k|\le B_k\) holds for every \(k\le11\), with \(|\hat\theta_k|/B_k\) falling from \(0.061\) (\(k=1\)) to \(0.0050\) (\(k=11\)). That is a check of BV.3 against an independent certificate.
+5. **BV.5 (extremes; derived from BV.3–BV.4, python-flint `arb`, 400 bits).** Let \(S\) be the certified \(11\)-mode sum. BV.3's tail gives \(|F-S|\le3.70\cdot10^{-62}\), \(|F'-S'|\le2.79\cdot10^{-60}\), \(|F''-S''|\le2.10\cdot10^{-58}\) on the real line. On every cell of a \(4096\)-cell partition of one period, \(F'\ne0\) or \(F''\ne0\) is certified, and \(F'\) changes sign on exactly two cells. So \(F\) has **exactly one maximum and one minimum per period**, and both are nondegenerate. Bisection on the certified sign of \(F'\) gives
+   \[
+   t_{\max}=0.75175596179031755877802933273820825656220192611655\ldots\ (\pm9.1\cdot10^{-56}),\qquad t_{\min}=0.25175612419221392884930287700067310106574561482\ldots\ (\pm3.5\cdot10^{-55}),
+   \]
+   \[
+   G^*=\max F=0.60096157859710108904205618413461692677004052591725819702\ldots\ (\pm4.5\cdot10^{-61}),
+   \]
+   \[
+   \min F=0.60094692379426561210422618817212924841162969178767769700\ldots\ (\pm6.7\cdot10^{-61}).
+   \]
+   Both values lie inside BU.3's independent convexity brackets (widths \(10^{-12}\)), and both locations lie within \(0.36\) of a cell of BU.3's extremal nodes \(197068/2^{18}\) and \(65996/2^{18}\). Also \(\max F-\min F=1.465480283547693782999\ldots\cdot10^{-5}\), and \((\max F+\min F)/2-\langle F\rangle=2.690974274943603605\ldots\cdot10^{-11}\), inside BU.4's \([2.4340,2.9084]\cdot10^{-11}\). So BI.4's sharp constant \(\sup_{s>0}s^{1-\gamma}r_\infty(s)=G^*\) (BT.3) is now known to 60 digits, and \(F\) attains it exactly at \(u=5^{t_{\max}+j}\), \(j\in\mathbb Z\).
+
+**KEPT FAILURE BV.5 (the extremes are not half a period apart).** The claim is "\(t_{\min}=t_{\max}+\tfrac12\pmod1\)". It is suggested by BU.3's extremal nodes, which differ by exactly \(197068-65996=2^{17}\), half the \(2^{18}\)-node period (and by BT.4's \(2^{16}\) of \(2^{17}\)). It is weaker than BU.4's antisymmetry, which BU.4 already refuted, so BU.4 does not decide it. The claim is false. Certified witness: \(t_{\max}-t_{\min}-\tfrac12=-1.6240189637007127\ldots\cdot10^{-7}\ne0\) (radius below \(10^{-54}\)). That is \(0.043\) of a BU cell (\(2^{-18}=3.8\cdot10^{-6}\)), which is why both node grids put the extremes exactly half a period apart.
+
+**CONJECTURE BV.6 (sharp rate).** \(|\hat\theta_k|\asymp e^{-2\pi^2|k|/\ln5}\), that is, \(\lim|\hat\theta_k|^{1/|k|}=e^{-2\pi^2/\ln5}\), and the factor \(1+T_k\) in \(B_k\) is not attained. Equivalently, \(F\) has no holomorphic continuation to any wider strip, so \(Q_\infty\) does not continue across \((-\infty,0)\) from both sides compatibly. **Evidence (certified numbers, conjectural reading):** \(|\hat\theta_k|e^{2\pi^2k/\ln5}\in[0.60,0.93]\) for \(k=1,\dots,11\), and the consecutive ratios \(|\hat\theta_{k+1}/\hat\theta_k|\) range over \(3.6\)–\(6.5\cdot10^{-6}\) around \(e^{-2\pi^2/\ln5}=4.72\cdot10^{-6}\). **Falsifier:** a certified \(|\hat\theta_k|\le e^{-ck}\) with \(c>2\pi^2/\ln5\) for all large \(k\), or a holomorphic continuation of \(F\) past \(|\operatorname{Im}t|=\pi/\ln5\).
+
+**Proof of BV.1.** For \(\lambda\ge0\), \(R=|z|\): \(|\lambda+z|^2-(\lambda+R)^2\cos^2(\varphi/2)=(1-\cos\varphi)(\lambda-R)^2/2\ge0\) (sympy). So \(|1/(\lambda+z)|\le1/((\lambda+R)\cos(\varphi/2))\). Integrate against \(\mu\), and note \(|c|=c\le c/\cos(\varphi/2)\). \(\square\)
+
+**Proof of BV.2.** By BN.1 each \(r_k\) is Stieltjes, so \(|r_k(z)|\le r_k(|z|)/\cos(\varphi/2)\le r_\infty(|z|)/\cos(\varphi/2)\) (AQ (3): \(r_k\le r_\infty\)). On a compact \(K\subset\mathbb C\setminus(-\infty,0]\), \(|z|\ge a>0\) and \(|\varphi|\le\varphi_0<\pi\), and \(r_\infty(|z|)\le r_\infty(a)\) because \(r_\infty\) is nonincreasing. So \(\{r_k\}\) is locally bounded, and it converges on \((0,\infty)\). By Vitali's theorem, \(r_k\to r_\infty\) locally uniformly on the slit plane, the limit is holomorphic, and the bound passes to the limit. The same argument applied to \(h_M(z)=(3/5)^Mr_\infty(5^{-M}z)\) (same argument \(\varphi\), \(h_M(|z|)\le h_M(a)\to Q_\infty(a)\), BS.1) continues \(Q_\infty\) with \(|Q_\infty(z)|\le Q_\infty(|z|)/\cos(\varphi/2)\). With \(z=5^t\), \(t=x+iy\): \(|z|=5^x\), \(\varphi=y\ln5\), and \(|5^{(1-\gamma)t}|=5^{(1-\gamma)x}\) (sympy). So \(|F(x+iy)|\le F(x)/\cos(y\ln5/2)\). \(F(t+1)-F(t)\) is holomorphic on \(S\) and vanishes on \(\mathbb R\) (BT.2), so it vanishes on \(S\). \(\square\)
+
+**Proof of BV.3.** \(F\) is real on \(\mathbb R\), so \(\hat\theta_{-k}=\overline{\hat\theta_k}\); take \(k\ge1\) and \(0<y<\pi/\ln5\). Integrate \(F(t)e^{-2\pi ikt}\) around the rectangle \(0\to1\to1-iy\to-iy\to0\). The vertical sides cancel by periodicity, so \(\hat\theta_k=\int_0^1F(x-iy)e^{-2\pi ik(x-iy)}dx\). Since \(|e^{-2\pi ik(x-iy)}|=e^{-2\pi ky}\), BV.2 gives \(|\hat\theta_k|\le G^*e^{-2\pi ky}/\cos(y\ln5/2)\). Put \(f=y\ln5/2\in(0,\pi/2)\). The exponent is \(-T_kf\), and \(-T_kf-\log\cos f\) is convex with stationary point \(\tan f=T_k\) (sympy). That gives \(B_k\). Finally \(\arctan T=\pi/2-\arctan(1/T)\ge\pi/2-1/T\) and \(\sqrt{1+T^2}\le1+T\) give the second form, because \((\pi/2)T_k=2\pi^2k/\ln5\). \(\square\)
+
+**Proof of BV.4.** This is AU (3)'s proof, unchanged except for its parameters. The script imports `period_integrals` and `corrections` from `scripts/gasket_fractional_log_mean.py` and sets 384 cells per period, interpolation orders \(b=u=20\) (floor, even) and \(21\) (ceiling, odd), as AS (2) allows for any \(b\), \(u\), 170 digits, and node cap \(10^{130}\). The node enclosures have relative width \(<10^{-100}\). A nonzero lower bound on \(|a_k|\) or \(|b_k|\) gives \(\hat\theta_k\ne0\). \(\square\)
+
+**Proof of BV.5.** For real \(t\), \(F^{(j)}(t)=S^{(j)}(t)+2\,\mathrm{Re}\sum_{k\ge12}(2\pi ik)^j\hat\theta_ke^{2\pi ikt}\). Termwise differentiation is valid by BV.3's exponential decay. The tail is at most \(2\sum_{k\ge12}(2\pi k)^jB_k\): the terms up to \(k=311\) are explicit, and the remainder uses \(B_k\le eG^*(1+ak)x^k\), \(x=e^{-2\pi^2/\ln5}\), \(a=4\pi/\ln5\), with consecutive-term ratio \(\le((K+1)/K)^{j+1}x\). \(S^{(j)}\) is evaluated with `acb` on ball arguments. On a cell where \(F''\ne0\), \(F'\) is strictly monotone, so it has one zero if its certified end signs differ and none otherwise. Cells with \(F'\ne0\) have no zero. This gives exactly two critical points per period. The sign of \(F''\) tells which is the maximum, and bisection keeps the certified sign change. \(\max F\) and \(\min F\) are \(S\) on the final balls \(\pm3.70\cdot10^{-62}\). \(\square\)
+
+**What stays open.**
+- *From BU/BV.* A closed form of \(F=\theta\), and so of \(c_\infty\), \(C_N\), \(P_N\), \(\chi_\infty\), \(G^*\), \(t_{\max}\), \(t_{\min}\). Whether \(\hat\theta_k\ne0\) for every \(k\ge12\), which is not implied by BV.3. Conjecture BV.6, the lower half of the decay rate. Whether the singularities of \(Q_\infty\) on \((-\infty,0)\) are poles (an atomic spectral measure would give BV.6). BU.3/BV.5's \(G^*\) was not fed back into BI.4/BJ.
+- *From BS.* Conjecture BS.4 (\(\chi_N\) decreasing for every \(N\)); a rate for \(J-A_N\); uniformity in \(\alpha\).
+- *Carried over.* Eventual monotonicity of \(V^{(n)}\); a closed form for \(a^*\); Conjecture BL.6's limit part; closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem BV proves that one log-periodic function built from a corner resolvent of a graph Laplacian on the combinatorial gasket is analytic in a strip. It bounds and certifies that function's Fourier modes, and it locates its extremes. These are statements about functions on graphs, not a field, a flux or a force. No flux functional is constructed, and Stage 1 is not touched. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_analytic.py`** (about 46 s; needs sympy, python-flint, mpmath; imports AU's script for the certified mode routine).
+- *Sympy:* the sector identity; \(|5^{(1-\gamma)t}|\); the contour factor; convexity and stationary point of \(-Tf-\log\cos f\); \(\arctan T+\arctan(1/T)=\pi/2\) and \(x\ge\arctan x\); the telescoping tail sum.
+- *Exact Gaussian rationals:* \(|r_n(z)|^2\cos^2(\varphi/2)\le r_n(|z|)^2\) for \(r_0,\dots,r_3\) at 125 points, with rational \(\cos\varphi=(1-m^2)/(1+m^2)\) (BV.1 on the actual resolvents; maximum ratio \(0.9983\)).
+- *Interval:* AU's routine for \(\langle F\rangle\) and \(a_k,b_k\) (\(k\le11\)); nonvanishing; agreement with AU's table; \(|\hat\theta_k|\le B_k\); the tails; the \(4096\)-cell critical-point count; bisection; Kept Failure BV.5's witness; consistency with BU.3/BU.4.
+- *Floats:* only the printed ratios \(|\hat\theta_{k+1}/\hat\theta_k|\) and products \(|\hat\theta_k|e^{2\pi^2k/\ln5}\) (Conjecture BV.6's evidence). They enter no check.
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

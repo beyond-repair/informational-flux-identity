@@ -719,3 +719,30 @@ class FractionalProfileFourierTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_fourier.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BU", (ROOT / doc).read_text())
+
+
+class FractionalProfileAnalyticTests(unittest.TestCase):
+    def test_theorem_bv_profile_analytic(self):
+        """Theorem BV: sympy lemmas (Stieltjes sector identity, contour factor, optimal strip height, arctan bound, tail sum),
+        exact Gaussian-rational sector checks for r_0..r_3, and B_k >= AU's published |theta_k| for k <= 4 (arb). The AU-routine
+        re-run and the extremes certificate (about 46 s) run in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_analytic as bv
+        from flint import arb, ctx
+
+        bv.FAILS.clear()
+        bv.symbolic_checks()
+        bv.exact_checks()
+        self.assertEqual(bv.FAILS, [])
+        ctx.prec = 200
+        G = arb(bv.G_STAR_HI)
+        x = (-2 * arb.pi() ** 2 / arb(5).log()).exp()
+        for k in range(1, 5):
+            mod = (arb(bv.AU_TABLE_A[k]) ** 2 + arb(bv.AU_TABLE_B[k]) ** 2).sqrt()
+            self.assertTrue(bool(mod < bv.B_bound(k, G)))
+            T = 4 * arb.pi() * k / arb(5).log()
+            self.assertTrue(bool(bv.B_bound(k, G) <= arb(1).exp() * G * (1 + T) * x ** k))
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_analytic.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BV", (ROOT / doc).read_text())

@@ -2581,7 +2581,7 @@ give two-sided bounds on \(r_k\) and \(-r_k'\) for every \(s>0\). Odd \(J\) give
 **Evidence (floats; consistency only).** mpmath (40 digits) gives \(\sup\Phi_k=0.0155298932937551\) (\(k=0\)), \(0.0167694660209228\) (\(k=1\)), \(0.0167788799215301\) (\(k=2\)), and \(0.0167788801728761\) at \(y=13.7785056\) for \(k=3,5,10\). These lie inside the certified brackets. The level dependence beyond \(k=3\) is invisible at \(16\) digits, which is consistent with BO.3. An attempt to compute \(\delta_N^{(n)}\) by floats at \(\alpha=0.01\) (BI's quadrature) did not finish in \(3\) minutes. So there is no evidence either way on whether the deficit is monotone below \(a^*\).
 
 **What stays open.**
-- *Below \(a^*\).* Whether \(\delta_N^{(n)}\) still increases in \(n\) for \(\alpha<a^*\). The Chebyshev route is closed there.
+- *Below \(a^*\).* Whether \(\delta_N^{(n)}\) still increases in \(n\) for \(\alpha<a^*\). The Chebyshev route is closed there. Settled by Theorem BP below: it does, for every \(\alpha\in(0,1)\), by a single-crossing covariance (the dip of BO.1 lies below the mean \(\langle\omega_k\rangle\ge\rho^{-1}\)).
 - *A closed form for \(a^*\).* It is \(\sup_y(5+y)d_\infty'/d_\infty\) with \(r_\infty=1/(2+s-2\eta)\). No closed form is known.
 - *The limit.* Conjecture BL.6's limit part: existence and \(N\)-independence of \(C_\delta(\alpha)\).
 - *Other items.* A certificate uniform over an interval of \(\alpha\); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
@@ -2593,6 +2593,50 @@ give two-sided bounds on \(r_k\) and \(-r_k'\) for every \(s>0\). Odd \(J\) give
 - *Exact integers:* the moments \(m_0,\dots,m_7\) from the graph matrices (\(k=1\)–\(6\)) and from the series of AQ's recursion (\(k=0\)–\(3\)).
 - *Exact polynomials:* the coarse window (i); the fine Sturm check (ii); the level-\(0,1,2\) brackets (iii); the witness at \(y^*\).
 - *Floats:* \(\sup\Phi_k\) at \(k=0,1,2,3,5,10\).
+
+The script exits nonzero if any check fails.
+
+## Theorem BP. The corner deficit \(\delta_N^{(n)}\) increases in \(n\) for every \(\alpha\in(0,1)\), also below \(a^*\): a single-crossing covariance replaces Chebyshev
+
+Kept Failure BO.1 showed that BK's one-level weight \(\omega_k\) is not monotone at any level \(k\ge3\) when \(\alpha<a^*\approx0.0167788801729\). That closed BN.3's Chebyshev route to \(\delta_N^{(k+1)}>\delta_N^{(k)}\), and BO left open whether the deficit itself still increases there. It does. Chebyshev needs \(\omega_k\) to be increasing. A covariance against an increasing \(G_k\) is already positive if \(\omega_k\) crosses its own mean only once, from below. Below \(1/17\) the non-monotone part of \(\omega_k\) sits at moderate \(y\), where \(\omega_k<8/5\). The mean of \(\omega_k\) is at least \(\rho^{-1}=3\cdot5^{-\alpha}>2.9\), because AQ's corner resolvent increases with the level. So the dip of BO.1 lies entirely below the mean and has no effect on the sign.
+
+**Setting.** As in Theorems BK, BN and BO: \(r_k(s)=\tfrac12v^T(L_k+s)^{-1}v\), \(p(y)=y(y+5)\), \(e=2y/(2+y)\), \(B=1-\tfrac{y(y+4)}{3(y+2)(y+5)}\), \(C=\tfrac53(1+\tfrac{2y}5)e\), \(d_k=B-C\,r_k(p)>0\), \(\omega_k=(1+y/5)^\alpha/d_k\), \(\rho=5^\alpha/3\), \(D_n=\int_0^\infty s^{-\alpha}r_n\,ds\), \(D'_n=\rho^{-n}D_n\), \(\mu_k\) BK.1's level-\(k\) probability measure (positive density in \(y\)), \(G_k=1-\eta_N(p^{k-N+1}(y))\), \(\delta_N^{(k)}=\langle G_k\rangle_{\mu_k}\). **Assumptions used as stated:** AQ (3) (\(r_n\uparrow r_\infty\) pointwise, so \(D_{n+1}>D_n\); re-checked here in exact rationals at sample points, \(k=0\)–\(3\)); BK.1 (the transfer identity \(\delta_N^{(k+1)}-\delta_N^{(k)}=\mathrm{Cov}_{\mu_k}(\omega_k,G_k)/\langle\omega_k\rangle\) with \(\langle\omega_k\rangle=D'_{k+1}/D'_k\), valid for every \(\alpha\in(0,1)\)); BL.1 (\(G_k\) strictly increasing in \(y\), \(\alpha\)-free); BN.1–BN.2 (Stieltjes bounds and the majorant, re-run); BG (flatness for \(\alpha\le\gamma\), only in BP.5). No arb cell, no \(\eta\) enclosure, no AZ input. Stage 1 is not edited. No \(W\), \(0.08\), \(0.23\), or \(30\,\mu\)N/kW enters.
+
+**THEOREM BP.**
+
+1. **BP.1 (mean floor, every \(k\), every \(\alpha\)).** \(\langle\omega_k\rangle_{\mu_k}=D'_{k+1}/D'_k=\rho^{-1}D_{k+1}/D_k>\rho^{-1}=3\cdot5^{-\alpha}\).
+2. **BP.2 (monotone tail, every \(k\)).** BN.2's majorant \(d_k'-\alpha d_k/(5+y)\le-P_\alpha/(3(y+2)^2(y+5)^2)\) holds for every \(\alpha\ge0\), and \(P_\alpha=y^2(2\alpha y+17\alpha-1)+46\alpha y+40\alpha+10\). For \(\alpha\in(0,1/17]\) put \(Y_\alpha=(1-17\alpha)/(2\alpha)\ge0\). Then \(P_\alpha>0\) on \([Y_\alpha,\infty)\), so \(\omega_k\) is strictly increasing on \([Y_\alpha,\infty)\) at every level \(k\).
+3. **BP.3 (the head lies below the mean, every \(k\)).** \(r_k(p)\le1/p\) gives \(d_k\ge B-C/p=\frac{(y+4)(2y+5)}{3(y+2)(y+5)}\), and \(\tfrac85(y+4)(2y+5)-3(y+2)(y+5)=(y^2-y+10)/5>0\). So \(\omega_k<\tfrac85(1+y/5)^\alpha\) for all \(y>0\). On \([0,Y_\alpha]\), \((1+y/5)^\alpha\le5^{-\alpha}(5+Y_\alpha)^\alpha\), with \(5+Y_\alpha=1/(2\alpha)-7/2<1/(2\alpha)\), and \((2\alpha)^{-\alpha}\le e^{1/(2e)}<1.2020<15/8\). Hence \(\omega_k<\tfrac85\cdot\tfrac{15}8\cdot5^{-\alpha}=\rho^{-1}<\langle\omega_k\rangle\) on \([0,Y_\alpha]\).
+4. **BP.4 (monotone deficit for every \(\alpha\)).** By BP.2–BP.3, \(\{\omega_k\ge\langle\omega_k\rangle\}=[y_c,\infty)\) for a single \(y_c>Y_\alpha\). With \(m=\langle\omega_k\rangle\),
+\[
+\mathrm{Cov}_{\mu_k}(\omega_k,G_k)=\int(\omega_k-m)\,(G_k-G_k(y_c))\,d\mu_k>0 ,
+\]
+since the integrand is \(\ge0\) and is \(>0\) off \(y_c\). So \(\delta_N^{(k+1)}>\delta_N^{(k)}\) for every \(\alpha\in(0,1/17]\), every \(N\ge1\) and every \(k\ge N\). Together with BN.3 (\(\alpha\ge1/17\)): **for every \(\alpha\in(0,1)\) and every \(N\ge1\), \(\delta_N^{(n)}\) is strictly increasing in \(n\ge N\).** This includes the whole range \((0,a^*)\) of Kept Failure BO.1, and also the range \((a_0^*,a^*)\) where only the base level is monotone.
+5. **BP.5 (derived, from BG as stated).** For \(\alpha\in(0,\gamma]\), \(u_n\to\bar d\) at every non-corner vertex (BG), so \(\delta_N^{(n)}\uparrow1\) strictly. For \(\alpha\in(\gamma,1)\) the increasing limit is \(\delta_N\) (BI), with the two-sided rate of BN.4.
+
+**Proof of BP.1.** BK.1 gives \(\langle\omega_k\rangle=D'_{k+1}/D'_k\). Since \(r_{k+1}\ge r_k\) pointwise and the two differ on an open set (AQ (3)), \(D_{k+1}>D_k\). \(\square\)
+
+**Proof of BP.2.** In BN.2's chain-rule identity \(d'-\alpha d/(5+y)=B'-\alpha B/(5+y)+r(K_0+\alpha C/(5+y))+Cp'(-r_k'(p))\), the coefficients \(K_0+\alpha C/(5+y)\) and \(Cp'\) are \(\ge0\) for every \(\alpha\ge0\). So BN.1's \(-r'\le r/p\) and \(r\le1/p\) give the majorant for every \(\alpha\ge0\), not only for \(\alpha\ge1/17\). For \(y\ge Y_\alpha\) every term of \(P_\alpha\) is \(\ge0\) and \(40\alpha+10>0\). Then \((\log\omega_k)'=-(d_k'-\alpha d_k/(5+y))/d_k>0\). \(\square\)
+
+**Proof of BP.3.** The two identities are sympy checks, and \(y^2-y+10\) has discriminant \(-39\). \(f(\alpha)=-\alpha\log(2\alpha)\) has \(f''=-1/\alpha<0\) and its only critical point at \(\alpha=1/(2e)\), where \(f=1/(2e)\). The bound \(e^{1/(2e)}\le1.201943\) is an arb enclosure. \(\square\)
+
+**Proof of BP.4.** \(\omega_k\) is continuous. It is \(<m\) on \([0,Y_\alpha]\) (BP.3) and strictly increasing on \([Y_\alpha,\infty)\) (BP.2). Since \(\int(\omega_k-m)\,d\mu_k=0\) and \(\mu_k\) has a positive density, \(\omega_k>m\) somewhere, so \(\omega_k-m\) changes sign exactly once, at some \(y_c>Y_\alpha\). For any constant \(g_0\), \(\mathrm{Cov}(\omega,G)=\langle(\omega-\langle\omega\rangle)(G-g_0)\rangle\). Take \(g_0=G_k(y_c)\). \(G_k\) is strictly increasing (BL.1), so both factors have the same strict sign for \(y\ne y_c\). Divide by \(\langle\omega_k\rangle>0\) (BK.1). \(\square\)
+
+**Evidence (floats; consistency only).** At \(\alpha=0.001,0.005,0.01,0.0167\) and \(k=3,6,10\) (mpmath, 30 digits), \(\omega_k\) is not monotone on \([0,Y_\alpha]\) (BO.1's dip). Its maximum there is \(1.545267\), \(1.550555\), \(1.557624\), \(1.569019\), the same at all three levels, against \(\rho^{-1}=2.995176\), \(2.975955\), \(2.952103\), \(2.920441\). It increases on \([Y_\alpha,10^6Y_\alpha]\). The deficit was computed by BI's quadrature with the heavy \(s^{-1-\alpha}\) tail beyond \(s=10^{12}\) done analytically (\(r_n=1/s-2/s^2+6/s^3-\dots\)). That tail is what stalled BO's float run. At \(\alpha=0.01\), \(N=1\), \(\delta_1^{(n)}=0.9984276\), \(0.9993087\), \(0.9997270\), \(0.9999009\), \(0.9999655\), \(0.9999882\) for \(n=1\)–\(6\), increasing toward \(1\) as BP.5 says. \(N=2\) and \(\alpha=0.001\) behave the same way. The same code reproduces BN's \(\delta_1^{(8)}(0.8)=0.9487\).
+
+**What stays open.**
+- *Rates below \(\gamma\).* BP gives monotonicity only. How fast \(1-\delta_N^{(n)}\) goes to \(0\) for \(\alpha<\gamma\) (floats at \(\alpha=0.01\), \(N=1\): successive ratios of \(1-\delta_1^{(n)}\) are \(0.44,0.40,0.36,0.35,0.34\), approaching \(\rho=0.3387\ldots\)) is not proved.
+- *A closed form for \(a^*\).* Still open. BP shows that \(a^*\) is a threshold for the weight only, not for the deficit.
+- *The limit.* Conjecture BL.6's limit part: existence and \(N\)-independence of \(C_\delta(\alpha)\).
+- *Other items.* A certificate uniform over an interval of \(\alpha\); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem BP is a monotonicity statement for the corner deficit of one graph Dirichlet extension of a discrete fractional operator on the combinatorial gasket. It does not make \(\omega_k\) monotone below \(a^*\): Kept Failure BO.1 stands. It is about functions on graphs, not a field, a flux or a force. No flux functional is constructed, and Stage 1 is not touched. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_deficit_small_alpha.py`** (about 30 s; needs sympy, mpmath, python-flint).
+- *Sympy:* the splitting of \(P_\alpha\); \(B-C/p\); the \(8/5\) identity and discriminant; \(5+Y_\alpha\); the concavity of \(-\alpha\log(2\alpha)\); the shifted-covariance identity; BN.2's identity and majorant re-run.
+- *Exact rationals:* \(r_{k+1}>r_k\) at five points for \(k=0\)–\(3\); \(B-C/p\le d_k\le B\) and \(d_k>5/8\); BN.1's Stieltjes checks re-run.
+- *Arb:* \(e^{1/(2e)}<15/8\).
+- *Floats:* the head maxima and tail monotonicity of \(\omega_k\) above; \(\delta_N^{(n)}\) at \(\alpha=0.01,0.001\) and the \(0.8\) control.
 
 The script exits nonzero if any check fails.
 

@@ -616,3 +616,20 @@ class FractionalWeightThresholdTests(unittest.TestCase):
         self.assertIn("gasket_fractional_weight_threshold.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BO", (ROOT / doc).read_text())
+
+
+class FractionalDeficitSmallAlphaTests(unittest.TestCase):
+    def test_theorem_bp_deficit_small_alpha(self):
+        """Theorem BP: sympy lemmas and exact-rational checks of the single-crossing argument.
+        The float evidence (about 30 s) runs in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_deficit_small_alpha as bp
+
+        bp.FAILS.clear()
+        bp.symbolic_checks()
+        bp.exact_checks()
+        self.assertEqual(bp.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_deficit_small_alpha.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BP", (ROOT / doc).read_text())

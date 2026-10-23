@@ -2530,7 +2530,7 @@ Theorems BL and BM proved the lower bound \(\delta_N-\delta_N^{(n)}\ge c_N\rho^{
 
 **What stays open.**
 - *The limit.* Conjecture BL.6 is now reduced to its limit part: does \(C_\delta(\alpha)=\lim\rho^n(\delta_N-\delta_N^{(n)})\) exist, and is it independent of \(N\)?
-- *Small \(\alpha\).* Monotone \(\omega_k\) for \(\alpha<1/17\).
+- *Small \(\alpha\).* Monotone \(\omega_k\) for \(\alpha<1/17\). Settled by Theorem BO below: monotone at every level iff \(\alpha\ge a^*\in[0.016778880172852,0.0167788801732]\); below \(a^*\) it fails at every level \(k\ge3\) (Kept Failure BO.1).
 - *Other items.* A certificate uniform over an interval of \(\alpha\); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
 
 **NOT THIS.** Theorem BN is a monotonicity statement and a lower bound for the convergence of one graph Dirichlet extension of a discrete fractional operator on the combinatorial gasket. It is about functions on graphs, not a field, a flux or a force. No flux functional on the infinite gasket is constructed, and Stage 1 is not touched. Not thrust.
@@ -2540,6 +2540,59 @@ Theorems BL and BM proved the lower bound \(\delta_N-\delta_N^{(n)}\ge c_N\rho^{
 - *Exact rationals:* \(\tfrac12v^T(L_n+s)^{-1}v\) against AQ's recursion (\(n\le3\)); the pole and residue structure of \(r_0,\dots,r_3\); \(r_k\le1/s\) and \(-r_k'\le r_k/s\) at sample points.
 - *`arb`:* BI.4 re-run; at each of the six exponents, \(J_\alpha\), \(W_0\), \(M\), \(\Lambda_N\) (\(N=1\)–\(19\) and uniform), and \(c_N\).
 - *Floats:* \(\omega_k\) on a grid; \(\delta_N^{(n)}\) at \(0.8\).
+
+The script exits nonzero if any check fails.
+
+## Theorem BO. The exact exponent threshold for BN's monotone weight: \(\omega_k\) is increasing at every level iff \(\alpha\ge a^*\), with \(a^*\in[0.016778880172852,\,0.0167788801732]\) (Kept Failure BO.1: below \(a^*\) the weight is not monotone at any level \(k\ge3\))
+
+Theorem BN.2 proved that BK's one-level weight \(\omega_k\) is strictly increasing in \(y\), at every level \(k\), for \(\alpha\ge1/17\). BN's own remark showed that its majorant fails at \(\alpha=1/100\), and left open whether this is a limit of the method or of the claim. This theorem settles that question. The claim itself fails for small \(\alpha\). The exact threshold is a number \(a^*\approx0.0167788801729\), certified to an interval of width \(<3.5\cdot10^{-13}\). The new input is a set of moment bounds on the corner resolvent. The moments \(m_j=\tfrac12v^TL_k^jv\) are local, so they are the same integers at every level \(k\ge3\). This makes one finite, exact-rational certificate cover every level.
+
+**Setting.** As in Theorem BN: \(r_k(s)=\tfrac12v^T(L_k+s)^{-1}v\), \(v=e_a-e_b\), \(p(y)=y(y+5)\), \(e=2y/(2+y)\), \(B=1-\tfrac{y(y+4)}{3(y+2)(y+5)}\), \(C=\tfrac53(1+\tfrac{2y}5)e\), \(d_k=B-C\,r_k(p)>0\), \(\omega_k=(1+y/5)^\alpha/d_k\). Write \(\Phi_k(y)=(5+y)\,d_k'(y)/d_k(y)\) and \(a_k^*=\sup_{y>0}\Phi_k(y)\). **Assumptions used as stated:** AQ (1) (the recursion equals \(\tfrac12v^T(L_k+s)^{-1}v\); BN re-checked levels \(0\)–\(3\); here the \(s\to\infty\) expansion of the recursion is matched against the graph moments at \(k=0\)–\(3\)); BN.1 (\(r_k=\sum_iw_i/(\lambda_i+s)\), \(w_i\ge0\), \(\sum w_i=1\), \(\lambda_i\ge0\)); BN.2's chain-rule identity (re-checked); BK's \(d_k>0\). No \(\eta\) enclosure, no arb cell, and no AZ input is used. Stage 1 is not edited. No \(W\), \(0.08\), \(0.23\), or \(30\,\mu\)N/kW enters.
+
+**THEOREM BO.**
+
+1. **BO.1 (reduction).** \((\log\omega_k)'=(\alpha-\Phi_k(y))/(5+y)\). So \(\omega_k\) is strictly increasing on \((0,\infty)\) iff \(\alpha\ge a_k^*\). If \(\alpha<a_k^*\), then \(\omega_k\) strictly decreases on an interval. The condition is linear in \(\alpha\), so one witness point covers a whole interval of exponents. The level-uniform threshold is \(a^*=\sup_ka_k^*\).
+2. **BO.2 (moment bounds, every \(k\)).** With \(m_j=\sum_iw_i\lambda_i^j=\tfrac12v^TL_k^jv\), the exact geometric remainders
+\[
+\frac1{s+\lambda}=\sum_{j<J}\frac{(-\lambda)^j}{s^{j+1}}+\frac{(-\lambda)^J}{s^J(s+\lambda)},\qquad
+\frac1{(s+\lambda)^2}=\sum_{j<J}\frac{(j+1)(-\lambda)^j}{s^{j+2}}+(-\lambda)^J\Big(\frac{J}{s^{J+1}(s+\lambda)}+\frac1{s^J(s+\lambda)^2}\Big)
+\]
+give two-sided bounds on \(r_k\) and \(-r_k'\) for every \(s>0\). Odd \(J\) gives upper bounds and even \(J\) gives lower bounds. The spectrum of \(L_k\) lies in \([0,8]\) (Gershgorin, maximum degree \(4\)), and \(m_1\ge2\) (\(m_1=3\) at \(k=0\), \(2\) for \(k\ge1\)). The chord of the convex functions \(\lambda\mapsto1/(s+\lambda)\) and \(\lambda\mapsto\lambda/(s+\lambda)^2\) on \([0,8]\) then gives the \(k\)-uniform bounds \(r_k\le\hat r:=1/s-2/(s(s+8))\) and \(-r_k'\le r_k/s-2/(s(s+8)^2)\). These sharpen BN.1's \(r_k\le1/s\) and \(-r_k'\le r_k/s\).
+3. **BO.3 (locality).** \(m_j(k)=(L_k^j)_{aa}\) for \(j<2^k\), and \(m_j(k+1)=m_j(k)\) whenever \(j<2^k\). Hence \(m_0,\dots,m_7=1,2,6,22,92,418,1994,9780\) at every level \(k\ge3\). The lower levels have \(3^j\) (\(k=0\)), \(1,2,5,17,74,365,1889,9938\) (\(k=1\)) and \(1,2,6,22,91,408,1928,9419\) (\(k=2\)).
+4. **BO.4 (upper certificate: monotone for \(\alpha\ge A_{\rm hi}\), every \(k\ge0\)).** Let \(A_{\rm hi}=0.0167788801732\) (exact rational).
+   - *(i) Coarse, every \(k\).* Insert BO.2's chord bounds into BN.2's identity \(d'-\alpha d/(5+y)=B'-\alpha B/(5+y)+r(K_0+\alpha C/(5+y))+Cp'((-r')-r/p)\). This gives \(d_k'-\alpha d_k/(5+y)\le U-\alpha V\), with \(U=B'+\hat rK_0-2Cp'/(p(p+8)^2)\) and \(V=(B-C\hat r)/(5+y)>0\). The cleared numerator of \(U-A_{\rm hi}V\) has exactly two positive roots, \(12.5408\ldots\) and \(14.7913\ldots\). So \(\Phi_k<A_{\rm hi}\) off \((12,15)\). The coarse threshold \(\sup U/V=0.0168734\ldots\) is already below \(1/17\), and below BN's own majorant limit \(0.0215883\ldots\).
+   - *(ii) Fine, every \(k\ge3\).* On \([12,15]\), use the \(J=7\) and \(J=8\) moment bounds with BO.3's integers, together with \(C'=4(y^2+4y+5)/(3(y+2)^2)>0\) and \(Cp'>0\). This gives \((5+y)d'_{\rm hi}-A_{\rm hi}d_{\rm lo}<0\). The check is an exact polynomial of degree \(17\) with no root on \([12,15]\) (Sturm).
+   - *(iii) Exact, \(k=0,1,2\).* \(d_k\) is rational (AQ's recursion). \(a_{k,\rm hi}d_k-(5+y)d_k'\) has no root on \([0,\infty)\) and is positive there, with \(a_{k,\rm hi}<A_{\rm hi}\).
+
+   Hence \(\omega_k\) is strictly increasing in \(y\), for every level \(k\ge0\), for every \(\alpha\ge A_{\rm hi}\). This extends BN.2 from \(\alpha\ge1/17\approx0.0588\) to \(\alpha\ge0.0167788801732\).
+5. **BO.5 (per-level thresholds, exact rationals).** \(a_0^*\in[0.0155298932937,0.0155298932938]\), \(a_1^*\in[0.0167694660209,0.0167694660210]\), \(a_2^*\in[0.0167788799215,0.0167788799216]\), and \(a_k^*\in[A_{\rm lo},A_{\rm hi}]\) for every \(k\ge3\). So \(a^*=\sup_ka_k^*\in[0.016778880172852,0.0167788801732]\). The lower ends are sign changes at rational witness points, and the upper ends are BO.4.
+6. **BO.6 (derived: Chebyshev beyond \(1/17\)).** BN.3's proof uses only that \(\omega_k\) and \(G_k\) are both increasing. So with BO.4, \(\delta_N^{(k+1)}>\delta_N^{(k)}\) holds for every \(N\ge1\), \(k\ge N\) and \(\alpha\in[A_{\rm hi},1)\).
+
+**KEPT FAILURE BO.1 (BN.2 does not extend below \(a^*\)).** Claim: \(\omega_k\) is increasing in \(y\) at every level for every \(\alpha\in(0,1)\). This is false. **Witness:** \(y^*=13.778505644\). At this point the \(J=7,8\) moment bounds give, in exact rationals, \(\Phi_k(y^*)\ge0.0167788801728520\ldots\) for every \(k\ge3\). So \((\log\omega_k)'(y^*)<0\) for every \(\alpha<A_{\rm lo}=0.016778880172852\) and every \(k\ge3\). Then \(\omega_k\) is not monotone at any level \(k\ge3\). Levels \(0,1,2\) fail below \(a_0^*,a_1^*,a_2^*\) (BO.5). For \(\alpha\in(a_0^*,a^*)\), the base level is monotone but every level \(k\ge3\) is not. So the failure is not visible at \(k=0\). The failure is in the claim, not only in BN's majorant. The consequence is that BN.3's Chebyshev route to \(\delta_N^{(n+1)}>\delta_N^{(n)}\) is unavailable for \(\alpha<a^*\). This does not show that \(\delta_N^{(n)}\) fails to increase there. That question is open.
+
+**Proof of BO.1.** \(\log\omega_k=\alpha\log(1+y/5)-\log d_k\), and \(d_k>0\). \(\square\)
+
+**Proof of BO.2.** The two remainder identities are checked by sympy for \(J=1\)–\(8\). For \(\lambda\ge0\), their remainders have sign \((-1)^J\). Integrate against \(\sum_iw_i\delta_{\lambda_i}\), which has unit mass (BN.1). The chord identities are \(1/s-\lambda/(s(s+8))-1/(s+\lambda)=\lambda(8-\lambda)/(s(s+\lambda)(s+8))\ge0\) and \(\lambda/(s+\lambda)^2-\lambda/(s+8)^2=\lambda(8-\lambda)(2s+\lambda+8)/((s+\lambda)^2(s+8)^2)\ge0\) on \([0,8]\). Use \(1/(s+\lambda)^2=1/(s(s+\lambda))-\lambda/(s(s+\lambda)^2)\). Then \(m_1=\tfrac12v^TL_kv=\tfrac12(\deg a+\deg b)+[a\sim b]=3\) at \(k=0\), and \(2\) for \(k\ge1\). \(\square\)
+
+**Proof of BO.3.** \((L^j)_{xy}\) is a sum over walks of length \(j\) from \(x\) to \(y\). The two corners are at graph distance \(2^k\) in \(V_k\). So for \(j<2^k\), \((L^j)_{ab}=0\), and by symmetry \(m_j=(L^j)_{aa}\). A closed walk of length \(j\) from \(a\) visits only vertices at distance \(\le j/2\). In \(V_{k+1}\), every vertex at distance \(<2^k\) from \(a\) lies in the corner subcell, which is a copy of \(V_k\). Only that subcell's two far corners (distance \(2^k\)) have a different degree. So the walk sums agree. The integers are checked against the graph matrices at \(k=1\)–\(6\), and against the \(s\to\infty\) expansion of AQ's recursion at \(k=0\)–\(3\). \(\square\)
+
+**Proof of BO.4–BO.5.** All checks are exact polynomial computations in sympy, with rational coefficients: root isolation, Sturm counts on \([12,15]\) and \([0,\infty)\), and the signs of the denominators. In (i), \(K_0+\alpha C/(5+y)\ge0\) allows \(r\le\hat r\), and \(Cp'\ge0\) allows the \(-r'\) bound. \(B-C\hat r\ge B-C/p>0\) (BN). In (ii), \(d'=B'-C'r+Cp'(-r')\) is bounded above with \(r\ge\) (\(J=8\)) and \(-r'\le\) (\(J=7\)), and \(d\) is bounded below with \(r\le\) (\(J=7\)). The witness in BO.5 and in Kept Failure BO.1 bounds \(d'\) below and \(d\) above at \(y^*\), with the opposite parities. \(\square\)
+
+**Evidence (floats; consistency only).** mpmath (40 digits) gives \(\sup\Phi_k=0.0155298932937551\) (\(k=0\)), \(0.0167694660209228\) (\(k=1\)), \(0.0167788799215301\) (\(k=2\)), and \(0.0167788801728761\) at \(y=13.7785056\) for \(k=3,5,10\). These lie inside the certified brackets. The level dependence beyond \(k=3\) is invisible at \(16\) digits, which is consistent with BO.3. An attempt to compute \(\delta_N^{(n)}\) by floats at \(\alpha=0.01\) (BI's quadrature) did not finish in \(3\) minutes. So there is no evidence either way on whether the deficit is monotone below \(a^*\).
+
+**What stays open.**
+- *Below \(a^*\).* Whether \(\delta_N^{(n)}\) still increases in \(n\) for \(\alpha<a^*\). The Chebyshev route is closed there.
+- *A closed form for \(a^*\).* It is \(\sup_y(5+y)d_\infty'/d_\infty\) with \(r_\infty=1/(2+s-2\eta)\). No closed form is known.
+- *The limit.* Conjecture BL.6's limit part: existence and \(N\)-independence of \(C_\delta(\alpha)\).
+- *Other items.* A certificate uniform over an interval of \(\alpha\); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem BO is a statement about the exponent range in which one weight function of a graph Dirichlet extension is monotone. It is about functions on graphs, not a field, a flux or a force. No flux functional is constructed, and Stage 1 is not touched. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_weight_threshold.py`** (about 15 s; needs sympy, mpmath, numpy).
+- *Sympy:* the remainder identities (\(J\le8\)); the chord lemmas; BN.2's identity and \(K_0\); \(C'>0\); the log-derivative reduction.
+- *Exact integers:* the moments \(m_0,\dots,m_7\) from the graph matrices (\(k=1\)–\(6\)) and from the series of AQ's recursion (\(k=0\)–\(3\)).
+- *Exact polynomials:* the coarse window (i); the fine Sturm check (ii); the level-\(0,1,2\) brackets (iii); the witness at \(y^*\).
+- *Floats:* \(\sup\Phi_k\) at \(k=0,1,2,3,5,10\).
 
 The script exits nonzero if any check fails.
 

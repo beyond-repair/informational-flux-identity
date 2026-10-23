@@ -597,3 +597,22 @@ class FractionalMonotoneWeightTests(unittest.TestCase):
         self.assertIn("gasket_fractional_monotone_weight.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BN", (ROOT / doc).read_text())
+
+
+class FractionalWeightThresholdTests(unittest.TestCase):
+    def test_theorem_bo_weight_threshold(self):
+        """Theorem BO: sympy lemmas, the local moments, and the exact-rational witness of Kept Failure BO.1 at y*.
+        The full upper certificate (Sturm checks, about 15 s) runs in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_weight_threshold as bo
+
+        bo.FAILS.clear()
+        bo.symbolic_checks()
+        bo.moment_checks()
+        bo.lower_checks()
+        self.assertEqual(bo.FAILS, [])
+        self.assertTrue(bo.A_LO < bo.A_HI < bo.sp.Rational(1, 17))
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_weight_threshold.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BO", (ROOT / doc).read_text())

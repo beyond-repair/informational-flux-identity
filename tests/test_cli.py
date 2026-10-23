@@ -388,3 +388,28 @@ class EntryPointTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FractionalCornerLayerTests(unittest.TestCase):
+    def test_theorem_bh_corner_layer(self):
+        """Theorem BH: sympy identities, exact corner-cell decomposition and neighbour recursion at levels 2-3,
+        coarse arb enclosures of the layer integrals (fast). The fine certificate (742386 nodes) and AS's J_r, J_w
+        run in `reproduce` (about 3 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_layer as bh
+
+        bh.FAILS.clear()
+        bh.symbolic_checks()
+        bh.exact_checks(levels=(2, 3))
+        self.assertEqual(bh.FAILS, [])
+        M, _ = bh.M_bracket("0.45", pts=bh.grid(rf=1.002, rm=1.02, rc=1.2))
+        Jr = 4.0013017734819
+        th = [1 - m / Jr for m in M]
+        fine = [(0.4624385835869, 0.462438583587), (0.340381375, 0.340407195), (0.241594653, 0.241622693), (0.382431398, 0.382456436)]
+        for x, (lo, hi) in zip(th, fine):
+            self.assertTrue(x.a < lo and hi < x.b and x.b - x.a < 0.02)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_layer.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BH", (ROOT / doc).read_text())
+            self.assertIn("0.340381375", (ROOT / doc).read_text())

@@ -2712,6 +2712,77 @@ The rate is exactly \(\rho^n\), but the sign of \(V^{(n)}-C_1\) depends on \(\al
 
 The script exits nonzero if any check fails.
 
+## Theorem BR. The corner deficit decreases in the depth \(N\) at every level, and below \(\log3/\log5\) the constant of Theorem BQ grows exactly like \(\rho^{-N}\): \(\rho^NC_N\) strictly increases in \(N\) to a finite limit \(c_\infty(\alpha)\), with \(c_\infty(0.45)\in[0.520387,0.520824]\)
+
+Theorem BQ proved \(\rho^{-n}(1-\delta_N^{(n)})\to C_N(\alpha)=P_N/D_\infty\) for \(\alpha<\gamma\), with certified constants for \(N=1\) only. It left the \(N\)-dependence of \(C_N\) open. This theorem settles its order and its monotonicity. The tool is a one-line inequality for the neighbour profile: going one step deeper in \(N\) while moving the argument one step along the orbit \(p\) can only raise \(\eta\). That gives a monotonicity in \(N\) at every level \(n\) and every \(\alpha\). Below \(\gamma\), the rescaling \(\tau=5^Nt\) turns \(\rho^NP_N\) into an integral whose two factors both increase in \(N\) and are bounded by BJ.2's power bracket. So \(\rho^NC_N\) increases to a finite, positive limit, and that limit is pinned to about four digits.
+
+**Setting.** As in Theorems BG, BH, BJ and BQ: \(p(z)=z(z+5)\), \(\alpha_1=(z+4)/((z+2)(z+5))\), \(\beta=(z+6)/((z+2)(z+5))\), \(\eta_0=-\tfrac12\), \(\eta_N=\alpha_1+\beta\,\eta_{N-1}\circ p\), \(\eta=\lim\eta_N\), \(\rho=5^\alpha/3\), \(\gamma=\log3/\log5\), \(\mathcal R=\lim(3/5)^nr_n(5^{-n}\cdot)\), \(\psi=\lim p^k(5^{-k}\cdot)\), \(g=s^{1-\gamma}r_\infty\). For \(N\ge0\) and \(n\ge N\), \(1-\delta_N^{(n)}=D_n^{-1}\int s^{-\alpha}r_n(s)\,\eta_N(p^{n-N}s)\,ds\) (BG.1, BJ.4, as in BQ's setting; at \(N=0\) this is BL.0's \(\delta_0^{(n)}=\tfrac32\)), \(P_N=\int\tau^{-\alpha}\mathcal R(\tau)\,\eta_N(\psi(5^{-N}\tau))\,d\tau\) and, for \(\alpha<\gamma\) and \(N\ge1\), \(C_N=P_N/D_\infty\) (BQ.2). **Assumptions used as stated (not re-run here):** AQ (3) (\(r_n\uparrow r_\infty\)); BD.4 (\(\psi_k\uparrow\psi\), \(\psi(5u)=p(\psi(u))\)); BG.1, BG.3, BJ.4 (the deficit formulas and \(P_N\)); BH.2 (\(\eta=\lim\eta_N\), \(\eta=\alpha_1+\beta\,\eta\circ p\), and \(\eta=\eta_N+\prod_{i<N}\beta(p^iz)(\tfrac12+\eta(p^Nz))\)); BJ.2 (the bracket \(1/(t^{1-\gamma}/g_{\rm lo}+3(3/5)^N)\le(5/3)^N\mathcal R(5^Nt)\le g_{\rm hi}t^{\gamma-1}\)); BJ.3 (\(g_{\rm lo}=0.600945014\), \(g_{\rm hi}=0.600963487\)); BJ.6's \(\psi(y)\le ye^{y/10}\); BI.4 (\(G=0.6031\)); BQ.2–BQ.3 (\(C_N=P_N/D_\infty\), the \(D_\infty\) routine and the certified \(C_1\)). Stage 1 is not edited. No \(W\), \(0.08\), \(0.23\), or \(30\,\mu\)N/kW enters.
+
+**THEOREM BR.**
+
+1. **BR.1 (ceiling; every \(N\ge0\), proved here).** \(\eta_N(z)\le2/(2+z)\) on \([0,\infty)\). (BQ quoted this from BH.2/BJ.4.)
+2. **BR.2 (depth step; every \(N\ge0\), \(w\ge0\)).**
+   \[
+   \eta_{N+1}(w)-\eta_N(p(w))\ \ge\ \frac{w}{w^2+5w+2}.
+   \]
+3. **BR.3 (monotone in depth at every level; every \(\alpha\in(0,1)\)).** For \(0\le N<n\), with \(w=p^{n-N-1}(s)\),
+   \[
+   \delta_N^{(n)}-\delta_{N+1}^{(n)}\ \ge\ \frac1{D_n}\int_0^\infty s^{-\alpha}r_n(s)\,\frac{w}{w^2+5w+2}\,ds\ >\ 0 .
+   \]
+   So \(\tfrac32=\delta_0^{(n)}>\delta_1^{(n)}>\cdots>\delta_n^{(n)}\) at every level. *Derived (BJ.4 as stated):* for \(\alpha>\gamma\) also \(\delta_{N+1}<\delta_N\) for the limit deficit.
+4. **BR.4 (\(N\)-dependence of \(C_N\); \(\alpha<\gamma\), \(N\ge1\)).** \(\rho^NC_N\) strictly increases in \(N\) and converges to a finite limit \(c_\infty(\alpha)>0\). For every \(N\ge1\),
+   \[
+   \rho\,C_1\ \le\ \rho^NC_N\ <\ c_\infty(\alpha),\qquad
+   \frac{g_{\rm lo}M_\alpha}{D_\infty}\le c_\infty(\alpha)\le\frac{g_{\rm hi}M_\alpha}{D_\infty},\qquad
+   M_\alpha=\int_0^\infty t^{\gamma-1-\alpha}\eta(\psi(t))\,dt\le\frac{2^{\gamma-\alpha}\pi}{\sin\pi(\gamma-\alpha)} .
+   \]
+   Independently of BQ.3, \(\rho^NC_N\ge L_1/D_\infty\) with \(L_1=\int t^{-\alpha}\eta_1(\psi(t))/(t^{1-\gamma}/g_{\rm lo}+\tfrac95)\,dt\). So \(C_N\) is of exact order \(\rho^{-N}\), and \(C_N\sim c_\infty\rho^{-N}\). *Derived (AT.1 as stated, as in BH.6 and BJ.6):* \(c_\infty(\alpha)=D_\infty^{-1}\int_0^\infty t^{\gamma-1-\alpha}\,\Theta_{AT}(\psi(t))\,\eta(\psi(t))\,dt\). This is the sub-\(\gamma\) analogue of BJ.6's \(c_{\rm corner}\), with \(1-\eta\) replaced by \(\eta\) and \(\kappa_\alpha\) by \(1/D_\infty\).
+5. **BR.5 (certified; python-flint `arb`, outward).**
+
+   | \(\alpha\) | \(M_\alpha\) | closed ceiling | \(c_\infty(\alpha)\) | every \(N\ge1\): \(\rho^NC_N\in\) | BQ-free floor \(L_1/D_\infty^{\rm hi}\) |
+   |---|---|---|---|---|---|
+   | \(0.01\) | \([1.7335799,1.7341000]\) | \(5.846206\) | \([0.010439,0.010444]\) | \([0.002653,0.010444]\) | \(0.001708\) |
+   | \(0.1\) | \([1.7583870,1.7589146]\) | \(4.867696\) | \([0.105440,0.105526]\) | \([0.023763,0.105526]\) | \(0.015249\) |
+   | \(0.3\) | \([2.1990754,2.1997359]\) | \(4.390927\) | \([0.327320,0.327592]\) | \([0.050414,0.327592]\) | \(0.032401\) |
+   | \(0.45\) | \([3.4657841,3.4668569]\) | \(5.530505\) | \([0.520387,0.520824]\) | \([0.049440,0.520824]\) | \(0.032245\) |
+
+   The lower ends of the every-\(N\) column are BQ.3's \(\rho C_1\). At every tabulated \(\alpha\), \(\rho C_1\) lies well below \(c_\infty\) (at \(0.45\): \(\rho C_1\le0.049489<0.520387\le c_\infty\)). So the growth of \(\rho^NC_N\) is real and large, about a factor \(10\) between \(N=1\) and \(N=\infty\) at \(0.45\). For example, at \(0.45\), \(C_N\le0.520824\,\rho^{-N}\) for every \(N\ge1\), and \(C_N\rho^N\to c_\infty\in[0.520387,0.520824]\), with \(\rho=0.68772568\ldots\).
+
+**Proof of BR.1–BR.2.** \(\alpha_1+\beta=2/(2+z)\) (sympy). Since \(\beta>0\), induction from \(\eta_0=-\tfrac12\le1\) gives \(\eta_N(z)\le\alpha_1+\beta\cdot2/(2+p(z))\), and sympy gives \(2/(2+z)-(\alpha_1+2\beta/(2+p))=z(z+6)/((z+2)(z^2+5z+2))\ge0\). For BR.2, \(\eta_{N+1}(w)-\eta_N(pw)=\alpha_1(w)-(1-\beta(w))\,\eta_N(pw)\), with \(1-\beta=(w^2+6w+4)/((w+2)(w+5))>0\). By BR.1 this is \(\ge\alpha_1-(1-\beta)\cdot2/(2+p(w))=w/(w^2+5w+2)\) (sympy). \(\square\)
+
+**Proof of BR.3.** Subtract the two deficit formulas at the same level \(n\). The integrand difference is \(s^{-\alpha}r_n(s)\bigl(\eta_{N+1}(p^{n-N-1}s)-\eta_N(p^{n-N}s)\bigr)\), and BR.2 at \(w=p^{n-N-1}s\) bounds it below. \(r_n>0\), and \(w>0\) for \(s>0\). For \(\alpha>\gamma\), apply the same step to BJ.4's formula at \(w=\psi(5^{-N-1}\tau)\), since \(p(\psi(5^{-N-1}\tau))=\psi(5^{-N}\tau)\). \(\square\)
+
+**Proof of BR.4.** *Scaling.* Put \(\tau=5^Nt\). Then \(\rho^N\tau^{-\alpha}d\tau=(3/5)^Nt^{-\alpha}dt\) (sympy), so
+\[
+\rho^NP_N=\int_0^\infty t^{-\alpha}\,Q_N(t)\,\eta_N(\psi(t))\,dt,\qquad Q_N(t)=(5/3)^N\mathcal R(5^Nt)=\lim_m(3/5)^mr_{m+N}(5^{-m}t).
+\]
+*Both factors increase in \(N\).* \(Q_{N+1}\ge Q_N\) because \(r_{k+1}\ge r_k\) pointwise (AQ (3)). With \(\eta=\alpha_1+\beta\,\eta\circ p\), \((\tfrac12+\eta(x))-\beta(x)(\tfrac12+\eta(px))=\tfrac12+\tfrac1{2(x+5)}>0\) (sympy), so the remainder \(\prod_{i<N}\beta(p^iz)(\tfrac12+\eta(p^Nz))\) strictly decreases in \(N\). Hence \(\eta_N(z)\) strictly increases in \(N\) at fixed \(z\), and \(\eta_N\ge\eta_1=1/(2(z+5))>0\) for \(N\ge1\). So \(\rho^NP_N\), and with it \(\rho^NC_N\), strictly increases in \(N\ge1\).
+*Bounds.* BJ.2 gives \(Q_N\le g_{\rm hi}t^{\gamma-1}\), and \(\eta_N\le\eta\), so \(\rho^NP_N\le g_{\rm hi}M_\alpha\) for every \(N\). With \(\eta(\psi(t))\le2/(2+t)\) (BR.1 in the limit, \(\psi(t)\ge t\)), \(M_\alpha\le\int t^{c-1}\,2/(2+t)\,dt=2^c\pi/\sin\pi c\), \(c=\gamma-\alpha\in(0,1)\). This is finite exactly because \(\alpha<\gamma\). The increasing sequence is bounded, so it converges. BJ.2's lower bound \(1/(t^{1-\gamma}/g_{\rm lo}+3(3/5)^N)\) increases to \(g_{\rm lo}t^{\gamma-1}\), and \(\eta_N\uparrow\eta\). Monotone convergence gives \(\lim\rho^NP_N\ge g_{\rm lo}M_\alpha\). For \(L_1\), use \(\eta_N\ge\eta_1\) and \(3(3/5)^N\le\tfrac95\).
+*Derived part.* BJ.1 gives \(r_\infty/(1+3(3/5)^{m+N}r_\infty)\le r_{m+N}\le r_\infty\), and \((3/5)^mr_\infty(5^{-m}t)\le Gt^{\gamma-1}\) (BI.4, \(5^{1-\gamma}=5/3\)). So for each \(t\), \(Q_N(t)\) lies within a factor \(1+3G(3/5)^Nt^{\gamma-1}\) of \(\lim_m(3/5)^mr_\infty(5^{-m}t)=t^{\gamma-1}\lim_mg(5^{-m}t)\), provided that limit exists. AT.1 says it does and equals \(\Theta_{AT}(\psi(t))\). Dominated convergence, with majorant \(g_{\rm hi}t^{\gamma-1-\alpha}\eta(\psi(t))\), then gives the formula. \(\square\)
+
+**Proof of BR.5.** Everything is computed in python-flint `arb` (64 bits, outward).
+- *\(M_\alpha\).* The integrand \(t^{\gamma-1-\alpha}\eta(\psi(t))\) is decreasing. On geometric cells of ratio \(1.0003\) on \([10^{-40},10^4]\), the upper sum uses left endpoints and the lower sum uses right endpoints. \(\psi\) is bracketed by \(p^{14}(5^{-14}t)\le\psi(t)\le p^{14}(5^{-14}te^{5^{-14}t/10})\), because \(\psi=p^K\circ\psi\circ5^{-K}\), \(p\) is increasing, and \(u\le\psi(u)\le ue^{u/10}\). Then \(\eta_{14}\le\eta\le\eta_{14}+\prod_{i<14}\beta(p^iz)(\tfrac12+2/(2+p^{14}z))\), and \(\eta\) is decreasing. The head uses \(\eta\le1\), which gives \(\varepsilon^c/c\). For the tail, \(\psi(t)/t=\prod_{j<k}(p^j(5^{-k}t)+5)/5\) in the limit is nondecreasing. So for \(t\ge T\), \(\eta(\psi(t))\le2T/(\psi_{14}(T)\,t)\), which gives \(2T^c/(\psi_{14}(T)(1-c))\).
+- *\(L_1\).* Right-endpoint sums, ratio \(1.0005\) on \([10^{-30},10^4]\), with \(\eta_1(\psi_{\rm hi})\). The head and tail are dropped.
+- *\(D_\infty\).* BQ.3's routine, unchanged. Its brackets agree with BQ.3's table.
+- *Consistency.* BQ.3's \(\rho C_1\) lies inside the every-\(N\) bracket at all four exponents, as BR.4 requires. \(\square\)
+
+**Evidence (floats; consistency only).** At \(\alpha=0.45\) and level \(n=6\), quadrature gives \(\delta_N^{(6)}=0.9918626,0.9482724,0.8916976,0.8128940,0.7069820\) for \(N=1,\ldots,5\), decreasing as BR.3 says (in the script). In a scratch run (not in the script), BQ's float routine gives \(\rho^NV_N^{(N+14)}(0.45)=0.049579,0.217094,0.314296,0.379079,0.453730\) at \(N=1,2,3,4,6\). These increase toward the certified \(c_\infty(0.45)\in[0.520387,0.520824]\), and the \(N=1\) value is consistent with BQ.3's \(\rho C_1\).
+
+**What stays open.**
+- *Closed forms.* A closed form for \(c_\infty(\alpha)\), for \(C_N\) and for \(P_N\). The rate at which \(\rho^NC_N\to c_\infty\) (the floats suggest it is slow, \(0.454\) at \(N=6\) against \(0.520\)). Certified \(C_N\) for individual \(N\ge2\). A bracket uniform in \(\alpha\). The matching of \(c_\infty\) with BH's layer profile, which here is only derived from AT.1.
+- *From BQ.* Eventual monotonicity of \(V_N^{(n)}\) in \(n\).
+- *Carried over.* A closed form for \(a^*\); Conjecture BL.6's limit part (existence and \(N\)-independence of \(C_\delta\) above \(\gamma\)); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem BR is a statement about how the corner-neighbour value of one graph Dirichlet extension of a discrete fractional operator on the combinatorial gasket depends on the depth of the neighbour. It is a statement about functions on graphs, not a field, a flux or a force. No flux functional is constructed, and Stage 1 is not touched. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_deficit_depth.py`** (about 2 min; needs sympy, mpmath, python-flint).
+- *Sympy:* \(\alpha_1+\beta=2/(2+z)\); the BR.1 induction gap; the BR.2 identity \(w/(w^2+5w+2)\); \(1-\beta>0\); the monotone remainder \(\tfrac12+1/(2(x+5))\); the \(\tau=5^Nt\) scaling; \(\int t^{c-1}2/(2+t)=2^c\pi/\sin\pi c\).
+- *Exact rationals:* \(\eta_N\le2/(2+z)\) for \(N=0\)–\(7\); BR.2 for \(N=0\)–\(6\); \(\eta_{N+1}>\eta_N\) at fixed \(z\).
+- *Arb:* \(M_\alpha\), \(L_1\), \(D_\infty\) and all brackets at \(\alpha=0.01,0.1,0.3,0.45\); consistency with BQ.3's \(C_1\).
+- *Floats:* \(\delta_N^{(6)}(0.45)\) for \(N=1\)–\(5\).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

@@ -650,3 +650,20 @@ class FractionalDeficitRateSmallAlphaTests(unittest.TestCase):
         self.assertIn("gasket_fractional_deficit_rate_small_alpha.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BQ", (ROOT / doc).read_text())
+
+
+class FractionalDeficitDepthTests(unittest.TestCase):
+    def test_theorem_br_deficit_depth(self):
+        """Theorem BR: sympy lemmas (ceiling induction, depth step, monotone remainder, scaling) and exact rationals.
+        The arb certificates (about 2 min) run in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_deficit_depth as br
+
+        br.FAILS.clear()
+        br.symbolic_checks()
+        br.exact_checks()
+        self.assertEqual(br.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_deficit_depth.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BR", (ROOT / doc).read_text())

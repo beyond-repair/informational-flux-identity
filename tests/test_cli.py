@@ -413,3 +413,33 @@ class FractionalCornerLayerTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BH", (ROOT / doc).read_text())
             self.assertIn("0.340381375", (ROOT / doc).read_text())
+
+
+class FractionalUniformLimitTests(unittest.TestCase):
+    def test_theorem_bi_uniform_limit(self):
+        """Theorem BI: sympy identities, exact cell recursion and cell bound at levels 2-3, coarse arb certificate of
+        sup g and the bootstrap, coarse eps_N(0.8) (upper bounds above the fine ones) and K_0.8 (fast). The fine
+        certificate and the dense/float evidence run in `reproduce` (about 5 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from fractions import Fraction
+
+        import gasket_fractional_uniform_limit as bi
+        from flint import arb
+
+        bi.FAILS.clear()
+        bi.symbolic_checks()
+        bi.exact_checks(levels=(2, 3), svals=(Fraction(1, 100), Fraction(7, 5)))
+        self.assertEqual(bi.FAILS, [])
+        G0, _, _ = bi.sup_g(ratio="1.005")
+        G = arb("0.6031")
+        ok, _ = bi.bootstrap(G0, G)
+        self.assertTrue(ok and G0.upper() < G.lower())
+        e40 = float(bi.eps_bound("0.8", 40, G, lo="1e-30", hi="1e120", ratio="1.2").upper())
+        self.assertTrue(0.00796134 <= e40 < 0.05)
+        K = float(bi.K_alpha("0.8", G).upper())
+        self.assertTrue(47.0 < K <= 47.109)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_uniform_limit.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BI", (ROOT / doc).read_text())
+            self.assertIn("47.109", (ROOT / doc).read_text())

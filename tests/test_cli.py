@@ -443,3 +443,34 @@ class FractionalUniformLimitTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BI", (ROOT / doc).read_text())
             self.assertIn("47.109", (ROOT / doc).read_text())
+
+
+class FractionalCornerSharpnessTests(unittest.TestCase):
+    def test_theorem_bj_corner_sharpness(self):
+        """Theorem BJ: sympy identities, exact reciprocal identity at levels 0-3, coarse g-bracket (contains the fine
+        one), coarse corner-constant bracket at 0.8 and a coarse N-uniform floor c_-(0.8). The fine certificate and
+        the floats run in `reproduce` (about 4 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_sharpness as bj
+        from flint import arb
+
+        bj.FAILS.clear()
+        bj.symbolic_checks()
+        bj.exact_checks(levels=(0, 1, 2, 3))
+        self.assertEqual(bj.FAILS, [])
+        lo0, hi0, _ = bj.g_range(ratio="1.0002")
+        glo, ghi, ok = bj.g_bootstrap(lo0, hi0, arb("0.6031"))
+        self.assertTrue(ok and 0.6009 < glo.lower() <= 0.600945014 and 0.600963487 <= ghi.upper() < 0.6011)
+        a = arb("0.8")
+        A = arb(bj.A08[0]).union(arb(bj.A08[1]))
+        kap = 2 * (arb.pi() * a).sin() / (arb.pi() * A)
+        Mlo, Mhi, _ = bj.M_bracket("0.8", glo, ghi, ratio="1.003")
+        clo, chi = float((kap * glo * Mlo).lower()), float((kap * ghi * Mhi).upper())
+        self.assertTrue(1.13 < clo <= 1.135890346 and 1.135938783 <= chi < 1.142)
+        B = bj.B_lower("0.8", glo, ratio="1.02")
+        self.assertTrue(float((kap * B).lower()) > 0.55)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_sharpness.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BJ", (ROOT / doc).read_text())
+            self.assertIn("1.135890", (ROOT / doc).read_text())

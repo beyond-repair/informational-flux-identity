@@ -684,3 +684,20 @@ class FractionalDeficitCorrectionTests(unittest.TestCase):
         self.assertIn("gasket_fractional_deficit_correction.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BS", (ROOT / doc).read_text())
+
+
+class FractionalLogPeriodicProfileTests(unittest.TestCase):
+    def test_theorem_bt_log_periodic_profile(self):
+        """Theorem BT: sympy lemmas (orbit ratio identity and bounds, scalings, cell-bound crossing) and exact rationals.
+        The arb certificate (about 20 s) runs in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_log_periodic_profile as bt
+
+        bt.FAILS.clear()
+        bt.symbolic_checks()
+        bt.exact_checks()
+        self.assertEqual(bt.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_log_periodic_profile.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BT", (ROOT / doc).read_text())

@@ -300,6 +300,29 @@ class MeshNoncentralityConvexTests(unittest.TestCase):
             self.assertIn("0.52046", (ROOT / doc).read_text())
 
 
+class FractionalExtensionLimitTests(unittest.TestCase):
+    def test_theorem_bg_extension_limit(self):
+        """Theorem BG: sympy identities, exact decimation of the corner-data resolvent at levels 1-2, dense u_n at
+        levels 1-3 against the profile formula and the flat-limit bound, coarse W(0.45) enclosure (fast).
+        The fine certificate (13485 cells, level 60) and AS's D_inf run in `reproduce` (about 3 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_extension_limit as bg
+
+        bg.FAILS.clear()
+        bg.symbolic_checks()
+        bg.exact_checks(levels=(1, 2))
+        bg.dense_checks(levels=(1, 2, 3), alphas=(0.45,), quad_levels=(1, 2))
+        self.assertEqual(bg.FAILS, [])
+        cells = bg.build_cells(N=40, tau0=1e-12, r2=1.01)
+        W, _ = bg.W_bracket(cells, "0.45")
+        self.assertTrue(0.5754299822 < W.b and W.a < 0.5757467849 and W.a < 0.5755882397 < W.b and W.b - W.a < 0.01)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_extension_limit.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Kept Failure BG.1", (ROOT / doc).read_text())
+            self.assertIn("0.143810693", (ROOT / doc).read_text())
+
+
 class EndpointShiftTests(unittest.TestCase):
     def test_theorem_ay_level_shift(self):
         """Theorem AY: recorded C_gamma, nu_gamma, K_gamma reproduce the endpoint audit norm (fast float check).

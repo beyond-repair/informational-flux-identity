@@ -2390,9 +2390,9 @@ where \(\eta_N=\alpha_1+\beta\,\eta_{N-1}\circ p\) and \(\eta_0=-\tfrac12\). Thi
 
 **What stays open.**
 - *The limit.* Existence of \(C_\delta=\lim\rho^n(\delta_N-\delta_N^{(n)})\) and its independence of \(N\). The floats put it near \(0.6025\), about \(4.9\) times the certified floor \(0.1240\).
-- *Small \(N\).* \(1\le N\le8\) at \(0.8\): the bracket fails there because the deficit ceiling exceeds \(g\). The floats suggest the sign still holds.
+- *Small \(N\).* \(1\le N\le8\) at \(0.8\): the bracket fails there because the deficit ceiling exceeds \(g\). The floats suggest the sign still holds. Settled by Theorem BN below (monotone \(\omega_k\), no deficit ceiling needed): \(c_N>0\) for every \(N\ge1\).
 - *Other exponents.* \(\alpha\ne0.8\) (the argument is general; only the certificate is at \(0.8\)). Settled for large \(N\) at every \(\alpha\in(\gamma,1)\) by Theorem BM below, with certified thresholds at \(0.7\), \(0.75\), \(0.85\), \(0.9\), \(0.95\).
-- *Monotone \(\omega_k\).* Floats show \(\omega_k\) increasing in \(y\) for \(k=0,1,3,6,10,20\). Not proved, and not needed here.
+- *Monotone \(\omega_k\).* Floats show \(\omega_k\) increasing in \(y\) for \(k=0,1,3,6,10,20\). Not proved, and not needed here. Proved by Theorem BN.2 for every \(k\) and every \(\alpha\ge1/17\).
 - *Other items.* Closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); BH.7, BF.2, and the Stage 2 question.
 
 **CONJECTURE BL.6 (floats only; replaces BK.6 for \(N\ge1\)).** For \(\alpha>\gamma\) and every \(N\ge1\), \(\rho^n(\delta_N-\delta_N^{(n)})\to C_\delta(\alpha)>0\), independent of \(N\) (floats: \(C_\delta(0.8)\approx0.6025\)), and \(\delta_N^{(n)}\) increases in \(n\) for every \(N\ge1\).
@@ -2445,7 +2445,7 @@ Theorem BL proved that BK's rate \(\rho^{-n}\) is attained, but its certificate 
 **Evidence (floats; consistency only).** At \(\alpha=0.9\), \(N=6\): \(\rho^n(\delta^{(60)}-\delta^{(n)})=0.3277,0.3488,0.3597,0.3659,0.3659,0.3648,0.3643\) at \(n=6,7,8,10,12,16,20\). The sequence \(\delta_6^{(n)}\) increases, and every value lies in \([c_6,1.4794]\). The limit is not BL's \(0.6025\), so if \(C_\delta\) exists it depends on \(\alpha\), as Conjecture BL.6 already allows.
 
 **What stays open.**
-- *Small \(N\).* \(N<N_0(\alpha)\): \(1\le N\le8\) at \(0.8\), \(1\le N\le60\) at \(0.7\), and so on. The bracket fails there because the deficit ceiling is too close to \(g\). The floats suggest the sign still holds.
+- *Small \(N\).* \(N<N_0(\alpha)\): \(1\le N\le8\) at \(0.8\), \(1\le N\le60\) at \(0.7\), and so on. The bracket fails there because the deficit ceiling is too close to \(g\). The floats suggest the sign still holds. Settled by Theorem BN below for every \(N\ge1\).
 - *Uniformity in \(\alpha\).* BM.1 is pointwise in \(\alpha\). No certificate covers an interval of \(\alpha\), and no explicit formula for \(N_0(\alpha)\) is given.
 - *The limit.* Conjecture BL.6: existence of \(C_\delta(\alpha)=\lim\rho^n(\delta_N-\delta_N^{(n)})\) (floats \(0.6025\) at \(0.8\), \(\approx0.364\) at \(0.9\)).
 - *Other items.* Monotone \(\omega_k\); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2, and the Stage 2 question.
@@ -2457,6 +2457,89 @@ Theorem BL proved that BK's rate \(\rho^{-n}\) is attained, but its certificate 
 - *Exact rationals:* BL.1's series and monotonicity re-run.
 - *`arb`:* BI.4 re-run; at \(\alpha=0.7,0.75,0.85,0.9,0.95\): \(J_\alpha\), \(L(0)\), \(L(y_0)\), \(J(y_0)\), \(I_N\) for the direct range, \(Q\), \(I_0\); the brackets, \(c_N\) and \(\liminf c_N\).
 - *Floats:* \(\delta_6^{(n)}\) at \(\alpha=0.9\) for \(n=6\)–\(20\) against \(n=60\).
+
+The script exits nonzero if any check fails.
+
+## Theorem BN. BK's one-level weight \(\omega_k\) is increasing, so \(\delta_N^{(n)}\) increases in \(n\) for every \(N\ge1\), and the rate \(\rho^{-n}\) is attained for every \(N\ge1\) at every \(\alpha\in(\gamma,1)\) (removes BL/BM's thresholds \(N_0(\alpha)\))
+
+Theorems BL and BM proved the lower bound \(\delta_N-\delta_N^{(n)}\ge c_N\rho^{-n}\) only for \(N\ge N_0(\alpha)\) (\(N_0(0.8)=9\), \(N_0(0.7)=61\)). The reason was that their covariance floor tolerated a loss term, which had to be beaten by a ceiling on the current deficit. BK had already pointed out that a monotone weight \(\omega_k\) would give the sign of the covariance outright. BL recorded that monotonicity as floats only. This theorem proves it, for every level \(k\) and every \(\alpha\ge1/17\). The only new input is that the corner resolvent \(r_k\) is a Stieltjes function of unit mass. Chebyshev's covariance inequality then gives monotonicity of \(\delta_N^{(n)}\) for every \(N\ge1\). A pair form of the covariance gives a floor of order \(\rho^{-k}\) with no deficit ceiling at all.
+
+**Setting.** As in Theorems BK and BL: \(r_k(s)=\tfrac12v^T(L_k+s)^{-1}v\) (AQ), \(p(y)=y(y+5)\), \(\beta(y)=(y+6)/((y+2)(y+5))\), \(e(y)=2y/(2+y)\), \(\rho=5^\alpha/3\), \(\gamma=\log3/\log5\). Write \(B(y)=1-\tfrac{y(y+4)}{3(y+2)(y+5)}\) and \(C(y)=\tfrac53(1+\tfrac{2y}5)e(y)\). BK.1's weight is \(\omega_k(y)=(1+y/5)^\alpha/d_k(y)\), where \(d_k=(1+\tfrac{2y}5)\tfrac53(\beta-e\,r_k(p))=B-C\,r_k(p)>0\). In BK.1's coordinate \(\tau'=5^kp(y)\), the deficit integrand is \(G_k=1-\eta_N(p^{k-N+1}(y))\), strictly increasing in \(y\) (BL.1), and \(\delta_N^{(k)}=\langle G_k\rangle_{\mu_k}\). **Assumptions used as stated:** AQ (1) (the decimation recursion equals \(\tfrac12v^T(L_k+s)^{-1}v\); re-checked in exact rationals at levels \(0\)–\(3\)); BK.1 (the transfer); BK.4 (the \(k\)-uniform two-form ceiling \(\omega_{\rm hi}\) and \(J_\alpha\), re-run live); BL.1 (monotone \(1-\eta_N\), positive series; re-run); BL.4(ii)'s pointwise bound \(G_k\le\min(1,S(5^{-N}\tau))+\tfrac32(3/5)^N\); BI.1 (orbit lemma); BI.3 (\(\mathcal R_k\ge1/(3+\tau)\)); BI.4 (\(G=0.6031\), re-run live). AZ is not used. Stage 1 is not edited. No \(W\), \(0.08\), \(0.23\), or \(30\,\mu\)N/kW enters.
+
+**THEOREM BN.**
+
+1. **BN.1 (spectral lemma; every \(k\ge0\)).** \(L_k\) is a symmetric positive semidefinite graph Laplacian and \(\tfrac12|v|^2=1\). So \(r_k(s)=\sum_iw_i/(\lambda_i+s)\) with \(w_i\ge0\), \(\sum_iw_i=1\), \(\lambda_i\ge0\). Hence, for every \(s>0\),
+   \[
+   r_k(s)\le\frac1s,\qquad 0\le-r_k'(s)\le\frac{r_k(s)}{s}.
+   \]
+2. **BN.2 (the weight is increasing; every \(k\ge0\), every \(\alpha\in[1/17,1)\)).** With \(r=r_k(p(y))\), exactly
+   \[
+   d_k'-\frac{\alpha d_k}{5+y}=B'-\frac{\alpha B}{5+y}+r\Bigl(-C'+\frac{\alpha C}{5+y}\Bigr)+Cp'\,(-r_k'(p)).
+   \]
+   By BN.1 the last term is at most \(Cp'r/p\). The resulting coefficient of \(r\) is \(K=K_0+\alpha C/(5+y)\), where \(K_0=-C'+Cp'/p=\dfrac{2y(2y^2+10y+15)}{3(y+2)^2(y+5)}\ge0\). So, using \(r\le1/p\),
+   \[
+   d_k'-\frac{\alpha d_k}{5+y}\ \le\ \Psi_\alpha(y)=-\frac{P_\alpha(y)}{3(y+2)^2(y+5)^2},\qquad P_\alpha(y)=2\alpha y^3+(17\alpha-1)y^2+46\alpha y+40\alpha+10 .
+   \]
+   For \(\alpha\ge1/17\) every coefficient of \(P_\alpha\) is \(\ge0\) and \(P_\alpha(0)>0\), so \(\Psi_\alpha<0\) on \((0,\infty)\). Hence \((\log\omega_k)'=\alpha/(5+y)-d_k'/d_k>0\): **\(\omega_k\) is strictly increasing on \((0,\infty)\) for every level \(k\) and every \(\alpha\in[1/17,1)\).** This holds above and below \(\gamma\). (BL listed it as floats only.)
+3. **BN.3 (monotone deficit; every \(\alpha\in[1/17,1)\), \(N\ge1\), \(k\ge N\)).** By BK.1, \(\delta_N^{(k+1)}-\delta_N^{(k)}=\operatorname{Cov}_{\mu_k}(\omega_k,G_k)/\langle\omega_k\rangle\). Both functions are strictly increasing in \(y\), and \(\mu_k\) has a positive density. So by Chebyshev's covariance inequality
+   \[
+   \delta_N^{(k+1)}>\delta_N^{(k)}.
+   \]
+   This is **the monotonicity half of Conjecture BL.6, for every \(N\ge1\)** (and also below \(\gamma\) down to \(\alpha=1/17\)). *Derived:* for \(x_a>0\), the corner-neighbour mean \(\tfrac12(u_n(\nu_b^N)+u_n(\nu_c^N))\) strictly decreases in \(n\ge N\).
+4. **BN.4 (rate floor without a deficit ceiling; every \(\alpha\in(\gamma,1)\), every \(N\ge1\)).** Write \(\operatorname{Cov}=\iint_{y'<y}(\omega_k(y)-\omega_k(y'))(G_k(y)-G_k(y'))\,d\mu_k\,d\mu_k\). By BN.2 and BL.1 every term is \(\ge0\). Keep only the following pairs.
+   - *Lower point.* \(y'\in A=\{\tau'\le\tau_0\}\) with \(\tau_0\le p(y_0)\), so \(y'\le y_0\). Then \(\omega_k(y')\le\omega_k(y_0)\le W_0:=\omega_{\rm hi}(y_0)\) (BN.2, BK.4). Also \(G_k(y')\le\bar G_N:=1-\eta_N(e^{1/2}5^{-N}\tau_0)\), by the orbit lemma (\(5^{-N}\tau_0\le1\)).
+   - *Upper point.* \(y\ge y_0\). There \(\omega_k\ge\omega_{\rm lo}\), \(G_k\ge H_N(y):=1-\eta_N(p(y))\), and \(r_k(p)\ge1/(3+p)\).
+   - *Mass of \(A\).* \(\mu_k(A)\ge M/D'_k\), with \(M=\int_0^{\tau_0}t^{-\alpha}/(3+t)\,dt\) (BI.3).
+
+   Hence
+   \[
+   \delta_N^{(k+1)}-\delta_N^{(k)}\ \ge\ \frac{\rho^{-k}M\Lambda_N}{D'_kD'_{k+1}},\qquad \Lambda_N=\int_{y_0}^\infty(\omega_{\rm lo}-W_0)^+(H_N-\bar G_N)^+\frac{p^{-\alpha}p'}{3+p}\,dy .
+   \]
+   Summing over \(k\ge n\) (\(D'_k\le D'_\infty<\infty\), BK.4) gives, for every \(N\ge1\) and \(n\ge N\),
+   \[
+   c_N\rho^{-n}\ \le\ \delta_N-\delta_N^{(n)}\ \le\ \tfrac32\frac{J_\alpha}{(1-\rho^{-1})D'_0}\rho^{-n},\qquad c_N=\frac{M\Lambda_N}{D'^{\,2}_\infty(1-\rho^{-1})}.
+   \]
+   Here \(c_N>0\), because \(\omega_{\rm lo}\to\infty\) and \(H_N\to1>\bar G_N\) as \(y\to\infty\). So **BK.4's order \(\rho^{-n}\) is attained at the level-\(N\) corner neighbours for every \(N\ge1\) and every \(\alpha\in(\gamma,1)\)**, with no threshold \(N_0(\alpha)\). This is the sharpness half of Conjecture BL.6 for all \(N\ge1\). For \(N\ge N_1\), one certificate covers all \(N\): \(H_N\) is at least BL.1's series truncated at \(j<N_1\), and \(\bar G_N\le K_S(5^{-N_1}\tau_0)^{1-\gamma}+\tfrac32(3/5)^{N_1}\) (BL.4(ii), \(K_S=\tfrac34e^{1/2}+\tfrac52\)).
+5. **BN.5 (certified; python-flint `arb`, outward rounding).** Parameters: \(y_0=1/10\), \(\tau_0=p(1/10)=51/100\), direct \(N=1\)–\(19\), uniform for \(N\ge N_1=20\) (\(\bar G_N\le1.652\cdot10^{-4}\)).
+
+   | \(\alpha\) | \(D'_\infty\le\) | \(W_0\le\) | \(M\ge\) | \(c_1\ge\) | \(c_2\ge\) | \(c_4\ge\) | \(c_8\ge\) | \(\Lambda\ge\) (\(N\ge20\)) | \(c_N\ge\) (\(N\ge20\)) |
+   |---|---|---|---|---|---|---|---|---|---|
+   | 0.7 | 50.543638 | 1.173620 | 0.775966 | \(3.253\cdot10^{-4}\) | \(1.580\cdot10^{-3}\) | \(2.850\cdot10^{-3}\) | \(3.481\cdot10^{-3}\) | 0.324879 | \(3.575\cdot10^{-3}\) |
+   | 0.75 | 14.176949 | 1.174783 | 0.963042 | \(1.136\cdot10^{-3}\) | \(5.548\cdot10^{-3}\) | \(1.003\cdot10^{-2}\) | \(1.226\cdot10^{-2}\) | 0.269989 | \(1.259\cdot10^{-2}\) |
+   | 0.8 | 9.120759 | 1.175946 | 1.245022 | \(1.758\cdot10^{-3}\) | \(8.641\cdot10^{-3}\) | \(1.566\cdot10^{-2}\) | \(1.914\cdot10^{-2}\) | 0.226154 | \(1.966\cdot10^{-2}\) |
+   | 0.85 | 7.533153 | 1.177111 | 1.716869 | \(2.166\cdot10^{-3}\) | \(1.071\cdot10^{-2}\) | \(1.946\cdot10^{-2}\) | \(2.380\cdot10^{-2}\) | 0.190824 | \(2.445\cdot10^{-2}\) |
+   | 0.9 | 7.512586 | 1.178277 | 2.663483 | \(2.274\cdot10^{-3}\) | \(1.132\cdot10^{-2}\) | \(2.061\cdot10^{-2}\) | \(2.523\cdot10^{-2}\) | 0.162108 | \(2.591\cdot10^{-2}\) |
+   | 0.95 | 10.164569 | 1.179445 | 5.509363 | \(1.836\cdot10^{-3}\) | \(9.195\cdot10^{-3}\) | \(1.680\cdot10^{-2}\) | \(2.057\cdot10^{-2}\) | 0.138586 | \(2.113\cdot10^{-2}\) |
+
+   The full direct rows \(N=1\)–\(19\) are printed by the script. At \(\alpha=0.8\) this closes BL's gap \(N=1\)–\(8\): \(c_1\ge1.758\cdot10^{-3}\), …, \(c_8\ge1.914\cdot10^{-2}\). At \(\alpha=0.7\) it closes BM's gap \(N=1\)–\(60\). For large \(N\), BL/BM's constants are larger (e.g. \(c_N\ge0.1240\) for \(N\ge40\) at \(0.8\)), and both floors are valid. Combined with BK.3–BK.4, the error is two-sided \(\Theta(\rho^{-n})\) at every \(N\ge1\).
+
+**Proof of BN.1.** This is the spectral theorem for \(L_k\). For the bounds: \(\lambda_i\ge0\) gives \(1/(\lambda_i+s)\le1/s\), and \(-r_k'=\sum w_i/(\lambda_i+s)^2\le\frac1s\sum w_i/(\lambda_i+s)\). Checks: exact rationals confirm \(\tfrac12v^T(L_n+s)^{-1}v=\) AQ's recursion at \(s=1/3,2,7/2\) for \(n=0\)–\(3\). sympy finds that \(r_0,\dots,r_3\) have only simple negative real poles, with positive residues summing to \(1\). \(\square\)
+
+**Proof of BN.2.** The chain-rule identity, \(K_0\), \(B'+K_0/p=(y^2-10)/(3(y+2)^2(y+5)^2)\), \(B-C/p=(y+4)(2y+5)/(3(y+2)(y+5))\) and \(\Psi_\alpha=-P_\alpha/(3(y+2)^2(y+5)^2)\) are sympy identities. The inequality steps use \(C,p'\ge0\), BN.1 and \(K\ge0\). Note that the \(\alpha=0\) part \(B'+K_0/p\) is positive for \(y>\sqrt{10}\). The exponent term \(-\alpha(B-C/p)/(5+y)\) is what closes the bound, and this majorant fails for small \(\alpha\) (e.g. \(P_{1/100}<0\) at \(y=5,\dots,40\)). That is a limit of the method, not a statement about \(\omega_k\). \(\square\)
+
+**Proof of BN.3.** Chebyshev's covariance inequality: \(\operatorname{Cov}=\tfrac12\iint(\omega(y)-\omega(y'))(G(y)-G(y'))\), and the integrand is \(>0\) off the diagonal. Integrability: \(G_k\in(0,1)\), and \(\langle\omega_k\rangle=D'_{k+1}/D'_k<\infty\). \(\square\)
+
+**Proof of BN.4.** Every pair term is \(\ge0\), so restricting to \(A\times[y_0,\infty)\) is a lower bound. On that set, \(y'\le y_0\le y\), and the two factors are \(\ge(\omega_{\rm lo}(y)-W_0)^+\) and \(\ge(H_N(y)-\bar G_N)^+\). The measure of \(B\) in \(y\) is \(\rho^{-k}p^{-\alpha}r_k(p)p'\,dy/D'_k\ge\rho^{-k}p^{-\alpha}p'/(3+p)\,dy/D'_k\). Divide by \(\langle\omega_k\rangle=D'_{k+1}/D'_k\). Sum using \(\delta_N^{(k)}\to\delta_N\) (BK.3). \(\square\)
+
+**Proof of BN.5.** \(W_0\) is BK.4's two-form ceiling at the point \(1/10\), with \(\bar r=\min(1/s,Gs^{\gamma-1})\). \(M\ge\tau_0^{1-\alpha}/((1-\alpha)(3+\tau_0))\). \(\Lambda_N\) uses cells of ratio \(1.01\) on \([1/10,10^6]\) (80 bits): ball evaluation of \(\omega_{\rm lo}\) and the weight, and \(H_N\) at the left endpoint (\(H_N\) increasing). The series is truncated once \(p^jz>10^{30}\), which drops positive terms. The part beyond \(10^6\) is dropped (integrand \(\ge0\)). \(\bar G_N\) is the full series at \(e^{1/2}5^{-N}\tau_0\), rounded up. \(J_\alpha\) and \(D'_\infty\le D'_0+J_\alpha/(1-\rho^{-1})\) are re-run as in BK.4. \(\square\)
+
+**Evidence (floats; consistency only).**
+- \(\omega_k\) increases on \(321\) log-grid points of \([10^{-5},10^3]\) for \(k=0,1,2,4,8,12\) at \(\alpha=0.45,0.8,0.95\) (mpmath, 40 digits).
+- At \(0.8\), \(\delta_N^{(n)}\) increases over \(n=8,12,20\) for \(N=1\)–\(8\) (e.g. \(N=1\): \(0.9487\to0.9562\); \(N=8\): \(0.1183\to0.2379\)), and \(\delta^{(20)}-\delta^{(8)}\ge c_N(\rho^{-8}-\rho^{-20})\).
+- The certified \(c_N\) are far below the floats' \(C_\delta(0.8)\approx0.6025\). BN gives existence of the order, not the constant.
+
+**What stays open.**
+- *The limit.* Conjecture BL.6 is now reduced to its limit part: does \(C_\delta(\alpha)=\lim\rho^n(\delta_N-\delta_N^{(n)})\) exist, and is it independent of \(N\)?
+- *Small \(\alpha\).* Monotone \(\omega_k\) for \(\alpha<1/17\).
+- *Other items.* A certificate uniform over an interval of \(\alpha\); closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); a continuum equation for \(\bar u\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem BN is a monotonicity statement and a lower bound for the convergence of one graph Dirichlet extension of a discrete fractional operator on the combinatorial gasket. It is about functions on graphs, not a field, a flux or a force. No flux functional on the infinite gasket is constructed, and Stage 1 is not touched. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_monotone_weight.py`** (about 1 min; needs sympy, mpmath, python-flint).
+- *Sympy:* the chain-rule identity; \(K_0\); \(B'+K_0/p\); \(B-C/p\); \(\Psi_\alpha\) and \(P_\alpha\); the coefficient signs at \(\alpha=1/17\); the small-\(\alpha\) remark; \(M\)'s floor; the two-atom Chebyshev identity; BL's checks re-run.
+- *Exact rationals:* \(\tfrac12v^T(L_n+s)^{-1}v\) against AQ's recursion (\(n\le3\)); the pole and residue structure of \(r_0,\dots,r_3\); \(r_k\le1/s\) and \(-r_k'\le r_k/s\) at sample points.
+- *`arb`:* BI.4 re-run; at each of the six exponents, \(J_\alpha\), \(W_0\), \(M\), \(\Lambda_N\) (\(N=1\)–\(19\) and uniform), and \(c_N\).
+- *Floats:* \(\omega_k\) on a grid; \(\delta_N^{(n)}\) at \(0.8\).
 
 The script exits nonzero if any check fails.
 

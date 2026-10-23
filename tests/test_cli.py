@@ -570,3 +570,30 @@ class FractionalRateSharpnessAlphaTests(unittest.TestCase):
         self.assertIn("gasket_fractional_rate_sharpness_alpha.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BM", (ROOT / doc).read_text())
+
+
+class FractionalMonotoneWeightTests(unittest.TestCase):
+    def test_theorem_bn_monotone_weight(self):
+        """Theorem BN: sympy lemmas (monotone omega_k for alpha >= 1/17) and a coarse (still rigorous, looser) floor at
+        alpha = 0.8, N = 1. The fine certificates at six exponents and the floats run in `reproduce` (about 1 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_monotone_weight as bn
+        import gasket_fractional_rate_sharpness as bl
+        from flint import arb
+
+        bn.FAILS.clear()
+        bn.symbolic_checks()
+        self.assertEqual(bn.FAILS, [])
+        G = arb("0.6031")
+        y0 = arb("0.1")
+        tau0 = y0 * (y0 + 5)
+        W0 = bn.omega_hi_point("0.8", G, y0)
+        self.assertTrue(float(W0.upper()) < 1.18)
+        N = 1
+        Gbar = arb(bl.one_minus_eta_series(arb(0.5).exp() * arb(5) ** (-N) * tau0, N)[0].upper())
+        Lam = bn.Lambda_lower("0.8", W0, Gbar, lambda z: bn.series_lo(z, N), yhi="1e4", ratio="1.05")
+        self.assertTrue(float(Lam.lower()) > 0)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_monotone_weight.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BN", (ROOT / doc).read_text())

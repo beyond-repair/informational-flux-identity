@@ -474,3 +474,26 @@ class FractionalCornerSharpnessTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BJ", (ROOT / doc).read_text())
             self.assertIn("1.135890", (ROOT / doc).read_text())
+
+
+class FractionalUniformRateTests(unittest.TestCase):
+    def test_theorem_bk_uniform_rate(self):
+        """Theorem BK: sympy identities, exact rationals at n = 0-2, a coarse J_0.8 bound (contains the fine one) and the
+        resulting C_0.8. The fine certificate and the floats run in `reproduce` (about 4 min)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_uniform_rate as bk
+        from flint import arb
+
+        bk.FAILS.clear()
+        bk.symbolic_checks()
+        bk.exact_checks(levels=(0, 1, 2))
+        self.assertEqual(bk.FAILS, [])
+        J, _, _, _ = bk.J_bound("0.8", arb("0.6031"), ratio="1.01")
+        self.assertTrue(1.188154 <= float(J.upper()) < 1.25)
+        _, _, _, C = bk.constants("0.8", J)
+        self.assertTrue(6.2 < float(C.upper()) < 6.6)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_uniform_rate.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BK", (ROOT / doc).read_text())
+            self.assertIn("6.2192", (ROOT / doc).read_text())

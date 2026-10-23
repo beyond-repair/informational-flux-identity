@@ -701,3 +701,21 @@ class FractionalLogPeriodicProfileTests(unittest.TestCase):
         self.assertIn("gasket_fractional_log_periodic_profile.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BT", (ROOT / doc).read_text())
+
+
+class FractionalProfileFourierTests(unittest.TestCase):
+    def test_theorem_bu_profile_fourier(self):
+        """Theorem BU: sympy lemmas (concavity of v^a(c+dv), closed-form Mellin antiderivative, Stieltjes convexity, extended-chord
+        monotonicity, psi_AU derivative bound, even-mode antisymmetry) and exact rationals. The arb certificate (about 65 s) runs
+        in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_fourier as bu
+
+        bu.FAILS.clear()
+        bu.symbolic_checks()
+        bu.exact_checks()
+        self.assertEqual(bu.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_fourier.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BU", (ROOT / doc).read_text())

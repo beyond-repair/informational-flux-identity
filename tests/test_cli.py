@@ -771,3 +771,23 @@ class FractionalProfileModesTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_modes.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BW", (ROOT / doc).read_text())
+
+
+class FractionalProfileSpectralTests(unittest.TestCase):
+    def test_theorem_bx_profile_spectral(self):
+        """Theorem BX: sympy lemmas (uniqueness bookkeeping, 3*5^-gamma=1, kernel identity, Mellin integral, |sin(x+iy)|^2,
+        Toeplitz rank for two atoms), the BX.3 bound and the rho_k band on AU's and BV.4's published tables, and the Toeplitz
+        certificate on an exact 3-atom measure (arb, fast). BW's routine re-run and T_17 > 0 (about 6.5 min) run in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_spectral as bx
+
+        bx.FAILS.clear()
+        bx.symbolic_checks()
+        self.assertTrue(bx.table_checks())
+        bx.toeplitz_toy_checks()
+        self.assertEqual(bx.FAILS, [])
+        self.assertEqual(bx.N_TOEP, 17)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_spectral.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BX", (ROOT / doc).read_text())

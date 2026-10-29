@@ -746,3 +746,28 @@ class FractionalProfileAnalyticTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_analytic.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BV", (ROOT / doc).read_text())
+
+
+class FractionalProfileModesTests(unittest.TestCase):
+    def test_theorem_bw_profile_modes(self):
+        """Theorem BW: the published tables it is checked against (AU k <= 4, BV.4 k = 5..11) obey BV.3's B_k and the
+        [0.60, 0.93] normalised band (arb, fast); the deep AU-routine re-run (k <= 20, about 6 min) runs in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_modes as bw
+        from flint import arb, ctx
+
+        ctx.prec = 200
+        G = arb(bw.bv.G_STAR_HI)
+        x = (-2 * arb.pi() ** 2 / arb(5).log()).exp()
+        table = {k: (bw.bv.AU_TABLE_A[k], bw.bv.AU_TABLE_B[k]) for k in range(1, 5)}
+        table.update(bw.BV_TABLE)
+        for k, (a, b) in table.items():
+            mod = (arb(a) ** 2 + arb(b) ** 2).sqrt()
+            self.assertTrue(bool(mod < bw.bv.B_bound(k, G)))
+            c = mod / x ** k
+            self.assertTrue(bool(c > arb("0.60")) and bool(c < arb("0.93")))
+        self.assertEqual(bw.KMAX, 20)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_modes.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BW", (ROOT / doc).read_text())

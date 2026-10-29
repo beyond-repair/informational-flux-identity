@@ -3043,6 +3043,64 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem BW. AU's mode routine, re-run deeper and with a finer sandwich, certifies \(\hat\theta_k\ne0\) for every \(k\le20\) (BV: \(k\le11\)), \(\langle F\rangle\) and \(c_R(\gamma)\) to \(10^{-113}\), and \(G^*\), \(\min F\) to \(10^{-109}\)
+
+**Setting.** As in Theorems BS–BV: \(F(u)=u^{1-\gamma}Q_\infty(u)=\theta(u)\), \(F(5u)=F(u)\), \(t=\log_5u\), \(\hat\theta_k=\int_0^1F(5^t)e^{-2\pi ikt}\,dt=a_k-ib_k\) (AU's normalisation), \(G^*=\max F\), \(B_k=G^*\sqrt{1+T_k^2}\,e^{-T_k\arctan T_k}\), \(T_k=4\pi k/\ln5\) (BV.3). **Assumptions (used as stated, not re-run):** AQ (3), BN.1, BS.1, BT.2, BU.1, BU.3 (\(G^*\le0.6009615785983\)), BV.3 (the bound \(|\hat\theta_k|\le B_k\)); AU (3)'s certified routine (AQ (4) node enclosures, AS (2) sandwich for any floor/ceiling orders \(b\), \(u\), AT.1 orbit lemma, AU's \(\psi\) and endpoint corrections), imported unchanged. AU's 22-digit table, BV.4's table and BV.5's balls are used for consistency only.
+
+**THEOREM BW.**
+
+1. **BW.1 (modes \(k\le20\); BV's open "\(\hat\theta_k\ne0\) for \(k\ge12\)", up to \(k=20\)).** AU (3)'s routine with period \([5^{-261},5^{-260}]\), \(1024\) cells per period, sandwich orders \(b=u=32/33\), outward-rounded `mpmath.iv` at \(300\) digits and node cap \(10^{240}\) encloses \(\langle F\rangle\) to radius \(1.0\cdot10^{-113}\) and every \(a_k,b_k\), \(k\le20\), to radius \(2.0\cdot10^{-113}\) (BV.4: \(8.2\cdot10^{-63}\)). Every one of them has \(a_k\ne0\) or \(b_k\ne0\) certified:
+
+| \(k\) | \(a_k\) | \(b_k\) | \(\lvert\hat\theta_k\rvert\ge\) | \(B_k\) | \(\lvert\hat\theta_k\rvert e^{2\pi^2k/\ln5}\) |
+|---|---|---|---|---|---|
+| 12 | \(-7.92030433941\cdot10^{-65}\) | \(1.75678609788\cdot10^{-65}\) | \(8.112800\cdot10^{-65}\) | \(1.8500\cdot10^{-62}\) | \(0.6712\) |
+| 13 | \(-7.23926469953\cdot10^{-71}\) | \(5.09345693186\cdot10^{-70}\) | \(5.144645\cdot10^{-70}\) | \(9.4507\cdot10^{-68}\) | \(0.9027\) |
+| 14 | \(1.77240534632\cdot10^{-75}\) | \(1.48737003819\cdot10^{-75}\) | \(2.313804\cdot10^{-75}\) | \(4.7992\cdot10^{-73}\) | \(0.8609\) |
+| 15 | \(6.60019679401\cdot10^{-81}\) | \(-5.01730355973\cdot10^{-81}\) | \(8.290714\cdot10^{-81}\) | \(2.4247\cdot10^{-78}\) | \(0.6542\) |
+| 16 | \(-2.48373767130\cdot10^{-86}\) | \(-4.00131229987\cdot10^{-86}\) | \(4.709507\cdot10^{-86}\) | \(1.2196\cdot10^{-83}\) | \(0.7881\) |
+| 17 | \(-2.44314458057\cdot10^{-91}\) | \(1.18102931611\cdot10^{-92}\) | \(2.445997\cdot10^{-91}\) | \(6.1104\cdot10^{-89}\) | \(0.8680\) |
+| 18 | \(-2.41716211798\cdot10^{-97}\) | \(8.84447012021\cdot10^{-97}\) | \(9.168824\cdot10^{-97}\) | \(3.0508\cdot10^{-94}\) | \(0.6900\) |
+| 19 | \(4.64767606746\cdot10^{-102}\) | \(1.71967465130\cdot10^{-102}\) | \(4.955620\cdot10^{-102}\) | \(1.5185\cdot10^{-99}\) | \(0.7909\) |
+| 20 | \(2.04957487095\cdot10^{-107}\) | \(-1.75889774588\cdot10^{-107}\) | \(2.700826\cdot10^{-107}\) | \(7.5375\cdot10^{-105}\) | \(0.9141\) |
+
+   So \(\hat\theta_k\ne0\) for every \(1\le|k|\le20\): AU (2)'s Mellin transform \(M\) of \(r_\infty\) has genuine simple poles at \(1-\gamma\pm i\omega k\) for all these \(k\), and \(F\) is not a trigonometric polynomial of degree below \(20\). Also \(|\hat\theta_k|\le B_k\) for every \(k\le20\) (a check of BV.3 against an independent certificate), and \(|\hat\theta_k|e^{2\pi^2k/\ln5}\in[0.60,0.93]\) for every \(k\le20\) (certified; nine more terms of Conjecture BV.6's evidence band, with no trend). The rows \(k\le4\) reproduce AU's 22-digit table, and the rows \(k=5,\dots,11\) agree with BV.4's table within BV.4's radius \(8.2\cdot10^{-63}\). (BV.4's printed \(b_{11}=-1.78263934544\cdot10^{-59}\) has a non-significant last digit; the new value is \(-1.78263934547\cdot10^{-59}\), and the new \(|\hat\theta_{11}|\ge1.808283\cdot10^{-59}\) sharpens BV.4's \(1.807336\cdot10^{-59}\).)
+2. **BW.2 (the mean and the slope constant).**
+   \[
+   \langle F\rangle=\langle\Theta\rangle=0.60095425116877360782370515009999426797183899606527964527556307290326859178311545042930649582114\ldots\ (\pm1.0\cdot10^{-113}),
+   \]
+   and AU (1)'s \(c_R(\gamma)=(2\sin\pi\gamma/\pi)\ln5\,\langle\Theta\rangle\) is
+   \[
+   c_R(\gamma)=0.51716583463050524392598048567312720045378382987715870184537398574670709450856254620631814819510\ldots\ (\pm8.7\cdot10^{-114}),
+   \]
+   both inside AU's \(34\)-digit enclosures.
+3. **BW.3 (extremes; BV.5's argument with the \(20\)-mode sum).** BV.3's tail from \(k\ge21\) gives \(|F-S|\le7.46\cdot10^{-110}\), \(|F'-S'|\le9.85\cdot10^{-108}\), \(|F''-S''|\le1.30\cdot10^{-105}\). The \(4096\)-cell count again gives exactly one maximum and one minimum per period, and
+   \[
+   G^*=\max F=0.60096157859710108904205618413461692677004052591725819702185687716025065514202295750071720787122\ldots\ (\pm1.3\cdot10^{-109}),
+   \]
+   \[
+   \min F=0.60094692379426561210422618817212924841162969178767769700850974102950276770653887623071791572010\ldots\ (\pm1.3\cdot10^{-109}),
+   \]
+   \[
+   t_{\max}=0.751755961790317558778029332738208256562201926116552145785615717872\ldots,\quad t_{\min}=0.251756124192213928849302877000673101065745614824539815823039223608\ldots\ (\pm5.6\cdot10^{-104}),
+   \]
+   all agreeing with BV.5's printed digits. Kept Failure BV.5's witness is reproduced: \(t_{\max}-t_{\min}-\tfrac12=-1.624018963700712735442624648445035436887\ldots\cdot10^{-7}\). So BI.4's sharp constant \(\sup_{s>0}s^{1-\gamma}r_\infty(s)=G^*\) (BT.3) is now known to \(108\) digits.
+
+**Proof.** BW.1 is AU (3)'s proof with new parameters: the script sets `gasket_fractional_log_mean`'s `E_DEPTH=260`, `K_PER=1024`, `ORD=32`, cap \(10^{240}\) and calls BV's `au_modes` (which calls AU's `period_integrals` and `corrections` unchanged), and converts each interval to python-flint `arb` exactly. AS (2) allows any floor and ceiling orders, and every correction term of AU (3) is evaluated at the new depth by the same code. A nonzero lower bound on \(|a_k|\) or \(|b_k|\) gives \(\hat\theta_k\ne0\); AU (2) identifies \(\overline{\hat\theta_k}\) with the residue of \(M\) at \(1-\gamma+i\omega k\). A trigonometric polynomial of degree \(d\) has \(\hat\theta_k=0\) for \(|k|>d\), so \(\hat\theta_{20}\ne0\) excludes \(d<20\). BW.2 is AU (1)'s identity evaluated in `arb`. BW.3 is BV.5's proof verbatim, with \(S\) the certified \(20\)-mode sum and the tail started at \(k=21\). \(\square\)
+
+**Observation (floats of certified numbers; no claim).** The certified radius dropped from \(8.2\cdot10^{-63}\) to \(3.7\cdot10^{-77}\) (depth \(5^{-200}\), \(512\) cells, \(b=24\)), \(1.3\cdot10^{-85}\) (\(768\) cells, \(b=24\)) and \(8.9\cdot10^{-92}\) (\(512\) cells, \(b=32\)) in exploratory runs, so at these settings the sandwich order, not the depth, was the limiting term; at \(b=32\), \(5^{-200}\) the radius is near AU's AT.1 depth correction \(\approx2(5^{-201})^{0.65}/(1-5^{-0.65})\). These runs are not part of the witness.
+
+**What stays open.**
+- *From BV/BW.* Whether \(\hat\theta_k\ne0\) for every \(k\ge21\) (not implied by BV.3 or BW.1; each further \(k\) costs about \(5.3\) more digits). Conjecture BV.6 (lower half of the decay rate): the certified band \([0.60,0.93]\) for \(k\le20\) is evidence, not proof, and the normalised moduli oscillate without a visible limit. Whether the singularities of \(Q_\infty\) on \((-\infty,0)\) are poles. A closed form of \(F=\theta\), \(G^*\), \(t_{\max}\), \(t_{\min}\). Feeding \(G^*\) back into BI.4/BJ.
+- *Carried over.* Conjecture BS.4; a rate for \(J-A_N\); uniformity in \(\alpha\); eventual monotonicity of \(V^{(n)}\); a closed form for \(a^*\); Conjecture BL.6's limit part; closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem BW certifies more Fourier modes and more digits of one log-periodic function built from a corner resolvent of a graph Laplacian on the combinatorial gasket. It proves no new structural property beyond those listed. No flux functional is constructed, Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_modes.py`** (about 6 min; needs python-flint, mpmath; imports BV's and AU's scripts).
+- *Interval:* AU's routine at the new parameters for \(\langle F\rangle\) and \(a_k,b_k\) (\(k\le20\)); nonvanishing; \(|\hat\theta_k|\le B_k\); the band \([0.60,0.93]\); agreement with AU's and BV.4's tables; \(c_R(\gamma)\) inside AU's enclosure; the tails; the \(4096\)-cell critical-point count; bisection; agreement with BV.5's printed digits; BV.5's witness sign.
+- *Floats:* none enter a check.
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

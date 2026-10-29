@@ -943,3 +943,28 @@ class FractionalProfileLevelRatioTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_ratio.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CE", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelRateTests(unittest.TestCase):
+    def test_theorem_cf_profile_level_rate(self):
+        """Theorem CF: sympy proof steps of Birkhoff's contraction, the s-variable cone constants, the certified diameter
+        and contraction factor (arb), CF.3's bound against arb iterates for m < M_FAST, and the gap bound."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_ratio as ce
+        import gasket_fractional_profile_level_rate as cf
+
+        cf.FAILS.clear()
+        cf.birkhoff_lemma()
+        cf.symbolic_cone()
+        consts = cf.cone_constants()
+        self.assertTrue(float(consts["theta"]) < 0.5442 and float(consts["rate"]) < 0.8855)
+        ce.FAILS.clear()
+        lo, hi = ce.certificate()
+        self.assertEqual(ce.FAILS, [])
+        self.assertTrue(cf.pointwise_consistency(cf.M_FAST, consts, lo, hi))
+        cf.eigen_gap(consts, hi)
+        self.assertEqual(cf.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_rate.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CF", (ROOT / doc).read_text())

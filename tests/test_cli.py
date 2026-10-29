@@ -918,3 +918,28 @@ class FractionalProfileLevelCountsTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_counts.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CD", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelRatioTests(unittest.TestCase):
+    def test_theorem_ce_profile_level_ratio(self):
+        """Theorem CE: sympy identities, the sigma law on O_k (k <= 6), the 5+11 level-4 branches, the exact rational
+        Collatz-Wielandt certificate r in [lo, hi] (width 2e-38) and CC's level sums through level K_FAST against r."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_ratio as ce
+
+        ce.FAILS.clear()
+        ce.symbolic_checks()
+        ce.cone_constants()
+        ce.sigma_law(6)
+        ce.branches4()
+        lo, hi = ce.certificate()
+        self.assertTrue(hi - lo <= 2 * ce.EPS)
+        self.assertTrue(abs(float(lo) - 0.42373128696260794) < 1e-15)
+        found = ce.level_sum_consistency(ce.K_FAST, lo, hi)
+        ce.mass_factorisation([f for f in found if f[2] <= 5][:6])
+        ce.naive_failure(10, float((lo + hi) / 2))
+        self.assertEqual(ce.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_ratio.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CE", (ROOT / doc).read_text())

@@ -836,3 +836,21 @@ class FractionalProfileAtomsTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_atoms.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BZ", (ROOT / doc).read_text())
+
+
+class FractionalProfileAtomLawTests(unittest.TestCase):
+    def test_theorem_ca_profile_atom_law(self):
+        """Theorem CA: symbolic checks, the accumulation certificate at lam*, the Kept Failure CA.5 witness and doc
+        wiring; the identification of all 311 BZ atoms (BZ.5 scan re-run, about 2.3 min) runs in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_atom_law as ca
+
+        ca.FAILS.clear()
+        ca.symbolic_checks()
+        ca.accumulation()
+        ca.minus_two_witness()
+        self.assertEqual(ca.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_atom_law.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CA", (ROOT / doc).read_text())

@@ -3361,7 +3361,7 @@ The script exits nonzero if any check fails.
 **Observation (no claim).** The level sums \(s_k\) have ratio \(s_{k+1}/s_k=0.42373129\ldots\) from \(k\approx8\) on (printed for \(k=4,\dots,13\)). The geometric tail \(s_{14}r/(1-r)\), with \(r=s_{14}/s_{13}\), equals \(7.837945649\cdot10^{-7}\), against the exact remainder \(\delta_{14}=7.837945666\cdot10^{-7}\): they differ by \(2\cdot10^{-15}\). So the CB.5 masses, which are products over the orbit \(\psi(5^iu)\), add up to the \(c_R(\gamma)\) of Theorems AT/AU, which was computed by a different route, to about \(15\) digits. Neither the ratio nor the counts \(5\cdot2^{k-4}\) are proved here.
 
 **What stays open.**
-- *From CA/CB/CC.* A closed form of \(\psi\), hence of \(F\), \(G^*\), \(t_{\max}\), \(t_{\min}\) and the atoms. The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). The ratio \(0.42373\ldots\) and the level counts. \(G^*\) into BI.4/BJ.
+- *From CA/CB/CC.* A closed form of \(\psi\), hence of \(F\), \(G^*\), \(t_{\max}\), \(t_{\min}\) and the atoms. The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). The ratio \(0.42373\ldots\) and the level counts (counts: now Theorem CD). \(G^*\) into BI.4/BJ.
 - *Carried over.* Conjecture BS.4; a rate for \(J-A_N\); uniformity in \(\alpha\); eventual monotonicity of \(V^{(n)}\); a closed form for \(a^*\); Conjecture BL.6's limit part; closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
 
 **NOT THIS.** Theorem CC proves that the spectral measure of one scaled corner resolvent of a graph Laplacian on the combinatorial gasket is pure point. A spectral measure is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters. The Stage 2 question stays OPEN: the repository has no \(\Psi_{\mathrm{info}}\) on the frozen \(0.45\) mesh from which to decide it. Functions on a graph, not a flux. Not thrust.
@@ -3371,6 +3371,50 @@ The script exits nonzero if any check fails.
 - *Exact rationals:* the Cauchy–Schwarz lemma \(\operatorname{Im}(1/r)\ge\operatorname{Im}z\) on \(200\) random probability measures.
 - *Interval (`arb`/`acb`, 300 bits):* \(\operatorname{Im}H-\operatorname{Im}z/2>0\), \(|F|\operatorname{Im}z<2\) and \(F=k\,F\circ p\) at \(8\) points (some within \(10^{-4}\) of \(K_p\)); \(\operatorname{Im}(1/r_n)\ge\operatorname{Im}z\) for CB.1's \(r_n\); \(\psi(-1)\), \(\psi(-5)=p(\psi(-1))\), \(f(-1)\ne0\); all \(10240\) atoms of level \(\le14\) in \([1,5)\) with CB.5 masses, the level counts, disjointness, the partial sum and \(\delta_{14}\); the largest mass against CB; \(\liminf\rho_k\le0.59486582\); \(\pi c_R(\gamma)/\ln5\); the geometric-tail consistency (to \(10^{-13}\)).
 - *Floats:* mpmath Newton steps only propose the balls.
+
+The script exits nonzero if any check fails.
+
+## Theorem CD. The level counts of \(\nu\)'s atoms in one scale period are exact at every level: \(N_0=1\), \(N_1=0\), \(N_2=1\), \(N_3=3\) and \(N_k=5\cdot2^{k-4}\) for \(k\ge4\), so one period holds exactly \(5\cdot2^{K-3}\) atoms of level \(\le K\)
+
+**Setting.** As in Theorem CC. \(p(z)=z(z+5)\), \(O_k=p^{-k}(-3)\), \(O=\bigcup_kO_k\) (CA); \(a=\psi(-1)\) and \(I=(p(a),a]=(\psi(-5),\psi(-1)]\). By CC.4, the atoms of \(\nu\) in \([1,5)\) are exactly the \(\lambda_t=-\psi^{-1}(t)\), \(t\in O\cap I\), and \(t\in O_k\) is the atom's level. CC certified \(N_k=\#(O_k\cap I)\) for \(k\le14\) (\(1,0,1,3\), then \(5\cdot2^{k-4}\); \(10240\) atoms) and left the counts as an observation. This note proves them for every \(k\). For an interval \(J\) write \(C_m(J)=\#(O_m\cap J)\).
+
+**Assumptions used as stated (not re-run).** CC.4 (the parametrisation of one period by \(\psi\) on \([-5,-1]\), \(\psi\) strictly increasing there, and the level-by-level atom set), BD.4, BJ.6, and CA's enclosure routine `psi_enc` (imported unchanged). No literature assumption is used.
+
+**THEOREM CD.**
+1. **CD.1 (the preimage sets).** \(O_k\) consists of exactly \(2^k\) distinct real points, all in \((-5,0)\setminus\{-\tfrac52\}\).
+2. **CD.2 (the endpoint orbit leaves \([-5,0]\) in four steps; certified).** \(-\tfrac52<a=-0.9508266438293260\ldots<0\), \(-5<p^2(a)=-4.427332832333435\ldots<p(a)=-3.850061912530890\ldots<-3\), \(-3<p^3(a)=-2.535388153409578\ldots<-\tfrac52\), and \(p^4(a)=-6.248747678598260\ldots<-5\).
+3. **CD.3 (exact level counts).** For every \(k\ge0\),
+   \[
+   N_k=\#(O_k\cap I)=\begin{cases}1,0,1,3&k=0,1,2,3,\\ 5\cdot2^{k-4}&k\ge4,\end{cases}\qquad \sum_{k\le K}N_k=5\cdot2^{K-3}\quad(K\ge3).
+   \]
+   In particular one scale period holds \(10240\) atoms of level \(\le14\), as CC.4 certified, and the level-\(k\) atoms are a fraction \(5/16\) of \(O_k\) for \(k\ge4\).
+4. **CD.4 (direct recount; certified consistency).** The six counting functions of the proof, recounted from `arb` enclosures of all \(2^k\) points of \(O_k\) for \(k\le18\) (\(262144\) points at the top level, every comparison with \(a\)'s orbit decided), equal the recursion.
+
+*Proof.* *CD.1.* \(p(y)=t\) iff \(y=-\tfrac52\mp\sqrt{t+25/4}\). For \(t\in(-\tfrac{25}4,0)\) the square root lies in \((0,\tfrac52)\), so the two roots are distinct, lie in \((-5,-\tfrac52)\) and \((-\tfrac52,0)\), and neither is \(-\tfrac52\). Since \(-3\in(-\tfrac{25}4,0)\) and \((-5,0)\subset(-\tfrac{25}4,0)\), induction on \(k\) gives the claim (points of \(O_{k+1}\) with different images are different).
+*CD.2.* `arb` at 300 bits from CA's enclosure of \(\psi(-1)\), with \(p\) evaluated as in BZ.
+*CD.3.* \(p\) is a decreasing bijection of \([-5,-\tfrac52]\) onto \([-\tfrac{25}4,0]\) and an increasing bijection of \([-\tfrac52,0]\) onto \([-\tfrac{25}4,0]\). So for \(m\ge1\) and an interval \(J\) on one side of \(-\tfrac52\), \(C_m(J)=C_{m-1}(p(J))\), and by CD.1 only \(p(J)\cap(-5,0)\) matters; \(C_{m-1}(J')=2^{m-1}\) if \(J'\supseteq(-5,0)\) and \(0\) if \(J'\cap(-5,0)=\emptyset\). Write \(a_j=p^j(a)\). Cutting at \(-\tfrac52\) and using CD.2 for the positions:
+   - \(N_k\): \((a_1,-\tfrac52)\mapsto(-\tfrac{25}4,a_2)\), \([-\tfrac52,a]\mapsto[-\tfrac{25}4,a_1]\), so \(N_k=A_{k-1}+B_{k-1}\) with \(A_m=C_m((-5,a_1])\), \(B_m=C_m((-5,a_2))\).
+   - \(A_m=G_{m-1}\), \(G_j=C_j([a_2,0))\), since \((-5,a_1]\mapsto[a_2,0)\); \(B_m=F_{m-1}\), \(F_j=C_j((a_3,0))\), since \((-5,a_2)\mapsto(a_3,0)\).
+   - \(G_j=E_{j-1}+2^{j-1}\), \(E_j=C_j((-5,a_3])\): \([a_2,-\tfrac52)\mapsto(-\tfrac{25}4,a_3]\) and \([-\tfrac52,0)\mapsto[-\tfrac{25}4,0)\).
+   - \(E_j=2^{j-1}\): \((-5,a_3]\mapsto[a_4,0)\supseteq(-5,0)\) because \(a_4<-5\).
+   - \(F_j=2^{j-1}\): \((a_3,-\tfrac52)\mapsto(-\tfrac{25}4,a_4)\), disjoint from \((-5,0)\), and \([-\tfrac52,0)\mapsto[-\tfrac{25}4,0)\).
+   The level-\(0\) values follow from the position of \(-3\) (CD.2): \(N_0=G_0=E_0=1\), \(A_0=B_0=F_0=0\). Hence \(N_1=0\), \(N_2=A_1+B_1=G_0+F_0=1\), \(N_3=G_1+F_1=(E_0+1)+1=3\), \(N_4=G_2+F_2=(1+2)+2=5\), and for \(k\ge5\), \(N_k=G_{k-2}+F_{k-2}=(2^{k-4}+2^{k-3})+2^{k-3}=5\cdot2^{k-4}\). The cumulative sum is \(5+5(2^{K-3}-1)=5\cdot2^{K-3}\). No endpoint of any interval is in \(O\): \(-5,0,-\tfrac52,-\tfrac{25}4\notin O\) by CD.1, and \(a_j\in O\) would give \(a\in O\), i.e. \(\lambda=1\) an atom, which CC.4 excludes (\(f(-1)\ne0\)). So open versus closed ends do not matter (CD.4 also decides every comparison numerically). \(\square\)
+
+**Observation CC (level counts): now PROVED by Theorem CD.** The ratio \(0.42373\ldots\) of the level sums is not touched: CD counts atoms, not masses.
+
+**Observation (no claim).** With CD.3 the mean \(\lambda^{-\gamma}\)-mass of a level-\(k\) atom is \(s_k/(5\cdot2^{k-4})\); CC's printed level sums give a mean ratio near \(0.42373/2=0.2119\) per level. Not proved.
+
+**What stays open.**
+- *From CA/CB/CC/CD.* A closed form of \(\psi\), hence of \(F\), \(G^*\), \(t_{\max}\), \(t_{\min}\) and the atoms. The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). The level-sum ratio \(0.42373\ldots\) (masses, not counts). \(G^*\) into BI.4/BJ.
+- *Carried over.* Conjecture BS.4; a rate for \(J-A_N\); uniformity in \(\alpha\); eventual monotonicity of \(V^{(n)}\); a closed form for \(a^*\); Conjecture BL.6's limit part; closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem CD counts the atoms of the spectral measure of one scaled corner resolvent of a graph Laplacian on the combinatorial gasket. A count of atoms is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters. The Stage 2 question stays OPEN: the repository has no \(\Psi_{\mathrm{info}}\) on the frozen \(0.45\) mesh from which to decide it. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_counts.py`** (about 3 s; needs python-flint, sympy; imports BZ's and CA's scripts unchanged; `python3 scripts/gasket_fractional_profile_level_counts.py K` recounts levels \(\le K\)).
+- *Sympy:* the two inverse branches of \(p\) and their ranges; \(p(-\tfrac52)=-\tfrac{25}4\); \(p'=2y+5\); the induction step \((2^{k-4}+2^{k-3})+2^{k-3}=5\cdot2^{k-4}\).
+- *Exact integers:* the recursion against the closed form and the cumulative count \(5\cdot2^{K-3}\) for \(k,K\le400\); agreement with CC.4's counts for \(k\le14\).
+- *Interval (`arb`, 300 bits, outward):* CD.2's orbit inequalities; all \(2^k\) points of \(O_k\), \(k\le18\), separated and in \((-5,0)\setminus\{-\tfrac52\}\); the six counting sequences recounted directly.
+- *Floats:* none.
 
 The script exits nonzero if any check fails.
 

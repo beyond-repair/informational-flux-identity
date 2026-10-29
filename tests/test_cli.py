@@ -895,3 +895,26 @@ class FractionalProfilePurePointTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_pure_point.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CC", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelCountsTests(unittest.TestCase):
+    def test_theorem_cd_profile_level_counts(self):
+        """Theorem CD: the endpoint orbit leaves [-5,0] in four steps, the exact recursion gives N_k = 1,0,1,3 then
+        5*2^(k-4), and a direct arb recount of all 2^k preimages (k <= K_FAST) agrees; k <= 18 runs in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_counts as cd
+
+        cd.FAILS.clear()
+        cd.symbolic_checks()
+        orb = cd.endpoint_orbit()
+        seq = cd.recursion_checks()
+        self.assertEqual(seq["N"][:8], [1, 0, 1, 3, 5, 10, 20, 40])
+        self.assertEqual(sum(seq["N"][:15]), 10240)
+        lev = cd.preimage_sets(cd.K_FAST)
+        cd.cd1_certified(lev)
+        cd.direct_recount(lev, orb, cd.K_FAST)
+        self.assertEqual(cd.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_counts.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CD", (ROOT / doc).read_text())

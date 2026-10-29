@@ -3274,6 +3274,58 @@ With \(|x_M|\le2\cdot5^{-M}|u|\), \(\Pi(5^{-M}u)\to1\) and BZ.3's tail constants
 
 The script exits nonzero if any check fails.
 
+## Theorem CB. \(1/r\) is an explicit infinite product: \(H=1/r-z/2\) obeys \(H=c\,H\circ p\), so \(1/r_\infty(z)=\tfrac z2\bigl(1+\prod_{j\ge0}\tfrac{p^jz+6}{p^jz+2}\bigr)\) and \(1/Q_\infty=\Pi\cdot\tfrac\psi2\prod_{j\ge0}\tfrac{\psi(5^j\cdot)+6}{\psi(5^j\cdot)+2}\) (BZ.3's \(S\) equals \(\Pi\psi/2\)); hence the atoms of \(\nu\) off \(-Z\) are exactly \(\Lambda_O\) (Conjecture CA.6 holds off \(-Z\)), no point of the \(-2\) branch is an atom, and the atom masses have a closed product form
+
+**Setting.** As in Theorems AQ, BD, BS, BX, BZ and CA: \(r_n(s)=\tfrac12v^T(L_n+s)^{-1}v\), \(r_{n+1}(s)=\Phi_s(r_n(p(s)))\), \(r_0=1/(3+s)\) (AQ); \(p(z)=z(z+5)\), \(c(z)=(z+6)/((z+2)(z+5))\), \(e(z)=2z/(2+z)\), \(D=1/r_\infty\) with \(D=c\,D\circ p-e\) on \(\mathbb C\setminus K_p\) (BZ.2); \(\psi\) (BD.4); \(f=1/Q_\infty=\Pi\,D(\psi)-S\) (BZ.3); \(Z=\psi^{-1}(K_p)\); \(O=\bigcup_kp^{-k}(-3)\) and \(\Lambda_O=\{\lambda>0:\psi(-5^k\lambda)=-3\text{ for some }k\in\mathbb Z\}\) (CA). CA proved that \(\Lambda_O\) consists of atoms and left open whether there are others (Conjecture CA.6) and a closed form of the masses. CA.1's identity \(c\,p/2-e=z/2\) says that \(z/2\) solves \(D\)'s functional equation. This note uses that globally, not only on \(O\).
+
+**Assumptions used as stated (not re-run).** AQ (1)–(3) (decimation recursion, \(r_n\uparrow r_\infty\)); BD.4, BJ.6 (\(\psi(5v)=p(\psi(v))\), nonnegative coefficients, \(v\le\psi(v)\le ve^{v/10}\)); BS.1; BX.1–BX.2; BZ.1–BZ.4 (\(K_p\) a null Cantor set in \([-5,0]\) with \(p^n\to\infty\) locally uniformly off it; \(D=c\,D\circ p-e\) and \(D\) meromorphic off \(K_p\); \(f=\Pi D(\psi)-S\) with \(\Pi,S\) meromorphic on \(\mathbb C\) and BZ.3's tail constants; BZ.4's description of \(\nu\) off \(-Z\): point masses at the real zeros of \(f\), mass \(1/f'\)); CA.1–CA.2. BW's digits of \(G^*,\min F,t_{\max},t_{\min}\) and BZ.5's printed masses are used for consistency checks only. No literature assumption is used.
+
+**THEOREM CB.**
+1. **CB.1 (finite level, exact).** For every \(n\ge0\),
+   \[
+   \frac1{r_n(s)}=\frac s2\Bigl[1+\Bigl(1+\frac6{p^n(s)}\Bigr)\prod_{j<n}\frac{p^j(s)+6}{p^j(s)+2}\Bigr].
+   \]
+2. **CB.2 (the corner resolvent in closed product form).** On \(\mathbb C\setminus K_p\),
+   \[
+   \frac1{r_\infty(z)}=D(z)=\frac z2\bigl(1+P(z)\bigr),\qquad P(z)=\prod_{j\ge0}\frac{p^j(z)+6}{p^j(z)+2},
+   \]
+   with \(P\) meromorphic on \(\mathbb C\setminus K_p\). Equivalently \(H=D-z/2=\tfrac z2P\) is the solution of \(H(z)=c(z)H(p(z))\) with \(H(w)\sim w/2\) at \(\infty\). CA.1 (\(D=z/2\) on \(O\cup\{-6\}\)) is the zero set of \(P\) on the \(-3\) branch, and CA.5's \(D(-2)=D(6)/3-2\) is the cancelled pair \((z+6)(pz+6)/((z+2)(pz+2))=(z+6)(z+3)/(pz+2)=-1\) at \(z=-2\).
+3. **CB.3 (\(1/Q_\infty\) in closed product form).** \(S(u)=\Pi(u)\psi(u)/2\) identically, so on \(\mathbb C\setminus Z\), with \(x_i=\psi(5^iu)\) (\(i\in\mathbb Z\)),
+   \[
+   \frac1{Q_\infty(u)}=\Pi(u)\,\frac{\psi(u)}2\,P(\psi(u))=\frac{x_0}2\prod_{i\ge0}\frac{x_i+6}{x_i+2}\ \prod_{i\le-1}\frac{5}{3}\,\frac{x_i+6}{(x_i+2)(x_i+5)} .
+   \]
+   No far-field bound for \(D\) and no sum \(S\) enter.
+4. **CB.4 (the atoms of \(\nu\) off \(-Z\); Conjecture CA.6 off \(-Z\)).** For \(u<0\), \(u\notin Z\): \(f(u)=0\) if and only if \(\psi(5^ku)=-3\) for some \(k\in\mathbb Z\). Hence the set of atoms of \(\nu\) in \((0,\infty)\setminus(-Z)\) is exactly \(\Lambda_O\). In particular no \(\lambda\) with \(\psi(-5^k\lambda)\in\bigcup_{j\ge0}p^{-j}(-2)\) is an atom. This extends CA.5 from one point to the whole \(-2\) branch.
+5. **CB.5 (closed product form of the masses).** If \(\psi(5^ku)=-3\) with \(k\ge0\) and \(u<0\), then the atom \(\lambda=-u\) has
+   \[
+   \nu(\{\lambda\})=\frac{-4}{\Pi(u)\,\frac{x_0}2\,\prod_{i\ge0,\,i\ne k+1}\frac{x_i+6}{x_i+2}\,\prod_{i=0}^{k}(2x_i+5)\,\psi'(u)},\qquad \psi'(u)=\prod_{i\ge1}\Bigl(1+\frac25\psi(5^{-i}u)\Bigr).
+   \]
+   It is a product over the orbit \(x_i=\psi(5^iu)\) alone, and with \(\nu(\{5\lambda\})=3\nu(\{\lambda\})\) it covers every atom. Certified: \(\nu(\{3.6152567198877032\ldots\})=0.4796406929290034734083466\ldots\) (\(k=0\)), \(\nu(\{1.1719102509988374\ldots\})=0.03592210432462168505\ldots\) (\(k=2\)), \(\nu(\{1.0163164174467888\ldots\})=0.01362783039371924943\ldots\) (\(k=3\)), matching BZ.5's Cauchy-estimate enclosures.
+
+*Proof.* *CB.1.* AQ's recursion is \(1/r_{n+1}=c/r_n(p)-e\) (BZ.2, sympy). Put \(H_n=1/r_n-s/2\). Since \(c\,p/2-e=s/2\) (CA.1), \(H_{n+1}(s)=c(s)H_n(p(s))\), and \(H_0=3+s/2=\tfrac s2(1+6/s)\). So \(H_n(s)=\prod_{j<n}c(p^js)\cdot H_0(p^ns)\). With \(c(w)p(w)/w=(w+6)/(w+2)\), the product telescopes: \(\prod_{j<n}c(p^js)\,p^n(s)=s\prod_{j<n}(p^js+6)/(p^js+2)\). Sympy checks this against AQ's recursion for \(n\le4\). Independently of AQ, exact rational Gaussian elimination on the gasket graphs \(G_1,G_2,G_3\) (\(6,15,42\) vertices, built from coordinates) gives the same \(r_n(s)\) at \(s=\tfrac12,3\).
+*CB.2.* For \(s>0\), \(p^n(s)\uparrow\infty\) and \(\sum_j4/(p^js+2)<\infty\), so CB.1 and \(r_n\uparrow r_\infty\) (AQ (3)) give the formula on \((0,\infty)\). On a compact subset of \(\mathbb C\setminus K_p\), \(p^j\to\infty\) uniformly (BZ.1). Once \(|w|\ge10\): \(|p(w)|\ge2|w|\), \(|4/(w+2)|\le\tfrac12\) and \(|\log(1+t)|\le2|t|\), so the tail \(\prod_{j\ge N}\) lies in \(\exp(B(16/(|p^Nz|-2)))\). Hence \(P\) is meromorphic on \(\mathbb C\setminus K_p\). That set is connected (\(K_p\) is a compact subset of \(\mathbb R\)), and \(D\) is meromorphic there (BZ.2), so the identity extends. Zeros and poles: a factor vanishes iff \(p^jz=-6\) and has a pole iff \(p^jz=-2\). Since \(p(z)+6=(z+2)(z+3)\), a pole at \(p^jz=-2\) is cancelled to the same order by the zero of the next factor.
+*CB.3.* By CA.1, \(Y_k=(5/3)^kx_k/2\) (\(x_k=\psi(5^{-k}u)\)) obeys BZ.3's recursion \(Y_k=b_kY_{k-1}-(5/3)^ke(x_k)\). The unrolling (sympy, as in CA.2) gives \(\Pi(u)\psi(u)/2-S(u)=\Pi(5^{-M}u)(5/3)^Mx_M/2-\sum_{k>M}(5/3)^ke(x_k)\Pi(5^{-k}u)\), which is \(O(3^{-M})\) by BZ.3's tail constants. This holds at every \(u\) where no \(x_j\) (\(j\ge1\)) is \(-2\) or \(-5\). That set is dense, and both sides are meromorphic, so \(S=\Pi\psi/2\). Then \(f=\Pi\,(D(\psi)-\psi/2)=\Pi\,\tfrac\psi2P(\psi)\) by CB.2, with \(p^j(\psi(u))=\psi(5^ju)\).
+*CB.4.* Let \(u<0\), \(u\notin Z\). Then every \(x_i\notin K_p\) (\(5Z=Z\)), so \(x_0\ne0\), and \(x_i\ne-5\) for \(i\le-1\) (else \(x_{i+1}=0\in K_p\)). Near \(u\), \(x_i\to\infty\) (\(i\to+\infty\)) and \(x_i\to0\) (\(i\to-\infty\)) uniformly, so only finitely many factors of CB.3 have zeros or poles near \(u\), and the remaining product is holomorphic and nonzero. Thus \(\operatorname{ord}_uf\) is the sum of the factors' orders. A factor vanishes only where \(x_i=-6\), and then \(x_{i-1}\in p^{-1}(-6)=\{-2,-3\}\). If \(x_{i-1}=-3\), then \(\psi(5^{i-1}u)=-3\). The forward orbit \(6,66,\dots\) of \(-6\) is positive and the backward orbit lies in \(O\), which avoids \(-2,-5,-6\) (CA.1). So no factor has a pole and \(f(u)=0\), as in CA.2. If \(x_{i-1}=-2\), then \(\operatorname{ord}(x_i+6)=\operatorname{ord}(x_{i-1}+2)\) cancels the pole of factor \(i-1\). The forward orbit of \(-6\) is positive, and \(p^{-1}(-2)=(-5\pm\sqrt{17})/2\) and its preimages never meet \(\{-2,-3,-6\}\) (a second \(-2\) or \(-6\) below would force a positive point into the orbit). So the orders cancel and \(f(u)\ne0\). If no \(x_i\) is \(-6\) or \(-2\), all factors are finite and nonzero, so \(f(u)\ne0\). By BZ.4, the atoms of \(\nu\) off \(-Z\) are the \(-u\) with \(f(u)=0\).
+*CB.5.* At such \(u\), the only vanishing factor is \(i=k+1\) (\(x_{k+1}=p(-3)=-6\)), and \(\frac d{dx}\frac{x+6}{x+2}\big|_{-6}=\frac1{x+2}\big|_{-6}=-\tfrac14\). Also \(\frac d{du}x_{k+1}=\prod_{i=0}^k(2x_i+5)\cdot\psi'(u)\). The derivative of \(\psi(5w)=p(\psi(w))\) gives \(\psi'(u)=\psi'(5^{-J}u)\prod_{i=1}^J(1+2\psi(5^{-i}u)/5)\). Here \(|\psi'(v)-1|\le\psi'(|v|)-1\le2(e^{|v|/5}-1)\) by nonnegative coefficients, convexity (\(\psi'(t)\le(\psi(2t)-\psi(t))/t\)) and BJ.6. Then \(\nu(\{-u\})=1/f'(u)\) (BZ.4). \(\square\)
+
+**Conjecture CA.6, status after CB (not claimed in full).** Off \(-Z\), CA.6 is now proved: the atoms there are exactly \(\Lambda_O\). Still open are whether \(\nu\) has atoms on \(-Z\) and whether \(\nu(-Z)=0\) (no singular continuous part on the null set \(-Z\)). BZ's uncaptured mass \(\le4.03\cdot10^{-5}\) is the only quantitative evidence.
+
+**Observation (no claim).** For \(s>0\), CB.1 is a spectral-decimation product of the type known for the Sierpiński gasket. Its factors \((w+6)/(w+2)\) carry the \(6\)- and \(2\)-series that CA's Observation mentions. A comparison with the literature was not made, and no literature result is used. CB.2–CB.3 do not give closed forms of \(G^*\), \(F\), \(t_{\max}\), \(t_{\min}\), because \(\psi\) itself is not in closed form.
+
+**What stays open.**
+- *From CA/CB.* Whether \(\nu(-Z)=0\) and whether \(-Z\) carries atoms (the rest of CA.6). Accumulation of atoms at even-order critical points of \(\psi\) in \(Z\). A closed form of \(\psi\), hence of \(F\), \(G^*\), \(t_{\max}\), \(t_{\min}\). The exact \(\limsup\rho_k\) and \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). \(G^*\) into BI.4/BJ.
+- *Carried over.* Conjecture BS.4; a rate for \(J-A_N\); uniformity in \(\alpha\); eventual monotonicity of \(V^{(n)}\); a closed form for \(a^*\); Conjecture BL.6's limit part; closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem CB gives a product formula for one corner resolvent of a graph Laplacian on the combinatorial gasket, for its scaling limit, and for the atoms of that limit's spectral measure. A resolvent is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters. The Stage 2 question stays OPEN: the repository has no \(\Psi_{\mathrm{info}}\) on the frozen \(0.45\) mesh from which to decide it. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_product.py`** (about 10 s; needs python-flint, sympy; imports BZ's and CA's scripts unchanged).
+- *Sympy:* \(H=c\,H\circ p\); \(c(w)p(w)/w=(w+6)/(w+2)\); \(H_0\); CB.1 against AQ's recursion for \(n\le4\); \(p+6=(z+2)(z+3)\) and the regular pair at \(-2\); \(p^{-1}(-2)\); the derivatives \(-\tfrac14\) and \(\tfrac5{12}\) at \(-6\); \(\psi'\) recursion; tail constants.
+- *Exact rationals:* \(r_n(s)\) of the graphs \(G_1,G_2,G_3\) at \(s=\tfrac12,3\) equal CB.1.
+- *Interval (`arb`/`acb`, 300–400 bits, outward):* \((z/2)(1+P)\) against BZ's `D_of` to \(10^{-50}\) (8 real, 3 complex points); \(\Pi\tfrac\psi2P(\psi)\) against BZ's `inv_Q` to \(10^{-40}\) (6 real, 2 complex points); \(F(t_{\max})=G^*\) and \(F(t_{\min})=\min F\) to \(10^{-38}\) from the product alone; CA.5's witness \(f\in[2.1979467595912,2.1979467595913]\) at \(\psi(u)=-2\) from the product alone; \(f(u)=1.31876805575\ldots\ne0\) at \(u=-0.44842663704929\ldots\), \(\psi(u)=(-5+\sqrt{17})/2\); CB.5's masses for \(k=0,2,3\) against BZ.5 (to \(2\cdot10^{-12}\)) and against BZ's `certify_atom`.
+- *Floats:* none enter a check. A float grid only proposes one bracket.
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

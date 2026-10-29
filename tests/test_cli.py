@@ -854,3 +854,23 @@ class FractionalProfileAtomLawTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_atom_law.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CA", (ROOT / doc).read_text())
+
+
+class FractionalProfileProductTests(unittest.TestCase):
+    def test_theorem_cb_profile_product(self):
+        """Theorem CB: symbolic checks, exact graph resolvents G_1-G_3 against the finite-level product, the product
+        formula against BZ's D_of/inv_Q, the -2 branch witnesses and the closed-form atom masses (about 10 s)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_product as cb
+
+        cb.FAILS.clear()
+        cb.symbolic_checks()
+        cb.graph_checks()
+        cb.consistency()
+        cb.branch_checks()
+        cb.mass_checks()
+        self.assertEqual(cb.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_product.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CB", (ROOT / doc).read_text())

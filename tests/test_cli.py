@@ -810,3 +810,29 @@ class FractionalProfileToeplitzTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_toeplitz.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BY", (ROOT / doc).read_text())
+
+
+class FractionalProfileAtomsTests(unittest.TestCase):
+    def test_theorem_bz_profile_atoms(self):
+        """Theorem BZ: symbolic checks, the finite-level identity, the G*/min F consistency of the exact formula, one
+        certified atom (the largest, lam = 3.6152567...) and doc wiring; the 128000-cell scan (311 atoms, about 2 min)
+        and BZ.6 run in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_atoms as bz
+        from flint import arb
+
+        bz.FAILS.clear()
+        bz.symbolic_checks()
+        bz.finite_level_check()
+        bz.profile_checks()
+        self.assertEqual(bz.FAILS, [])
+        five = arb(5)
+        lo, hi = (-five ** (arb(3195) / 4000)).mid(), (-five ** (arb(3194) / 4000)).mid()
+        lam, w = bz.certify_atom(lo, hi)
+        self.assertTrue(lam > arb(bz.LAM_BIG[0]) and lam < arb(bz.LAM_BIG[1]))
+        self.assertTrue(w > arb("0.4796") and w < arb("0.4797"))
+        self.assertEqual(bz.N_SCAN, 128000)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_atoms.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BZ", (ROOT / doc).read_text())

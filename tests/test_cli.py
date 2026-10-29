@@ -874,3 +874,24 @@ class FractionalProfileProductTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_product.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CB", (ROOT / doc).read_text())
+
+
+class FractionalProfilePurePointTests(unittest.TestCase):
+    def test_theorem_cc_profile_pure_point(self):
+        """Theorem CC: symbolic transfer identity T = (2-t)/(6-t), the Cauchy-Schwarz lemma, the Nevanlinna checks and
+        a level <= 6 certificate of the period sum (fast); the level <= 14 certificate (about 40 s) runs in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_pure_point as cc
+
+        cc.FAILS.clear()
+        cc.symbolic_checks()
+        cc.cauchy_schwarz_exact()
+        cc.nevanlinna_checks()
+        found, tot, delta, mT, sums = cc.mass_identity(cc.K_FAST)
+        self.assertEqual(len(found), 40)
+        cc.rho_bounds(found, delta, mT, kmax=20)
+        self.assertEqual(cc.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_pure_point.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CC", (ROOT / doc).read_text())

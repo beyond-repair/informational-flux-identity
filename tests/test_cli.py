@@ -791,3 +791,22 @@ class FractionalProfileSpectralTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_spectral.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem BX", (ROOT / doc).read_text())
+
+
+class FractionalProfileToeplitzTests(unittest.TestCase):
+    def test_theorem_by_profile_toeplitz(self):
+        """Theorem BY: parameters, the Toeplitz certificate's 3-atom sanity check (arb, fast) and doc wiring; the deep
+        AU-routine re-run (k <= 21, sandwich 40/41, about 18 min) and T_18..T_20 > 0 run in `reproduce`."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_toeplitz as by
+
+        self.assertEqual(by.KMAX, 21)
+        self.assertEqual(by.N_TOEP, (18, 19, 20))
+        self.assertGreater(by.ORD, by.bw.ORD)
+        by.bx.FAILS.clear()
+        by.bx.toeplitz_toy_checks()
+        self.assertEqual(by.bx.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_toeplitz.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem BY", (ROOT / doc).read_text())

@@ -3149,6 +3149,35 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem BY. A deeper sandwich certifies \(\hat\theta_{21}\ne0\) and the Toeplitz sections \(T_{18},T_{19},T_{20}\) of BX's spectral measure positive definite (Kept Failure BY.3: \(\nu\) is not carried by at most \(19\) geometric pole series)
+
+**Setting.** As in Theorem BX: \(\gamma=\log3/\log5\), \(\omega=2\pi/\ln5\), \(F=\theta\) the \(1\)-periodic profile in \(t=\log_5u\), \(\hat\theta_k=a_k-ib_k\), and \(m\ge0\) the periodic spectral measure of BX.2, with \(\hat\theta_k=\frac{\pi}{\ln5}\hat m_k/\sin\pi(\gamma+i\omega k)\) and \(\rho_k=|\hat m_k|/\hat m_0\). BX left two finite questions open at its precision: whether \(\hat\theta_{21}\ne0\), and whether \(T_{18}=(\hat m_{i-j})_{i,j<18}\succ0\). The obstruction was the radius, not the method. \(\hat m_k\) is \(\hat\theta_k\) times about \(e^{2\pi^2k/\ln5}\), so BW's radius \(2\cdot10^{-113}\) on \(\hat\theta_{17}\) becomes \(3.5\cdot10^{-23}\) on \(\hat m_{17}\), and that alone moves the \(18\)th \(LDL^*\) pivot by more than its size. BW observed that the sandwich order limits the radius.
+
+**Assumptions used as stated (not re-run).** AQ (3), BN.1, BS.1, BT.2, BU.1, BV.2, AU (1); Assumption BX (Nevanlinna characterisation of Stieltjes functions); BX.2, BX.3 and BX.5's rank lemma; AU (3)'s certified routine (AQ (4) node enclosures, AS (2) sandwich for any \(b,u\), AT.1 orbit lemma, AU's \(\psi\) and endpoint corrections), imported unchanged with new parameters.
+
+**THEOREM BY.**
+1. **BY.1 (modes).** AU (3)'s routine with period \([5^{-341},5^{-340}]\), \(1024\) cells, sandwich \(b=u=40/41\), `mpmath.iv` outward at \(380\) digits and node cap \(10^{310}\) encloses \(\langle F\rangle\) to \(\pm9.3\cdot10^{-134}\) and every \(a_k,b_k\) with \(k\le21\) to \(\pm1.9\cdot10^{-133}\) (BW: \(\pm2.0\cdot10^{-113}\)). Every \(a_k\) or \(b_k\) is certified nonzero, so \(\hat\theta_k\ne0\) for every \(1\le|k|\le21\). For example, \(a_{21}=-2.55838576504077\cdot10^{-113}\), \(b_{21}=-9.60025191043711\cdot10^{-113}\), and \(|\hat\theta_{21}|\ge9.93\cdot10^{-113}\). AU's (\(k\le4\)) and BV.4's (\(k=5,\dots,11\)) published tables are reproduced, and \(\langle F\rangle\) lies inside AU's enclosure.
+2. **BY.2 (normalised moduli).** With BX.2, \(\rho_k\in[0.60,0.92]\) for every \(k\le21\), with \(\rho_{21}=0.706371132\ldots\). Also \(|\hat\theta_k|\le\langle F\rangle\sin\pi\gamma/|\sin\pi(\gamma+i\omega k)|\) (BX.3) for every \(k\le21\).
+3. **BY.3 (Toeplitz).** For \(n=18,19,20\), the exact-midpoint \(LDL^*\) of \(T_n-2\varepsilon_nI\) in `arb` has every pivot certified positive, with \(\varepsilon_n\ge\|E\|_F\) the Frobenius norm of the enclosure radii. By Weyl, \(T_n\succ\varepsilon_nI\succ0\). The smallest pivots are \(5.33\cdot10^{-15}\), \(4.51\cdot10^{-16}\) and \(1.21\cdot10^{-16}\), and \(\varepsilon_{20}\le3.0\cdot10^{-32}\).
+
+*Proof.* BY.1 is AU (3)'s routine, unchanged, run with new parameters. A nonzero real or imaginary part certifies \(\hat\theta_k\ne0\). BY.2 is BX.2's exact factorisation, applied in `acb` to the BY.1 enclosures, together with BX.3's bound. For BY.3, \(T_n=T_n^{\rm mid}+E\) with \(E\) Hermitian and \(\|E\|_2\le\|E\|_F\le\varepsilon_n\). So \(T_n^{\rm mid}\succ2\varepsilon_nI\), which the positive pivots certify, gives \(T_n\succ0\). The same certificate passes on an exact \(3\)-atom measure for \(T_3\) and fails for \(T_4\). \(\square\)
+
+**KEPT FAILURE BY.3 (certified witness).** Claim: "\(\nu\) is carried by at most \(r\le19\) geometric series \(\lambda_j5^{\mathbb Z}\)", that is, \(Q_\infty(u)=\sum_{j\le r}c_j\sum_{n\in\mathbb Z}3^n/(\lambda_j5^n+u)\). **The claim is false.** Such a \(\nu\) makes \(m\) a sum of \(r\) atoms, so \(\operatorname{rank}T_{r+1}\le r\) (BX.5's lemma). But \(T_{20}\succ0\). **Witness:** the smallest pivot of \(T_{20}-2\varepsilon_{20}I\) is \(\ge1.2\cdot10^{-16}>0\), with \(\varepsilon_{20}\le3.0\cdot10^{-32}\). So \(m\) has at least \(20\) points in every scale period, which sharpens BX.5's \(17\).
+
+**Observation (no claim).** \(T_{21}\) is not certified at this precision: its \(21\)st midpoint pivot falls below \(2\varepsilon_{21}\approx1.3\cdot10^{-26}\). The smallest pivot drops by a factor of about \(4\)–\(12\) per step from \(n=17\) to \(20\). That is consistent with many atoms or a continuous part, and it decides neither.
+
+**What stays open.**
+- *From BX/BY.* Conjecture BV.6 (\(\rho_k\to\rho_\infty>0\)); the certified band \([0.60,0.92]\) now covers \(k\le21\), with no visible limit. Whether \(\nu\) is purely atomic, and whether it has finitely or infinitely many atoms per period. Whether \(\hat\theta_k\ne0\) for every \(k\ge22\); each further \(k\) costs about \(5.3\) digits, and the sandwich order sets the radius. Whether \(T_{21}\succ0\). A closed form of \(F\), \(G^*\), \(t_{\max}\), \(t_{\min}\). Feeding \(G^*\) back into BI.4/BJ.
+- *Carried over.* Conjecture BS.4; a rate for \(J-A_N\); uniformity in \(\alpha\); eventual monotonicity of \(V^{(n)}\); a closed form for \(a^*\); Conjecture BL.6's limit part; closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem BY is a finite certificate for one log-periodic function built from a corner resolvent of a graph Laplacian on the combinatorial gasket. A lower bound on the number of atoms of a spectral measure on the scale circle is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters. The Stage 2 question stays OPEN. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_toeplitz.py`** (about 18 min; needs python-flint, mpmath, sympy; imports BX's, BW's, BV's and AU's scripts).
+- *Interval:* AU's routine at the new parameters; radius \(<10^{-132}\); \(\hat\theta_k\ne0\) for \(k\le21\); AU's and BV.4's tables; \(\langle F\rangle\) inside AU's enclosure; \(\rho_k\in[0.60,0.92]\) and the BX.3 bound for \(k\le21\); \(T_{18},T_{19},T_{20}\succ0\); BX's \(3\)-atom sanity check.
+- *Floats:* none enter a check.
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

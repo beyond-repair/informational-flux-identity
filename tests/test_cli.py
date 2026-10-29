@@ -968,3 +968,35 @@ class FractionalProfileLevelRateTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_rate.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CF", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelSpectrumTests(unittest.TestCase):
+    def test_theorem_cg_profile_level_spectrum(self):
+        """Theorem CG: disk constants and eps_N (arb), the 81x81 Taylor matrix, Pellet counts and sign changes on its arb
+        characteristic polynomial, certified resolvent bounds on the circles around r, l_2, l_3 and on |z| = 3/100
+        (the |z| = 1/1000 circle runs in `reproduce`), and CE.4's [lo, hi] inside the disk around r."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_ratio as ce
+        import gasket_fractional_profile_level_spectrum as cg
+
+        cg.FAILS.clear()
+        cg.symbolic_checks()
+        dc = cg.disk_constants()
+        eps, beta = cg.tail_constants(dc, cg.N_TRUNC)
+        self.assertTrue(float(eps) < 2e-17)
+        M = cg.build_matrix(cg.N_TRUNC)
+        P, mids = cg.charpoly_counts(M, cg.N_TRUNC)
+        deltas = cg.deltas_for(cg.N_TRUNC)
+        self.assertTrue(cg.sign_changes(P, mids, deltas))
+        self.assertTrue(abs(float(mids[1]) + 0.0731138175124) < 1e-12)
+        self.assertTrue(abs(float(mids[1]) / float(mids[0]) + 0.1725476021) < 1e-9)
+        cg.transfer(M, cg.N_TRUNC, eps, beta, mids, deltas, radii=cg.RADII_FAST)
+        ce.FAILS.clear()
+        lo, hi = ce.certificate()
+        self.assertEqual(ce.FAILS, [])
+        cg.summary(mids, deltas, lo, hi, sum((M[i, i] for i in range(cg.N_TRUNC + 1)), cg.arb(0)))
+        self.assertEqual(cg.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_spectrum.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CG", (ROOT / doc).read_text())

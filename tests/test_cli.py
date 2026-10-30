@@ -1146,3 +1146,31 @@ class FractionalProfileLevelFillTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_fill.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CM", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelCoefficientTests(unittest.TestCase):
+    def test_theorem_cn_profile_level_coefficient(self):
+        """Theorem CN: B != 0 in CG.4. Holomorphic continuation of Lt^4 G (box checks, Krawczyk on 256 arcs), certified
+        resolvent circles, CC's level sums, the enclosures of a_1, a_2, B and the explicit rate constant."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_coefficient as cn
+
+        cn.FAILS.clear()
+        cn.tail_constants()
+        self.assertTrue(cn.box_checks(nx=44, ny=6))
+        S = cn.circle_sup(K=256)
+        self.assertTrue(0.0167 < float(S.mid()) < 0.021)
+        eig = cn.spectral_layout()
+        res, cg = cn.resolvent_constants()
+        ec = cn.expansion_constants(S, res)
+        sums = cn.level_data(13)
+        a1, a2, B = cn.coefficients(sums, ec, eig)
+        self.assertTrue(-8.25 < float(B.mid()) < -8.17 and float(a2.mid()) < 0 < float(a1.mid()))
+        C, rem = cn.exact_rate(sums, ec, eig, a1, a2, B)
+        self.assertTrue(float(C.mid()) < 15)
+        self.assertEqual(cn.FAILS, [])
+        self.assertEqual(cg.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_coefficient.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CN", (ROOT / doc).read_text())

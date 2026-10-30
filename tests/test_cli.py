@@ -1174,3 +1174,32 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_coefficient.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CN", (ROOT / doc).read_text())
+
+    def test_theorem_co_profile_level_third(self):
+        """Theorem CO: a_3 != 0 in CN.2. Continuation of Lt^4 G to a larger disk (1024 arcs), certified Taylor coefficients
+        (2048 points, aliasing bound), Krawczyk eigenvectors of M_80, Riesz-projection error bounds, a_1..a_3, B, B_3."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_third as co
+
+        co.FAILS.clear()
+        co.cn.FAILS.clear()
+        S = co.cn.circle_sup(K=256)
+        self.assertTrue(co.big_disk(K=1024))
+        S_rho = co.circle_sup_rho(K=1024)
+        self.assertTrue(0.0249 < float(S_rho.mid()) < 0.03)
+        f = co.taylor_coeffs(S_rho, M=2048)
+        self.assertIsNotNone(f)
+        a, c0 = co.projection_coeffs(f, S)
+        self.assertEqual(sorted(a), ["l2", "l3", "r"])
+        B, B3 = co.compare_and_conclude(a)
+        a3 = a["l3"]
+        self.assertFalse(a3.contains(0))
+        self.assertTrue(-2.37e-5 < float(a3.mid()) < -2.35e-5 and float(a3.rad()) < 1e-7)
+        self.assertTrue(-8.2108 < float(B.mid()) < -8.2106 and -1580 < float(B3.mid()) < -1560)
+        self.assertEqual(co.FAILS, [])
+        self.assertEqual(co.cn.FAILS, [])
+        self.assertEqual(co.cg.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_third.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CO", (ROOT / doc).read_text())

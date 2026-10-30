@@ -4083,6 +4083,43 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem CR. The fifth eigenvalue: \(\tilde L\) has exactly one eigenvalue \(\lambda_5=-4.550141188009\ldots\cdot10^{-8}\) in \(10^{-8}<|z|<5\cdot10^{-5}\), real and simple, every further eigenvalue has \(|\mu|<10^{-8}\), its coefficient \(a_5\ne0\), and CQ's remainder has the exact rate \(|\lambda_5|\)
+
+**Setting.** As in Theorems CE, CG, CN, CO and CQ. \((\tilde Lf)(s)=\tilde w_1(s)f(\sigma_1s)+\tilde w_2(s)f(\sigma_2s)\) on \(H^2(D)\), \(D=\{|s-c|<R\}\), \(c=\tfrac{83}{50}\), \(R=\tfrac85\), \(M_N=P_N\tilde LP_N\), \(\|\tilde L(I-P_N)\|\le\varepsilon_N\), \(\|\tilde LP_N\|\le\beta_N\) (CG.1's formula, any \(N\)). \(F_0=\tilde L^4G\) (CN.1), \(x_0=\sqrt{13}/2\), \(c_0=3\sigma_{-3}\), \(a_j=c_0(\Pi_jF_0)(x_0)\). CQ left every eigenvalue other than \(r,\lambda_2,\lambda_3,\lambda_4\) inside \(|z|<5\cdot10^{-5}\) (Pellet at \(10^{-5}\) failed) and put it into one remainder \(e'_k\), \(|e'_k|\le9.817\cdot10^7(1/20000)^k\). CQ's float guesses for the next eigenvalues (\(-1.744\cdot10^{-7}\) and a complex pair near \(1.55\cdot10^{-7}\)) were float noise: \(M_N\) is extremely non-normal near \(0\), and mpmath at 60/90 digits gives \(\lambda_5\approx-4.5501411880\cdot10^{-8}\), \(|\lambda_6|\approx2.07\cdot10^{-15}\) (seeds only).
+
+**Assumptions used as stated (not re-run).** CE.1–CE.3. CG.1's tail formula (its constants re-run at \(N=300\)). CG.3's homotopy argument. CN.1's box argument (box checks and \(S\) re-run). CO.1's continuation and CO.2's trapezoid/aliasing bound (both re-run with \(N=300\)). CQ.3's enclosure of \(\lambda_4\) (used for identification only). Textbook: Krawczyk/Brouwer, Riesz projections, Neumann series, the second resolvent identity, the maximum principle, Cauchy/trapezoid aliasing.
+
+**THEOREM CR.**
+1. **CR.1 (eigenpairs; certified, `arb` Krawczyk, 512 bits, \(N=300\)).** Right and left eigenpairs of \(M_{300}\) at \(r,\lambda_2,\lambda_3,\lambda_4,\lambda_5\) are enclosed (radii \(10^{-130}\)); the five eigenvalue enclosures are real and disjoint, so the rank-one projectors \(P_i=v_iw_i^T/(w_i\cdot v_i)\) are complementary and commute with \(M\). \(\mu_5^{300}=-4.550141188008649836529478\cdot10^{-8}\pm2.1\cdot10^{-33}\), \(\|P_5\|\le1.0717\cdot10^{12}\).
+2. **CR.2 (spectral remainder; certified, `arb`).** With \(Q=I-\sum P_i\), \(A=MQ\): \(\|A^jQ\|_F\le1.07\cdot10^{12},\,4.88\cdot10^4,\,2.19\cdot10^{-3},\,2.68\cdot10^{-11},\,1.36\cdot10^{-22},\,3.26\cdot10^{-37},\,6.74\cdot10^{-52}\) (\(j=0..6\)) and \(\|A^7\|_F\le1.40\cdot10^{-66}\), so \(\|(z-M)^{-1}Q\|\le\sum_{j<7}T_j|z|^{-j-1}/(1-\alpha_7|z|^{-7})\) for \(|z|\ge10^{-8}\): every other eigenvalue of \(M_{300}\) has \(|z|<10^{-8}\).
+3. **CR.3 (count and localisation; proved, CG.3's homotopy).** \(\sup\|(z-\tilde LP_{300})^{-1}\|\,\varepsilon_{300}<1\) (\(\varepsilon_{300}\le1.141\cdot10^{-63}\)) on \(|z|=10^{-8}\) (\(2.72\cdot10^{-33}\)), on \(|z|=6>\beta_N+\varepsilon_N\), on four circles of radius \(10^{-20}\) about \(r,\lambda_2,\lambda_3,\lambda_4\) and on \(G_5=\{|z-\mu_5^{300}|=10^{-21}\}\) (\(1.16\cdot10^{-22}\)). So \(\tilde L\) has exactly five eigenvalues in \(|z|>10^{-8}\), one inside each circle, each real and algebraically simple; the first four overlap CG.3's \(r,\lambda_2,\lambda_3\) and CQ.3's \(\lambda_4\), and
+   \[
+   \lambda_5=-4.550141188009\cdot10^{-8}\pm4.51\cdot10^{-21},\qquad |\lambda_5|/r=1.073827052\cdot10^{-7}\pm1.93\cdot10^{-17},\qquad |\lambda_5|/|\lambda_4|=0.0002102200810.
+   \]
+   Every eigenvalue of \(\tilde L\) other than \(r,\lambda_2,\lambda_3,\lambda_4,\lambda_5\) has \(|\mu|<10^{-8}\) (CQ: \(5\cdot10^{-5}\)).
+4. **CR.4 (\(a_5\ne0\); proved, certified).** CO.3/CO.4's exact projection formula for \(\tilde LP_{300}\), Taylor coefficients \(f_0..f_{300}\) (4096 certified points, aliasing \(\le1.5\cdot10^{-37}\)), and the second-resolvent bound on \(G_5'=\{|z-\mu_5^{300}|=10^{-8}\}\): \(|a_5-a_5^N|\le c_0\|\mathrm{ev}_{x_0}\|\,\mathrm{rad}\,KK^N\varepsilon_{300}S\le2.83\cdot10^{-16}\), \(a_5^N=-2.13234993568815\cdot10^{-11}\). So
+   \[
+   a_5=-2.1323\cdot10^{-11}\pm7.9\cdot10^{-16}\ne0\quad(\text{negative}).
+   \]
+5. **CR.5 (exact rate of CQ's remainder; proved from CR.3, CR.4, CN.1).** For every \(k\ge0\), \(s_{k+4}=\sum_{i\le5}a_i\lambda_i^k+e''_k\) with \(|e''_k|\le\varepsilon_0''\,10^{-8k}\), \(\varepsilon_0''=c_0\|\mathrm{ev}_{x_0}\|\rho_{\rm in}K_{\rm in}S\le6.79\cdot10^{20}\). Since \(10^{-8}/|\lambda_5|=0.21977<1\) and \(\varepsilon_0''(10^{-8}/|\lambda_5|)^k<|a_5|\) for \(k\ge48\), CQ's remainder \(e'_k=a_5\lambda_5^k+e''_k\) satisfies \(e'_k/\lambda_5^k\to a_5\) and \(\operatorname{sign}e'_k=(-1)^{k+1}\) for every \(k\ge48\). Its exact rate is \(|\lambda_5|\), not \(5\cdot10^{-5}\).
+
+*Proof.* CR.1 is Krawczyk's test on the bordered eigen-system (normalised component fixed), for \(M\) and \(M^T\); disjoint real enclosures make \(w_i\cdot v_j=0\) for \(i\ne j\) exactly. CR.2: \((z-M)^{-1}Q=\sum_{j<m}A^jQz^{-j-1}+A^m(z-M)^{-1}Qz^{-m}\), and the Neumann series converges once \(\alpha_m|z|^{-m}<1\); so \(\|(z-M)^{-1}\|\le\sum\|P_i\|/|z-\mu_i|+H(|z|)\) on every circle in \(|z|\ge10^{-8}\), with no cover. CR.3: CG.3's block formula turns this into \(K_T\ge\|(z-\tilde LP_N)^{-1}\|\), and \(K_T\varepsilon_N<1\) plus the homotopy \(z-\tilde LP_N-\tau\tilde L(I-P_N)\) keep each count; \(\tilde L\) commutes with \(f\mapsto\overline{f(\bar s)}\) and the circles are symmetric, so each single eigenvalue is real. CR.4 is CO.4's argument with \(G_5'\) in place of CO's circles. CR.5 is the Riesz decomposition of \(F_0\) along \(|z|=10^{-8}\), \(G_5'\) and CQ's circles, evaluated at \(x_0\). \(\square\)
+
+**Kept Failure CR.6 (\(N=200\) is not enough for \(a_5\)).** The same script at \(N=200\) (\(\varepsilon_{200}\le1.03\cdot10^{-42}\)) passes CR.1–CR.3 with the same \(\lambda_5\) enclosure, but on \(G_5'\) the bound is \(|a_5-a_5^N|\le2.55\cdot10^5\) against \(|a_5^N|=2.13\cdot10^{-11}\): it cannot decide the sign of \(a_5\), and CR.5 has no \(k_0\). On \(G_5'\), \(KK^N\approx8.7\cdot10^{56}\) (the projector norm \(\|P_5\|\approx10^{12}\) over a distance \(10^{-8}\), squared, times CG.3's \(\beta_N/\min|z|\) factor), so only \(\varepsilon_N\) can absorb it; \(N=300\) gains \(10^{21}\). The \(N=200\) witness is kept in the log, not asserted.
+
+**Kept limits (what CR does not claim).** No closed form of \(\lambda_5\) or \(a_5\) is known. \(\lambda_6\) (mpmath \(\approx-2.07\cdot10^{-15}\)) is not certified; only \(|\mu|<10^{-8}\) beyond \(\lambda_5\). \(k_0=48\) is what these bounds give, not claimed optimal. CP and CQ are unchanged: CQ's \(e'_k\) already contained the \(\lambda_5\)-term.
+
+**What stays open.**
+- *From CA–CR.* An explicit \(C_G\) in CF.3. Eigenvalues on \(|z|=\rho(L_k)\). A rate for \(\inf R_n\to\rho(L_1)\). The sixth eigenvalue and beyond (and whether \(a_6\ne0\)). Closed forms of \(r,\lambda_j,a_j,B,B_3\) and \(\rho(L_k)\). The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). \(G^*\) into BI.4/BJ.
+- *Carried over.* As in Theorem CQ, including the Stage 2 question.
+
+**NOT THIS.** Theorem CR locates one more eigenvalue of a transfer operator built from the level sums of one scaled corner resolvent of a graph Laplacian on the combinatorial gasket, and shows its coefficient is nonzero. An eigenvalue of that operator is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN: the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_fifth.py`** (about 510 s; needs python-flint; imports CN's, CG's and CO's scripts unchanged; `CR_N=200` reproduces Kept Failure CR.6).
+- *Interval (`arb`):* \(\varepsilon_{300},\beta_{300}\); Krawczyk eigenpairs of \(M_{300}\); \(\|A^jQ\|_F\); every resolvent circle; \(\lambda_5\), \(a_5\), \(\varepsilon_0''\), \(k_0\).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

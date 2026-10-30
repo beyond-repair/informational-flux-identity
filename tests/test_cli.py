@@ -1262,3 +1262,28 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_fourth.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CQ", (ROOT / doc).read_text())
+
+    def test_theorem_cr_profile_level_fifth(self):
+        """Theorem CR: the fifth eigenvalue. Krawczyk eigenpairs of M_300 for r, l_2..l_5, a certified spectral remainder,
+        resolvent circles (CG.3's homotopy): exactly five eigenvalues in |z| > 1e-8; a_5 != 0 and the exact rate of e'_k.
+        Slow (about 9 minutes)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_fifth as cr
+
+        for mod in (cr, cr.cn, cr.cg, cr.co):
+            mod.FAILS.clear()
+        self.assertEqual(cr.N, 300)
+        self.assertEqual(cr.main(), 0)
+        res = cr.RESULT
+        l5, a5 = res["l5"], res["a5"]
+        self.assertTrue(-4.5502e-8 < float(l5.mid()) < -4.5501e-8 and float(l5.rad()) < 1e-20)
+        self.assertFalse(a5.contains(0))
+        self.assertTrue(-2.133e-11 < float(a5.mid()) < -2.131e-11 and float(a5.rad()) < 1e-15)
+        self.assertIsNotNone(res["k0"])
+        self.assertLessEqual(res["k0"], 50)
+        for mod in (cr, cr.cn, cr.cg, cr.co):
+            self.assertEqual(mod.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_fifth.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CR", (ROOT / doc).read_text())

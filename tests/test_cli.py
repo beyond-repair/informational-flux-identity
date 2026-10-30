@@ -1118,3 +1118,31 @@ class FractionalProfileLevelCalkinTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_calkin.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CL", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelFillTests(unittest.TestCase):
+    def test_theorem_cm_profile_level_fill(self):
+        """Theorem CM: every |mu| < rho(L_k) is a C^k eigenvalue of infinite multiplicity; sigma_e(C^k) = closed disk;
+        Harnack constants certified, exact telescoping identities, float growth rates of the explicit series."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_fill as cm
+
+        cm.FAILS.clear()
+        cm.cl.FAILS.clear()
+        cm.symbolic_checks(kmax=3)
+        Ck = cm.harnack_constants(n_cover=500)
+        self.assertTrue(28.0 < Ck[1] < 28.2 and 76.0 < Ck[2] < 76.5 and Ck[4] < 1e3)
+        cm.consequences()
+        out = cm.float_observations(ks=(2,))
+        lam, res = out[2]
+        for mu, ratio in res.items():
+            self.assertAlmostEqual(ratio[2], abs(mu) / lam, delta=0.02 * abs(mu) / lam)
+        self.assertTrue(out[("N", 2)] <= 1 + 1e-9)
+        self.assertTrue(out["eig_err"] < 1e-12)
+        self.assertTrue(all(out["harnack"][k] <= Ck[k] for k in (1, 2, 3, 4)))
+        self.assertEqual(cm.FAILS, [])
+        self.assertEqual(cm.cl.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_fill.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CM", (ROOT / doc).read_text())

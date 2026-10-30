@@ -1000,3 +1000,26 @@ class FractionalProfileLevelSpectrumTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_spectrum.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CG", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelRegularityTests(unittest.TestCase):
+    def test_theorem_ch_profile_level_regularity(self):
+        """Theorem CH: exact CH.1 identities, Collatz-Wielandt bounds for rho(L_k), k = 1..4 (arb), the comparisons with
+        CG's r, l_2, l_3, and Kept Failure CH.4's certified majorant rho(A) < 9.18 (every |mu| <= 0.1089 a C^1 eigenvalue)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_regularity as ch
+
+        ch.FAILS.clear()
+        ch.symbolic_checks()
+        lams = {k: ch.collatz_wielandt(k) for k in (1, 2, 3, 4)}
+        self.assertTrue(abs(lams[1] - 0.134355) < 1e-5 and abs(lams[2] - 0.0430703) < 1e-6)
+        rho = ch.k_majorant()
+        self.assertTrue(9.17 < float(rho.mid()) < 9.18)
+        self.assertTrue(float(ch.MU_MAX) > 0.0731138175124 and float(ch.LAM[2]) < 0.0731138175124)
+        ch.consequences(lams)
+        self.assertTrue(5.0 < ch.k_growth_observation() < 9.18)
+        self.assertEqual(ch.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_regularity.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CH", (ROOT / doc).read_text())

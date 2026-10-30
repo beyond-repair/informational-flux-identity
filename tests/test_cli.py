@@ -1263,6 +1263,31 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CQ", (ROOT / doc).read_text())
 
+    def test_theorem_cs_profile_level_sharp(self):
+        """Theorem CS: sharp constants for the level-sum rate. CP.2's two-sided bound makes D_n strictly decreasing to
+        L = B(q_2 - 1) from D_4; the sharp C_G* in CF.3 is |log(s_5/(r s_4))| theta^(-4/5)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_sharp as cs
+
+        for mod in (cs, cs.cp, cs.cp.cn, cs.cf):
+            mod.FAILS.clear()
+        self.assertEqual(cs.main(), 0)
+        res = cs.RESULT
+        self.assertTrue(9.6273 < float(res["L"].mid()) < 9.6275 and float(res["L"].rad()) < 1e-4)
+        self.assertTrue(14.5950 < float(res["D4"].mid()) < 14.5952 and float(res["D4"].rad()) < 1e-8)
+        self.assertTrue(float(res["contr"].mid()) < 0.33)
+        self.assertTrue(0.0210512 < float(res["CG"].mid()) < 0.0210514 and float(res["CG"].rad()) < 1e-10)
+        self.assertTrue(float(res["base"].mid()) < 0.2)
+        D = res["D"]
+        for n in range(4, 12):
+            self.assertTrue(bool(D[n] > D[n + 1]))
+        for mod in (cs, cs.cp, cs.cp.cn, cs.cf):
+            self.assertEqual(mod.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_sharp.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CS", (ROOT / doc).read_text())
+
     def test_theorem_cr_profile_level_fifth(self):
         """Theorem CR: the fifth eigenvalue. Krawczyk eigenpairs of M_300 for r, l_2..l_5, a certified spectral remainder,
         resolvent circles (CG.3's homotopy): exactly five eigenvalues in |z| > 1e-8; a_5 != 0 and the exact rate of e'_k.

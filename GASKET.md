@@ -4120,6 +4120,49 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem CS. Sharp constants for the level-sum rate: \(D_n=\log(s_{n+1}/(r\,s_n))/q_2^n\) strictly decreases for every \(n\ge4\) from \(D_4=14.59509785\ldots\) to \(B(q_2-1)=9.6274\ldots\), at the exact rate \(|\lambda_3/\lambda_2|\); and CF.3's Birkhoff constant is explicit and sharp, \(C_G^*=|\log(s_5/(r\,s_4))|\,\theta^{-4/5}=0.02105127810\ldots\)
+
+**Setting.** As in Theorems CC, CF, CG, CN, CO and CP. \(q_j=\lambda_j/r\), \(B=(a_2/a_1)q_2^{-4}\) (CO.4), \(T_n=\log(s_{n+1}/(rs_n))-Bq_2^n(q_2-1)\) (CP), and
+\[
+D_n=\frac{\log(s_{n+1}/(r\,s_n))}{q_2^n},\qquad L=B(q_2-1),\qquad D_n=L+U_n,\quad U_n=T_n/q_2^n .
+\]
+CN.4 proved \(|\log(s_{n+1}/(rs_n))|\le14.60\,|q_2|^n\) for \(n\ge4\) and \(\ge9.626\,|q_2|^n\) only for \(n\ge13\), without claiming either constant sharp. CF.3 proved \(|\log(s_{k+1}/(rs_k))|\le C_G\,\theta^{k/5}\) (\(k\ge4\)) with \(C_G<\infty\) not made explicit (open item since CF).
+
+**Assumptions used as stated (not re-run).** CP.2's two-sided bound \(1360.9\,|q_3|^n\le|T_n|\le1906.1\,|q_3|^n\) and \(\operatorname{sign}T_n=(-1)^n\) for every \(n\ge4\); CP's script is imported unchanged for its inputs (CG.3's \(r,\lambda_2,\lambda_3\); CO.4's \(a_1,a_2,a_3\)). CO.5's limit \(T_n/q_3^n\to B_3(q_3-1)\) (only for the limit statement in CS.2). CF.2's \(\theta=\tanh(\Delta/4)\) (CF's `cone_constants` re-run unchanged). CC's certified level sums \(s_4,\dots,s_{13}\) are re-run.
+
+**THEOREM CS.**
+1. **CS.1 (two-sided remainder; proved from CP.2).** \(q_2<0\), so \(\operatorname{sign}q_2^n=(-1)^n=\operatorname{sign}T_n\) and \(U_n=|T_n|/|q_2|^n>0\) for every \(n\ge4\). Hence, with \(\rho_{32}=|q_3/q_2|=|\lambda_3/\lambda_2|=0.23343938\pm2.3\cdot10^{-9}\),
+   \[
+   1360.9\,\rho_{32}^n\le D_n-L\le1906.1\,\rho_{32}^n\qquad\text{for every }n\ge4 .
+   \]
+   So \(D_n>L\) for every \(n\ge4\), and \(D_n-L\) has the exact rate \(|\lambda_3/\lambda_2|\); by CO.5, \((D_n-L)/(q_3/q_2)^n=T_n/q_3^n\to B_3(q_3-1)\).
+2. **CS.2 (strict monotonicity and sharp constants; proved, `arb`).** \(U_{n+1}/U_n\le(1906.1/1360.9)\,\rho_{32}\le0.326960<1\), so \(D_n\) is strictly decreasing for every \(n\ge4\) and tends to \(L\). Therefore, for every \(n\ge4\),
+   \[
+   L\,|q_2|^n<\Bigl|\log\frac{s_{n+1}}{r\,s_n}\Bigr|\le D_4\,|q_2|^n,\qquad L=B(q_2-1)=9.6274\pm3.6\cdot10^{-5},\qquad D_4=\frac{\log(s_5/(rs_4))}{q_2^4}=14.59509785\pm5.9\cdot10^{-10},
+   \]
+   and both constants are best possible: \(D_4\) is attained at \(n=4\), and \(L\) is the infimum, not attained. This sharpens CN.4 (\(14.60\); \(9.626\) only for \(n\ge13\)) and extends its lower bound to every \(n\ge4\).
+3. **CS.3 (an explicit sharp \(C_G\) in CF.3; proved, `arb`).** \(\theta^{1/5}=0.88540315\ldots\) and \(|q_2|/\theta^{1/5}=0.19488027\pm3.8\cdot10^{-9}<1\). For \(k\ge4\), \(|\log(s_{k+1}/(rs_k))|\,\theta^{-k/5}=D_k\,(|q_2|/\theta^{1/5})^k\) is a product of two positive, strictly decreasing factors (CS.2). So the smallest constant with \(|\log(s_{k+1}/(rs_k))|\le C_G\,\theta^{k/5}\) for all \(k\ge4\) is
+   \[
+   C_G^*=\Bigl|\log\frac{s_5}{r\,s_4}\Bigr|\,\theta^{-4/5}=0.02105127810\pm2.1\cdot10^{-12}\qquad(\theta=\tanh(\Delta/4)=0.5441333187\pm2\cdot10^{-11}),
+   \]
+   with equality at \(k=4\). For the rounded \(\bar\theta=0.5442>\theta\) the same argument gives the sharp constant \(0.0210492\).
+4. **Data consistency (certified, not needed for the proof).** CC's \(s_4..s_{13}\) give \(D_4,\dots,D_{12}=14.595098,\ 10.753464,\ 9.8926798,\ 9.6889799,\ 9.6418551,\ 9.6307827,\ 9.6282103,\ 9.6276077,\ 9.6274674\) (radii \(\le1.6\cdot10^{-7}\)); \(D_n>D_{n+1}\) is certified directly for every \(4\le n\le11\), and \(D_4-L=4.9677\) lies in CS.1's window \([4.0413,5.6604]\).
+
+*Proof.* CS.1: divide CP.2's bounds by \(|q_2|^n\) and use \(\operatorname{sign}(T_n/q_2^n)=+1\). CS.2: \(U_{n+1}/U_n=|T_{n+1}|/(|q_2||T_n|)\le(C/c)\rho_{32}\) by CS.1's two sides at \(n\) and \(n+1\); a positive sequence with ratio \(<1\) strictly decreases to \(0\). \(D_n>0\), so \(|\log(s_{n+1}/(rs_n))|=D_n|q_2|^n\). CS.3: CF.2's \(\theta\) satisfies \(\theta^{1/5}>|q_2|\) (certified), so both factors decrease; the supremum over \(k\ge4\) is the \(k=4\) value. \(\square\)
+
+**Kept limits (what CS does not claim).** CS.3 makes \(C_G\) explicit only for the level sums, through the spectral route (CG–CP). It does not compute CF.3's Birkhoff-route constant \(\Theta_a(f_0,\tilde Lf_0)\) for \(f_0=\tilde L^4G\) (that still needs a Lipschitz bound for \(\log\tilde L^4G\), hence for \(\psi''\)); since \(\theta^{1/5}\gg|q_2|\), the \(\theta\)-rate is far from sharp and \(\inf_k|\log(s_{k+1}/(rs_k))|\theta^{-k/5}=0\). The improvement of CN.4's upper constant is small (\(14.60\to14.5951\)); the new content is sharpness, the lower bound for every \(n\ge4\), and the strict monotonicity of \(D_n\). \(L\) is known only to \(\pm3.6\cdot10^{-5}\) (CO.4's radius of \(B\)). No closed form of \(D_4\), \(L\) or \(C_G^*\).
+
+**What stays open.**
+- *From CA–CS.* CF.3's Birkhoff-route constant for general \(f\) (a Lipschitz bound for \(\log\tilde L^4G\)). Eigenvalues on \(|z|=\rho(L_k)\). A rate for \(\inf R_n\to\rho(L_1)\). The sixth eigenvalue and beyond (and whether \(a_6\ne0\)). Closed forms of \(r,\lambda_j,a_j,B,B_3\) and \(\rho(L_k)\). The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). \(G^*\) into BI.4/BJ.
+- *Carried over.* As in Theorem CR, including the Stage 2 question.
+
+**NOT THIS.** Theorem CS fixes the best constants in the rate at which the level sums of one scaled corner resolvent of a graph Laplacian on the combinatorial gasket approach their geometric ratio. A sharp constant is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN: the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_sharp.py`** (about 18 s; needs python-flint, sympy; imports CP's, CN's and CF's scripts unchanged).
+- *Interval (`arb`, 200 bits):* \(L\), \(\rho_{32}\), \((C/c)\rho_{32}\); \(D_4..D_{12}\) from CC's certified \(s_4..s_{13}\); CF.2's \(\theta\), \(\theta^{1/5}\), \(|q_2|/\theta^{1/5}\), \(C_G^*\) and the \(\bar\theta\) constant.
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

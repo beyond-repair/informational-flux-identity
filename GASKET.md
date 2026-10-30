@@ -4163,6 +4163,62 @@ CN.4 proved \(|\log(s_{n+1}/(rs_n))|\le14.60\,|q_2|^n\) for \(n\ge4\) and \(\ge9
 
 The script exits nonzero if any check fails.
 
+## Theorem CT. The exact rate of \(\inf R_n\to\rho(L_1)\): on \(H^2(D)\), \(L_1\) has exactly two eigenvalues in \(|z|>1/100\), \(\rho(L_1)=0.1343549829703998131\ldots\) and \(\nu_2=-0.0327933736640408162\ldots\), real and simple, and for every \(n\ge10\), \(\rho(L_1)-\inf_XR_n\) lies between explicit multiples of \(|\nu_2/\rho(L_1)|^n=0.2440800701^n\), with separate limit constants along even and odd \(n\)
+
+**Setting.** As in Theorems CI and CJ: \(s=\sqrt{t+25/4}\), \(X=[\sqrt5/2,\tfrac52]\), \(\sigma_{1,2}=\sqrt{15/4\mp s}\), \(L_1f=u_1f(\sigma_1)+u_2f(\sigma_2)\) with \(u_i=\tilde w_i|\sigma_i'|=\tilde w_i/(2\sigma_i)\), \(h_n=L_1^n\mathbf 1\), \(R_n=h_{n+1}/h_n\) on \(X\). CJ.2 proved \(\inf_XR_n\le\rho(L_1)\le\sup_XR_n\) and \(\log(\sup R_n/\inf R_n)\le\tanh(\Delta/4)^{n-1}\Delta\) with \(\Delta<13.31\), so \(\tanh(\Delta/4)\approx0.9974\); CJ's Observation claimed no rate for \(\inf R_n\to\rho(L_1)\), and every theorem from CJ to CS listed it as open. Here \(L_1\) acts on CG's Hardy space \(H^2(D)\), \(D=\{|s-c|<R\}\), \(c=\tfrac{83}{50}\), \(R=\tfrac85\), \(e_n=u^n\), \(M_N=P_NL_1P_N\), \(N=120\).
+
+**Assumptions used as stated (not re-run).** CJ.2's definition of \(R_n\). CI.1's interval for \(\rho(L_1)\), used only as a consistency check. CG.1's disk facts and tail formula (re-run with the new weights \(u_i\)). CG.3's homotopy argument. CR.1–CR.2's Krawczyk and Neumann routines (imported unchanged). Textbook facts: Riesz projections, Neumann series, the second resolvent identity, Gelfand's formula, and point evaluation in \(H^2\).
+
+**THEOREM CT.**
+1. **CT.1 (compactness; exact + `arb`).** On the closed disk, \(\operatorname{Re}(15/4\mp s)\ge49/100\), so \(|\sigma_i|\ge7/10\) and \(u_i\) is holomorphic. Covering \(|u|=1\) with 2048 `arb` arcs gives \(\sup|v_1|\le0.60001\), \(\sup|v_2|\le0.61728\), \(\sup|u_1|\le1.7185\) and \(\sup|u_2|\le0.26748\). Hence \(\|L_1(I-P_{120})\|\le\varepsilon_{120}=1.82\cdot10^{-26}\) and \(\|L_1P_{120}\|\le2.4878\).
+2. **CT.2 (`arb` Krawczyk, 512 bits).** \(M_{120}\) has right and left eigenpairs at \(\mu_\rho=0.13435498297039981308\ldots\) and \(\mu_\nu=-0.03279337366404081617\ldots\), both real and disjoint. A certified Neumann bound on \(A=MQ\) (\(\|A^7\|_F\le1.65\cdot10^{-18}<10^{-14}\)) puts every other eigenvalue of \(M_{120}\) in \(|z|<1/100\).
+3. **CT.3 (the top of the spectrum of \(L_1\); proved by CG.3's homotopy).** \(K_T\varepsilon_{120}<1\) holds on \(|z|=1/100\) (\(K_{\rm in}\le8.298\cdot10^5\)), on \(|z|=6\), and on circles of radius \(10^{-20}\) about \(\mu_\rho\) and \(\mu_\nu\). So \(L_1\) on \(H^2(D)\) has exactly two eigenvalues in \(|z|>1/100\), both real and algebraically simple:
+   \[
+   \rho_H=0.1343549829703998131\pm2.9\cdot10^{-20},\qquad \nu_2=-0.0327933736640408162\pm4.0\cdot10^{-20},\qquad q=\nu_2/\rho_H=-0.244080070117426\pm4\cdot10^{-16}.
+   \]
+   Also \(\rho_H=\rho(L_1)\), the spectral radius on \(C(X)\). For \(\ge\): the \(\rho_H\)-eigenfunction is analytic and not identically zero on \(X\), and \(\sigma_iX\subset X\), so it is a \(C(X)\) eigenfunction. For \(\le\): \(\rho(L_1)=\lim\|L_1^n\mathbf 1\|_\infty^{1/n}\le\lim(e_X\|L_1^n\mathbf 1\|_{H^2})^{1/n}=\rho_H\). This sharpens CI.1's \([0.1343549,0.1343551]\) to \(\pm2.9\cdot10^{-20}\) and lies inside it.
+4. **CT.4 (the two-term expansion of \(h_n\) on \(X\); proved, `arb`).** Let \(A=P_\rho\mathbf 1\) and \(B=P_\nu\mathbf 1\), where \(P_\rho,P_\nu\) are the Riesz projections of \(L_1\). Then for every \(n\ge0\),
+   \[
+   h_n=\rho^nA+\nu_2^nB+E_n,\qquad \sup_X|E_n|\le e_XK_{\rm in}(1/100)^{n+1},\qquad e_X=\sup_X(1-|u|^2)^{-1/2}\le1.17495 .
+   \]
+   \(A(x)\) and \(B(x)\) are enclosed pointwise by \((L_1p)(x)/\mu_N\), where \(p\) is the \(M_N\)-Riesz image of \(e_0\) (CO.3's block formula). The error bound is \(e_X\,\mathrm{rad}\,K\,K_T\,\varepsilon_N\), which is at most \(6.8\cdot10^{-20}\) for \(A\) and \(5.4\cdot10^{-18}\) for \(B\), on circles of radius \(1/20\) and \(1/100\). An `arb` branch-and-bound cover of \(X\) gives \(\min_XA\ge0.833891\) and \(\sup_X|B|\le0.984690\). With \(G=B/A\),
+   \[
+   \Gamma_+=\max_XG\in[0.2000641183,\,0.2000642055],\qquad \Gamma_-=\max_X(-G)\in[0.5249039315,\,0.5249041376].
+   \]
+   Both are positive, so \(B/A\) changes sign on \(X\).
+5. **CT.5 (the exact rate, with explicit constants; proved from CT.3–CT.4).** Let \(\eta_n=E_n/\rho^n\), so \(|\eta_n|\le\tau_n=\tau_1(\rho_{\rm in}/\rho)^n\) with \(\tau_1=e_XK_{\rm in}/100\le9750.0\). Then
+   \[
+   \frac{\rho-R_n(x)}{\rho(1-q)|q|^n}=\frac{(-1)^nG(x)+(\eta_n-\eta_{n+1})/((1-q)|q|^nA(x))}{1+(q^nB(x)+\eta_n)/A(x)} ,
+   \]
+   so this quantity lies within \(\theta_n=(\max|G|\,\epsilon_n+\Delta_n)/(1-\epsilon_n)\) of \((-1)^nG(x)\). Here \(\epsilon_n=(|q|^n\sup|B|+\tau_n)/\min A\) and \(\Delta_n=(\tau_n+\tau_{n+1})/((1-q)|q|^n\min A)\). \(\theta_n\) decreases, and \(\theta_{10}\le0.0702049<\Gamma_+\). Hence, for every \(n\ge n_0=10\),
+   \[
+   \rho(1-q)|q|^n(\Gamma_{\pm}-\theta_n)\le\rho(L_1)-\inf_XR_n\le\rho(1-q)|q|^n(\Gamma_{\pm}+\theta_n)\qquad(+\text{ for even }n,\ -\text{ for odd }n).
+   \]
+   Explicitly, \(0.0217058\,|q|^n\le\rho-\inf R_n\le0.0451750\,|q|^n\) for even \(n\ge10\), and \(0.0841585\,|q|^n\le\rho-\inf R_n\le0.0913152\,|q|^n\) for odd \(n\ge11\). The same bounds hold for \(\sup_XR_n-\rho\) with the parities swapped. So \(\inf R_n\to\rho(L_1)\) at the **exact rate** \(|\nu_2|/\rho(L_1)=0.2440800701\pm1.8\cdot10^{-11}\) (CJ.2's Birkhoff rate was \(\approx0.9974\)). The limits are
+   \[
+   \frac{\rho-\inf R_{2m}}{|q|^{2m}}\to c_+=\rho(1-q)\Gamma_+=0.0334404\pm1.2\cdot10^{-8},\qquad \frac{\rho-\inf R_{2m+1}}{|q|^{2m+1}}\to c_-=\rho(1-q)\Gamma_-=0.0877368\pm6.4\cdot10^{-8}.
+   \]
+   The oscillation \(\sup R_n-\inf R_n\) lies within \(\rho(1-q)|q|^n(\Gamma_++\Gamma_-\mp2\theta_n)\) for every \(n\ge10\), and the lower constant is \(\ge0.097708\) at \(n=10\). Its limit constant is \(0.1211772\pm6.7\cdot10^{-8}\) for both parities, so \(\log(\sup R_n/\inf R_n)\) also has the exact rate \(|q|\).
+
+*Proof.* CT.1 is CG.1's argument with \(W_i\) replaced by \(U_i=\sup|u_i|\). CT.2 and CT.3 follow CR.1–CR.3 verbatim: Krawczyk, then the Neumann bound \(H(|z|)\), then \(K_T=K(1+\beta_N/|z|)+1/|z|\ge\|(z-L_1P_N)^{-1}\|\), then the homotopy \(z-L_1P_N-\tau L_1(I-P_N)\). Realness holds because \(L_1\) commutes with \(f\mapsto\overline{f(\bar s)}\). \(\rho_H=\rho(L_1)\) was shown in CT.3. CT.4: \(\mathbf 1=e_0\) and \(\|e_0\|=1\). We have \(h_n=L_1^n(P_\rho+P_\nu)\mathbf 1+L_1^nQ_L\mathbf 1\) and \(L_1^nQ_L=\frac1{2\pi i}\oint_{|z|=1/100}z^n(z-L_1)^{-1}dz\), so \(\|L_1^nQ_L\mathbf 1\|\le(1/100)^{n+1}K_{\rm in}\). For \(x\) in a neighbourhood of \(X\), \(|f(x)|\le e_X\|f\|_{H^2}\). By the second resolvent identity, \(\|P_j-P_j^N\|\le\mathrm{rad}\,K_{L}K_T\varepsilon_N\). By CO.3, \(P_j^N\mathbf 1=L_1p_j/\mu_j^N\) with \(p_j=v_j(w_j)_0/(w_j\cdot v_j)\). The cover evaluates \(A,B\) on `arb` balls slightly larger than \(X\), with \(e_X\) taken on that set. Lower bounds for the maxima come from point evaluations inside \(X\), and upper bounds from enclosures over the surviving balls (width \(<10^{-7}\)). CT.5: \(\rho F_n-F_{n+1}=\rho^{n+1}[q^n(1-q)B+\eta_n-\eta_{n+1}]\) with \(F_n=h_n\). Divide this by \(F_n=\rho^n(A+q^nB+\eta_n)\). Since \(q<0\), \(\operatorname{sign}q^n=(-1)^n\) and \(1-q>0\). Then \(\rho-\inf_XR_n=\sup_X(\rho-R_n)\), and \(|\sup Y-\sup Y'|\le\sup|Y-Y'|\). \(\theta_n\) increases in \(\epsilon_n\) and \(\Delta_n\), and both decrease in \(n\) (bases \(|q|\), \(\rho_{\rm in}/\rho=0.0744\) and \(\rho_{\rm in}/(\rho|q|)=0.305\), all \(<1\)), so \(\theta_n\le\theta_{10}\) for \(n\ge10\). The script also checks this numerically for \(n\le60\). \(\square\)
+
+**Observation (no claim).** Floats of \(M_N^ne_0\) on a 2001-point grid give \((\rho-\min R_n)/(\rho(1-q)|q|^n)=0.200064,\ 0.524903\) for \(n=8,9\), matching \(\Gamma_+,\Gamma_-\). For \(n=0,\dots,7\) they give \(0.1625,0.4634,0.1977,0.5209,0.1999,0.5247,0.2001,0.5249\), so the regime already holds well below \(n_0=10\). The maximisers of \(\pm B/A\) sit at the endpoints \(s=\sqrt5/2\) (\(t=-5\)) and \(s=\tfrac52\) (\(t=0\)).
+
+**Kept limits (what CT does not claim).** The two-sided bounds are not claimed for \(n<10\): with these constants \(\theta_n\ge\Gamma_+\) there. \(\Gamma_\pm\) are known only to about \(10^{-7}\) (the stopping width of the cover). They have no closed form, and neither do \(\rho(L_1)\) and \(\nu_2\). That the maximisers are at the endpoints is an observation, not a claim. \(\nu_2\) is an eigenvalue on \(H^2(D)\). Nothing is claimed about the \(C^1\) or \(C(X)\) spectrum of \(L_1\) besides \(\rho_H=\rho(L_1)\). \(L_k\) for \(k\ge2\), the circle \(|z|=\rho(L_k)\), and the level sums are not touched.
+
+**What stays open.**
+- *From CA–CT.* CF.3's Birkhoff-route constant for general \(f\) (a Lipschitz bound for \(\log\tilde L^4G\)). Eigenvalues on \(|z|=\rho(L_k)\). The same rate for \(\inf_XL_k^{n+1}\mathbf 1/L_k^n\mathbf 1\), \(k\ge2\). The sixth eigenvalue of \(\tilde L\) and beyond (and whether \(a_6\ne0\)). Closed forms of \(r,\lambda_j,a_j,B,B_3\), \(\rho(L_k)\), \(\nu_2\) and \(\Gamma_\pm\). The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). \(G^*\) into BI.4/BJ.
+- *Carried over.* As in Theorem CS, including the Stage 2 question.
+
+**NOT THIS.** Theorem CT fixes the rate at which the Collatz–Wielandt ratios of the derivative transfer operator \(L_1\) converge to its spectral radius. That operator controls the \(C^1\) spectrum of the transfer operator for the level sums of one scaled corner resolvent of a graph Laplacian on the combinatorial gasket. A convergence rate is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN: the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_infrate.py`** (about 15 s; needs python-flint, numpy; imports CR's script unchanged for its Krawczyk and Neumann routines).
+- *Exact:* the disk facts (\(49/100\), the poles of \(\tilde w_i\)).
+- *Interval (`arb`, 512 bits):* \(U_i\), \(q_i\), \(\varepsilon_{120}\), \(\beta_{120}\); the Krawczyk eigenpairs; \(\|A^jQ\|_F\); the resolvent bounds on six circles; \(\rho_H\), \(\nu_2\), \(q\); \(e_X\), the projection errors, \(\tau_1\); the cover of \(X\) (\(\min A\), \(\sup|B|\), \(\Gamma_\pm\)); \(\theta_n\) for \(n\le60\), \(n_0\), \(c_\pm\), the oscillation constant.
+- *Floats:* the observation only.
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

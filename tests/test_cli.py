@@ -1288,6 +1288,32 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CS", (ROOT / doc).read_text())
 
+    def test_theorem_ct_profile_level_infrate(self):
+        """Theorem CT: the exact rate of inf R_n -> rho(L_1). Two certified eigenvalues of L_1 on H^2(D) outside 1/100;
+        rho(L_1) - inf R_n between explicit multiples of |nu_2/rho|^n for every n >= 10."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_infrate as ct
+
+        for mod in (ct, ct.cr):
+            mod.FAILS.clear()
+        self.assertEqual(ct.main(), 0)
+        res = ct.RESULT
+        rho, nu, q = res["rho"], res["nu"], res["q"]
+        self.assertTrue(0.1343549 < float(rho.mid()) < 0.1343551 and float(rho.rad()) < 1e-19)
+        self.assertTrue(-0.03279338 < float(nu.mid()) < -0.03279337 and float(nu.rad()) < 1e-19)
+        self.assertTrue(-0.24409 < float(q.mid()) < -0.24407)
+        self.assertTrue(0.20006 < float(res["Gp"].mid()) < 0.20007 and float(res["Gp"].rad()) < 1e-6)
+        self.assertTrue(0.52490 < float(res["Gm"].mid()) < 0.52491 and float(res["Gm"].rad()) < 1e-6)
+        self.assertTrue(0.03344 < float(res["cp"].mid()) < 0.03345)
+        self.assertTrue(0.08773 < float(res["cm"].mid()) < 0.08774)
+        self.assertLessEqual(res["n0"], 10)
+        for mod in (ct, ct.cr):
+            self.assertEqual(mod.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_infrate.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CT", (ROOT / doc).read_text())
+
     def test_theorem_cr_profile_level_fifth(self):
         """Theorem CR: the fifth eigenvalue. Krawczyk eigenpairs of M_300 for r, l_2..l_5, a certified spectral remainder,
         resolvent circles (CG.3's homotopy): exactly five eigenvalues in |z| > 1e-8; a_5 != 0 and the exact rate of e'_k.

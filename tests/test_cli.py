@@ -1227,3 +1227,38 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_threshold.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CP", (ROOT / doc).read_text())
+
+    def test_theorem_cq_profile_level_fourth(self):
+        """Theorem CQ: the fourth eigenvalue. Pellet counts at 1/1000 and 1/20000, certified resolvent circles G_4 and
+        |z| = 1/20000, Krawczyk enclosure of l_4 (N = 140), a_4 != 0 by the second resolvent identity, exact rate of e_k."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_fourth as cq
+
+        for mod in (cq, cq.cn, cq.cg, cq.co):
+            mod.FAILS.clear()
+        cq.cn.tail_constants()
+        S = cq.cn.circle_sup(K=1024)
+        self.assertTrue(cq.pellet(cq.cg.build_matrix(cq.N1)))
+        M80 = cq.cg.build_matrix(cq.N1, prec=320)
+        circ, eps80, beta80, dc = cq.counting(M80)
+        self.assertTrue(circ["G4"][0] and circ["in"][0])
+        loc = cq.localise(cq.cg.build_matrix(cq.N2, prec=320), M80, dc)
+        self.assertIsNotNone(loc)
+        l4 = loc["l4"]
+        self.assertTrue(-2.1645e-4 < float(l4.mid()) < -2.1644e-4 and float(l4.rad()) < 1e-17)
+        self.assertTrue(cq.co.big_disk(K=1024))
+        S_rho = cq.co.circle_sup_rho(K=1024)
+        f = cq.co.taylor_coeffs(S_rho, M=2048, Nc=cq.N2)
+        self.assertIsNotNone(f)
+        a4, c0, ev = cq.a4_coeff(f, S, loc)
+        self.assertFalse(a4.contains(0))
+        self.assertTrue(-2.21e-7 < float(a4.mid()) < -2.20e-7 and float(a4.rad()) < 1e-10)
+        eps0p, k0 = cq.rate(a4, c0, ev, S, circ["in"][2], l4)
+        self.assertIsNotNone(k0)
+        self.assertLessEqual(k0, 30)
+        for mod in (cq, cq.cn, cq.cg, cq.co):
+            self.assertEqual(mod.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_fourth.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CQ", (ROOT / doc).read_text())

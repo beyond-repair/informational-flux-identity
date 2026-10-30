@@ -4048,6 +4048,41 @@ By CN.2, \(s_n=a_1r^{n-4}(1+\beta_n)\) with \(\beta_n=Bq_2^n+B_3q_3^n+\epsilon_n
 
 The script exits nonzero if any check fails.
 
+## Theorem CQ. The fourth eigenvalue: \(\tilde L\) has exactly one eigenvalue \(\lambda_4=-0.000216446552837\ldots\) in \(5\cdot10^{-5}<|z|<10^{-3}\), real and simple, its coefficient \(a_4\ne0\), and CN.2's remainder has the exact rate \(|\lambda_4|\)
+
+**Setting.** As in Theorems CE, CG, CN and CO. \((\tilde Lf)(s)=\tilde w_1(s)f(\sigma_1s)+\tilde w_2(s)f(\sigma_2s)\) on \(H^2(D)\), \(D=\{|s-c|<R\}\), \(c=\tfrac{83}{50}\), \(R=\tfrac85\), \(M_N=P_N\tilde LP_N\), \(\|\tilde L(I-P_N)\|\le\varepsilon_N\) (CG.1's formula, any \(N\)). \(F_0=\tilde L^4G\) (CN.1), \(x_0=\sqrt{13}/2\), \(c_0=3\sigma_{-3}\), \(a_j=c_0(\Pi_jF_0)(x_0)\). CG.3 left every eigenvalue other than \(r,\lambda_2,\lambda_3\) inside \(|z|<10^{-3}\), and CN.2 put all of it into one remainder \(e_k\), \(|e_k|\le\varepsilon_0\,10^{-3k}\). CP's \(\epsilon_n\) still contains the \(\lambda_4\)-term.
+
+**Assumptions used as stated (not re-run).** CE.1–CE.3. CG.3's circle \(|z|=10^{-3}\) and its count. CN.1's box argument (its box checks and \(S\) are re-run). CO.1's continuation to \(|s-c|<\tfrac{51}{50}R\) (re-run). Textbook: Pellet's theorem, Krawczyk/Brouwer, Riesz projections, the second resolvent identity, the maximum principle, Cauchy/trapezoid aliasing, floating-point dot-product error bounds (Higham, Thm 3.5 and Sec. 3.6).
+
+**THEOREM CQ.**
+1. **CQ.1 (count; certified, `arb` characteristic polynomial at 1100 bits, Pellet).** \(\chi(M_{80})\) passes Pellet's test at \(\rho=1/1000\) (\(k=78\), ratio \(3.5348\)) and at \(\rho'=1/20000\) (\(k=77\), ratio \(4.2343\)). So \(M_{80}\) has exactly one eigenvalue in \(1/20000<|z|<1/1000\), and it is real (\(\chi\) is real).
+2. **CQ.2 (localisation; certified, rigorous float residual bounds and `arb`).** Resolvent circles for \(M_{80}\) on \(G_4=\{|z+2.164466\cdot10^{-4}|=1/20000\}\) and on \(|z|=1/20000\) give \(\sup\|(z-\tilde LP_{80})^{-1}\|\,\varepsilon_{80}<1\) (\(5.33\cdot10^{-5}\) and \(1.20\cdot10^{-3}\)). By CG.3's homotopy, \(\tilde L\) has exactly one eigenvalue \(\lambda_4\) inside \(G_4\), real and algebraically simple. With CG.3's circle \(|z|=10^{-3}\) (as stated), every eigenvalue of \(\tilde L\) other than \(r,\lambda_2,\lambda_3,\lambda_4\) has \(|\mu|<5\cdot10^{-5}\).
+3. **CQ.3 (enclosure; certified).** With \(N=140\) (\(\varepsilon_{140}\le3.97\cdot10^{-30}\)), Krawczyk right/left eigenvectors of \(M_{140}\), the \(G_4\) circle for \(M_{140}\) and a rank-one split of the resolvent on \(|z-\mu_4^{140}|=10^{-18}\) (maximum principle) give
+   \[
+   \lambda_4=-0.00021644655283736\pm1.53\cdot10^{-18},\qquad |\lambda_4|/r=0.0005108108830\pm2.54\cdot10^{-14}.
+   \]
+4. **CQ.4 (\(a_4\ne0\); proved, certified).** CO.3/CO.4's exact projection formula for \(\tilde LP_{140}\), Taylor coefficients \(f_0..f_{140}\) as in CO.2 (2048 certified points, aliasing \(\le6.1\cdot10^{-20}\)), and the second-resolvent bound \(|a_4-a_4^N|\le c_0\|\mathrm{ev}_{x_0}\|\,\mathrm{rad}_4\,KK^N\varepsilon_{140}S\le5.3\cdot10^{-11}\) give
+   \[
+   a_4=-2.204\cdot10^{-7}\pm5.54\cdot10^{-11}\ne0\quad(\text{negative}).
+   \]
+5. **CQ.5 (exact rate of CN.2's remainder; proved from CQ.2, CQ.4, CN.1).** For every \(k\ge0\), \(s_{k+4}=a_1r^k+a_2\lambda_2^k+a_3\lambda_3^k+a_4\lambda_4^k+e'_k\) with \(|e'_k|\le\varepsilon_0'(1/20000)^k\), \(\varepsilon_0'=c_0\|\mathrm{ev}_{x_0}\|\rho'K'S\le9.817\cdot10^7\). Since \(\rho'/|\lambda_4|=0.231004<1\) and \(\varepsilon_0'(\rho'/|\lambda_4|)^k<|a_4|\) for \(k\ge24\), CN.2's remainder \(e_k=a_4\lambda_4^k+e'_k\) satisfies \(e_k/\lambda_4^k\to a_4\) and \(\operatorname{sign}e_k=(-1)^{k+1}\) for every \(k\ge24\). Its exact rate is \(|\lambda_4|\), not \(10^{-3}\).
+
+*Proof.* CQ.1 is Pellet's theorem applied to the certified coefficients of \(\chi(M_{80})\); a non-real root would come with its conjugate. For CQ.2, a float approximate inverse \(Y\) of \(zI-A\) (\(A\) the float mid of \(M\), \(\|M-A\|_F\le2.93\cdot10^{-17}\)) and Higham's dot-product bounds give \(\|(zI-M)^{-1}\|\le\|Y\|_F/(1-\|E\|_F)\) on an adaptive cover of each circle; then \(\|(z-\tilde LP_N)^{-1}\|\varepsilon_N<1\) and the homotopy \(z-\tilde LP_N-\tau\tilde L(I-P_N)\), as in CG.3, keep the eigenvalue count inside each circle. \(\tilde L\) commutes with \(f\mapsto\overline{f(\bar s)}\) and \(G_4\) is symmetric, so the single eigenvalue inside \(G_4\) is real. CQ.3: the same count for \(M_{140}\) on \(G_4\) puts \(\mu_4^{140}\) there; writing \((z-M)^{-1}=P/(z-\mu)+H(z)\) with \(H\) holomorphic on the closed \(G_4\) disk, the maximum principle bounds \(\|(z-M)^{-1}\|\) on \(|z-\mu_4^{140}|=10^{-18}\), and that bound times \(\varepsilon_{140}\) is \(<1\). CQ.4 is CO.4's argument with \(G_4\) in place of CO's circles. CQ.5 is the Riesz decomposition of \(F_0\) along the circles \(|z|=1/20000\), \(G_4\) and CN.2's circles, evaluated at \(x_0\). \(\square\)
+
+**Kept limits (what CQ does not claim).** No closed form of \(\lambda_4\) or \(a_4\) is known. The next eigenvalues (floats: \(-1.744\cdot10^{-7}\) and a complex pair near \(-1.16\cdot10^{-8}\pm1.55\cdot10^{-7}i\)) are only bounded by \(\rho'=5\cdot10^{-5}\); Pellet's test at \(10^{-5}\) fails. CP is unchanged: its \(\epsilon_n\) already contains the \(\lambda_4\)-term. \(k_0=24\) is what these bounds give, not claimed optimal.
+
+**What stays open.**
+- *From CA–CQ.* An explicit \(C_G\) in CF.3. Eigenvalues on \(|z|=\rho(L_k)\). A rate for \(\inf R_n\to\rho(L_1)\). The fifth eigenvalue and beyond. Closed forms of \(r,\lambda_j,a_j,B,B_3\) and \(\rho(L_k)\). The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). \(G^*\) into BI.4/BJ.
+- *Carried over.* As in Theorem CP, including the Stage 2 question.
+
+**NOT THIS.** Theorem CQ locates one more eigenvalue of a transfer operator built from the level sums of one scaled corner resolvent of a graph Laplacian on the combinatorial gasket, and shows its coefficient is nonzero. An eigenvalue of that operator is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN: the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_fourth.py`** (about 280 s; needs python-flint, numpy, mpmath; imports CN's, CG's and CO's scripts unchanged).
+- *Interval (`arb`):* the characteristic polynomial of \(M_{80}\) and both Pellet ratios; \(\varepsilon_{80},\varepsilon_{140}\); Krawczyk eigenvectors of \(M_{140}\) and \(M_{80}\); \(\lambda_4\), \(a_4\), \(\varepsilon_0'\), \(k_0\).
+- *Rigorous floats:* the resolvent circles \(G_4\) and \(|z|=1/20000\) (residual bounds as above).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

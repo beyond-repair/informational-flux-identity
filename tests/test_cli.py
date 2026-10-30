@@ -1093,3 +1093,28 @@ class FractionalProfileLevelFredholmTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_fredholm.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CK", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelCalkinTests(unittest.TestCase):
+    def test_theorem_cl_profile_level_calkin(self):
+        """Theorem CL: r_ess(C^k) = rho(L_k) exactly (Calkin norm), two-sided arb Collatz-Wielandt for rho(L_2..4),
+        C^1 Fredholm essential spectrum = closed disk, jet-zero eigenfunctions never reach the circle."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_calkin as cl
+
+        cl.FAILS.clear()
+        cl.symbolic_checks()
+        floats = {k: cl.collatz_two_sided(k) for k in (2, 3, 4)}
+        for k, v in floats.items():
+            self.assertTrue(float(cl.CW[k][0]) < v < float(cl.CW[k][1]))
+        Dw, Ds = cl.distortion_constants(n_cover=1000)
+        self.assertTrue(1.68 < Dw < 1.70 and 0.72 < Ds < 0.73)
+        cl.consequences()
+        out, maxdl = cl.float_observations()
+        self.assertTrue(out["witness_disjoint"] and out["witness_err"] < 1e-12)
+        self.assertTrue(maxdl < Dw)
+        self.assertEqual(cl.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_calkin.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CL", (ROOT / doc).read_text())

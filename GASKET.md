@@ -4001,6 +4001,53 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem CP. An explicit \(n_0\) in CO.5: the second-order residual of the level sums has sign \((-1)^n\) for every \(n\ge4\), with explicit two-sided constants, and CO.5's convergence itself has the exact rate \(\lambda_2^2/(r|\lambda_3|)=0.7391538\ldots\)
+
+**Setting.** As in Theorems CC, CG, CN and CO. \(q_j=\lambda_j/r\), \(B=(a_2/a_1)q_2^{-4}\), \(B_3=(a_3/a_1)q_3^{-4}\), and CO.5's residual
+\[
+T_n=\log\frac{s_{n+1}}{r\,s_n}-B\,q_2^n(q_2-1).
+\]
+By CN.2, \(s_n=a_1r^{n-4}(1+\beta_n)\) with \(\beta_n=Bq_2^n+B_3q_3^n+\epsilon_n\) and \(|\epsilon_n|\le(\varepsilon_0/a_1)(\rho/r)^{n-4}\), \(\rho=10^{-3}\), for every \(n\ge4\). CO.5 proved \(T_n/q_3^n\to B_3(q_3-1)\) with no explicit \(n_0\) and no constant.
+
+**Assumptions used as stated (not re-run).** CG.3's enclosures of \(r,\lambda_2,\lambda_3\). CN.2's expansion with \(\varepsilon_0\le2.889\cdot10^4\) (rounded up to \(2.9\cdot10^4\)). CO.4's enclosures \(a_1=0.00571256871089104\pm1.6\cdot10^{-13}\), \(a_2=-4.15763912993700\cdot10^{-5}\pm4.9\cdot10^{-11}\), \(a_3=-2.36115967884500\cdot10^{-5}\pm4.6\cdot10^{-8}\) (mid values from a fresh run of CO's script, radii as stated in CO.4). CC's level sums \(s_4,\dots,s_{13}\) are re-run. Textbook: \(|x-\log(1+x)-x^2/2|\le|x|^3/(3(1-|x|))\) for \(|x|<1\).
+
+**THEOREM CP.**
+1. **CP.1 (data; certified, `arb`).** For \(4\le n\le12\), \(T_n\) has sign \((-1)^n\). For \(4\le n\le11\), \(T_n/q_3^n\in[1530.4,1734.3]\). The enclosures are \(1672.85\pm0.006\), \(1624.40\pm0.06\), \(1639.\pm0.3\), \(1629.\pm0.8\) for \(n=4..7\). They widen with \(n\) because of the radius of \(B\) (as CO's Observation said).
+2. **CP.2 (explicit \(n_0=12\); proved).** For every \(n\ge12\),
+   \[
+   \frac{T_n}{q_3^n}=B_3(q_3-1)+\tfrac{B^2}2(1-q_2^2)\,w^n+R_n,\qquad w=\frac{q_2^2}{q_3}=-0.73915380\ldots,
+   \]
+   \[
+   |R_n|\le E_2(n)=P_1\theta^n+P_2|q_2|^n+P_3|q_3|^n+P_4\bigl(|q_2|^3/|q_3|\bigr)^n,\qquad\theta=\frac{\rho}{r|q_3|}=0.058590,
+   \]
+   with \(P_1\le1.6405\cdot10^{17}\), \(P_2\le1.53\cdot10^4\), \(P_3\le1.70\cdot10^6\) and \(P_4\le185.461\) (certified). Every base is \(<1\), so \(E_1(n)=\tfrac{B^2}2(1-q_2^2)|w|^n+E_2(n)\) decreases, and \(E_1(12)\le269.33<1630.28\le B_3(q_3-1)\). Hence \(\operatorname{sign}T_n=\operatorname{sign}q_3^n=(-1)^n\) for every \(n\ge12\). With CP.1 this holds **for every \(n\ge4\)**, and
+   \[
+   1360.9\,|q_3|^n\le|T_n|\le1906.1\,|q_3|^n\qquad\text{for every }n\ge4\ (\text{explicit}).
+   \]
+   The tail bound alone needs \(n\ge12\): \(E_1(11)=4583\) exceeds the limit.
+3. **CP.3 (exact rate of CO.5's convergence; proved).** Every base of \(E_2(n)/|w|^n\) is \(<1\): they are \(0.0793\), \(0.2334\), \(0.0545\) and \(0.1726\). Also \(E_2(15)/|w|^{15}\le5.028<32.704=\tfrac{B^2}2(1-q_2^2)\), while \(E_2(14)/|w|^{14}\) is about \(63.4\). So for every \(n\ge15\), \(T_n/q_3^n-B_3(q_3-1)\) has sign \(\operatorname{sign}w^n=(-1)^n\), and
+   \[
+   \frac{T_n/q_3^n-B_3(q_3-1)}{w^n}\longrightarrow\tfrac{B^2}2(1-q_2^2)=32.7041\pm10^{-4}\ne0 .
+   \]
+   So CO.5's limit is approached at the exact geometric rate \(q_2^2/|q_3|=\lambda_2^2/(r|\lambda_3|)=0.7391537958\ldots\). It is approached in alternation, and the rate is not \(|q_2|\) or \(\theta\).
+
+*Proof.* Put \(Q(x)=x-\log(1+x)\). Then \(T_n=B_3q_3^n(q_3-1)+(\epsilon_{n+1}-\epsilon_n)-(Q(\beta_{n+1})-Q(\beta_n))\), exactly. Write \(\beta_m=Bq_2^m+\gamma_m\), with \(\gamma_m=B_3q_3^m+\epsilon_m\). Then \(Q(\beta_m)=\tfrac{B^2}2q_2^{2m}+Bq_2^m\gamma_m+\tfrac12\gamma_m^2-C(\beta_m)\), with \(|C(x)|\le|x|^3/(3(1-|x|))\). The \(q_2^{2m}\) parts give \(-\tfrac{B^2}2q_2^{2n}(q_2^2-1)\). For \(m\ge n_0\), \(\epsilon_m/|q_3|^m=E\theta^m\) with \(E=(\varepsilon_0/a_1)(r/\rho)^4\), and this decreases. So \(|\gamma_m|\le G_*|q_3|^m\) with \(G_*=|B_3|+E\theta^{n_0}\le1845\), and \(|\beta_m|\le B_*|q_2|^m\) with \(B_*=|B|+G_*|q_3/q_2|^{n_0}\le8.2108\). This gives \(|\beta_m|\le5.72\cdot10^{-9}<\tfrac12\). Summing \(m=n,n+1\) and dividing by \(|q_3|^n\) gives \(P_1=E(1+\rho/r)\), \(P_2=|B|G_*(1+|q_2q_3|)\), \(P_3=\tfrac12G_*^2(1+q_3^2)\) and \(P_4=B_*^3(1+|q_2|^3)/(3(1-\bar b))\). Each term of \(E_1\), \(E_2\) and \(E_2/|w|^n\) is a positive constant times a power of a base certified \(<1\), so it decreases in \(n\). The conclusions follow from the two certified inequalities at \(n=12\) and \(n=15\), and from \(q_3<0\), \(\tfrac{B^2}2(1-q_2^2)>0\). \(\square\)
+
+**Consistency (no claim).** CP.3's term \(32.704\,w^n\) gives \(9.8,-7.2,5.3,-3.9,2.9\) for \(n=4..8\). The float deviations of CO's Observation from \(1633\) are \(+40,-8.6,+6.2,-3.5,+3.4\), with the same signs from \(n=5\) on. The \(n=4\) excess carries the \(\lambda_4\)-term, which CN.2 bounds only crudely. Data cannot test CP.3 directly, because \(B_3(q_3-1)\) is enclosed only in \([1630.29,1636.66]\).
+
+**Kept limits (what CP does not claim).** \(n_0=12\) and \(n_1=15\) are what these bounds give; they are not claimed to be optimal. The \(\lambda_4\)-term is still inside \(\epsilon_n\) (CN.2's circle \(|z|=10^{-3}\)), so \(a_4\) and the fourth eigenvalue are not touched. The data cannot resolve \(B_3(q_3-1)\) beyond \(\pm3.2\). \(C_G\), the circle eigenvalues \(|z|=\rho(L_k)\), a rate for \(\inf R_n\) and the closed forms stay open.
+
+**What stays open.**
+- *From CA–CP.* The fourth eigenvalue (float about \(-2.16\cdot10^{-4}\)) and \(a_4\ne0\). An explicit \(C_G\) in CF.3. Eigenvalues on \(|z|=\rho(L_k)\). A rate for \(\inf R_n\to\rho(L_1)\). Closed forms of \(r,\lambda_j,B,B_3\) and \(\rho(L_k)\). The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). \(G^*\) into BI.4/BJ.
+- *Carried over.* As in Theorem CO, including the Stage 2 question.
+
+**NOT THIS.** Theorem CP fixes from which level on a sign pattern holds in the level sums of one scaled corner resolvent of a graph Laplacian on the combinatorial gasket, and it fixes the rate at which CO.5's limit is approached. Signs of a residual are not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN: the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_threshold.py`** (about 20 s; needs python-flint, mpmath; imports CN's and CC's scripts unchanged).
+- *Interval (`arb`):* CC's \(s_4..s_{13}\); \(T_n\) for \(n\le12\); the bases, \(G_*,B_*,\bar b\), \(P_1..P_4\), \(E_1(12)\), \(E_2(15)/|w|^{15}\), and the constants \(1360.9\) and \(1906.1\).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

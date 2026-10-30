@@ -1203,3 +1203,27 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_third.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CO", (ROOT / doc).read_text())
+
+    def test_theorem_cp_profile_level_threshold(self):
+        """Theorem CP: explicit n_0 in CO.5. CC's level sums give sign(T_n) = (-1)^n for 4 <= n <= 12; the explicit tail
+        bound E_1(12) < B_3(q_3 - 1) covers n >= 12; E_2(15)/|w|^15 < (B^2/2)(1 - q_2^2) gives the exact rate q_2^2/|q_3|."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_threshold as cp
+
+        cp.FAILS.clear()
+        cp.cn.FAILS.clear()
+        k = cp.constants()
+        sums = cp.cn.level_data(13)
+        lo, hi, vals = cp.data_part(k, sums)
+        self.assertTrue(1500 < float(lo.mid()) and float(hi.mid()) < 1750)
+        P = cp.tail_coeffs(k)
+        out = cp.conclude(k, P, lo, hi)
+        self.assertTrue(float(out["E1"].mid()) < 270 and 1360 < float(out["c"].mid()) and float(out["C"].mid()) < 1907)
+        self.assertTrue(float(out["rel"].mid()) < 5.1)
+        self.assertTrue(0.7391 < float(abs(k["w"]).mid()) < 0.7392)
+        self.assertEqual(cp.FAILS, [])
+        self.assertEqual(cp.cn.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_threshold.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CP", (ROOT / doc).read_text())

@@ -1070,3 +1070,26 @@ class FractionalProfileLevelDiskTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_disk.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CJ", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelFredholmTests(unittest.TestCase):
+    def test_theorem_ck_profile_level_fredholm(self):
+        """Theorem CK: Assumption CH discharged: exact Faa di Bruno split (Lt f)^(k) = M_k f^(k) + lower order (k = 1..4),
+        disjoint branch images and positive weights (arb), finite one-step Lasota-Yorke constants, re-run CI.1 / CH.2
+        radii, and the now unconditional consequences (spec(C^1) = {r} u {|z| <= rho(L_1)})."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_fredholm as ck
+
+        ck.FAILS.clear()
+        coeffs = ck.symbolic_checks()
+        self.assertEqual(len(coeffs), 2 * ck.KMAX)
+        consts = ck.certified_constants(coeffs)
+        self.assertTrue(0.28166 < float(consts[1][0].mid()) < 0.28167)   # sup L_1 1
+        self.assertTrue(all(float(consts[k][0].upper()) < 0.3 for k in consts))
+        ck.consequences()
+        self.assertTrue(0.14 < ck.norm_identity_observation(nmax=5) < 0.16)
+        self.assertEqual(ck.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_fredholm.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CK", (ROOT / doc).read_text())

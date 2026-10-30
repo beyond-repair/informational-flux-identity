@@ -1048,3 +1048,25 @@ class FractionalProfileLevelEssentialTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_essential.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CI", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelDiskTests(unittest.TestCase):
+    def test_theorem_cj_profile_level_disk(self):
+        """Theorem CJ: Conjecture CI.6: exact (log u_i)', the certified uniform cone for L_1 (B <= 2.4121, diameter
+        < 13.31), the gap-weight constant Q <= 0.8050 < 1, and the consequences spec(C^1) = {r} u {|z| <= rho(L_1)}."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_disk as cj
+
+        cj.FAILS.clear()
+        cj.symbolic_checks()
+        k = cj.constants()
+        self.assertTrue(float(k["B"].mid()) < 2.4121)
+        self.assertTrue(float(k["Delta"].mid()) < 13.31)
+        self.assertTrue(float(k["Q"].mid()) < 0.8050)
+        self.assertTrue(float(k["Q"].upper()) < 1)
+        cj.consequences()
+        self.assertEqual(cj.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_disk.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CJ", (ROOT / doc).read_text())

@@ -1288,6 +1288,46 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CS", (ROOT / doc).read_text())
 
+    def test_theorem_cu_profile_level_infrate_k(self):
+        """Theorem CU: the exact rate of inf R_n^(k) -> rho(L_k) for k = 2, 3, 4. Two certified eigenvalues of L_k on H^2(D)
+        outside rho_in; rho(L_k) - inf R_n between explicit multiples of |nu_2/rho|^n for every n >= n_0(k)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_infrate_k as cu
+
+        for mod in (cu, cu.cr):
+            mod.FAILS.clear()
+        self.assertEqual(cu.main(), 0)
+        expect = {  # k: (rho, nu_2, q, Gamma_+, Gamma_-, c_+, c_-, n_0)
+            2: (0.04307031122, -0.01247174356, -0.2895670639, 0.2546354, 0.6796090, 0.01414298, 0.03774688, 7),
+            3: (0.01391925477, -0.00444017237, -0.3189949783, 0.3087743, 0.8310494, 0.00566892, 0.01525759, 9),
+            4: (0.00452646909, -0.00152826859, -0.3376293000, 0.3625752, 0.9801676, 0.002195297, 0.00593466, 12),
+        }
+        lo_cl3 = {2: 0.0430702, 3: 0.0139192, 4: 0.0045264}
+        for k, (rho, nu, q, gp, gm, cp, cm, n0) in expect.items():
+            res = cu.ALL[k]
+            self.assertEqual(res["k"], k)
+            self.assertAlmostEqual(float(res["rho"].mid()), rho, delta=1e-10)
+            self.assertLess(float(res["rho"].rad()), 1e-19)
+            self.assertTrue(lo_cl3[k] < float(res["rho"].mid()) < lo_cl3[k] + 2e-7)
+            self.assertAlmostEqual(float(res["nu"].mid()), nu, delta=1e-10)
+            self.assertLess(float(res["nu"].rad()), 1e-19)
+            self.assertAlmostEqual(float(res["q"].mid()), q, delta=1e-9)
+            self.assertAlmostEqual(float(res["Gp"].mid()), gp, delta=1e-6)
+            self.assertAlmostEqual(float(res["Gm"].mid()), gm, delta=1e-6)
+            self.assertLess(float(res["Gp"].rad()), 1e-6)
+            self.assertLess(float(res["Gm"].rad()), 1e-6)
+            self.assertAlmostEqual(float(res["cp"].mid()), cp, delta=1e-7)
+            self.assertAlmostEqual(float(res["cm"].mid()), cm, delta=1e-7)
+            self.assertLessEqual(res["n0"], n0)
+            self.assertGreater(float(res["ev"][0].lower()), 0)
+            self.assertGreater(float(res["od"][0].lower()), 0)
+        for mod in (cu, cu.cr):
+            self.assertEqual(mod.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_infrate_k.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CU", (ROOT / doc).read_text())
+
     def test_theorem_ct_profile_level_infrate(self):
         """Theorem CT: the exact rate of inf R_n -> rho(L_1). Two certified eigenvalues of L_1 on H^2(D) outside 1/100;
         rho(L_1) - inf R_n between explicit multiples of |nu_2/rho|^n for every n >= 10."""

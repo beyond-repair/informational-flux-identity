@@ -4219,6 +4219,69 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem CU. The exact rate of \(\inf R_n^{(k)}\to\rho(L_k)\) for \(k=2,3,4\): on \(H^2(D)\), each \(L_k\) has exactly two eigenvalues outside an explicit small disk, \(\rho(L_k)\) and \(\nu_2^{(k)}<0\), real and simple, and for every \(n\ge n_0(k)\), \(\rho(L_k)-\inf_XR_n^{(k)}\) lies between explicit multiples of \(|\nu_2^{(k)}/\rho(L_k)|^n\), with rates \(0.2895670639\), \(0.3189949783\), \(0.3376293000\)
+
+**Setting.** As in Theorems CK, CL and CT: \(s=\sqrt{t+25/4}\), \(X=[\sqrt5/2,\tfrac52]\), \(\sigma_{1,2}=\sqrt{15/4\mp s}\), and \(L_kf=u_1f(\sigma_1)+u_2f(\sigma_2)\) with \(u_i=\tilde w_i|\sigma_i'|^k=\tilde w_i/(2\sigma_i)^k\). Put \(h_n=L_k^n\mathbf 1>0\) and \(R_n=R_n^{(k)}=h_{n+1}/h_n\) on \(X\). Since \(L_k\) is positive, \(\inf_XR_n\le\rho(L_k)\le\sup_XR_n\) (iterate \(L_kh_n\gtrless(\inf/\sup R_n)h_n\), then Gelfand). CL.3 certified \(\rho(L_k)\) on \(C(X)\) to about \(10^{-7}\). CT proved the exact rate of \(\inf R_n\to\rho(L_1)\) and listed the same question for \(k\ge2\) as open. Here \(L_k\) acts on CG's Hardy space \(H^2(D)\), \(D=\{|s-c|<R\}\), \(c=\tfrac{83}{50}\), \(R=\tfrac85\), \(N=120\), 512-bit `arb`, with inner radius \(\rho_{\rm in}=1/500,\,1/1000,\,1/2500\) for \(k=2,3,4\).
+
+**Assumptions used as stated (not re-run).** CJ.2's definition of \(R_n\), applied to \(L_k\). CL.3's intervals for \(\rho(L_k)\), used only as a consistency check. CG.1's disk facts and tail formula, re-run with the weights \(u_i\). CG.3's homotopy argument. CR.1–CR.2's Krawczyk and Neumann routines, imported unchanged. CT.4–CT.5's algebra. Textbook facts: Riesz projections, Neumann series, the second resolvent identity, Gelfand's formula, and point evaluation in \(H^2\). CT's script is not changed. The new script is CT's routine with the exponent \(k\) as a parameter.
+
+**THEOREM CU.**
+1. **CU.1 (compactness; exact + `arb`).** On the closed disk, \(|\sigma_i|\ge7/10\) (CT.1), so \(u_i\) is holomorphic. Covering \(|u|=1\) with 2048 `arb` arcs gives \(\sup|u_1|\le1.2283,\ 0.87833,\ 0.62835\) and \(\sup|u_2|\le0.068530,\ 0.017558,\ 0.0044986\) for \(k=2,3,4\). Hence \(\|L_k(I-P_{120})\|\le6.08\cdot10^{-27},\ 2.57\cdot10^{-27},\ 1.39\cdot10^{-27}\).
+2. **CU.2 (`arb` Krawczyk, 512 bits).** \(M_{120}\) has right and left eigenpairs at \(\rho\) and \(\nu_2\), real and disjoint. The certified Neumann bound \(\|A^7\|_F\le5.09\cdot10^{-21},\ 2.23\cdot10^{-23},\ 1.02\cdot10^{-24}<\rho_{\rm in}^7\) puts every other eigenvalue of \(M_{120}\) in \(|z|<\rho_{\rm in}\).
+3. **CU.3 (the top of the spectrum of \(L_k\); proved by CG.3's homotopy).** \(K_T\varepsilon_{120}<1\) holds on \(|z|=\rho_{\rm in}\) (\(K_{\rm in}\le3.552\cdot10^7,\ 1.390\cdot10^8,\ 3.091\cdot10^9\)), on \(|z|=6\), and on circles of radius \(10^{-20}\) about \(\mu_\rho\) and \(\mu_\nu\). So \(L_k\) on \(H^2(D)\) has exactly two eigenvalues in \(|z|>\rho_{\rm in}\), both real and algebraically simple:
+
+   | \(k\) | \(\rho(L_k)\) | \(\nu_2^{(k)}\) | \(q=\nu_2/\rho\) |
+   |---|---|---|---|
+   | 2 | \(0.0430703112227101271\pm1.3\cdot10^{-20}\) | \(-0.0124717435618530418\pm3.8\cdot10^{-20}\) | \(-0.289567063896138\pm2.7\cdot10^{-16}\) |
+   | 3 | \(0.0139192547691468646\pm2.1\cdot10^{-20}\) | \(-0.0044401723728826436\pm1.4\cdot10^{-20}\) | \(-0.318994978288970\pm1.9\cdot10^{-16}\) |
+   | 4 | \(0.0045264690852562123\pm2.8\cdot10^{-20}\) | \(-0.0015282685887826225\pm3.6\cdot10^{-20}\) | \(-0.337629300012356\pm4.2\cdot10^{-16}\) |
+
+   \(\rho_H=\rho(L_k)\) on \(C(X)\) by CT.3's argument: the \(\rho_H\)-eigenfunction is analytic and not identically zero on \(X\), and \(\|L_k^n\mathbf 1\|_\infty\le e_X\|L_k^n\mathbf 1\|_{H^2}\). Each value lies inside CL.3's interval (\([0.0430702,0.0430704]\), \([0.0139192,0.0139193]\), \([0.0045264,0.0045265]\)) and sharpens it from about \(10^{-7}\) to about \(3\cdot10^{-20}\).
+4. **CU.4 (the two-term expansion of \(h_n\) on \(X\); proved, `arb`).** With the Riesz projections \(P_\rho,P_\nu\) of \(L_k\), \(A=P_\rho\mathbf 1\) and \(B=P_\nu\mathbf 1\), for every \(n\ge0\)
+   \[
+   h_n=\rho^nA+\nu_2^nB+E_n,\qquad \sup_X|E_n|\le\tau_1\rho_{\rm in}^n,\qquad \tau_1=e_XK_{\rm in}\rho_{\rm in}\le8.346\cdot10^4,\ 1.633\cdot10^5,\ 1.453\cdot10^6 .
+   \]
+   \(A\) and \(B\) are enclosed pointwise as in CT.4, with errors at most \(5.8\cdot10^{-17}\), \(1.3\cdot10^{-15}\), \(7.2\cdot10^{-14}\). An `arb` branch-and-bound cover of \(X\) gives \(\min_XA\ge0.795593,\ 0.759466,\ 0.724643\) and \(\sup_X|B|\le1.62837,\ 2.56697,\ 3.91689\). With \(G=B/A\):
+
+   | \(k\) | \(\Gamma_+=\max_XG\) | \(\Gamma_-=\max_X(-G)\) |
+   |---|---|---|
+   | 2 | \([0.2546353828,\,0.2546354891]\) | \([0.6796088690,\,0.6796091443]\) |
+   | 3 | \([0.3087742424,\,0.3087743752]\) | \([0.8310492070,\,0.8310495724]\) |
+   | 4 | \([0.3625750669,\,0.3625752290]\) | \([0.9801674176,\,0.9801678993]\) |
+
+5. **CU.5 (the exact rate, with explicit constants; proved from CU.3–CU.4).** CT.5's identity holds verbatim with \(L_k\) in place of \(L_1\). The bases \(|q|\), \(\rho_{\rm in}/\rho\) (\(0.0464,\,0.0718,\,0.0884\)) and \(\rho_{\rm in}/|\nu_2|\) (\(0.160,\,0.225,\,0.262\)) are all \(<1\), so \(\theta_n\) decreases. \(\theta_n<\min\Gamma_\pm\) from \(n_0=7,\,9,\,12\). Hence, for every \(n\ge n_0\),
+   \[
+   \rho(1-q)|q|^n(\Gamma_\pm-\theta_n)\le\rho(L_k)-\inf_XR_n^{(k)}\le\rho(1-q)|q|^n(\Gamma_\pm+\theta_n)\qquad(+\text{ for even }n,\ -\text{ for odd }n).
+   \]
+   Explicitly, as multiples of \(|q|^n\):
+
+   | \(k\) | even \(n\) | odd \(n\) | exact rate \(|q|\) | \(c_+\) (even) | \(c_-\) (odd) | oscillation constant |
+   |---|---|---|---|---|---|---|
+   | 2 | \([0.0120710,\,0.0162149]\), \(n\ge8\) | \([0.0248320,\,0.0506618]\), \(n\ge7\) | \(0.2895670639\) | \(0.01414298\) | \(0.03774688\) | \(0.0518899\) |
+   | 3 | \([0.00459104,\,0.00674680]\), \(n\ge10\) | \([0.0104718,\,0.0200434]\), \(n\ge9\) | \(0.3189949783\) | \(0.00566892\) | \(0.01525759\) | \(0.02092651\) |
+   | 4 | \([0.00117440,\,0.00321619]\), \(n\ge12\) | \([0.00566745,\,0.00620186]\), \(n\ge13\) | \(0.3376293000\) | \(0.002195297\) | \(0.00593466\) | \(0.00812996\) |
+
+   Here \(c_\pm=\rho(1-q)\Gamma_\pm=\lim(\rho-\inf R_n)/|q|^n\) along even/odd \(n\), certified to \(\le9\cdot10^{-9}\), and the oscillation constant \(\rho(1-q)(\Gamma_++\Gamma_-)\) is the limit of \((\sup R_n-\inf R_n)/|q|^n\) for both parities, certified to \(\le6.6\cdot10^{-8}\). The same bounds hold for \(\sup_XR_n-\rho\) with the parities swapped. So \(\inf R_n^{(k)}\to\rho(L_k)\) at the **exact rate** \(|\nu_2^{(k)}|/\rho(L_k)\) for \(k=2,3,4\), and \(\log(\sup R_n/\inf R_n)\) has the same rate.
+
+*Proof.* As for CT.1–CT.5, with \(\tilde w_i/(2\sigma_i)\) replaced by \(\tilde w_i/(2\sigma_i)^k\). On the disk this is holomorphic because \(\sigma_i\ne0\), and on \(X\) it equals \(\tilde w_i|\sigma_i'|^k>0\) because \(\sigma_i>0\) there. The circle layout and the homotopy are checked for each \(k\). Realness holds because \(L_k\) commutes with \(f\mapsto\overline{f(\bar s)}\). The monotonicity of \(\theta_n\) follows from the three bases being \(<1\). The script also checks it numerically for \(n\le60\). \(\square\)
+
+**Observation (no claim).** Floats of \(M_N^ne_0\) on a 2001-point grid give \((\rho-\min R_n)/(\rho(1-q)|q|^n)\) within \(10^{-3}\) of \(\Gamma_\pm\) from about \(n=4\) (\(k=2\)) or \(n=6\) (\(k=3,4\)), so the regime begins before \(n_0\). As for \(k=1\), the extrema of \(B/A\) sit at the endpoints \(s=\sqrt5/2\) (\(\Gamma_+\)) and \(s=\tfrac52\) (\(\Gamma_-\)). \(|q^{(k)}|\) increases with \(k\) (\(0.2441,0.2896,0.3190,0.3376\) for \(k=1,\dots,4\)). Whether it stays below some bound uniformly in \(k\) is not claimed.
+
+**Kept limits (what CU does not claim).** Only \(k=2,3,4\). There is no statement uniform in \(k\), and no limit as \(k\to\infty\). \(n<n_0(k)\) is not covered. \(\Gamma_\pm\) are known only to about \(10^{-7}\), and none of \(\rho(L_k)\), \(\nu_2^{(k)}\), \(\Gamma_\pm\) has a closed form. \(\nu_2^{(k)}\) is an eigenvalue on \(H^2(D)\). Nothing is claimed about the \(C^j\) or \(C(X)\) spectrum of \(L_k\) besides \(\rho_H=\rho(L_k)\), nor about the circles \(|z|=\rho(L_k)\) or the level sums.
+
+**What stays open.**
+- *From CA–CU.* The rate for \(k\ge5\) and uniformly in \(k\). CF.3's Birkhoff-route constant for general \(f\). Eigenvalues on \(|z|=\rho(L_k)\). The sixth eigenvalue of \(\tilde L\) and beyond (and whether \(a_6\ne0\)). Closed forms of \(r,\lambda_j,a_j,B,B_3\), \(\rho(L_k)\), \(\nu_2^{(k)}\) and \(\Gamma_\pm\). The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). \(G^*\) into BI.4/BJ.
+- *Carried over.* As in Theorem CT, including the Stage 2 question.
+
+**NOT THIS.** Theorem CU fixes the rate at which the Collatz–Wielandt ratios of the higher derivative transfer operators \(L_2,L_3,L_4\) converge to their spectral radii. These operators control the \(C^k\) essential spectrum of the transfer operator for the level sums of one scaled corner resolvent of a graph Laplacian on the combinatorial gasket. A convergence rate is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN: the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_infrate_k.py`** (about 35 s for \(k=2,3,4\); needs python-flint, numpy; imports CR's script unchanged for its Krawczyk and Neumann routines; `CU_KS=2` runs a single \(k\)).
+- *Exact:* the disk facts (\(49/100\), the poles of \(\tilde w_i\)).
+- *Interval (`arb`, 512 bits):* \(U_i\), \(q_i\), \(\varepsilon_{120}\), \(\beta_{120}\); the Krawczyk eigenpairs; \(\|A^jQ\|_F\); the resolvent bounds on six circles per \(k\); \(\rho\), \(\nu_2\), \(q\); \(e_X\), the projection errors, \(\tau_1\); the cover of \(X\) (\(\min A\), \(\sup|B|\), \(\Gamma_\pm\)); the three bases; \(\theta_n\) for \(n\le60\), \(n_0\), the uniform constants, \(c_\pm\), the oscillation constant.
+- *Floats:* the observation only.
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

@@ -1023,3 +1023,28 @@ class FractionalProfileLevelRegularityTests(unittest.TestCase):
         self.assertIn("gasket_fractional_profile_level_regularity.py", names)
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CH", (ROOT / doc).read_text())
+
+
+class FractionalProfileLevelEssentialTests(unittest.TestCase):
+    def test_theorem_ci_profile_level_essential(self):
+        """Theorem CI: exact CI.2 identities, two-sided Collatz-Wielandt rho(L_1) in [0.1343549, 0.1343551] (arb), the
+        certified majorant rho(A) < 7.44297805367 of the sharp right inverse K (every |mu| <= 0.1343547 a C^1 eigenvalue),
+        and the comparisons with CH's 0.1089, 0.1345 and CG's r."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_essential as ci
+
+        ci.FAILS.clear()
+        ci.symbolic_checks()
+        lam_f, coef = ci.collatz_two_sided()
+        self.assertTrue(abs(lam_f - 0.134354983) < 1e-8)
+        self.assertEqual(len(coef), ci.DEG_H + 1)
+        rho = ci.k_majorant(coef)
+        self.assertTrue(7.4429 < float(rho.mid()) < 7.44297805367)
+        self.assertTrue(float(ci.MU_MAX) * float(rho.mid()) < 1)
+        self.assertTrue(float(ci.MU_CH) < float(ci.MU_MAX) < float(ci.LAM_LO) < float(ci.LAM_UP) < float(ci.LAM1_CH))
+        ci.consequences()
+        self.assertEqual(ci.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_essential.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CI", (ROOT / doc).read_text())

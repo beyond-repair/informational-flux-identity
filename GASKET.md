@@ -3611,7 +3611,7 @@ The script exits nonzero if any check fails.
 
 **Observation (no claim).** In floats, \(\sup|(K^ng)'|/s\) grows by about \(7.58\) per step at \(n=8\), against the certified majorant \(9.18\) and \(1/\rho(L_1)=7.443\). This is consistent with the Collet–Isola picture, in which the \(C^1\) spectrum fills the disk of radius \(\rho(L_1)\approx0.13436\) (not claimed here).
 
-**Kept limits (what CH does not claim).** The \(C^1\) eigenvalues with \(0.1089<|\mu|\le0.1345\) are not decided, and the exact \(C^1\) essential radius is not certified (floats: \(\rho(L_1)=0.1343550\)). Assumption CH is cited, not re-proved. The level sums are untouched: CG.4 concerns the analytic \(\tilde L^4G\), so its rate \(|\lambda_2|/r<0.17255\) stands, with \(C\) and \(B\) still not explicit. CH.4 is a statement about the function space, not about the level sums.
+**Kept limits (what CH does not claim).** The \(C^1\) eigenvalues with \(0.1089<|\mu|\le0.1345\) are not decided, and the exact \(C^1\) essential radius is not certified (floats: \(\rho(L_1)=0.1343550\)). (Now Theorem CI: every \(|\mu|\le0.1343547\) is a \(C^1\) eigenvalue and \(r_{\rm ess}(C^1)\in[0.1343547,0.1343551]\).) Assumption CH is cited, not re-proved. The level sums are untouched: CG.4 concerns the analytic \(\tilde L^4G\), so its rate \(|\lambda_2|/r<0.17255\) stands, with \(C\) and \(B\) still not explicit. CH.4 is a statement about the function space, not about the level sums.
 
 **What stays open.**
 - *From CA–CH.* Whether \(B\ne0\) in CG.4, i.e. whether \(|\lambda_2|/r\) is the exact rate of the level sums. An explicit constant \(C_G\), which needs a Lipschitz bound for \(\log\tilde L^4G\) and hence for \(\psi''\). The \(C^1\) spectrum in \(0.1089<|z|\le0.1345\). Closed forms of \(r\) and \(\lambda_2\). The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). \(G^*\) into BI.4/BJ.
@@ -3623,6 +3623,68 @@ The script exits nonzero if any check fails.
 - *Exact (sympy):* the CH.1 identities, \(\sup d=343\sqrt3/72\), the branch images, the Hermite basis bounds, and the bump \(g\).
 - *Interval (`arb`):* the Collatz–Wielandt covers for \(k=1,\dots,4\); \(g_a\), \(g_b\), the majorant \(A\) and \(\rho(A)<9.18\); the comparisons with CG's \(r,\lambda_2,\lambda_3\).
 - *Floats:* power iteration and polynomial fits only propose \(h_k\); the growth of \(K^ng\) is an observation.
+
+The script exits nonzero if any check fails.
+
+## Theorem CI. The \(C^1\) essential spectral radius of \(\tilde L\) is \(\rho(L_1)\), certified to \(4\cdot10^{-7}\): every \(|\mu|\le0.1343547\) is a \(C^1\) eigenvalue, \(\rho(L_1)\in[0.1343549,0.1343551]\), and every \(C^1\) eigenvalue \(\mu\ne r\) has \(|\mu|\le0.1343551\). CH's undecided annulus \(0.1089<|\mu|\le0.1345\) shrinks to \(0.1343547<|\mu|\le0.1343551\)
+
+**Setting.** As in Theorem CH: \(s=\sqrt{t+25/4}\), \(X=[\sqrt5/2,\tfrac52]\), \((\tilde Lf)(s)=\tilde w_1f(\sigma_1s)+\tilde w_2f(\sigma_2s)\), \(\sigma_{1,2}=\sqrt{15/4\mp s}\), \(|\sigma_i'|=1/(2\sigma_i)\), \(L_1\) the positive operator with weights \(\tilde w_i|\sigma_i'|\). \(Y_1=\sigma_1X=[\sqrt5/2,g_a]\), \(Y_2=\sigma_2X=[g_b,\tfrac52]\), \(G=(g_a,g_b)\), \(\ell=g_b-g_a\), \(T_i=\sigma_i^{-1}\) (\(T_1=\tfrac{15}4-x^2\), \(T_2=x^2-\tfrac{15}4\)). \(r_{\rm ess}\) is the essential spectral radius in Hennion's sense: the infimum of the \(\rho\) such that the spectrum in \(|z|>\rho\) consists of isolated eigenvalues of finite algebraic multiplicity. CH left open the \(C^1\) spectrum in \(0.1089<|z|\le0.1345\). The gap in CH.4 came from its right inverse: the constant multiplier \(c=(49-4s^2)/16\) and the cubic Hermite fill of \(G\) inflate the derivative growth to \(9.18\), against \(1/\rho(L_1)\approx7.443\).
+
+**Assumptions used as stated.** CH.3 and Assumption CH (Hennion's theorem, literature), only for the upper bound \(r_{\rm ess}\le\rho(L_1)\) and for "no \(C^1\) eigenvalue other than \(r\) beyond \(\rho(L_1)\)", with CH.2's radius replaced by CI.1's. CG.3's enclosure of \(r\) and \(|\lambda_2|\) (constants only). CH.4's gap bump \(g\).
+
+**THEOREM CI.**
+1. **CI.1 (two-sided Collatz–Wielandt; certified, `arb`).** There is a polynomial \(h>0\) on \(X\), of degree \(12\) in \(u=(s-\tfrac95)/\tfrac7{10}\) with rational coefficients, such that
+   \[
+   0.1343549\,h<L_1h<0.1343551\,h\quad\text{on }X .
+   \]
+   It is checked on \(215\) intervals by a second-order `arb` Taylor bound (\(e(m)-|e'(m)|w-\sup|e''|w^2/2>0\)). Hence \(\rho(L_1)\in[0.1343549,0.1343551]\) on \(C(X)\) (CH.2: \(\le0.1345\); float \(0.1343549830\)).
+2. **CI.2 (exact; sympy).** Put \(c_i=|\sigma_i'|\,h(\sigma_i)/L_1h\). Then \(\tilde w_1c_1+\tilde w_2c_2=1\) and \(2\sigma_ic_i/h(\sigma_i)=1/L_1h\), for every positive \(h\). The window profile \(p(u)=(1-u)(1-3u)\) has \(p(0)=1\), \(p(1)=0\), \(\int_0^1p=0\), \(|p|\le1\) and \(\max_u|\int_0^up|=\max u(1-u)^2=\tfrac4{27}\). The fill \(\psi(\tau)=6\tau(1-\tau)\) has \(\psi(0)=\psi(1)=0\), \(\int\psi=1\), \(\max\psi=\tfrac32\), and \(\Psi=\int_0^\tau\psi=3\tau^2-2\tau^3\) increases from \(0\) to \(1\).
+3. **CI.3 (a right inverse with sharp derivative growth; proved, `arb`).** For \(f\in C^1(X)\) let \(Kf(x)=c_i(T_ix)f(T_ix)\) on \(Y_i\). On \(G\), with \(\tau=(x-g_a)/\ell\) and \(\delta=10^{-6}\), let \(Kf(g_a)=V_a\) and
+   \[
+   (Kf)'(x)=m_a\,p(\tau/\delta)\mathbf 1_{\tau<\delta}+m_b\,p((1-\tau)/\delta)\mathbf 1_{\tau>1-\delta}+(V_b-V_a)\,\psi(\tau)/\ell ,
+   \]
+   where \(V_a=c_1(s_0)f(s_0)\), \(V_b=c_2(s_0)f(s_0)\) (\(s_0=\sqrt5/2\)) and \(m_a,m_b\) are the one-sided slopes of \(Kf\) at \(g_a,g_b\) from \(Y_1,Y_2\). Then \(Kf\in C^1(X)\) and \(\tilde LK=I\). With \(N(f)=(\sup|f|,\ \sup|f'|/h)\), \(N(Kf)\le A\,N(f)\) entrywise, where
+   \[
+   A=\begin{pmatrix}2.84473&8.331\cdot10^{-7}\\4.53102&7.442977233\end{pmatrix},\qquad \rho(A)<7.44297805367,\qquad 1/\rho(A)>0.1343548231 .
+   \]
+   Here \(A_{11}=\kappa/0.1343549\) with \(\kappa=\max_j\sup_{\text{window }j}h(g_j)/h\le1.000000463\).
+4. **CI.4 (Kept Failure CH.4 extended; proved).** Every \(\mu\in\mathbb C\) with \(|\mu|\le0.1343547\) is an eigenvalue of \(\tilde L\) on \(C^1(X)\). The witness is \(v=\sum_{n\ge0}\mu^nK^ng\), with CH.4's bump \(g\). The series converges in \(C^1(X)\), since \(0.1343547\,\rho(A)<0.99999909\). Also \(\tilde Lv=\mu v\) and \(v\ne0\).
+5. **CI.5 (the \(C^1\) essential radius; proved from CI.1, CI.4 and CH.3 under Assumption CH).**
+   \[
+   0.1343547\le r_{\rm ess}(\tilde L;C^1(X))\le\rho(L_1)\le0.1343551 .
+   \]
+   Every \(C^1\) eigenvalue \(\mu\ne r\) has \(|\mu|\le0.1343551\), and the closed disk \(|\mu|\le0.1343547\) consists of eigenvalues. So
+   \[
+   \sup\{|\mu|:\mu\ne r\text{ a }C^1\text{ eigenvalue}\}\in[0.1343547,\,0.1343551],\qquad\text{ratio to }r\in[0.3170752,\,0.3170762]
+   \]
+   (CH: \([0.1089,0.1345]\) and \([0.2569,0.3175]\)).
+
+*Proof.* *CI.1.* \(L_1\) is positive. If \(\lambda_{\rm lo}h\le L_1h\le\lambda_{\rm up}h\) with \(h>0\), then \(\lambda_{\rm lo}^nh\le L_1^nh\le\lambda_{\rm up}^nh\), so \(\lambda_{\rm lo}^n\min h/\max h\le\|L_1^n\|=\|L_1^n\mathbf 1\|\le\lambda_{\rm up}^n\max h/\min h\), and Gelfand's formula gives the enclosure. *Cover.* On \([m-w,m+w]\), Taylor's theorem with Lagrange remainder gives \(e(x)\ge e(m)-|e'(m)|w-\sup_{\rm ball}|e''/2|\,w^2\). Here \(e(m),e'(m)\) come from an `arb` series at the point \(m\), and \(e''/2\) from an `arb` series on the ball. This is applied to \(e=L_1h-\lambda_{\rm lo}h\), \(e=\lambda_{\rm up}h-L_1h\) and \(e=h\), with bisection until all three are positive. The float eigenfunction (Chebyshev collocation, refit) only proposes \(h\).
+*CI.2.* These are sympy identities, with \(h\) an undefined function.
+*CI.3.* *Well defined and \(C^1\).* \(T_1(g_a)=T_2(g_b)=s_0\), so the \(Y\)-values at the gap endpoints are \(V_a\) and \(V_b\). Integrating the displayed derivative over \(G\) gives \(m_a\ell\delta\int_0^1p+m_b\ell\delta\int_0^1p+(V_b-V_a)\int\psi=V_b-V_a\), so \(Kf\) is continuous at \(g_b\). At \(\tau=0\) the derivative is \(m_a\), and at \(\tau=1\) it is \(m_b\). The pieces join continuously at \(\tau=\delta,1-\delta\) because \(p(1)=0\). The \(c_i\) are \(C^1\) because \(h\) is a polynomial and \(L_1h>0\). *Right inverse.* \(\tilde L\) reads only \(Y_1\cup Y_2\), and there \(\tilde LKf=(\tilde w_1c_1+\tilde w_2c_2)f=f\). *Off \(G\).* With \(x=\sigma_is\), \((Kf)'(x)=(c_i'f+c_if')(s)/\sigma_i'(s)\) and \(|1/\sigma_i'|=2\sigma_i\). So, by CI.2,
+\[
+\frac{|(Kf)'(x)|}{h(x)}\le\frac{2\sigma_i|c_i'|}{h(\sigma_i)}\sup|f|+\frac{h(s)}{L_1h(s)}\frac{|f'(s)|}{h(s)}\le A^Y_{10}\sup|f|+\frac1{0.1343549}\sup\frac{|f'|}h ,
+\]
+and \(|Kf|\le\sup c_i\cdot\sup|f|\). *On \(G\).* In the \(a\)-window, \(Kf=V_a(1-\Psi)+V_b\Psi+m_a\ell\delta P(\tau/\delta)\) with \(P=\int_0^\cdot p\). The \(b\)-window is symmetric. In the middle, \(Kf=V_a(1-\Psi)+V_b\Psi\), a cubic. So \(|Kf|\le\max_jc_j(s_0)\sup|f|+\tfrac4{27}\delta\ell\max_j|m_j|\), and \(|(Kf)'|\le|m_j|+\tfrac32|V_b-V_a|/\ell\) in window \(j\). Also \(|m_j|\le h(g_j)(A^Y_{10}\sup|f|+\sup|f'|/h/0.1343549)\). Dividing by \(h(x)\ge h(g_j)/\kappa\) in the window and by \(h\ge\min_Gh\) elsewhere gives the four entries: \(A_{00}=\max(\sup c_i,\max c_j(s_0)+\tfrac4{27}\delta\ell H A^Y_{10})\), \(A_{01}=\tfrac4{27}\delta\ell H/0.1343549\), \(A_{10}=\kappa A^Y_{10}+\tfrac32|c_2-c_1|(s_0)/(\ell\min_Gh)\) and \(A_{11}=\kappa/0.1343549\), with \(H=\max_jh(g_j)\). The suprema are `arb` covers (\(4000\) balls on \(X\) with first-order `arb` series for \(c_i'\), \(2000\) on \(G\), one ball per window). The certified values are \(\sup c_i\le2.84473\), \(A^Y_{10}\le4.21644\), \(|c_2-c_1|(s_0)\le0.111917\), \(\min_Gh\ge0.913749\) and \(\kappa\le1.000000463\).
+*CI.4.* \(A\ge0\) entrywise, so \(N(K^nf)\le A^nN(f)\). \(N\) is equivalent to the \(C^1\) norm because \(0<\min h\le h\le\max h\). Hence \(\|K^ng\|_{C^1}=O((\rho(A)+\epsilon)^n)\) and the series converges for \(|\mu|\rho(A)<1\). \(\tilde L\) is bounded on \(C^1\), \(\tilde Lg=0\) (CH.4) and \(\tilde LK=I\), so \(\tilde Lv=\tilde Lg+\sum_{n\ge1}\mu^nK^{n-1}g=\mu v\). On the middle of \(G\) (\(\delta\le\tau\le1-\delta\)), every \(K^ng\) with \(n\ge1\) is a cubic, and \(g\) is a monic quartic. A uniform limit of cubics is a cubic, so \(v\) is a monic quartic plus a cubic there, hence \(v\ne0\).
+*CI.5.* *Upper bound.* CH.3's Lasota–Yorke/Faà di Bruno estimate \(\|\tilde L^nf\|_{C^1}\le\|L_1^n\mathbf 1\|\,\|f\|_{C^1}+B_n\|f\|_{C^0}\) and Assumption CH give \(r_{\rm ess}\le\lim\|L_1^n\mathbf 1\|^{1/n}=\rho(L_1)\le0.1343551\). Outside that radius, the \(C^1\) eigenvalues are CG's eigenvalues of modulus \(>0.1343551\) (CH.3's restriction argument, unchanged), and that is only \(r\), since \(|\lambda_2|<0.1343551<r\). *Lower bound.* By CI.4 no point of the open disk \(|z|<0.1343547\) is an isolated point of the spectrum. So the spectrum there is not isolated eigenvalues, and \(r_{\rm ess}\ge0.1343547\). The ratios use CG.3's \(r\in[0.4237312869626,0.4237312869627]\). \(\square\)
+
+**Observation (no claim).** CI.3's growth \(\rho(A)\) tends to \(\sup h/L_1h\) as \(\delta\to0\). By CI.1 that number is within a relative \(1.5\cdot10^{-6}\) of \(1/\rho(L_1)\). So the method should reach every \(|\mu|<\rho(L_1)\) with better \(h\) and smaller \(\delta\), which is consistent with the Collet–Isola picture that the \(C^1\) spectrum fills the closed disk of radius \(\rho(L_1)\). That stronger statement is Conjecture CI.6 below, not a theorem.
+
+**Conjecture CI.6.** On \(C^1(X)\), the spectrum of \(\tilde L\) is \(\{r\}\cup\{|z|\le\rho(L_1)\}\), and every \(|\mu|<\rho(L_1)\) is an eigenvalue. Falsified by a \(C^1\) eigenvalue \(\mu\ne r\) with \(|\mu|>\rho(L_1)\), which CH.3 already excludes under Assumption CH, or by a point \(|\mu|<\rho(L_1)\) in the resolvent set.
+
+**Kept limits (what CI does not claim).** The annulus \(0.1343547<|z|\le0.1343551\) is not decided, and \(\rho(L_1)\) has no closed form. Assumption CH is still cited for the upper bound, not re-proved. The level sums are untouched: CG.4 concerns the analytic \(\tilde L^4G\), so its rate \(|\lambda_2|/r<0.17255\) stands, and \(C\) and \(B\) are still not explicit. CI is about the space \(C^1(X)\), not about the level sums; for those the relevant spaces are \(C^2\) (CH.3) or \(H^2(D)\) (CG).
+
+**What stays open.**
+- *From CA–CI.* Whether \(B\ne0\) in CG.4, i.e. whether \(|\lambda_2|/r\) is the exact rate of the level sums. An explicit constant \(C_G\), which needs a Lipschitz bound for \(\log\tilde L^4G\) and hence for \(\psi''\). Conjecture CI.6. Assumption CH from scratch. Closed forms of \(r\), \(\lambda_2\) and \(\rho(L_1)\). The exact value of \(\liminf\rho_k\). Whether \(\hat\theta_k\ne0\) for every \(k\ge22\). \(G^*\) into BI.4/BJ.
+- *Carried over.* Conjecture BS.4; a rate for \(J-A_N\); uniformity in \(\alpha\); eventual monotonicity of \(V^{(n)}\); a closed form for \(a^*\); Conjecture BL.6's limit part; closed forms for \(c_{\rm corner}\), \(W\), \(U\), \(\kappa\); Conjecture BH.7, Conjecture BF.2 and the Stage 2 question.
+
+**NOT THIS.** Theorem CI locates the essential spectrum of a positive transfer operator on \(C^1\). That operator governs how the spectral mass of one scaled corner resolvent of a graph Laplacian on the combinatorial gasket is spread over levels. A spectral radius is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters. The Stage 2 question stays OPEN: the repository has no \(\Psi_{\mathrm{info}}\) on the frozen \(0.45\) mesh from which to decide it. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_essential.py`** (about 3 s; needs python-flint, sympy, numpy).
+- *Exact (sympy):* \(|\sigma_i'|=1/(2\sigma_i)\), \(\sum\tilde w_ic_i=1\) and \(2\sigma_ic_i/h(\sigma_i)=1/L_1h\) for symbolic \(h\), the maps \(T_i\), and the profile facts for \(p\), \(P\), \(\psi\), \(\Psi\) and the bump \(g\).
+- *Interval (`arb`):* the two-sided Collatz–Wielandt cover (\(215\) second-order intervals), the suprema in \(A\), \(\kappa\), \(\rho(A)\), and the comparisons with CH's \(0.1089\), \(0.1345\) and CG's \(r\), \(\lambda_2\).
+- *Floats:* the collocation eigenfunction only proposes \(h\).
 
 The script exits nonzero if any check fails.
 

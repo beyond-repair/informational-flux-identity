@@ -1487,6 +1487,32 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DF", (ROOT / doc).read_text())
 
+    def test_theorem_dg_profile_level_hilbert(self):
+        """Theorem DG: signed local-slope bound for DF's cone-lemma term: D+ < 0.76155, D- < -0.15311, cone term < 0.012225,
+        Delta_G <= 0.056735, theta_G <= 0.014183, rate theta_G^(1/8) < 0.58745, |mu| < 0.24893 (about 55 s; needs
+        python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_hilbert as dg
+
+        for mod in (dg, dg.df, dg.de, dg.cf, dg.dd):
+            mod.FAILS.clear()
+        self.assertEqual(dg.main(), 0)
+        self.assertEqual(dg.FAILS, [])
+        r = dg.RESULT
+        self.assertLess(float(r["Dp"].upper()), 0.76155)
+        self.assertLess(float(r["Dm"].upper()), -0.15311)
+        self.assertLess(float(r["cone"].upper()), 0.012225)
+        self.assertLess(float(r["Delta"].upper()), 0.056735)
+        self.assertLess(float(r["theta"].upper()), 0.014183)
+        self.assertLess(float(r["rate"].upper()), 0.58745)
+        self.assertLess(float(r["mu"].upper()), 0.24893)
+        self.assertLess(float(r["TG"].upper()), 0.11477)
+        self.assertLess(float(r["worst"].upper()), 0.2)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_hilbert.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DG", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

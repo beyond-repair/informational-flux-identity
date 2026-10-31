@@ -1288,6 +1288,37 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CS", (ROOT / doc).read_text())
 
+    def test_theorem_cz_profile_level_ratio_rate(self):
+        """Theorem CZ: (q^(k) + 1/3)/(k B*^k) -> alpha* = -0.04916130431; q^(k) < -1/3 for k >= 24; |q^(k)| decreasing for k >= 23."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_ratio_rate as cz
+
+        self.assertEqual(cz.main(), 0)
+        self.assertEqual(cz.FAILS, [])
+        r = cz.RESULT
+        self.assertAlmostEqual(float(r["alpha_s"].mid()), -0.0491613043141717, places=14)
+        self.assertAlmostEqual(float(r["gamma_s"].mid()), 0.179336821291891, places=14)
+        self.assertAlmostEqual(float(r["Bst"].mid()), 0.777376027633332, places=14)
+        self.assertLess(float(r["alpha_s"].rad()), 1e-25)
+        self.assertEqual(r["K1"], 24)
+        self.assertEqual(r["KM_mono"], 30)
+        tab = r["tab"]
+        self.assertLess(float(tab[24]["Gerr"].mid()), 0.416)
+        self.assertLess(float(tab[40]["Gerr"].mid()), 0.0248)
+        self.assertLess(float(tab[40]["w0"].mid()), 0.00683)
+        self.assertLess(float(tab[60]["w0"].mid()), 0.000274)
+        # first-order formula agrees with CU's certified values (CZ.6) and with CY's float collocation at k = 30, 40
+        self.assertEqual(sorted(r["cu"]), list(range(24, 30)))
+        self.assertTrue(r["dec"] and r["above"])
+        self.assertAlmostEqual(float(r["cu"][24]["q"].mid()), -0.3357008, places=6)
+        for k, fl in ((30, -6.783e-4), (40, -7.542e-5)):
+            pred = float(((r["alpha_s"] * k + r["gamma_s"]) * r["Bst"] ** k).mid())
+            self.assertLess(abs(pred - fl) / abs(fl), 2e-3)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_ratio_rate.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CZ", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

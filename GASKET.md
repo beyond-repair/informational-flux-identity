@@ -4477,6 +4477,71 @@ For example, \(|q^{(k)}+\tfrac13|\le0.1073\) at \(k=24\), \(0.01563\) at \(k=30\
 
 The script exits nonzero if any check fails.
 
+## Theorem CZ. The exact rate and the sign of \(q^{(k)}+\tfrac13\): \(q^{(k)}+\tfrac13=(\alpha^*k+\gamma^*)B^{*k}+\mathrm{Err}_kB^{*k}\), \(\mathrm{Err}_k/k\to0\) explicit, with \(\alpha^*=-0.04916130431\), so \(q^{(k)}<-1/3\) and \(|q^{(k)}|\) strictly decreases for every \(k\ge24\) (CY's kept limits)
+
+**Setting.** Exactly as in Theorem CY. On \(H^\infty(D)\), \(D=\{|s-\tfrac95|<\tfrac45\}\), \(\tilde L_k=3^{k+1}h_k^{-1}L_kh_k=C+E_k\), with \(Cf=f\circ\sigma_1\), \(E_kf=a_k\,(f\circ\sigma_2)\) and \(a_k=GB^k\). By CY.3, for \(k\ge24\), \(\lambda_0=3^{k+1}\rho(L_k)\) and \(\lambda_1=3^{k+1}\nu_2^{(k)}\) are real simple eigenvalues with \(|\lambda_0-1|<\tfrac12\) and \(|\lambda_1+\tfrac13|\le r_2(k)\), and \(q^{(k)}=\lambda_1/\lambda_0\). Write \(s^*=\tfrac32\) and \(t=\sigma_2(s^*)=\sqrt{21}/2\). The left eigenfunctionals of \(C\) are \(\delta f=f(s^*)\) (eigenvalue \(1\), right eigenvector \(1\)) and \(\ell f=f'(s^*)\) (eigenvalue \(-\tfrac13\), right eigenvector the Koenigs function \(\kappa\), with \(\kappa(s^*)=0\) and \(\kappa'(s^*)=1\)). CY's bound \(r_2(k)\le4.8271\cdot0.8529^k\) uses \(\sup_{\partial D}|B|\). The values floated in CY (\(q^{(k)}+\tfrac13\approx-2.89\cdot10^{-3}\) at \(k=23\), ratios \(\approx0.80\)) suggested \(kB^{*k}\) with \(B^*=B(s^*)\). Theorem CZ derives that rate, with its constant and sign.
+
+**Assumptions used as stated.** CY.1–CY.4, imported from `gasket_fractional_profile_level_ratio_k.py` and re-run: the disk facts, the 4096 boundary arcs, \(c_n\), \(S(r)\), \(\beta\), \(\|\kappa\|<1.2426\), \(\eta_k\), \(r_2(k)\) and the eigenvalue localisation. CU.1–CU.3's routine, imported, for CZ.6 only. CZ.6 changes three parameters of that routine and nothing in its proof: eigenvalue circles of radius \(10^{-7}|\nu_2|\) instead of \(10^{-20}\), Neumann power 24 instead of 40, and \(\rho_{\rm in}\approx0.9|\nu_2|\). CY.5's \(|q^{(23)}|=0.33622604\pm8.3\cdot10^{-9}\), for CZ.6. CU.3, CV.5 and CY.5/CY.6's values, for the corollary. Standard facts: Schwarz's lemma, the Schwarz–Pick and Cauchy bounds for bounded holomorphic functions on a disk, the maximum modulus principle, and Neumann series.
+
+**Schur complement (exact algebra).** Put \(W=\ker\ell\) and \(Qf=f-\ell(f)\kappa\). Since \(\ell(Cw)=-\tfrac13\ell(w)\) and \(C\kappa=-\kappa/3\), \(C\) maps \(W\) to \(W\). Write an eigenvector for \(\lambda_1\) as \(c\kappa+w\) with \(w\in W\). The \(W\)-component gives \((\lambda_1-C-QE_k)w=c\,QE_k\kappa\). If \(\lambda_1-C-QE_k\) is invertible on \(W\), then \(c\ne0\); normalise \(c=1\). The \(\kappa\)-component gives
+\[
+\lambda_1=-\tfrac13+\ell(E_k\kappa)+\ell(E_kw),\qquad w=(\lambda_1-C-QE_k)|_W^{-1}QE_k\kappa .
+\]
+In the same way, with \(W_0=\ker\delta\) and \(Q_0f=f-f(s^*)\), \(\lambda_0=1+a_k(s^*)+\delta(E_kw_0)\). Exactly, \(\ell(E_kf)=a_k'(s^*)f(t)+a_k(s^*)f'(t)/(2t)\), \(a_k(s^*)=G^*B^{*k}\) and \(a_k'(s^*)=G^*B^{*k}(kb_1+g_1)\), where \(b_1=B'(s^*)/B^*\) and \(g_1=G'(s^*)/G^*\). Hence, with
+\[
+\alpha'=b_1\kappa(t),\qquad \gamma'=g_1\kappa(t)+\frac{\kappa'(t)}{2t}+\frac13,
+\]
+\[
+\lambda_1+\tfrac13=G^*B^{*k}\bigl(k\alpha'+\gamma'-\tfrac13\bigr)+\rho_1,\qquad \lambda_0-1=G^*B^{*k}(1+\rho_0'),\qquad q^{(k)}+\tfrac13=\frac{N_k}{\lambda_0},\quad N_k=\lambda_1+\tfrac13+\frac{\lambda_0-1}3 .
+\]
+
+**Bounds.** Let \(\eta'_k=\max_i|G|_i|B|_i^k\ge\sup_D|a_k|\) and \(\eta^\kappa_k=\max_i|G|_i|B|_i^k|\kappa\circ\sigma_2|_i\ge\|E_k\kappa\|\). These are maxima over CY's 4096 arcs of upper bounds, valid by the maximum modulus principle. With \(|f(t)|\le\|f\|\) and \(|f'(t)|\le\mathrm{SP}\,\|f\|\), \(\mathrm{SP}=R/(R^2-|t-c|^2)\), the bound \(|\ell(E_kf)|\le G^*B^{*k}\Lambda_k\|f\|\) holds with \(\Lambda_k=k|b_1|+|g_1|+\mathrm{SP}/(2t)\). Put \(\varepsilon_k=\eta'_k+\|\kappa\|G^*B^{*k}\Lambda_k\), which bounds \(\|QE_k|_W\|\); then \(\|QE_k\kappa\|\le\eta^\kappa_k+\|\kappa\|^2G^*B^{*k}\Lambda_k\). On \(W\), write \(w=w(s^*)1+g\) with \(g\in V_2\) and \(\|g\|\le2\|w\|\); this gives \(\|(z-C)^{-1}|_W\|\le R_1(z)=1/|z-1|+2S(|z|)\). On \(W_0\), write \(f=f'(s^*)\kappa+g\) with \(\|g\|\le(1+\beta)\|f\|\); this gives \(R_0(z)=\beta/|z+\tfrac13|+(1+\beta)S(|z|)\). Here \(\varepsilon^0_k=\eta'_k+G^*B^{*k}\) bounds both \(\|Q_0E_k|_{W_0}\|\) and \(\|Q_0E_k1\|\). Neumann series give
+\[
+|\rho_1|\le G^*B^{*k}\,\mathrm{Rem}_1(k),\quad \mathrm{Rem}_1=\Lambda_k\frac{R_1\|QE_k\kappa\|}{1-R_1\varepsilon_k},\qquad |\rho_0'|\le w_0(k)=\frac{R_0\varepsilon^0_k}{1-R_0\varepsilon^0_k}.
+\]
+\(R_1\) is evaluated on \(|z|\ge\tfrac13-r\), \(|z-1|\ge\tfrac43-r\), and \(R_0\) on \(|z+\tfrac13|\ge\tfrac56\), \(|z|\ge\tfrac12\). The localisation \(r\) starts as CY's \(r_2(k)\) and is then sharpened once to \(\min(r_2(k),G^*B^{*k}(k|\alpha'|+|\gamma'-\tfrac13|+\mathrm{Rem}_1))\).
+
+**THEOREM CZ.**
+1. **CZ.1 (proved; `arb`, 160 bits, order-2 Taylor arithmetic through the 60-factor products, tails \(T\) with \(|T-1|\le e\) uniformly on \(D'\) and \(|T'|\le e/\mathrm{dist}(\cdot,\partial D')\) by Cauchy, all radii \(<10^{-25}\)).** \(B^*=0.777376027633332\), \(G^*=0.287065241760389\) (CX.1's values), \(b_1=-0.199881602332293\), \(g_1=0.0376598834730586\), \(\kappa(t)=0.856781269828647\), \(\kappa'(t)=1.18746149669128\) and \(\mathrm{SP}=2.0068421\). Hence
+\[
+\alpha^*:=G^*\alpha'=G^*\,\frac{B'(s^*)}{B^*}\,\kappa(\sigma_2(s^*))=-0.0491613043141717\ldots<0,\qquad \gamma^*:=G^*\gamma'=0.179336821291891\ldots
+\]
+2. **CZ.2 (proved from CY.1–CY.3 and CZ.1, every integer \(k\ge24\)).** The per-arc bounds give \(\sup_{\partial D}|\kappa\circ\sigma_2|\le1.13808\) and \(\eta'_{24}\le0.0052131\) (CY's \(\eta_{24}=0.00784\)). Also \(S(\tfrac12)\le5.00597\), \(R_1\varepsilon_k\le0.2161\) and \(R_0\varepsilon^0_k<1\) for every \(k\ge24\). Therefore
+\[
+\Bigl|\frac{3^{k+1}\rho(L_k)-1}{G^*B^{*k}}-1\Bigr|=|c_k-1|\le w_0(k),\qquad \bigl|3^{k+1}\nu_2^{(k)}+\tfrac13-G^*B^{*k}(k\alpha'+\gamma'-\tfrac13)\bigr|\le G^*B^{*k}\,\mathrm{Rem}_1(k),
+\]
+with \(w_0=0.1058,\,0.03606,\,0.006823,\,0.001357,\,0.0002737\) and \(\mathrm{Rem}_1=1.407,\,0.4456,\,0.08384,\,0.01715,\,0.00369\) at \(k=24,30,40,50,60\). This sharpens CX.3's \(c_k\in[0.98,1.02]\) for \(k\ge40\) and gives \(c_k\to1\) geometrically.
+3. **CZ.3 (proved from CZ.2).** For every integer \(k\ge24\),
+\[
+\Bigl|\,q^{(k)}+\tfrac13-(\alpha^*k+\gamma^*)\,B^{*k}\Bigr|\le\mathrm{Err}_k\,B^{*k},
+\]
+with \(\mathrm{Err}_k=0.4151,\,0.1316,\,0.02475,\,0.005054,\,0.001086\) at \(k=24,30,40,50,60\). \(\mathrm{Err}_k/k\) is nonincreasing and tends to \(0\), and \(\mathrm{Err}_{150}/150\le9.3\cdot10^{-12}\). Hence
+\[
+\lim_{k\to\infty}\frac{q^{(k)}+\tfrac13}{k\,B^{*k}}=\alpha^*=-0.04916130431\ldots,\qquad B^*=B(3/2)=0.77737602763\ldots
+\]
+So the exact rate is \(kB^{*k}\), with a polynomial factor \(k\) from \(\partial_s(B^k)\). Examples: \(q^{(k)}+\tfrac13\in-6.7822\cdot10^{-4}\pm6.9\cdot10^{-5}\) at \(k=30\), \(-7.5405\cdot10^{-5}\pm1.1\cdot10^{-6}\) at \(k=40\) and \(-7.5928\cdot10^{-7}\pm3.0\cdot10^{-10}\) at \(k=60\).
+4. **CZ.4 (proved from CZ.2, every \(k\ge24\)).** \(N_k/(G^*B^{*k})\le k\alpha'+\gamma'+\mathrm{Rem}_1+w_0/3<0\) at \(k=24\), in the uniform form \(\alpha'+\gamma'/24+(\mathrm{Rem}_1+w_0/3)/24<0\). Every factor of the remainder is nonincreasing in \(k\) after division by \(k\): \(\eta'\), \(\eta^\kappa\), \(r_2\), \(R_1\), \(B^{*k}\Lambda_k\) and \(\Lambda_k/k\), with \(B^*(1+|b_1|/\Lambda_{24})<1\) checked. Also \(\gamma'>0\). So the inequality holds for every \(k\ge24\), and \(\lambda_0>1\) because \(w_0<1\). Hence **\(q^{(k)}<-1/3\) for every \(k\ge24\)**.
+5. **CZ.5 (proved from CZ.2, every \(k\ge30\)).** From \(|q^{(k)}+\tfrac13|\in[G^*B^{*k}(|k\alpha'+\gamma'|-\mathrm{rem}_k)/\lambda_0^{\max},\;G^*B^{*k}(|k\alpha'+\gamma'|+\mathrm{rem}_k)]\), with \(\mathrm{rem}_k=\mathrm{Rem}_1+w_0/3\): at \(k=30\), \(B^*m_k(1+d_k)\lambda^{\max}_{0,k}<1-d_k\), where \(m_k=|{\rm main}_{k+1}|/|{\rm main}_k|\) and \(d_k=\mathrm{rem}_k/|{\rm main}_k|\). Each of these is monotone in the right direction. So \(|q^{(k)}|=\tfrac13+|q^{(k)}+\tfrac13|\) strictly decreases for every \(k\ge30\).
+6. **CZ.6 (certified; CU's routine for \(k=24..29\), circle radius \(10^{-7}|\nu_2|\), \(N=180\), Neumann power 24, about 36 s each).** Exactly two eigenvalues of \(L_k\) on \(H^2(D_{CG})\) lie in \(|z|>\rho_{\rm in}\), both real and simple. The values of \(q^{(24..29)}\) are \(-0.3357008,\,-0.3352657,\,-0.3349069,\,-0.3346119,\,-0.3343701,\,-0.3341726\), each \(\pm9\cdot10^{-8}\) and each inside CZ.3's band. With CY.5's \(|q^{(23)}|\), \(|q^{(k)}|\) strictly decreases on \(23..29\). CZ.2 gives \(|q^{(30)}+\tfrac13|\le7.47\cdot10^{-4}<|q^{(29)}+\tfrac13|=8.39\cdot10^{-4}\). So \(|q^{(k)}|\) strictly decreases for every \(k\ge23\).
+
+**Corollary (CU.3, CV.5, CY.5–CY.6 as stated; CZ.4–CZ.6).** \(q^{(k)}<-1/3\) for every integer \(k\ge4\). For \(k=1,2,3\), \(|q^{(k)}|=0.2441,\,0.2896,\,0.3190<1/3\) (CT.3/CU.3). \(|q^{(k)}|\) is unimodal: it strictly increases for \(k=1..8\) (CV.6) and strictly decreases to \(1/3\) for every \(k\ge8\) (CY.6 and CZ). The asymptotic sign change of \(\alpha^*k+\gamma^*\) at \(k=\gamma^*/|\alpha^*|=3.648\) falls between \(3\) and \(4\). CZ's formula is proved only for \(k\ge24\), so this match is an *observation*, not a claim for small \(k\).
+
+*Proof.* The Schur identities are exact linear algebra on \(H^\infty(D)\), and the invertibility on \(W\) and \(W_0\) is the checked Neumann condition. The formula for \(\ell(E_kf)\) is the product and chain rule, with \(\sigma_2'(s^*)=1/(2t)\). \(|q+\tfrac13-G^*B^{*k}{\rm main}|\le|N_k-G^*B^{*k}{\rm main}|+|N_k|(\lambda_0-1)\) because \(1-1/\lambda_0\le\lambda_0-1\). CZ.4 and CZ.5 reduce, by the stated monotonicity, to finite interval inequalities at \(k=24\) and \(k=30\). CZ.6 is CU's proof at new parameters. \(\square\)
+
+**Kept limits (what CZ does not claim).** The remainder \(\mathrm{Err}_k\) is explicit per \(k\) (certified for \(k=24..150\), monotone beyond), but no closed-form rate for it is certified. Structurally it is driven by \(\Lambda_k\eta'_k\sim k\cdot0.853^k\), which is not the true second-order rate. The constant of the next term is not computed. CZ.6 needs CU's routine for \(k\le29\). At \(k\ge30\) that routine's Frobenius bound underflows to `nan` at the Neumann power it needs, so the gap is closed by CZ.2's bounds instead. No uniform-in-\(k\) rate for \(\inf R_n^{(k)}\): the Riesz-projection constants \(\Gamma_\pm^{(k)}\) are still not tracked. Circle eigenvalues, CF.3's general-\(f\) constant and \(\lambda_6\), \(a_6\) are untouched.
+
+**What stays open.**
+- *From CA–CZ.* A uniform-in-\(k\) rate for \(\inf R_n^{(k)}\) (\(\Gamma_\pm^{(k)}\) via CZ's eigenvectors \(\kappa+w\), \(1+w_0\)). The second-order constant of \(q^{(k)}+\tfrac13\). CF.3's Birkhoff-route constant for general \(f\). Eigenvalues on \(|z|=\rho(L_k)\). \(\lambda_6\), \(a_6\). Closed forms.
+- *Carried over.* As in Theorem CY, including the Stage 2 question.
+
+**NOT THIS.** Theorem CZ is about the second eigenvalue of the higher-derivative transfer operators of the level-sum transfer operator on the combinatorial gasket. An eigenvalue ratio is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN, because the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_ratio_rate.py`** (about 4 min; needs python-flint; CZ.1–CZ.5 take about 10 s; `CZ_SKIP_CU=1` skips CZ.6; imports CY's and CU's scripts).
+- *Interval (`arb`, 160 bits; CU's routine at 512 bits):* the Taylor enclosures, per-arc bounds, \(S\), \(R_0\), \(R_1\), every bound for \(k=24..150\), the threshold inequalities and CZ.6's eigenpairs.
+- *Exact:* the Schur identities and the first-order formula (algebra).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

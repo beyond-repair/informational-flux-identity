@@ -4729,6 +4729,56 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem DE. The joint oscillation for CF.2's cone: with the same cone \(\mathcal C_{47/2}\) and the same block \(\tilde L^5\), \(\log(\sup(v/u)/\inf(v/u))\le0.29040\) for all \(u,v\in\tilde L^5\mathcal C_a\) (certified floor \(0.29009\)), so \(\theta_E\le0.15990\) and the Birkhoff rate improves from \(\theta_D^{1/5}<0.84339\) to \(\theta_E^{1/5}<0.69306\) (DD's kept limits "max over words" and "\(\operatorname{osc}\log u+\operatorname{osc}\log v\)")
+
+**Setting.** As in Theorems CE, CF, DC and DD. In \(s\in X_s=[\sqrt5/2,\tfrac52]\), \(\tilde Lf=\tilde w_1f\circ\sigma_1+\tilde w_2f\circ\sigma_2\), \(\mathcal C_a=\{f>0:\log f\text{ is }a\text{-Lipschitz in }s\}\), \(a=\tfrac{47}2\), \(b_5=2.0785933\) (CF.2). CF.2 and DD bound \(\operatorname{diam}_{\Theta_a}\tilde L^5\mathcal C_a\le2\log\frac{a+b_5}{a-b_5}+\log\frac{\sup(v/u)}{\inf(v/u)}\) (CE.3's cone lemma, \(u,v\in\mathcal C_{b_5}\)) and then bound the last term by \(\operatorname{osc}\log u+\operatorname{osc}\log v\le2V\), with \(V_5=1.0426526\) (CF.2) or \(V_D=0.73438\) (DD, a maximum over words). DD kept both steps and listed "the true ratio-of-sums oscillation" as open. Theorem DE keeps the cone, the block and the cone-lemma term, and computes the joint term \(\log(\sup(v/u)/\inf(v/u))\) itself, up to \(0.1\%\).
+
+**Assumptions used as stated.** CE.3's cone lemma, CF.1 (Birkhoff's contraction, elementary), CF.2's cone step and \(b_5\) (re-run), CF.3's and CF.5's arguments, DC.1–DC.3's proofs and DC.2's certified \(\Theta_G\le0.28154093\) (not re-run), all exactly as DD.3 used them. DD.2's table arithmetic (re-implemented on nested grids). CE.4's certificate for \(r\) and CC's level sums are re-run (consistency only).
+
+**THEOREM DE** (`arb` tables, float dynamic programme with outward rounding; every claim checked by the script, exit 1 on any failure).
+1. **DE.1 (proved; exact). Separation and the line programme.** For \(u=\tilde L^5f\), \(v=\tilde L^5g\) with \(f,g\in\mathcal C_a\),
+   \[
+   \log\frac{\sup(v/u)}{\inf(v/u)}=\sup_{x,y}\Bigl[\log\frac{v(x)}{v(y)}+\log\frac{u(y)}{u(x)}\Bigr]\le W:=\sup_{x,y\in X_s}\bigl[\rho(x,y)+\rho(y,x)\bigr],\qquad\rho(x,y)=\sup_{f\in\mathcal C_a}\log\frac{\tilde L^5f(x)}{\tilde L^5f(y)},
+   \]
+   because for fixed \(x,y\) the suprema over \(f\) and \(g\) separate. For fixed \(x,y\), \(\tilde L^5f(x)/\tilde L^5f(y)=\sum_kA_ku_k/\sum_kB_ku_k\) over the \(64\) points \(\sigma_wx,\sigma_wy\) sorted as \(s_1<\dots<s_{64}\), \(u_k=f(s_k)\), \(A_k=\tilde w_w(x)\) at the \(x\)-points and \(B_k=\tilde w_w(y)\) at the \(y\)-points. On a line, \(\log u\) is \(a\)-Lipschitz on the points iff \(u_{k+1}/u_k\in[e^{-ad_k},e^{ad_k}]\), \(d_k=s_{k+1}-s_k\), and every such \(u\) extends to some \(f\in\mathcal C_a\) (interpolate \(\log u\) linearly). Hence \(\sup_f\) ratio \(\le t\) iff \(V_1(t)\le0\), where
+   \[
+   V_{64}=c_{64},\qquad V_k=c_k+\max\bigl(e^{ad_k}V_{k+1},\,e^{-ad_k}V_{k+1}\bigr),\qquad c_k=A_k-tB_k .
+   \]
+   The recursion is increasing in \(c_k\), \(V_{k+1}\) and \(d_k\). So upper enclosures of \(A\), lower enclosures of \(B\) and upper bounds of the consecutive distances, in any fixed order of the points, give a valid upper bound for every \(x\in J_p\), \(y\in J_q\) (a wrong order only relaxes the constraints). The maximiser is bang-bang: \(\log f\) has slope \(\pm a\) between consecutive points.
+2. **DE.2 (certified). The joint term.** The \(32\) images \(\sigma_w(X_s)\) are pairwise disjoint and ordered (outward hulls), so the \(64\) points of a pair are ordered word by word. All \(16384\) cell pairs of the \(128\)-grid are bounded; every pair whose bound exceeds \(0.2904\) is split \(8\times8\) on the exactly nested finer grid, down to the \(65536\)-grid (\(16384+48000+51968+27264\) pairs, about \(10\) s). On each cell, \(\tilde w_w\) and \(\sigma_w(J)\) are enclosed in `arb` as in DD.2. The bisection for \(t\) runs in floats; the certificate is one more DP at \(t(1+10^{-9})\) with `nextafter` outward rounding after every operation and \(10^{-12}\) pads on every exponential, which must return \(V_1\le0\). Result:
+   \[
+   W\le W_E=0.29039894\ldots<0.29040\qquad(\text{DD: }2V_D=1.46876;\ \text{CF.2: }2V_5=2.08531),
+   \]
+   \[
+   \Delta_E=2\log\frac{a+b_5}{a-b_5}+W_E=0.64512908\ldots<0.64513,\qquad\theta_E=\tanh\frac{\Delta_E}4=0.15989825\ldots<0.15990,\qquad\theta_E^{1/5}=0.69305666\ldots<0.69306 .
+   \]
+3. **DE.3 (certified; `arb`). Floors.** At \(x=\sqrt5/2+10^{-9}\), \(y=\tfrac52-10^{-9}\), the DP's bang-bang maximisers, rebuilt in `arb` with slopes \(\pm a(1-10^{-6})\) (so they lie in \(\mathcal C_a\)) and with the order of the \(64\) points certified, give \(\log(\sup(v/u)/\inf(v/u))\ge W_{\rm low}=0.29009694\ldots>0.29009\). So \(W_E/W_{\rm low}\le1.0011\): the joint term is now known to \(0.11\%\), and DD's separated \(2V_D\) was \(5.063\) times it. The same construction gives \(\sup_{f\in\mathcal C_a}\operatorname{osc}_X\log\tilde L^5f\ge0.66531635\ldots\) (DD.4's floor from \(e^{\pm as}\) was \(0.51383\)), so DD's \(V_D=0.73438\) is within \(1.104\) of the true single-function oscillation; the gain in DE comes from the joint term, not from \(V\).
+4. **DE.4 (proved from DE.2 with CF.1, CF.3, CF.5 and DC.1–DC.3 as stated, exactly as DD.3).** Every statement of CF.3, CF.5, DC and DD.3 holds with \(\theta_E\):
+   - every eigenvalue \(\mu\ne r\) of \(\tilde L\) with a \(C^1\) eigenfunction has \(|\mu|\le\theta_E^{1/5}r\le0.29366979\ldots<0.29367\) (DD.3: \(<0.3575\); CF.5: \(<0.3752\));
+   - DC.1: \(|\log R_m-\log r|\le\theta_E^{\lfloor(m-j)/5\rfloor}K(\beta_j)\), DC.1's \(K\) unchanged;
+   - for every \(k\ge4\), \(|\log(s_{k+1}/(rs_k))|\le\theta_E^{\lfloor(k-4)/5\rfloor}\Theta_G\le C_E\theta_E^{k/5}\), \(C_E=\Theta_G\theta_E^{-8/5}<5.28923\).
+
+   The bound equals DD.3's for \(k=4..8\) and is smaller for \(k\ge9\): DD.3/DE.4 \(=2.6687\), \(7.1219\), \(50.722\), \(1.83\cdot10^4\) at \(k=9,14,24,54\). *Consistency (certified):* CF.4's check with \(f=\mathbf 1\) at five points for \(m<12\) holds with \(\theta_E\); on CC's \(s_4..s_{13}\) every deviation is below DE.4's bound (largest ratio deviation/bound \(0.04595\)).
+
+*Proof.* DE.1: \(\sup(v/u)/\inf(v/u)=\sup_{x,y}\frac{v(x)u(y)}{u(x)v(y)}\), and for fixed \((x,y)\) the first factor depends only on \(g\), the second only on \(f\). For the programme, \(\sum A_ku_k\le t\sum B_ku_k\) for all admissible \(u\) iff \(\max_u\sum_k(A_k-tB_k)u_k\le0\); by homogeneity normalise \(u_1=1\), and the maximum over \(u_2,\dots\) given \(u_k\) is \(u_kV_k\) by backward induction, since \(\max_{\varrho\in[e^{-ad},e^{ad}]}\varrho V=e^{ad}V\) for \(V\ge0\) and \(e^{-ad}V\) for \(V<0\). Consecutive constraints imply all pairwise ones by the triangle inequality on the line. Monotonicity in \(c_k\), \(V_{k+1}\), \(d_k\) is read off the recursion. Any true configuration (actual points in their hulls, in their actual order) satisfies the relaxed constraints, because each relaxed distance bounds the distance between the two points it joins, whichever order they are in. DE.2: every float operation is rounded to nearest, so `nextafter` toward \(+\infty\) bounds its exact value; the computed \(V_1\) therefore bounds the exact relaxed \(V_1\) from above, and \(V_1\le0\) certifies \(\rho\le\log t\) on the cell pair. The split pairs cover their parents exactly, so the maximum over the final cover bounds \(W\). Then CE.3's cone lemma with \(\lambda=b_5/a\) gives \(\Delta_E\) as in CF.2. DE.3: any pair \(f,g\in\mathcal C_a\) and any two points bound the joint term from below. DE.4: CF.1 needs only some \(\Delta\ge\operatorname{diam}\tilde L^5\mathcal C_a\), and CF.3, CF.5, DC.1 and DC.3 use \(\Delta\) only through \(\theta\). \(\square\)
+
+**Observation (floats, 33-point grid, no claim).** With the joint term the per-level rate \(\tanh(\Delta/4)^{1/n}\) keeps improving with larger cones and blocks: \(a=40,n=5\): \(\approx0.711\); \(a=60,n=6\): \(\approx0.678\); \(a=100,n=8\): \(\approx0.643\) (joint term \(\approx0.043\), cone-lemma term \(\approx0.074\)). This differs from DD's observation, where the separated term stalled near \(0.594\): the joint term tends to \(0\) as \(n\to\infty\), the separated one does not. None of these \((a,n)\) is certified here, and CF.3/DC are stated for \(a=\tfrac{47}2\), \(n=5\) only.
+
+**Kept limits (what DE does not claim).** Same cone family (log-Lipschitz in \(s\)), same \(a=\tfrac{47}2\), same block \(\tilde L^5\). The cone-lemma term \(2\log\frac{a+b_5}{a-b_5}=0.35473\) is untouched and is now more than half of \(\Delta_E\); \(\Delta_E\) is therefore still an upper bound for the true Hilbert diameter, not its value. \(C_E=5.28923\) carries the block factor \(\theta_E^{-8/5}\) (the floor-form bound is never larger than DD.3's). The Birkhoff rate \(0.6931\) is still far from the spectral \(|\lambda_2|/r=0.1725\) (CG). The DP certificate is float arithmetic with outward rounding and padded library exponentials, at the same level of rigour as DD.2's float maxima. \(\Theta_G\) is DC.2's, used as stated. The observation is floats only.
+
+**What stays open.**
+- *From CA–DE.* Certify a larger \((a,n)\) with the joint term and carry CF.3/DC to that cone; the cone-lemma term (the true Hilbert diameter); a cone whose Birkhoff rate approaches \(0.1725\). The second-order terms of \(\Gamma_\pm^{(k)}-\tfrac{2k+3}{12}\kappa_\mp\) and of \(q^{(k)}+\tfrac13\). Eigenvalues on \(|z|=\rho(L_k)\). \(\lambda_6\), \(a_6\). The fractional/weighted refinement limit. Closed forms.
+- *Carried over.* As in Theorem DD, including the Stage 2 question.
+
+**NOT THIS.** Theorem DE sharpens a contraction rate for a positive transfer operator that governs how the spectral mass of one scaled corner resolvent on the combinatorial gasket is spread over levels. A contraction rate is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN (BLOCKED), because the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_joint.py`** (about 30 s; needs python-flint, numpy, sympy; imports DD's script, hence CF's, unchanged, CE's script for \(r\) and CC's script for the level sums; `DE_CELLS`, `DE_LEVELS`, `DE_TARGET` override the base grid, the refinement depth and the split threshold).
+- *Interval (`arb`):* the per-cell enclosures of \(\tilde w_w\) and \(\sigma_w(J)\), the separation of the \(32\) images, \(b_5\), \(\Delta_E\), \(\theta_E\), \(\theta_E^{1/5}\), \(C_E\), \(W_{\rm low}\) and \(V\)'s floor from explicit bang-bang functions, CF.4's check with \(\theta_E\) and the level-sum consistency.
+- *Floats with outward rounding:* the DP certificates on the cell cover.
+- *Floats:* the bisection and the observation (no claim).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

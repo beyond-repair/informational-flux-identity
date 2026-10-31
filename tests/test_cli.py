@@ -1433,6 +1433,31 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DD", (ROOT / doc).read_text())
 
+    def test_theorem_de_profile_level_joint(self):
+        """Theorem DE: the joint (ratio-of-sums) oscillation for CF.2's cone C_(47/2) under Lt^5: W_E <= 0.29040, floor
+        0.29009, theta_E <= 0.15990, Birkhoff rate theta_E^(1/5) < 0.69306, |mu| < 0.29367 (about 30 s; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_joint as de
+
+        de.FAILS.clear()
+        de.cf.FAILS.clear()
+        de.dd.FAILS.clear()
+        self.assertEqual(de.main(obs=False), 0)
+        self.assertEqual(de.FAILS, [])
+        r = de.RESULT
+        self.assertLess(float(r["W"].upper()), 0.29040)
+        self.assertLess(float(r["Delta"].upper()), 0.64513)
+        self.assertLess(float(r["theta"].upper()), 0.15990)
+        self.assertLess(float(r["rate"].upper()), 0.69306)
+        self.assertLess(float(r["CE"].upper()), 5.28923)
+        self.assertGreater(float(r["Wlow"].lower()), 0.29009)
+        self.assertLess(float(r["Wlow"].upper()), float(r["W"].lower()))
+        self.assertLess(float(r["worst"].upper()), 0.05)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_joint.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DE", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

@@ -4604,6 +4604,44 @@ g(s^*)=1,\qquad \ell(g)=g'(s^*)=-\frac{2k+3}{12},\qquad \frac ba=m\,\frac{\kappa
 
 The script exits nonzero if any check fails.
 
+## Theorem DB. The exact rate of \(\inf R_n^{(k)}\to\rho(L_k)\) for \(k=13..28\) (DA's kept limit): CU's certified pipeline run on \(3^{k+1}L_k\), so with CT, CU, CV and DA, CT.5's two-sided bound holds for every integer \(k\ge1\)
+
+**Setting.** As in Theorems CT–DA: \(L_kf=u_1f(\sigma_1)+u_2f(\sigma_2)\) on CG's \(H^2(D_{CG})\), \(X=[\sqrt5/2,\tfrac52]\), \(h_n=L_k^n\mathbf 1\), \(R_n^{(k)}=h_{n+1}/h_n\), \(q^{(k)}=\nu_2^{(k)}/\rho(L_k)\), \(\Gamma_\pm=\max_X(\pm B/A)\). CT/CU/CV proved CT.5's two-sided bound for \(k\le12\), DA for every \(k\ge29\). CY.5/CZ.6 certified only the eigenvalues (CU.1–CU.3) for \(k=13..29\), not \(\Gamma_\pm\) (CU.4) or the rate (CU.5), and DA's \(\delta_k\) exceeds \(\Gamma_+\) for \(k\le28\).
+
+**Method.** CU's script `gasket_fractional_profile_level_infrate_k.py` is imported and run **unchanged** per \(k\) (every CU.1–CU.5 check, every threshold, including CU.4's \(|A-A^N|,|B-B^N|<10^{-12}\)) on the rescaled operator \(\hat L_k=3^{k+1}L_k\). Rescaling by the exact integer \(3^{k+1}\) changes no eigenvector, Riesz projection, \(B/A\), \(q\), \(\Gamma_\pm\) or \(\theta_n\) (all homogeneous of degree 0), and \(\rho(\hat L_k)-\inf_X\hat R_n=3^{k+1}(\rho(L_k)-\inf_XR_n)\). It wraps CU's three weight evaluators (disk sup bounds \(U_i\), the matrix \(M_N\), pointwise \(L_kp\) on \(X\)) by the factor \(3^{k+1}\) and CU's outer circle \(|z|=6\) by \(6\cdot3^{k+1}\). CZ's "underflow" past \(k\ge30\) is interval wrapping in the Neumann powers; at 1024 bits (Krawczyk radius \(10^{-130}\)) the Neumann power 40 stays finite for every \(k\le28\). Parameters: \(N(k)=60+10k\) for \(k=14..19\) and \(\max(180,30+10k)\) otherwise; \(\rho_{\rm in}=0.6|\nu_2|\) (rescaled, here \(\tfrac15\)); eigenvalue circles of radius \(10^{-15}\); \(\theta_n\) scanned to \(n=400\). **Witness for the choice of \(N\):** at \(N=30+10k\) the runs for \(k=14..19\) failed CU.4 only, with \(|B-B^N|\le1.52\cdot10^{-11},\ 6.50\cdot10^{-10},\ 1.81\cdot10^{-10},\ 4.97\cdot10^{-11},\ 1.35\cdot10^{-11},\ 3.67\cdot10^{-12}\) (\(K_T^2\) grows faster in \(k\) than \(\varepsilon_N\) falls). With 30 more modes the largest projection error over \(k=13..28\) is \(9.87\cdot10^{-13}\) (\(k=20\), \(N=230\)); for \(k=14..19\) it is \(\le5.6\cdot10^{-16}\). CU's threshold was not changed.
+
+**Assumptions used as stated.** Everything CU uses (CU's script imported and run unchanged); DA.1's \(\kappa_-=0.370860305428934\pm10^{-14}\) (DB.6 only); CT.4/CU.4/CV.4's \(\Gamma_\pm\) for \(k\le12\) (DB.7 only); CY.5/CZ.6's \(q^{(k)}\) (consistency only).
+
+**THEOREM DB** (`arb`, 1024 bits; every claim proved by the script, exit 1 on any failure).
+1. **DB.1–DB.3 (CU.1–CU.3's proofs, each \(k=13..28\)).** \(\hat L_k\) on \(H^2(D_{CG})\) has exactly two eigenvalues in \(|z|>\rho_{\rm in}\), real and algebraically simple, \(3^{k+1}\rho(L_k)\) and \(3^{k+1}\nu_2^{(k)}\). For example \(q^{(13)}=-0.349942106203\), \(q^{(20)}=-0.338508371108\), \(q^{(28)}=-0.334370141255\) (radii \(<4\cdot10^{-13}\)), agreeing with CY.5/CZ.6 at \(k=13,18,23..28\).
+2. **DB.4 (CU.4's proof).** \(h_n=\rho^nA+\nu_2^nB+E_n\), \(\min_XA>0\), \(\sup_X|E_n|\le\tau_1\rho_{\rm in}^n\), and
+   \(\Gamma_+^{(k)}=0.887577,\ 0.950756,\ 1.014249,\ 1.077876,\ 1.141493,\ 1.204995,\ 1.268312,\ 1.331403,\ 1.39425,\ 1.456866,\ 1.519255,\ 1.581443,\ 1.64346,\ 1.70533,\ 1.76708,\ 1.82873\)
+   and \(\Gamma_-^{(k)}=2.53383,\ 2.73238,\ 2.93272,\ 3.13386,\ 3.33498,\ 3.5355,\ 3.7349,\ 3.9330,\ 4.1297,\ 4.3248,\ 4.5185,\ 4.7109,\ 4.9020,\ 5.0920,\ 5.2810,\ 5.469\) for \(k=13,\dots,28\) (radii \(\le5.6\cdot10^{-6}\) for \(\Gamma_+\), \(\le3.2\cdot10^{-4}\) for \(\Gamma_-\)).
+3. **DB.5 (CU.5's proof).** \(\theta_n\) decreases and \(\theta_n<\min\Gamma_\pm\) from \(n_0(k)\), with \(n_0(13..28)=48,51,55,58,62,65,68,72,75,78,82,85,88,92,95,100\); for every \(n\ge n_0(k)\)
+   \[
+   \rho(1-q)|q|^n(\Gamma_\pm-\theta_n)\le\rho(L_k)-\inf_XR_n^{(k)}\le\rho(1-q)|q|^n(\Gamma_\pm+\theta_n)\qquad(+\text{ even }n,\ -\text{ odd }n),
+   \]
+   so \(\inf R_n^{(k)}\to\rho(L_k)\) at the exact rate \(|q^{(k)}|\) for every \(k=13..28\), with limit constants \(c_\pm^{(k)}=\rho(1-q)\Gamma_\pm\) (e.g. \(c_+^{(13)}=2.53227\cdot10^{-7}\), \(c_-^{(13)}=7.22906\cdot10^{-7}\); \(c_+^{(28)}=3.55647\cdot10^{-14}\), \(c_-^{(28)}=1.0636\cdot10^{-13}\)).
+4. **DB.6 (proved; finite interval comparisons).** \(\Gamma_+^{(k)}/(\tfrac{2k+3}{12}\kappa_-)\in[0.99033,1.0034]\) and \(\Gamma_-^{(k)}/(\tfrac{2k+3}{12}\kappa_+)\in[0.94239,0.9998]\) for \(k=13..28\) (e.g. \(0.99033,0.94239\) at \(k=13\); \(1.0029,0.9998\) at \(k=28\)); both lie within \(2\%\) of 1 for every \(k\ge19\). DA.2's leading term is already accurate where DA's own bound is void. This is a finite comparison, not a rate.
+5. **DB.7 (proved; CT.4/CU.4/CV.4's \(\Gamma_\pm\) as stated for \(k\le12\)).** \(\Gamma_+^{(k)}\) and \(\Gamma_-^{(k)}\) strictly increase for \(k=1..28\).
+
+**Corollary (CT, CU, CV, DB, DA).** For every integer \(k\ge1\) there is an explicit \(n_0(k)\) such that CT.5's two-sided bound holds for all \(n\ge n_0(k)\); \(\inf R_n^{(k)}\to\rho(L_k)\) at the exact rate \(|q^{(k)}|\) for every \(k\ge1\). This closes DA's kept limit \(k=13..28\).
+
+**Kept limits (what DB does not claim).** \(n<n_0(k)\) is not covered (\(n_0\) grows with \(k\): 48..100 here). \(\Gamma_\pm^{(k)}\) for \(k=13..28\) are enclosures, not closed forms. DB.6 is a finite comparison, not a rate for \(\Gamma_\pm-\tfrac{2k+3}{12}\kappa_\mp\). \(\rho_{\rm in}=0.6|\nu_2|\) and \(N(k)\) are parameter choices, not optimal; \(k=20\) passes CU.4 with the smallest margin (\(9.87\cdot10^{-13}<10^{-12}\)). The run takes about 27 min on 8 processes and is not in CI.
+
+**What stays open.**
+- *From CA–DB.* The second-order terms of \(\Gamma_\pm^{(k)}-\tfrac{2k+3}{12}\kappa_\mp\) and of \(q^{(k)}+\tfrac13\). Eigenvalues on \(|z|=\rho(L_k)\) (circle eigenvalues). CF.3's Birkhoff-route constant for general \(f\). \(\lambda_6\), \(a_6\). The fractional/weighted refinement limit. Closed forms.
+- *Carried over.* As in Theorem DA, including the Stage 2 question.
+
+**NOT THIS.** Theorem DB gives convergence constants of Collatz–Wielandt ratios of the higher-derivative transfer operators on the combinatorial gasket for \(k=13..28\). A convergence rate is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN (BLOCKED), because the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_infrate_mid.py`** (about 27 min with 8 processes; needs python-flint; imports CU's script; `DB_KS` selects \(k\), `DB_PROCS` the process count, `DB_N` overrides \(N(k)\), `DB_LOGDIR` writes per-\(k\) logs).
+- *Interval (`arb`/`acb`, 1024 bits):* CU.1–CU.5 for each \(k=13..28\); DB.6's ratios; DB.7's comparisons.
+- *Exact:* the rescaling by \(3^{k+1}\).
+- *Floats:* only the Krawczyk seeds (certified afterwards).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

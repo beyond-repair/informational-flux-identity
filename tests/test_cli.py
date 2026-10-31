@@ -1352,6 +1352,34 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DA", (ROOT / doc).read_text())
 
+    def test_theorem_db_profile_level_infrate_mid(self):
+        """Theorem DB: CU.1-CU.5 certified on 3^(k+1) L_k for every k = 13..28, CT.5's two-sided inf R_n bound from n0(k);
+        DB.6/DB.7 (local only, about 27 min on 8 processes; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_infrate_mid as db
+
+        self.assertEqual(db.KS, list(range(13, 29)))
+        self.assertEqual(db.main(), 0)
+        self.assertEqual(db.FAILS, [])
+        r = db.RESULT
+        tab = r["tab"]
+        self.assertEqual(sorted(tab), list(range(13, 29)))
+        self.assertEqual([db.n_of(k) for k in range(14, 20)], [200, 210, 220, 230, 240, 250])
+        for k, b in tab.items():
+            self.assertTrue(all(float(e.upper()) < 1e-12 for e in b["errs"]))  # CU.4's own threshold, unchanged
+            self.assertGreater(float(b["Gp"].lower()), 0)
+            self.assertGreater(float(b["Gm"].lower()), 0)
+        self.assertAlmostEqual(float(tab[13]["q"].mid()), -0.349942106203, places=11)
+        self.assertAlmostEqual(float(tab[13]["Gp"].mid()), 0.887577, places=5)
+        self.assertAlmostEqual(float(tab[28]["Gp"].mid()), 1.82873, places=4)
+        self.assertEqual(r["n0s"], dict(zip(range(13, 29), [48, 51, 55, 58, 62, 65, 68, 72, 75, 78, 82, 85, 88, 92, 95, 100])))
+        self.assertEqual(r["K_2pc"], 19)
+        self.assertTrue(r["inc"])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_infrate_mid.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DB", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

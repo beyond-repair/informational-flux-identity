@@ -252,9 +252,14 @@ def certify(pairs, T, alpha, eps, beta):
     check(allok, f"CU.3: beta_N + eps_N < {R_OUT}; the small and projection circles hold mu_i only and stay in |z| > rho_in. "
                  f"CG.3's homotopy: L_k on H^2(D) has exactly two eigenvalues in |z| > rho_in, real and simple: "
                  f"rho_H = {rho.str(20)}, nu_2 = {nu.str(20)} (+- 1e-20); every other eigenvalue has |mu| < rho_in")
-    lo, hi = arb(CI1[0]), arb(CI1[1])
-    check(bool(rho > lo) and bool(rho < hi), f"CU.3: rho_H lies in CL.3's [{CI1[0]}, {CI1[1]}] (consistency); rho_H = rho(L_k) "
-                                             "on C(X) (point evaluation <= e_X ||.||_H2 and the analytic eigenfunction is not 0 on X)")
+    if CI1 is None:      # k >= 5 (Theorem CV): CL.3 certified no interval; no consistency check is claimed
+        print("   (no CL.3 interval for this k; rho_H = rho(L_k) on C(X) by point evaluation <= e_X ||.||_H2 and the "
+              "analytic eigenfunction not 0 on X)", flush=True)
+    else:
+        lo, hi = arb(CI1[0]), arb(CI1[1])
+        check(bool(rho > lo) and bool(rho < hi), f"CU.3: rho_H lies in CL.3's [{CI1[0]}, {CI1[1]}] (consistency); rho_H = "
+                                                 "rho(L_k) on C(X) (point evaluation <= e_X ||.||_H2 and the analytic "
+                                                 "eigenfunction is not 0 on X)")
     q = nu / rho
     check(bool(q < 0) and bool(abs(q) < arb(QCAP)), f"CU.3: q = nu_2/rho(L_k) = {q.str(15)}, |q| < {QCAP}")
     return out, rho, nu, q, allok

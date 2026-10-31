@@ -4282,6 +4282,66 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem CV. The exact rate of \(\inf R_n^{(k)}\to\rho(L_k)\) for \(k=5,\dots,12\), and Kept Failure CV.6: \(|\nu_2^{(k)}/\rho(L_k)|\) is not monotone in \(k\) (it peaks at \(k=8\))
+
+**Setting.** Exactly as in Theorem CU: \(L_kf=u_1f(\sigma_1)+u_2f(\sigma_2)\), \(u_i=\tilde w_i/(2\sigma_i)^k\), \(h_n=L_k^n\mathbf 1\), \(R_n^{(k)}=h_{n+1}/h_n\) on \(X=[\sqrt5/2,\tfrac52]\), and \(L_k\) acting on CG's \(H^2(D)\), \(D=\{|s-\tfrac{83}{50}|<\tfrac85\}\). CU proved the exact rate for \(k=2,3,4\) and listed \(k\ge5\) as open. Its observation also said that \(|q^{(k)}|\) increases with \(k\) (\(0.2441,\dots,0.3376\) for \(k=1,\dots,4\)). CV runs CU's routine for \(k=5,\dots,12\) with three parameter changes: \(N=180\) instead of \(120\), Neumann power \(m=20\) instead of \(7\), and inner radius \(\rho_{\rm in}(k)\approx\sqrt{|\nu_2\nu_3|}\):
+\(1/5000,\ 1/12500,\ 1/35000,\ 1/10^5,\ 1/(3\cdot10^5),\ 1/(9\cdot10^5),\ 1/(2.6\cdot10^6),\ 1/(7.8\cdot10^6)\).
+At \(N=120,\ m=7\), the Neumann bound fails for each of \(k=6,\dots,10\), the values tried (for example \(\|A^7\|_F=3.31\cdot10^{-29}\) against \(\rho_{\rm in}^7=2.1\cdot10^{-29}\) at \(k=6\)). The third eigenvalue moves towards \(\nu_2\) as \(k\) grows (\(|\nu_3|/\rho\approx0.06\) at \(k=5\), \(0.116\) at \(k=12\), floats), so a longer Neumann tail is needed. This is a parameter fact, not a claim.
+
+**Assumptions used as stated (not re-run).** Everything CU uses, and CU's script itself, which is imported and run unchanged per \(k\). The only edit to it is a guard: CL.3 certified no interval for \(k\ge5\), so CU.3's consistency check against CL.3 is skipped there. For \(k=2,3,4\), CU's script runs exactly as before. CV.6 and CV.7 also use CT.3's \(q^{(1)},\rho(L_1)\) and CU.3's \(q^{(k)},\rho(L_k)\) for \(k=2,3,4\), as stated.
+
+**THEOREM CV.**
+1. **CV.1–CV.3 (CU.1–CU.3's proofs, `arb`, 512 bits).** For each \(k=5,\dots,12\), the following hold. \(\|L_k(I-P_{180})\|\le\varepsilon_{180}\le5.70\cdot10^{-41}\). There are Krawczyk eigenpairs of \(M_{180}\) at \(\rho\) and \(\nu_2\). The Neumann bound \(\|A^{20}\|_F<\rho_{\rm in}^{20}\) holds (e.g. \(1.81\cdot10^{-79}\) at \(k=5\), \(6.54\cdot10^{-139}\) at \(k=12\)). The resolvent circles satisfy \(K_T\varepsilon_{180}<1\). By CG.3's homotopy, \(L_k\) on \(H^2(D)\) has exactly two eigenvalues in \(|z|>\rho_{\rm in}(k)\), both real and algebraically simple, and \(\rho_H=\rho(L_k)\) on \(C(X)\) (CT.3's argument; \(\min_XA>0\) below):
+
+   | \(k\) | \(\rho(L_k)\) (\(\pm6\cdot10^{-20}\)) | \(\nu_2^{(k)}\) (\(\pm6\cdot10^{-20}\)) | \(q=\nu_2/\rho\) |
+   |---|---|---|---|
+   | 5 | \(0.0014792559239634748\) | \(-0.0005161358132104635\) | \(-0.348915833189665\pm8\cdot10^{-17}\) |
+   | 6 | \(0.0004853393939726874\) | \(-0.0001723958039714274\) | \(-0.355206698884058\pm4\cdot10^{-16}\) |
+   | 7 | \(0.0001597483711719488\) | \(-0.0000572111535546882\) | \(-0.358132938288978\pm5\cdot10^{-16}\) |
+   | 8 | \(0.0000527169494750854\) | \(-0.0000189167039184835\) | \(-0.358835329184282\pm4\cdot10^{-16}\) |
+   | 9 | \(0.0000174329038013139\) | \(-0.0000062429809833751\) | \(-0.35811480717886\pm6\cdot10^{-15}\) |
+   | 10 | \(0.0000057745266397710\) | \(-0.0000020588085310616\) | \(-0.35653286572130\pm3\cdot10^{-15}\) |
+   | 11 | \(0.0000019153320627478\) | \(-0.0000006789469804583\) | \(-0.3544800369938\pm5\cdot10^{-14}\) |
+   | 12 | \(0.0000006359658135257\) | \(-0.0000002240022214049\) | \(-0.3522236834762\pm6\cdot10^{-14}\) |
+
+2. **CV.4 (CU.4's proof).** \(h_n=\rho^nA+\nu_2^nB+E_n\) with \(\sup_X|E_n|\le\tau_1\rho_{\rm in}^n\), where \(\tau_1\le1.30\cdot10^6\) (\(k=5\)) up to \(7.43\cdot10^{10}\) (\(k=12\)). The pointwise errors in \(A,B\) are at most \(6.8\cdot10^{-15}\), and \(\min_XA\ge0.690635,\dots,0.474345\). The `arb` cover of \(X\) gives \(\Gamma_\pm=\max_X(\pm B/A)\) to within \(6\cdot10^{-6}\):
+
+   | \(k\) | \(\Gamma_+\) | \(\Gamma_-\) | \(c_+=\rho(1-q)\Gamma_+\) | \(c_-=\rho(1-q)\Gamma_-\) | \(n_0\) |
+   |---|---|---|---|---|---|
+   | 5 | \(0.416558\) | \(1.129942\) | \(8.31196\cdot10^{-4}\) | \(2.254676\cdot10^{-3}\) | 16 |
+   | 6 | \(0.471227\) | \(1.283207\) | \(3.09943\cdot10^{-4}\) | \(8.44010\cdot10^{-4}\) | 22 |
+   | 7 | \(0.526963\) | \(1.442049\) | \(1.143297\cdot10^{-4}\) | \(3.12866\cdot10^{-4}\) | 26 |
+   | 8 | \(0.583993\) | \(1.607694\) | \(4.18335\cdot10^{-5}\) | \(1.151650\cdot10^{-4}\) | 31 |
+   | 9 | \(0.642394\) | \(1.78057\) | \(1.520924\cdot10^{-5}\) | \(4.21566\cdot10^{-5}\) | 34 |
+   | 10 | \(0.702119\) | \(1.96047\) | \(5.49994\cdot10^{-6}\) | \(1.53570\cdot10^{-5}\) | 37 |
+   | 11 | \(0.763030\) | \(2.14668\) | \(1.979512\cdot10^{-6}\) | \(5.56909\cdot10^{-6}\) | 43 |
+   | 12 | \(0.824925\) | \(2.33819\) | \(7.09409\cdot10^{-7}\) | \(2.01077\cdot10^{-6}\) | 47 |
+
+3. **CV.5 (CU.5's proof).** For every \(n\ge n_0(k)\),
+   \(\rho(1-q)|q|^n(\Gamma_\pm-\theta_n)\le\rho(L_k)-\inf_XR_n^{(k)}\le\rho(1-q)|q|^n(\Gamma_\pm+\theta_n)\), with \(+\) for even \(n\) and \(-\) for odd \(n\), and \(\theta_n\) decreasing. So for \(k=5,\dots,12\), \(\inf R_n^{(k)}\to\rho(L_k)\) at the **exact rate** \(|q^{(k)}|\). The limit constants are \(c_\pm\), and \(\sup R_n-\inf R_n\) has the same rate. The uniform constants at \(n_0\) are printed by the script, e.g. \(k=12\): \(4.3041\cdot10^{-7}\,|q|^n\le\rho-\inf R_n\le9.8841\cdot10^{-7}\,|q|^n\) for even \(n\ge48\), and \(1.5233\cdot10^{-6}\)–\(2.4982\cdot10^{-6}\) for odd \(n\ge47\).
+4. **Kept Failure CV.6 (interval witness).** Combine CT.3 (\(k=1\)), CU.3 (\(k=2,3,4\)) and CV.3. Then \(|q^{(k)}|\) strictly increases for \(k=1,\dots,8\) and strictly decreases for \(k=8,\dots,12\):
+   \(0.2440800701,\ 0.2895670639,\ 0.3189949783,\ 0.3376293000,\ 0.3489158332,\ 0.3552066989,\ 0.3581329383,\ \mathbf{0.3588353292},\ 0.3581148072,\ 0.3565328657,\ 0.3544800370,\ 0.3522236835\).
+   The witness is \(|q^{(8)}|-|q^{(9)}|=7.205\cdot10^{-4}>7\cdot10^{-4}\), far above the enclosure radii (\(\le6\cdot10^{-14}\)). So CU's observation that "\(|q^{(k)}|\) increases with \(k\)" does not extend past \(k=8\), and \(\max_{k\le12}|q^{(k)}|=|q^{(8)}|\). It was an observation, not a claim of CU. It is kept here as a failure of the natural extrapolation.
+5. **CV.7 (proved, finite range).** \(3^k\rho(L_k)\) strictly decreases for \(k=1,\dots,12\) and stays above \(1/3\): \(0.40306495,\dots,0.33797831\).
+
+*Proof.* CV.1–CV.5 are CU.1–CU.5 verbatim, with \(N=180\) and \(m=20\). Every inequality those proofs need is checked in `arb` for each \(k\), including the circle layout, \(K_T\varepsilon_{180}<1\) on all six circles, the bases \(|q|,\rho_{\rm in}/\rho,\rho_{\rm in}/|\nu_2|<1\), and \(\theta_n<\min\Gamma_\pm\) from \(n_0\). CV.6 and CV.7 are finitely many `arb` comparisons of certified enclosures. \(\square\)
+
+**Observation (no claim).** \(s^*=3/2\) is the fixed point of \(\sigma_1\), with \(\sigma_1'(s^*)=-1/3\) and \(\tilde w_1(s^*)=1/3\). As \(k\to\infty\) the branch \(u_1\) dominates. A single-branch weighted composition operator with an attracting fixed point has nonzero spectrum \(\{\tilde w_1(s^*)|\sigma_1'(s^*)|^k\sigma_1'(s^*)^j:j\ge0\}\), which suggests \(3^k\rho(L_k)\to1/3\) and \(q^{(k)}\to-1/3\). The data fit this: \(|q^{(12)}|-1/3=0.01889\), and \(3^k\rho(L_k)\) decreases towards \(1/3\). It would also explain the hump in CV.6, since \(|q^{(k)}|\) must come back down to \(1/3\) after exceeding it from \(k=4\) on. Neither limit is proved here.
+
+**Kept limits (what CV does not claim).** Only \(k\le12\). There is no statement uniform in \(k\) and no limit as \(k\to\infty\). \(n<n_0(k)\) is not covered, and \(n_0\) grows with \(k\) (16 to 47), mainly because \(\rho_{\rm in}/|\nu_2|\) must stay above \(|\nu_3/\nu_2|\). \(\Gamma_\pm\) are known only to about \(10^{-6}\)–\(6\cdot10^{-6}\), and nothing has a closed form. As in CU, nothing is claimed about circle eigenvalues or the \(C^k\) spectrum beyond \(\rho_H=\rho(L_k)\).
+
+**What stays open.**
+- *From CA–CV.* A uniform-in-\(k\) rate and the limits \(q^{(k)}\to-1/3\), \(3^k\rho(L_k)\to1/3\) (observation only). \(k\ge13\). CF.3's Birkhoff-route constant for general \(f\). Eigenvalues on \(|z|=\rho(L_k)\). \(\lambda_6\), \(a_6\). Closed forms.
+- *Carried over.* As in Theorem CU, including the Stage 2 question.
+
+**NOT THIS.** Theorem CV fixes convergence rates of Collatz–Wielandt ratios of the higher-derivative transfer operators \(L_5,\dots,L_{12}\) of the level-sum transfer operator on the combinatorial gasket. A convergence rate is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN, because the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_infrate_k5.py`** (about 300 s; needs python-flint and numpy; imports CU's script, which imports CR's; `CV_KS=5,6` runs a subset and skips CV.6/CV.7).
+- *Interval (`arb`, 512 bits):* everything CU certifies, per \(k\); the comparisons in CV.6 and CV.7.
+- *Floats:* the seeds, the parameter remark in the setting, and the observation.
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

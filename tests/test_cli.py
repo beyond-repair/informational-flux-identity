@@ -1288,6 +1288,43 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CS", (ROOT / doc).read_text())
 
+    def test_theorem_cy_profile_level_ratio_k(self):
+        """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_ratio_k as cy
+        from fractions import Fraction as Fr
+
+        self.assertEqual(cy.main(), 0)
+        self.assertEqual(cy.FAILS, [])
+        r = cy.RESULT
+        self.assertEqual((cy.C0, cy.R0, cy.RIN, cy.R1), (Fr(9, 5), Fr(4, 5), Fr(9, 40), Fr(1, 2)))
+        self.assertEqual((r["BM"], r["GM"], r["KM"]), (Fr(8529, 10000), Fr(3572, 10000), Fr(12426, 10000)))
+        self.assertEqual(r["K0"], 24)
+        self.assertLess(float(r["A"].mid()), 91.4)
+        self.assertLess(float(r["C2"].mid()), 4.828)
+        self.assertLess(float(r["r2K0"].mid()), 1 / 3 - 9 / 40)
+        self.assertLess(float(r["qbound"][40][1].mid()), 2.44e-3)
+        self.assertLess(float(r["qbound"][60][1].mid()), 9.5e-5)
+        self.assertLess(float(r["word_worst"].mid()), 0.8)
+        # CY.5: every k = 13..23 certified by CU's routine; CY.6: |q| decreasing on 8..23 and > 1/3
+        self.assertEqual(sorted(r["cu"]), list(range(13, 24)))
+        self.assertTrue(r["dec"] and r["above"])
+        self.assertAlmostEqual(float(r["cu"][13]["q"].mid()), -0.349942106203, places=11)
+        self.assertAlmostEqual(float(r["cu"][23]["q"].mid()), -0.33622604, places=7)
+        # Koenigs function: kappa o sigma_1 = -kappa/3 at a sample point, kappa'(s*) = 1 (difference quotient)
+        cy.ctx.prec = 160
+        s = cy.acb(2)
+        k1 = cy.orbit_products(cy.sig1(s))[2]
+        k0 = cy.orbit_products(s)[2]
+        self.assertLess(float(abs(k1 + k0 / 3).mid()), 1e-30)
+        h = cy.acb(cy.arb(10) ** -20)
+        d = cy.orbit_products(cy.acb(3) / 2 + h)[2] / h
+        self.assertLess(float(abs(d - 1).mid()), 1e-15)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_ratio_k.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CY", (ROOT / doc).read_text())
+
     def test_theorem_cx_profile_level_rate_k(self):
         """Theorem CX: (3^(k+1) rho(L_k) - 1)/(G* B*^k) -> 1, B* = B(3/2) = 0.7773760276; 3^k rho(L_k) strictly decreasing."""
         sys.path.insert(0, str(ROOT / "scripts"))

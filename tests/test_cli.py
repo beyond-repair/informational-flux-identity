@@ -1548,6 +1548,34 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DH", (ROOT / doc).read_text())
 
+    def test_theorem_di_profile_level_f0_coupled(self):
+        """Theorem DI: signed slopes of f_0, Lt f_0 ((log F0)' in [0.035291, 0.77334], (log Lt F0)' in [0.17682, 0.79038]),
+        DH.1 signed: Theta_100(f_0, Lt f_0) < 0.078489; coupled bound from DI.1's identity: Theta_100(f_0, Lt f_0) < 0.064982
+        with certified floor 0.064975 (DH.5: 0.10465) (local only, about 3 min; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_f0_coupled as di
+
+        for mod in (di, di.bk, di.bk.co, di.bk.cn):
+            mod.FAILS.clear()
+        self.assertEqual(di.main(), 0)
+        self.assertEqual(di.FAILS, [])
+        r = di.RESULT
+        self.assertGreater(r["c0"], 0.035291)
+        self.assertLess(r["d0"], 0.77334)
+        self.assertGreater(r["c1"], 0.17682)
+        self.assertLess(r["d1"], 0.79038)
+        self.assertLess(float(r["logR"].upper()), 0.063387)
+        self.assertLess(float(r["TS"].upper()), 0.078489)
+        self.assertLess(float(r["TI"].upper()), 0.064982)
+        self.assertGreater(float(r["floor"].lower()), 0.064975)
+        self.assertLessEqual(float(r["floor"].upper()), float(r["TI"].lower()))
+        self.assertGreater(float(r["ratio"].lower()), 1.61)
+        self.assertLess(float(r["worst"].upper()), 0.2)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_f0_coupled.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DI", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

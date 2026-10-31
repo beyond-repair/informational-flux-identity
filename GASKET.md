@@ -4342,6 +4342,48 @@ At \(N=120,\ m=7\), the Neumann bound fails for each of \(k=6,\dots,10\), the va
 
 The script exits nonzero if any check fails.
 
+## Theorem CW. A bound on \(\rho(L_k)\) that holds for every \(k\): \(0.1999\cdot0.5999^k\le3^{k+1}\rho(L_k)-1\le0.2873\cdot0.8352^k\), so \(3^k\rho(L_k)\to1/3\) (CV's observation, proved)
+
+**Setting.** Exactly as in Theorems CT–CV: \(L_kf=u_1f(\sigma_1)+u_2f(\sigma_2)\) on \(C(X)\), \(X=[\sqrt5/2,\tfrac52]\), \(\sigma_{1,2}(s)=\sqrt{15/4\mp s}\), \(u_i=\tilde w_i/(2\sigma_i)^k\), \(\tilde w_1=(s+\tfrac12)/(2s(\tfrac72-s))\), \(\tilde w_2=(s-\tfrac12)/(2s(s+\tfrac72))\), and \(\rho(L_k)\) is the spectral radius on \(C(X)\) (\(k=0\) is CE's twisted operator, \(\rho(L_0)=r\)). CV certified \(\rho(L_k)\) for \(k\le12\) only, proved nothing uniform in \(k\), and recorded \(3^k\rho(L_k)\to1/3\) and \(q^{(k)}\to-1/3\) as observations. They come from the fixed point \(s^*=3/2\) of \(\sigma_1\), where \(2\sigma_1(s^*)=3\) and \(\tilde w_1(s^*)=1/3\) exactly.
+
+**Assumptions used as stated (not re-run).** None for CW.1–CW.3. CW.4 is a consistency check only, and it uses CE's \(r\) and the certified \(\rho(L_k)\) of CT.3, CU.3 and CV.3 as stated.
+
+**Construction (exact).** Let \(x_0=s\) and \(x_{j+1}=\sigma_1(x_j)\). Define
+\(\Phi(s)=-\sum_{j\ge0}\log(2\sigma_1(x_j)/3)\) and \(\Psi(s)=\sum_{j\ge0}\log(3\tilde w_1(x_j))\).
+Telescoping gives \(\Phi(\sigma_1s)-\Phi(s)=\log(2\sigma_1(s)/3)\) and \(\Psi(\sigma_1s)-\Psi(s)=-\log(3\tilde w_1(s))\). So \(h_k=e^{k\Phi+\Psi}>0\) satisfies, exactly and for every real \(k\ge0\),
+\[
+\frac{L_kh_k}{h_k}=3^{-k-1}\bigl(1+G(s)B(s)^k\bigr),\qquad B=\frac{3}{2\sigma_2}e^{\Phi(\sigma_2s)-\Phi(s)},\quad G=3\tilde w_2\,e^{\Psi(\sigma_2s)-\Psi(s)}.
+\]
+The \(\sigma_1\) branch contributes exactly \(3^{-k-1}\) at every point, and all of the \(k\)-dependence of the \(\sigma_2\) branch sits in \(B^k\).
+
+**THEOREM CW.**
+1. **CW.1 (proved, exact).** Let \(X'=[\mathrm{lo},\tfrac52]\) with \(\mathrm{lo}=1172343/2^{20}\le\sqrt5/2\). Then \(\sigma_1,\sigma_2\) map \(X'\) into \(X\). Since \(\sigma_1x-\sigma_1y=(y-x)/(\sigma_1x+\sigma_1y)\) and \(\sigma_1\ge\sqrt5/2\), \(\sigma_1\) is a \(1/\sqrt5\)-contraction towards \(s^*\). Also \(|\log(2\sigma_1(x)/3)|\le\tfrac25|x-s^*|\) and \(|\log(3\tilde w_1(x))|\le1.8944|x-s^*|\le3|x-s^*|\). Hence \(\Phi\) and \(\Psi\) converge uniformly, \(h_k\) is continuous and positive, and the tails after \(J=120\) terms are at most \(8.4\cdot10^{-43}\) and \(6.3\cdot10^{-42}\).
+2. **CW.2 (certified, `arb`, 160 bits).** An adaptive cover of \(X'\) by \(1967\) intervals, with the tails added, encloses \(\log B\) and \(\log G\) and gives \(0.5999<B<0.8352\) and \(0.1999<G<0.2873\) on \(X\). The enclosure extremes are \(B\in[0.5999814,0.8351902]\) and \(G\in[0.1999161,0.2872999]\).
+3. **CW.3 (proved from CW.1–CW.2; Collatz–Wielandt).** For a positive operator on \(C(X)\), \(mh\le Lh\le Mh\) with \(h>0\) gives \(m\le\rho(L)\le M\). So for **every real \(k\ge0\)**,
+   \[
+   0.1999\cdot0.5999^k\ \le\ 3^{k+1}\rho(L_k)-1\ \le\ 0.2873\cdot0.8352^k .
+   \]
+   Consequences: \(3^k\rho(L_k)>1/3\) for every \(k\), which extends the lower half of CV.7 from \(k\le12\) to all \(k\). Also \(3^k\rho(L_k)\to1/3\) geometrically, which proves CV's first observation, and \(\rho(L_{k+1})/\rho(L_k)\to1/3\). For \(k\ge13\) this gives explicit enclosures, e.g. \(\rho(L_{13})\in[2.0913\cdot10^{-7},2.1486\cdot10^{-7}]\) and \(\rho(L_{50})\in[4.64318\cdot10^{-25},4.64335\cdot10^{-25}]\).
+4. **CW.4 (consistency, finite).** CE's \(r\) (\(k=0\): \(3r-1=0.271194\)) and CT/CU/CV's certified \(\rho(L_k)\) for \(k=1,\dots,12\) all lie strictly inside CW.3's bracket. For example, at \(k=12\), \(0.0004343<0.0139349<0.03310\).
+
+*Proof.* The identity for \(L_kh_k/h_k\) is exact algebra once \(\Phi\) and \(\Psi\) converge, which is CW.1. CW.2 is a finite `arb` computation in which every orbit point and the tail are enclosed. Since \(G,B>0\), \(\inf_XGB^k\ge\min G(\min B)^k\) and \(\sup_XGB^k\le\max G(\max B)^k\). Finally, \(L_k^nh_k\le M^nh_k\) gives \(\|L_k^n\mathbf 1\|\le M^n\max h_k/\min h_k\), and similarly from below, so \(\rho(L_k)=\lim\|L_k^n\mathbf 1\|^{1/n}\in[m,M]\). \(\square\)
+
+**Observation (floats, no claim).** \(\min B=3/5\) and \(\min G=1/5\) are attained at \(s=5/2\), the fixed point of \(\sigma_2\). \(\max B\approx0.835144\) is attained at \(s=\sqrt5/2\), and \(\max G\approx0.287279\) near \(s\approx1.54\). From CV's data, the successive ratios of \(3^{k+1}\rho(L_k)-1\) are \(0.7797\) and \(0.7791\) at \(k=10,11\), between the two bases.
+
+**Kept limits (what CW does not claim).** The geometric rate of \(3^{k+1}\rho(L_k)-1\) is only bracketed in \([0.5999,0.8352]\). This \(h_k\) cannot do better, because \((\sup GB^k)^{1/k}\to\max B\) and \((\inf GB^k)^{1/k}\to\min B\). The bracket does not imply that \(3^k\rho(L_k)\) decreases for \(k\ge13\) (CV.7 covers \(k\le12\)). Nothing is said about \(\nu_2^{(k)}\), so \(q^{(k)}\to-1/3\) remains a **HEURISTIC**, and so does a uniform-in-\(k\) rate for \(\inf R_n^{(k)}\). For \(k\ge13\), \(\rho(L_k)\) is enclosed only to the relative width of the bracket, not to \(10^{-20}\).
+
+**What stays open.**
+- *From CA–CW.* \(q^{(k)}\to-1/3\) and a uniform-in-\(k\) rate for \(\inf R_n^{(k)}\). The exact geometric rate of \(3^{k+1}\rho(L_k)-1\). Monotonicity of \(3^k\rho(L_k)\) for \(k\ge13\). CF.3's Birkhoff-route constant for general \(f\). Eigenvalues on \(|z|=\rho(L_k)\). \(\lambda_6\), \(a_6\). Closed forms.
+- *Carried over.* As in Theorem CV, including the Stage 2 question.
+
+**NOT THIS.** Theorem CW bounds spectral radii of the higher-derivative transfer operators of the level-sum transfer operator on the combinatorial gasket, uniformly in the derivative order. A spectral radius is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN, because the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_uniform_k.py`** (about 3 s; needs python-flint; standalone).
+- *Interval (`arb`, 160 bits):* CW.1's exact inequalities and identity checks, CW.2's cover, and CW.4's comparisons.
+- *Floats:* the observation.
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

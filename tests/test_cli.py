@@ -1288,6 +1288,34 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CS", (ROOT / doc).read_text())
 
+    def test_theorem_cw_profile_level_uniform_k(self):
+        """Theorem CW: 0.1999*0.5999^k <= 3^(k+1) rho(L_k) - 1 <= 0.2873*0.8352^k for every k >= 0 (3^k rho(L_k) -> 1/3)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_uniform_k as cw
+        from fractions import Fraction as Fr
+
+        self.assertEqual(cw.main(), 0)
+        self.assertEqual(cw.FAILS, [])
+        self.assertLessEqual(4 * cw.LO * cw.LO, 5)            # X' contains X = [sqrt5/2, 5/2]
+        self.assertEqual(cw.HI, Fr(5, 2))
+        self.assertEqual(cw.BOUNDS, dict(B_lo=Fr(5999, 10000), B_hi=Fr(8352, 10000),
+                                         G_lo=Fr(1999, 10000), G_hi=Fr(2873, 10000)))
+        r = cw.RESULT
+        self.assertGreater(r["cover"], 100)
+        self.assertTrue(r["consistency"])
+        self.assertGreater(float(r["Bmin"].mid()), 0.5999)
+        self.assertLess(float(r["Bmax"].mid()), 0.8352)
+        self.assertGreater(float(r["Gmin"].mid()), 0.1999)
+        self.assertLess(float(r["Gmax"].mid()), 0.2873)
+        # exact single-branch identity at the fixed point s* = 3/2 of sigma_1: 2 sigma_1(s*) = 3, wt_1(s*) = 1/3
+        s = cw.arb(3) / 2
+        self.assertLess(float(abs(2 * cw.sig1(s) - 3).mid()), 1e-30)
+        self.assertLess(float(abs(cw.wt1(s) - cw.arb(1) / 3).mid()), 1e-30)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_uniform_k.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CW", (ROOT / doc).read_text())
+
     def test_theorem_cv_profile_level_infrate_k5(self):
         """Theorem CV: the exact rate of inf R_n^(k) -> rho(L_k) for k = 5..12; Kept Failure CV.6: |q^(k)| not monotone."""
         sys.path.insert(0, str(ROOT / "scripts"))

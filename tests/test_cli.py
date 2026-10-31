@@ -1319,6 +1319,39 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CZ", (ROOT / doc).read_text())
 
+    def test_theorem_da_profile_level_infrate_uniform(self):
+        """Theorem DA: Gamma_+-^(k) = ((2k+3)/12) kappa_-+ + O(delta_k) and CT.5's two-sided inf R_n bound for every k >= 29,
+        n >= n0(k) <= 16 + k/3 (local only, about 95 s; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_infrate_uniform as da
+
+        self.assertEqual(da.main(), 0)
+        self.assertEqual(da.FAILS, [])
+        r = da.RESULT
+        self.assertAlmostEqual(float(r["kap_m"].mid()), 0.370860305428934, places=14)
+        self.assertAlmostEqual(float(r["kap_p"].mid()), 3 * float(r["kap_m"].mid()), places=13)
+        self.assertLess(float(r["kap_m"].rad()), 1e-25)
+        self.assertEqual(r["KDA"], 29)
+        tab = r["tab"]
+        self.assertEqual(sorted(tab), list(range(29, da.K1 + 1)))
+        self.assertLess(float(tab[40]["delta"].mid()), 0.227)
+        self.assertLess(float(tab[60]["delta"].mid()), 0.0097)
+        for k, b in tab.items():
+            self.assertLessEqual(b["n0"], 16 + k / 3)
+        self.assertLess(float(r["rel"][40].mid()), 0.09)
+        self.assertLessEqual(r["K1pc"], 53)
+        self.assertLess(float(r["rel_tail"].mid()), 1e-7)
+        self.assertAlmostEqual(float(r["lim_p"].mid()), 0.0824134012064, places=12)
+        # float collocation (GASKET.md observation) lies inside DA.2's bands
+        for k, gp, gm in ((30, 1.95186, 5.84369), (40, 2.56698, 7.69921), (60, 3.80143, 11.40425), (80, 5.03752, 15.11257)):
+            b = tab[k]
+            self.assertLess(abs(gp - float(b["gam_p"].mid())), float(b["delta"].mid()) + 1e-5)
+            self.assertLess(abs(gm - float(b["gam_m"].mid())), float(b["delta"].mid()) + 1e-5)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_infrate_uniform.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DA", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

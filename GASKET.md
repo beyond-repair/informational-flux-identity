@@ -4976,6 +4976,50 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem DJ. The Hilbert diameter of \(\tilde L^9\mathcal C_{100}\) separates into a two-functional programme, and it is at least \(0.013997\): \(0.013997<\operatorname{diam}_{\Theta_{100}}\tilde L^9\mathcal C_{100}\le\Delta_H<0.025879\), so no diameter bound for \((a,n)=(100,9)\) can push CF.1's factor below \(0.0034992\) or the per-level rate below \(0.53342\) (DI's kept limit "DI.1 not applied to the diameter of \(\tilde L^9\mathcal C_{100}\)", DH's kept limit "no floor for the cone term")
+
+**Setting.** As in Theorems CE, CF and DC–DI: \(s\in X_s=[\sqrt5/2,\tfrac52]\), \(\tilde Lf=\tilde w_1f\circ\sigma_1+\tilde w_2f\circ\sigma_2\), \(\mathcal C_a=\{f>0:\log f\text{ is }a\text{-Lipschitz in }s\}\), \(\Theta_a\) its Hilbert metric (CF's definition), \(a=100\), block \(\tilde L^9\) (512 words). DH.4 bounds the diameter by the decoupled sum \(\Delta_H=W_H+2\log K<0.025879\), with \(W_H<0.0142\) (floor \(0.013764\)) and \(2\log K<0.011679\). Before DJ nothing bounded the true diameter from below except DH.3's floor for the diagonal term. Theorem DJ gives no new upper bound. It gives an exact formula for the diameter and a certified floor.
+
+**Assumptions used as stated.** CF's definition of \(\Theta_a\) and DI.1's characterisation of \(\beta\), \(\alpha\) (proved in Theorem DI). DF.1(i) (\(\tilde L\mathcal C_{100}\subset\mathcal C_{100}\)) and DH.2 (\(\tilde L^9\mathcal C_{100}\subset\mathcal C_{0.74455}\)). DH.4's \(\Delta_H<0.025879\), \(\theta_H<0.0064696\) and DH.3's floor \(0.013764\), as stated (DH's script is not re-run here). CF.1 (Birkhoff's contraction).
+
+**THEOREM DJ** (`arb`, 200 bits; the float programme only chooses \(f\), \(g\); every claim checked by the script, exit 1 on any failure).
+1. **DJ.1 (proved; exact). Separation of the diameter.** Let \(E=X_s\cup\{(x,y)\in X_s^2:x\ne y\}\), with the functionals \(\ell_y(u)=u(y)\) and \(\ell_{(x,y)}(u)=e^{a|x-y|}u(y)-u(x)=\Phi_u(x,y)\). Then
+   \[
+   \operatorname{diam}_{\Theta_a}\tilde L^n\mathcal C_a=\sup_{P_1,P_2\in E}\bigl[\rho(P_1,P_2)+\rho(P_2,P_1)\bigr],\qquad
+   \rho(P,P')=\sup_{f\in\mathcal C_a}\log\frac{\ell_P(\tilde L^nf)}{\ell_{P'}(\tilde L^nf)} .
+   \]
+   Each \(\rho(P,P')\) is the supremum of a ratio of two signed linear functionals of \(f\), supported on at most \(4\cdot2^n\) image points \(\sigma_wz\). It is DE.1's line programme with signed coefficients: \(\sup_f(\ell_P-t\ell_{P'})(\tilde L^nf)>0\) iff a backward recursion \(V\mapsto c_k+e^{\pm a d_k}V\) ends positive, and the maximiser is bang-bang. DE.1/DF's \(W\) is the restriction of DJ.1 to \(P_1,P_2\in X_s\).
+2. **DJ.2 (certified; `arb`). A floor.** Take \(d=10^{-6}\), \(P_1=(\tfrac52-d,\tfrac52)\) and \(P_2=(\sqrt5/2,\sqrt5/2+d)\). DJ.1's float programme (2048 points) gives bang-bang \(g\) for \(\rho(P_1,P_2)\approx0.0070018\) and \(f\) for \(\rho(P_2,P_1)\approx0.0069963\). Each is \(\exp\phi\), with \(\phi\) continuous and piecewise linear through dyadic knots, slopes exactly \(\pm a(1-10^{-6})\), constant outside, so \(f,g\in\mathcal C_{100}\). With \(u=\tilde L^9f\), \(v=\tilde L^9g\), evaluated in `arb` at the four points (each of the \(512\) images located between certified knots), \(\ell_{P_i}(u),\ell_{P_i}(v)>0\), and
+   \[
+   \Theta_{100}(u,v)\ge\log\frac{\ell_{P_1}(v)/\ell_{P_1}(u)}{\ell_{P_2}(v)/\ell_{P_2}(u)}=0.013998061\ldots>0.013997 .
+   \]
+   So \(0.013997<\operatorname{diam}_{\Theta_{100}}\tilde L^9\mathcal C_{100}\le\Delta_H<0.025879\). The floor exceeds DH.3's diagonal floor \(0.013764\) by \(0.000234\), and the true diameter lies in an interval of width \(<0.011881\), about DH's whole cone term \(2\log K<0.011679\) plus the \(W\) slack. *Consistency (certified):* DI.1's identity \(\Phi_v/\Phi_u=R(y)+(R(y)-R(x))/(e^{ad}u(y)/u(x)-1)\) reproduces both quotients (overlapping `arb` balls).
+3. **DJ.3 (proved from DJ.2).** CF.1's factor for \(\tilde L^9\) on \(\mathcal C_{100}\) is \(\tanh(\Delta/4)\) for some \(\Delta\ge\operatorname{diam}\tilde L^9\mathcal C_{100}\). So every such factor is \(\ge\tanh(0.013997/4)>0.0034992\), and every per-level rate of this form is \(>0.53342\) (DH.4: \(\theta_H<0.0064696\), rate \(<0.57117\); spectral \(|\lambda_2|/r=0.1725\)). On \((\mathcal C_{100},\tilde L^9)\), a sharper diameter can move the rate from \(0.57117\) to at best \(0.53342\), never toward \(0.1725\).
+
+*Proof.* DJ.1: by DI.1's proof, \(tu-v\in\overline{\mathcal C_a}\) iff \(t\ge\ell_P(v)/\ell_P(u)\) for every \(P\in E\), where \(\ell_{(x,y)}(u)=\Phi_u(x,y)>0\) because \(u\in\mathcal C_{b}\) with \(b<a\) and \(d>0\) (for \(a=100\), \(n\ge1\): DF.1(i), \(\tilde L^n\mathcal C_{100}\subset\mathcal C_{b_1}\), \(b_1=\varphi(100)<46\); for \(n=9\) also DH.2). Likewise \(v-tu\in\overline{\mathcal C_a}\) iff \(t\le\ell_P(v)/\ell_P(u)\) for every \(P\). So \(\beta=\sup_P\ell_P(v)/\ell_P(u)\), \(\alpha=\inf_P\ell_P(v)/\ell_P(u)\), and
+\[
+\Theta_a(u,v)=\sup_{P_1,P_2}\Bigl[\log\frac{\ell_{P_1}(v)}{\ell_{P_2}(v)}+\log\frac{\ell_{P_2}(u)}{\ell_{P_1}(u)}\Bigr].
+\]
+With \(u=\tilde L^nf\), \(v=\tilde L^ng\), and \(f,g\) ranging independently over \(\mathcal C_a\), the supremum over \((f,g)\) of the bracket splits into \(\rho(P_1,P_2)+\rho(P_2,P_1)\); exchange the suprema. Each \(\ell_P(\tilde L^nf)=\sum_kc_kf(p_k)\) over the images \(p_k=\sigma_wz\) with signed \(c_k\). The ratio programme is DE.1's: on a line, log-Lipschitz means consecutive constraints, and for fixed \(t\) the sup of \(\sum(c_k-tc'_k)e^{\phi_k}\) under \(|\phi_{k+1}-\phi_k|\le ad_k\) is positive iff the backward recursion with the sign of the running value ends positive. DJ.2: \(\beta\ge\ell_{P_1}(v)/\ell_{P_1}(u)\) and \(\alpha\le\ell_{P_2}(v)/\ell_{P_2}(u)\) by DJ.1's characterisation; every number is an `arb` ball. \(\phi\) is evaluated at each image ball by the two pieces adjacent to the nearest knot, after certifying that the ball lies between the neighbouring knots. DJ.3: CF.1 holds with \(\theta=\tanh(\Delta/4)\) for any \(\Delta\ge\operatorname{diam}\), and \(\tanh\) is increasing. \(\square\)
+
+*Remark (assumption, not used elsewhere).* If the Birkhoff–Hopf theorem holds in this setting (the contraction ratio of a cone-preserving linear map equals \(\tanh(\Delta/4)\); Bushell 1973, Eveson–Nussbaum 1995; not checked here for this cone), then the true contraction coefficient of \(\tilde L^9\) on \((\mathcal C_{100},\Theta_{100})\) lies in \([0.0034992,0.0064696]\).
+
+**Observation (floats, no claim).** DJ.1's programme was run on a grid of \(57\) functionals: \(\ell_y\) and \(\ell_{(y\pm\delta,y)}\) at \(9\) equally spaced \(y\), with \(\delta=10^{-6},10^{-3},10^{-2}\). The grid maximum is \(0.0139716\), at near-diagonal pairs at the two ends of \(X_s\). The off-grid end pairs of DJ.2 give \(0.0139981\) for \(d=10^{-8}..10^{-6}\). Moving both pairs inward by \(10^{-4}\), \(10^{-3}\), \(10^{-2}\) lowers this to \(0.013996\), \(0.013978\), \(0.013798\). So the floats point to \(\operatorname{diam}\tilde L^9\mathcal C_{100}\approx0.013998\). That would mean DH's decoupled \(\Delta_H\) overestimates by about \(0.0119\), nearly all of its cone term. The rate would then be \(\approx0.5335\). This is not certified.
+
+**Kept limits (what DJ does not claim).** No new upper bound: \(\Delta_H<0.025879\), \(\theta_H<0.0064696\), the rate \(0.57117\) and every consequence in DH.5/DI.5 are unchanged. The floor is certified in `arb`. That the diameter is \(\approx0.013998\) is a float observation over a finite set of functionals; a certified upper bound by DJ.1 would need an outward cover of the four-parameter set \((x_1,y_1,x_2,y_2)\), normalised as \(d\to0\), and is not attempted. The Birkhoff–Hopf remark is an assumption. DJ.3 caps only bounds of CF.1's form on \((\mathcal C_{100},\tilde L^9)\): other \((a,n)\) or another cone family are not covered, and that is where any approach to \(0.1725\) must come from. DC.1's \(K(\beta)\) is not recomputed for \(a=100\).
+
+**What stays open.**
+- *From CA–DJ.* A certified upper bound for the joint diameter via DJ.1 (an outward cover of \(E\times E\)), worth at most rate \(0.57117\to0.53342\). A cone family or block whose Birkhoff rate approaches \(0.1725\). DC.1's \(K(\beta)\) in \(\mathcal C_{100}\). The second-order terms of \(\Gamma_\pm^{(k)}-\tfrac{2k+3}{12}\kappa_\mp\) and of \(q^{(k)}+\tfrac13\). Eigenvalues on \(|z|=\rho(L_k)\). \(\lambda_6\), \(a_6\). The fractional/weighted refinement limit. Closed forms.
+- *Carried over.* As in Theorem DI, including the Stage 2 question.
+
+**NOT THIS.** Theorem DJ is a floor for the projective diameter of one block of a positive transfer operator. That operator governs how the spectral mass of one scaled corner resolvent on the combinatorial gasket is spread over levels. A diameter is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\) (Stage-1 symbol), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN (BLOCKED), because the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_joint_diameter.py`** (under 5 s; peak memory under 100 MB; needs python-flint, numpy). It is self-contained and imports no earlier theorem script. `DJ_D` sets \(d\). `DJ_OBS=1` adds the 57-functional float observation (about 4 min).
+- *Interval (`arb`):* knots, \(\phi\), the \(512\) images and weights at the four points, \(\ell_{P_i}(u)\), \(\ell_{P_i}(v)\), the floor, \(\tanh\), the rate floor, and DI.1's identity.
+- *Floats (choice only):* the ratio programme that picks \(f\), \(g\).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

@@ -1576,6 +1576,29 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DI", (ROOT / doc).read_text())
 
+    def test_theorem_dj_profile_level_joint_diameter(self):
+        """Theorem DJ: separation of the Hilbert diameter of Lt^9 C_100 and a certified floor 0.013997 < diam <= Delta_H < 0.025879;
+        CF.1 factor > 0.0034992, per-level rate > 0.53342 (local only, under 5 s; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_joint_diameter as dj
+
+        dj.FAILS.clear()
+        dj.RESULT.clear()
+        self.assertEqual(dj.main(), 0)
+        self.assertEqual(dj.FAILS, [])
+        r = dj.RESULT
+        self.assertGreater(float(r["low"].lower()), 0.013997)
+        self.assertLess(float(r["low"].upper()), 0.025879)
+        self.assertGreater(float(r["low"].lower()), 0.013764)
+        self.assertGreater(float(r["theta_low"].lower()), 0.0034992)
+        self.assertGreater(float(r["rate_low"].lower()), 0.53342)
+        self.assertLess(float(r["rate_low"].upper()), 0.57117)
+        self.assertLess(abs(r["r12"] + r["r21"] - float(r["low"].mid())), 1e-6)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_joint_diameter.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DJ", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

@@ -4686,6 +4686,49 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem DD. A sharper diameter for CF.2's cone: with the same cone \(\mathcal C_{47/2}\) and the same block \(\tilde L^5\), \(\operatorname{diam}\tilde L^5\mathcal C_a\le1.82349\), so \(\theta_D\le0.42672\) and the Birkhoff rate improves from \(\theta^{1/5}<0.8855\) to \(\theta_D^{1/5}<0.84339\) (DC's kept limit "\(a,\theta\) not re-optimised; a better cone")
+
+**Setting.** As in Theorems CE, CF and DC. In \(s=\sqrt{t+25/4}\in X_s=[\sqrt5/2,\tfrac52]\), \(\tilde Lf=\tilde w_1f\circ\sigma_1+\tilde w_2f\circ\sigma_2\), \(\sigma_{1,2}(s)=\sqrt{15/4\mp s}\), \(\mathcal C_a=\{f>0:\log f\text{ is }a\text{-Lipschitz in }s\}\), \(a=\tfrac{47}2\). CF.2 bounded \(\operatorname{diam}_{\Theta_a}\tilde L^5\mathcal C_a\le\Delta=2\log\frac{a+b_5}{a-b_5}+2V_5=2.44003534\) with \(b_5=2.0785933\) and \(V_5=1.0426526\), where \(V_5\) came from a branch-by-branch maximum recursion \(\operatorname{osc}_J\log\tilde L^nf\le\max_i(\operatorname{Var}_J\log\tilde w_i+\operatorname{osc}_{\sigma_iJ}\log\tilde L^{n-1}f)\) over the 32 level-5 intervals. That gives \(\theta=\tanh(\Delta/4)=0.5441333\) and the rate \(\theta^{1/5}=0.8854032\) used by CF.3, CF.5 and DC. DC kept "\(a=\tfrac{47}2\) and \(\theta\) are not re-optimised" and listed "a better cone" as open. Theorem DD keeps the cone and the block and replaces only the oscillation estimate \(V_5\).
+
+**Assumptions used as stated.** CF.1 (Birkhoff's contraction, elementary), CF.2's cone step and \(b_5\) (CF.2's `arb` constants re-run unchanged), CF.3's and CF.5's arguments (which use \(\Delta\) only through \(\theta=\tanh(\Delta/4)\)), DC.1–DC.3's proofs, and DC.2's certified \(\Theta_G\le0.28154093\) (DC's 15-minute Taylor scan is not re-run). CE.4's certificate for \(r\) and CC's level sums are re-run (consistency only).
+
+**THEOREM DD** (`arb`, 100–200 bits, outward; every claim checked by the script, exit 1 on any failure).
+1. **DD.1 (proved; exact). The pairwise word bound.** For a word \(w=(i_1,\dots,i_5)\in\{1,2\}^5\) let \(\sigma_w=\sigma_{i_5}\circ\dots\circ\sigma_{i_1}\) and \(\tilde w_w(x)=\prod_j\tilde w_{i_j}(\sigma_{i_{j-1}}\circ\dots\circ\sigma_{i_1}x)\), so \(\tilde L^5f(x)=\sum_w\tilde w_w(x)f(\sigma_wx)\). By the mediant inequality \(\sum p_w/\sum q_w\le\max_wp_w/q_w\), for \(f\in\mathcal C_a\) and \(x,y\in X_s\),
+   \[
+   \log\frac{\tilde L^5f(x)}{\tilde L^5f(y)}\le\max_w\Bigl(\log\tilde w_w(x)-\log\tilde w_w(y)+a\,|\sigma_wx-\sigma_wy|\Bigr).
+   \]
+   Hence for any cover of \(X_s\) by cells \(J_p\), \(\sup_{f\in\mathcal C_a}\operatorname{osc}_{X}\log\tilde L^5f\le V_D:=\max_{p,q}\max_w\bigl[\sup_{J_p}\log\tilde w_w-\inf_{J_q}\log\tilde w_w+a\max(\sup\sigma_wJ_p-\inf\sigma_wJ_q,\ \sup\sigma_wJ_q-\inf\sigma_wJ_p)\bigr]\). The CF.2 recursion is the special case that bounds each composed weight's oscillation by the sum of its factors' variations on one cell \(J=X_s\).
+2. **DD.2 (certified; 2048 equal cells of \(X_s\), interval evaluation of \(\log\tilde w_w\) on each cell, \(\sigma_w(J_p)\) as the hull of the endpoint images since \(\sigma_w\) is monotone, float maxima with outward-rounded inputs and a \(10^{-12}\) pad).** \(V_D\le0.73438\) (\(V_D=0.73437493\ldots\); the maximum is attained for the word \(11111\) on the end cells). With CF.2's \(b_5=2.078593340\),
+   \[
+   \operatorname{diam}_{\Theta_a}\tilde L^5\mathcal C_a\le\Delta_D=2\log\frac{a+b_5}{a-b_5}+2V_D=1.8234800\ldots<1.82349,\qquad\theta_D=\tanh\frac{\Delta_D}4=0.42671218\ldots<0.42672,\qquad\theta_D^{1/5}=0.84338720\ldots<0.84339 .
+   \]
+3. **DD.3 (proved from DD.2 with CF.1, CF.3, CF.5 and DC.1–DC.3 as stated).** Every statement of CF.3, CF.5 and DC holds with \(\theta\) replaced by \(\theta_D\):
+   - for \(f\in\mathcal C_b\), \(b<a\), \(m\ge0\): \(|\log(\tilde L^{m+1}f/\tilde L^mf)-\log r|\le\theta_D^{\lfloor m/5\rfloor}\Theta_a(f,\tilde Lf)\);
+   - every eigenvalue \(\mu\ne r\) of \(\tilde L\) with a \(C^1\) eigenfunction has \(|\mu|\le\theta_D^{1/5}r\le0.35736955\ldots<0.3575\) (CF.5: \(<0.3752\));
+   - DC.1: \(|\log R_m-\log r|\le\theta_D^{\lfloor(m-j)/5\rfloor}K(\beta_j)\) with DC.1's \(K\) unchanged;
+   - DC.3: for every \(k\ge4\), \(|\log(s_{k+1}/(rs_k))|\le\theta_D^{\lfloor(k-4)/5\rfloor}\Theta_G\le C_D\theta_D^{k/5}\), \(C_D=\Theta_G\theta_D^{-8/5}\le1.09984\).
+
+   The bound is the same as DC.3's for \(k=4..8\) and strictly smaller for \(k\ge9\): the ratio DC.3/DD.3 is \(1.2752\), \(1.6261\), \(2.6441\), \(11.368\) at \(k=9,14,24,54\). \(C_D\) is larger than DC's \(C_G^B=0.74544057\) only because the block factor \(\theta_D^{-8/5}\) grows as \(\theta_D\) shrinks. *Consistency (certified):* CF.4's check with \(f=\mathbf 1\) at five points for \(m<12\) holds with \(\theta_D\); on CC's \(s_4..s_{13}\) every deviation is below DD.3's bound (largest ratio deviation/bound \(0.04595\)).
+4. **DD.4 (certified; `arb` point values). Floor of the oscillation term.** \(f_\pm=e^{\pm as}\in\mathcal C_a\), and the certified values of \(\log\tilde L^5f_\pm\) at 2049 equally spaced points give \(\sup_{f\in\mathcal C_a}\operatorname{osc}_X\log\tilde L^5f\ge V_{\rm low}=0.51383489\ldots\). So no oscillation bound for this cone and block can go below \(0.51383\); \(V_D/V_{\rm low}\le1.4293\). CF.2's \(V_5\) was \(2.03\) times this floor.
+
+*Proof.* DD.1 is the mediant inequality applied termwise, with \(f(\sigma_wx)/f(\sigma_wy)\le e^{a|\sigma_wx-\sigma_wy|}\) for \(f\in\mathcal C_a\); for \(x\in J_p\), \(y\in J_q\) the bracket bounds each term. DD.2 is interval arithmetic: the arb ball containing \(J_p\) is pushed through the five factors, so the enclosure of \(\log\tilde w_w\) is valid on all of \(J_p\); the cells' edge balls are shared, so the cells cover \(X_s\); the float step adds at most four outward-rounded numbers of size \(<40\), far below the \(10^{-12}\) pad. Then CF.2's cone lemma gives \(\Delta_D\) exactly as it gave \(\Delta\). DD.3: CF.1 needs only some \(\Delta\ge\operatorname{diam}\tilde L^5\mathcal C_a\), and CF.3, CF.5, DC.1 and DC.3 use \(\Delta\) only through \(\theta\). DD.4: \(\log f_\pm=\pm as\) is \(a\)-Lipschitz, and any two certified point values bound the oscillation from below. \(\square\)
+
+**Observation (floats, coarse 128 cells, no claim).** The same pairwise bound over \(a\in\{12,16,23.5,30,40\}\) and \(n\in\{4,5,6\}\) gives its best per-level rate near \(a=\tfrac{47}2\), \(n=5\) (\(0.847\) at 128 cells; \(0.8434\) certified at 2048). For larger \(n\) the oscillation term stalls near \(0.594\) (float scan up to \(n=8\)), so \(\tanh(\Delta/4)^{1/n}\to1\): re-optimising \(a\) and \(n\) inside this family does not approach the spectral rate \(|\lambda_2|/r=0.1725\) (CG). CF.2's own recursion is already optimal at \(a=\tfrac{47}2\), \(n=5\) among the grid tried (float scan).
+
+**Kept limits (what DD does not claim).** Same cone family (log-Lipschitz in \(s\)), same \(a\), same block. The bound still takes the maximum over words (mediant inequality), not the true ratio of sums, and \(V_D\) is \(1.43\) times the certified floor \(V_{\rm low}\); the cone-lemma term \(2\log\frac{a+b_5}{a-b_5}=0.3545\) is untouched. \(C_D=1.09984\) carries the block factor \(\theta_D^{-8/5}\) and is larger than DC's \(C_G^B\), although the floor-form bound is never larger. The Birkhoff rate \(0.8434\) stays far from the true \(0.1725\), which only the spectral route (CG/CN/CS) gives. \(\Theta_G\) is DC.2's, used as stated. The observation is floats only.
+
+**What stays open.**
+- *From CA–DD.* A cone whose Birkhoff rate approaches \(0.1725\) (or a proof that log-Lipschitz cones cannot); the true ratio-of-sums oscillation. The second-order terms of \(\Gamma_\pm^{(k)}-\tfrac{2k+3}{12}\kappa_\mp\) and of \(q^{(k)}+\tfrac13\). Eigenvalues on \(|z|=\rho(L_k)\). \(\lambda_6\), \(a_6\). The fractional/weighted refinement limit. Closed forms.
+- *Carried over.* As in Theorem DC, including the Stage 2 question.
+
+**NOT THIS.** Theorem DD sharpens a contraction rate for a positive transfer operator that governs how the spectral mass of one scaled corner resolvent on the combinatorial gasket is spread over levels. A contraction rate is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN (BLOCKED), because the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_cone.py`** (about 25 s; needs python-flint, numpy, sympy; imports CF's script unchanged, CE's script for \(r\) and CC's script for the level sums; `DD_CELLS` overrides the cell count).
+- *Interval (`arb`):* the per-word, per-cell enclosures, \(V_D\), \(b_5\), \(\Delta_D\), \(\theta_D\), \(\theta_D^{1/5}\), \(C_D\), \(V_{\rm low}\), CF.4's check with \(\theta_D\) and the level-sum consistency.
+- *Floats:* the pair maximum (outward-rounded inputs, padded) and the observation (no claim).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

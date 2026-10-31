@@ -1409,6 +1409,30 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DC", (ROOT / doc).read_text())
 
+    def test_theorem_dd_profile_level_cone(self):
+        """Theorem DD: a sharper diameter for CF.2's cone C_(47/2) under Lt^5: V_D <= 0.73438, theta_D <= 0.42672,
+        Birkhoff rate theta_D^(1/5) < 0.84339, C_D <= 1.09984, floor V_low >= 0.51383 (about 25 s; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_cone as dd
+
+        dd.FAILS.clear()
+        dd.cf.FAILS.clear()
+        self.assertEqual(dd.main(obs=False), 0)
+        self.assertEqual(dd.FAILS, [])
+        r = dd.RESULT
+        self.assertLess(float(r["V"].upper()), 0.73438)
+        self.assertLess(float(r["Delta"].upper()), 1.82349)
+        self.assertLess(float(r["theta"].upper()), 0.42672)
+        self.assertLess(float(r["rate"].upper()), 0.84339)
+        self.assertLess(float(r["CD"].upper()), 1.09984)
+        self.assertGreater(float(r["Vlow"].lower()), 0.51383)
+        self.assertLess(float(r["worst"].upper()), 0.05)
+        self.assertLess(float(r["theta"].upper()), float(r["theta_CF"].lower()))
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_cone.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DD", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

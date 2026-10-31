@@ -1288,6 +1288,42 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem CS", (ROOT / doc).read_text())
 
+    def test_theorem_cx_profile_level_rate_k(self):
+        """Theorem CX: (3^(k+1) rho(L_k) - 1)/(G* B*^k) -> 1, B* = B(3/2) = 0.7773760276; 3^k rho(L_k) strictly decreasing."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_rate_k as cx
+        from fractions import Fraction as Fr
+
+        self.assertEqual(cx.main(), 0)
+        self.assertEqual(cx.FAILS, [])
+        r = cx.RESULT
+        self.assertAlmostEqual(float(r["Bstar"].mid()), 0.7773760276333319, places=14)
+        self.assertAlmostEqual(float(r["Gstar"].mid()), 0.2870652417603890, places=14)
+        self.assertLess(float(r["Bstar"].rad()), 1e-20)
+        self.assertEqual((cx.K, cx.DELTA, cx.TAU), (40, Fr(2, 100), Fr(8, 1000)))
+        self.assertLessEqual(r["LAM_B"], Fr(213, 1000))
+        self.assertLessEqual(r["LAM_G"], Fr(204, 1000))
+        br = r["bracket"]
+        self.assertEqual(sorted(br), list(range(cx.K + 1)))
+        for k, (lo, hi) in br.items():
+            self.assertLess(lo, hi)
+        self.assertLess(br[13][1] - br[13][0], Fr(6, 1000))
+        self.assertLess(br[39][1] - br[39][0], Fr(2, 10000))
+        self.assertTrue(Fr(98, 100) <= br[cx.K][0] and br[cx.K][1] <= Fr(102, 100))
+        self.assertLess(float(r["worst_ratio"].mid()), 0.8136)
+        self.assertLess(float(r["mono"].mid()), 0.8092)
+        self.assertLess(float(r["cx3_up"].mid()), 0.9901)
+        self.assertGreater(float(r["cx3_lo"].mid()), 1.0104)
+        self.assertTrue(r["consistency"])
+        # theta0 = (3 - sqrt5)/2 is the contraction factor towards s* = 3/2, attained at s = 5/2 (sigma_1(5/2) = sqrt5/2)
+        for s, strict in ((cx.arb(2), True), (cx.arb(5) / 2, False)):
+            d = float((abs(cx.sig1(s) - cx.arb(3) / 2) - r["theta0"] * abs(s - cx.arb(3) / 2)).mid())
+            self.assertLess(d, -1e-3) if strict else self.assertLess(abs(d), 1e-30)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_rate_k.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem CX", (ROOT / doc).read_text())
+
     def test_theorem_cw_profile_level_uniform_k(self):
         """Theorem CW: 0.1999*0.5999^k <= 3^(k+1) rho(L_k) - 1 <= 0.2873*0.8352^k for every k >= 0 (3^k rho(L_k) -> 1/3)."""
         sys.path.insert(0, str(ROOT / "scripts"))

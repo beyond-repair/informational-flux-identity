@@ -4384,6 +4384,47 @@ The \(\sigma_1\) branch contributes exactly \(3^{-k-1}\) at every point, and all
 
 The script exits nonzero if any check fails.
 
+## Theorem CX. The exact rate of \(3^{k+1}\rho(L_k)-1\): \((3^{k+1}\rho(L_k)-1)/(G^*B^{*k})\to1\) with \(B^*=B(3/2)=0.7773760276\ldots\), and \(3^k\rho(L_k)\) strictly decreases for every \(k\) (CW's kept limit and CW's open item \(k\ge13\))
+
+**Setting.** Exactly as in Theorem CW: \(L_kf=u_1f(\sigma_1)+u_2f(\sigma_2)\) on \(C(X)\), \(X=[\sqrt5/2,\tfrac52]\), \(s^*=3/2\), CW's \(\Phi,\Psi\), \(h_k=e^{k\Phi+\Psi}\), \(G\), \(B\). CW's identity says \(L_k(h_kf)=3^{-k-1}h_k\,\tilde L_kf\) with \((\tilde L_kf)(s)=f(\sigma_1s)+a(s)f(\sigma_2s)\), \(a=GB^k\). Write \(\varepsilon_k=3^{k+1}\rho(L_k)-1\) (\(>0\) by CW.3), \(Y=\sigma_2(X)=[\sqrt{15/4+\sqrt5/2},\tfrac52]\), \(B^*=B(3/2)\), \(G^*=G(3/2)\) and \(c_k=\varepsilon_k/(G^*B^{*k})\). CW only bracketed the rate in \([0.5999,0.8352]\), because its \(h_k\) sees \(\max B\) and \(\min B\). It did not imply monotonicity for \(k\ge13\).
+
+**Assumptions used as stated.** CW.1–CW.2 (CW's routines are imported and re-run unchanged, including the bounds \(G<0.2873\), \(B<0.8352\) used in CX.3). For CX.5 only (consistency): CE's \(r\) and CT/CU/CV's certified \(\rho(L_k)\), \(k\le12\).
+
+**Renewal test function (exact).** For \(\varepsilon>0\) put \(u_\varepsilon(t)=\sum_{n\ge0}(1+\varepsilon)^{-n-1}a(\sigma_1^nt)\). It converges uniformly, and it is continuous and positive. Telescoping gives \((1+\varepsilon)u_\varepsilon=u_\varepsilon\circ\sigma_1+a\), hence exactly
+\[
+\tilde L_ku_\varepsilon=(1+\varepsilon)u_\varepsilon+a\,(u_\varepsilon\circ\sigma_2-1).
+\]
+Since \(a>0\), Collatz–Wielandt for \(L_k\) on \(C(X)\) with the test function \(h_ku_\varepsilon>0\) gives
+\[
+\sup_Yu_\varepsilon\le1\ \Rightarrow\ \varepsilon_k\le\varepsilon,\qquad \inf_Yu_\varepsilon\ge1\ \Rightarrow\ \varepsilon_k\ge\varepsilon.\tag{R}
+\]
+Because \(\sigma_1^nt\to s^*\), the tail of \(u_\varepsilon\) is \(\approx G^*B^{*k}/\varepsilon\), and that is why the rate is \(B(s^*)\).
+
+**THEOREM CX.**
+1. **CX.1 (proved, exact and `arb`).** \(|\sigma_1x-s^*|=|x-s^*|/(\sigma_1x+\tfrac32)\le\theta_0|x-s^*|\) on CW's \(X'\), with \(\theta_0=(3-\sqrt5)/2=0.381966\). On \(J=[s^*-\tfrac18,s^*+\tfrac18]\), the chain rule along the \(\sigma_1\)-orbit (80 terms plus explicit tails \(\tfrac{2}{\sqrt5}5^{-81/2}/(1-5^{-1/2})\) and \(3\cdot5^{-40}/(1-5^{-1/2})\), from \(|\sigma_1'|\le1/\sqrt5\) and \(|(\log\tilde w_1)'|\le3\)) and a cover by 8 cells give \(|(\log B)'|<0.213\) and \(|(\log G)'|<0.204\). Also \(B^*=(3/\sqrt{21})\,e^{\Phi(\sqrt{21}/2)}=0.77737602763333190375\pm2.3\cdot10^{-21}\) and \(G^*=0.28706524176038901924\pm2.9\cdot10^{-21}\).
+2. **CX.2 (certified, `arb`, 160 bits, every integer \(k=0,\dots,40\)).** Cover \([2259533/2^{20},\tfrac52]\supset Y\) by 64 cells. Enclose the first 60 orbit terms on each cell. Bracket the tail \(n\ge60\) by \(G^*B^{*k}(1+\varepsilon)^{-60}\varepsilon^{-1}e^{\pm(0.204+0.213k)\theta_0^{60}}\). Bisection on (R) then gives, for example, \(c_0\in[0.916881,0.966669]\), \(c_1\in[0.911993,0.956446]\), \(c_{12}\in[0.995044,0.999926]\), \(c_{13}\in[0.996648,1.001488]\), \(c_{20}\in[1.000366,1.002947]\), \(c_{39}\in[1.000050,1.000199]\), \(c_{40}\in[1.000042,1.000169]\). So \(\rho(L_{13})\in[2.113399,2.113510]\cdot10^{-7}\) (CW: \([2.0913,2.1486]\cdot10^{-7}\)), \(\rho(L_{20})\in[9.577739,9.577786]\cdot10^{-11}\) and \(\rho(L_{39})\in[8.2253915,8.2253916]\cdot10^{-20}\).
+3. **CX.3 (proved from CX.1 and CW.2, every real \(k\ge40\)).** Let \(N(k)\) be the least \(N\) with \((0.204+0.213k)\theta_0^N\le\tau=0.008\). Then \(N(k)\le1+\log((0.204+0.213k)/\tau)/\log(1/\theta_0)\) (\(\le8.27\) at \(k=40\)), and \(\sigma_1^nY\subset J\) for \(n\ge N(k)\). Bound the first \(N(k)\) terms by \(0.2873\cdot0.8352^k\) each (a decreasing total \(F(k)\le1.77\cdot10^{-3}\) for \(k\ge40\)) and use \((1+\varepsilon)^{-N}\ge1-N\varepsilon\). Then \(\sup_Yu\le F+e^\tau/1.02\le0.99004<1\) at \(\varepsilon=1.02\,G^*B^{*k}\), and \(\inf_Yu\ge(1-F)e^{-\tau}/0.98\ge1.01048>1\) at \(\varepsilon=0.98\,G^*B^{*k}\). Hence \(0.98\le c_k\le1.02\) for every real \(k\ge40\). All of these inequalities are checked in `arb`.
+4. **CX.4 (proved from CX.1–CX.3).**
+   (a) \(\displaystyle\lim_{k\to\infty}\frac{3^{k+1}\rho(L_k)-1}{G^*B^{*k}}=1\). For any \(\delta\in(0,1)\), CX.3's argument with \(\tau=\delta/3\) closes once \(F(K)\) is small enough, because \(e^{\delta/3}<1+\delta\) and \(e^{-\delta/3}>1-\delta\). So the exact geometric rate is \(B^*=B(3/2)=0.7773760276\ldots\), and \(\varepsilon_k^{1/k}\to B^*\), with constant \(G^*=0.2870652418\ldots\). CW's bracket \([0.5999,0.8352]\) collapses to this point.
+   (b) \(3^k\rho(L_k)>3^{k+1}\rho(L_{k+1})\) for every integer \(k\ge0\) and every real \(k\ge40\). For \(k\le39\), CX.2 gives \(c_{k+1}^{\rm hi}B^*/c_k^{\rm lo}\le0.81359<1\). For \(k\ge40\), CX.3 gives \(\varepsilon_{k+1}/\varepsilon_k\le B^*\cdot1.02/0.98\le0.80911<1\). So \(3^k\rho(L_k)\) strictly decreases to \(1/3\). This extends CV.7 from \(k\le12\) to all \(k\), and it does not depend on CV.
+5. **CX.5 (consistency, finite).** CE's \(r\) and CT/CU/CV's certified \(\rho(L_k)\), \(k\le12\), give \(c_k\) strictly inside CX.2's brackets. For example, \(c_0=0.94471159\), \(c_1=0.93743082\), \(c_6=0.96976013\) and \(c_{12}=0.99666741\).
+
+*Proof.* The identity for \(\tilde L_ku_\varepsilon\) is exact algebra, and (R) is Collatz–Wielandt as in CW.3: \(L_k(h_ku)\le3^{-k-1}(1+\varepsilon)h_ku\) with \(h_ku>0\) continuous gives \(\rho(L_k)\le3^{-k-1}(1+\varepsilon)\), and similarly from below. For \(t\in X'\) and \(n\ge N\), \(|\sigma_1^nt-s^*|\le\theta_0^N\le\tfrac18\), so \(|\log a(\sigma_1^nt)-\log(G^*B^{*k})|\le(\Lambda_G+k\Lambda_B)\theta_0^N\) by CX.1, and \(\sum_{n\ge N}(1+\varepsilon)^{-n-1}=(1+\varepsilon)^{-N}/\varepsilon\). CX.2 is a finite `arb` computation. In CX.3, \((\log N_b)'\le1/(k\log(1/\theta_0))<-\log0.8352\) for \(k\ge40\), so \(F\) decreases and the two inequalities checked at \(k=40\) hold for all \(k\ge40\). (a) and (b) follow. \(\square\)
+
+**Kept limits (what CX does not claim).** \(c_k\) is only bracketed: the width is about \(5\cdot10^{-3}\) at \(k=13\), \(1.5\cdot10^{-4}\) at \(k=39\), and \(\pm0.02\) for \(k\ge40\). The bracket is not at \(10^{-20}\). The width is the real variation of \(u_\varepsilon\) over \(Y\), not round-off. Monotonicity of \(c_k\) itself is not claimed (\(c_k<1\) for \(k\le12\), \(c_k>1\) for \(20\le k\le40\)). Nothing is said about \(\nu_2^{(k)}\), so \(q^{(k)}\to-1/3\) remains a **HEURISTIC**, and there is still no uniform-in-\(k\) rate for \(\inf R_n^{(k)}\).
+
+**What stays open.**
+- *From CA–CX.* \(q^{(k)}\to-1/3\) (a renewal argument for \(\nu_2\) would need a signed test function, and none is given). A uniform-in-\(k\) rate for \(\inf R_n^{(k)}\). The next term in \(c_k-1\). CF.3's Birkhoff-route constant for general \(f\). Eigenvalues on \(|z|=\rho(L_k)\). \(\lambda_6\), \(a_6\). Closed forms.
+- *Carried over.* As in Theorem CW, including the Stage 2 question.
+
+**NOT THIS.** Theorem CX gives the exact asymptotics and the monotonicity of spectral radii of the higher-derivative transfer operators of the level-sum transfer operator on the combinatorial gasket. A spectral radius is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN, because the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_rate_k.py`** (about 11 s; needs python-flint; imports CW's script).
+- *Interval (`arb`, 160 bits):* CW.1–CW.2 re-run, CX.1's constants, CX.2's brackets, CX.3's inequalities, CX.4(b)'s ratios, and CX.5's comparisons.
+- *Exact:* \(\theta_0\), the containment of the cover in \(X'\), and the renewal identity (algebra).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

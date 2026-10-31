@@ -1458,6 +1458,35 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DE", (ROOT / doc).read_text())
 
+    def test_theorem_df_profile_level_block(self):
+        """Theorem DF: DE's joint programme on the cone C_100 under Lt^8: W_F <= 0.04451, floor 0.04297, theta_F <= 0.02958,
+        Birkhoff rate theta_F^(1/8) < 0.64398, |mu| < 0.27288, Theta_G' < 0.11477 (about 80 s; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_block as df
+
+        df.FAILS.clear()
+        df.de.FAILS.clear()
+        df.cf.FAILS.clear()
+        df.dd.FAILS.clear()
+        self.assertEqual(df.main(), 0)
+        self.assertEqual(df.FAILS, [])
+        r = df.RESULT
+        self.assertLess(float(r["W"].upper()), 0.04451)
+        self.assertLess(float(r["Delta"].upper()), 0.11835)
+        self.assertLess(float(r["theta"].upper()), 0.02958)
+        self.assertLess(float(r["rate"].upper()), 0.64398)
+        self.assertLess(float(r["mu"].upper()), 0.27288)
+        self.assertLess(float(r["TG"].upper()), 0.11477)
+        self.assertLess(float(r["CF"].upper()), 14.531)
+        self.assertGreater(float(r["Wlow"].lower()), 0.04297)
+        self.assertLess(float(r["Wlow"].upper()), float(r["W"].lower()))
+        self.assertEqual(r["worse"], [9, 10, 11, 19])
+        self.assertLess(float(r["worst"].upper()), 0.2)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_block.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DF", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

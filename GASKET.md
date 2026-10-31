@@ -4872,6 +4872,65 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem DH. DG's factor lemma on the longer block \(\tilde L^9\), and an asymmetric factor lemma for the \(f_0\) term: every \(\log\tilde L^9f\), \(f\in\mathcal C_{100}\), is increasing with slope in \([0.16327,0.74455]\) (certified floors \(0.74356\), \(0.16376\)); \(\Delta_H<0.025879\), \(\theta_H<0.0064696\), per-level Birkhoff rate \(\theta_H^{1/9}<0.57117\) (DG: \(0.58745\)); \(\Theta_{100}(f_0,\tilde Lf_0)<0.10465\) (DG.4: \(0.11477\)) (DG's kept limits "\((a,n)=(100,8)\) not re-optimised with DG.1", "\(\Theta_G'\) not redone with DG.1", "no floor for \(D^\pm\)")
+
+**Setting.** As in Theorems CE, CF and DC–DG: \(s\in X_s=[\sqrt5/2,\tfrac52]\), \(\tilde Lf=\tilde w_1f\circ\sigma_1+\tilde w_2f\circ\sigma_2\), \(\mathcal C_a=\{f>0:\log f\text{ is }a\text{-Lipschitz in }s\}\), \(\Theta_a\) its Hilbert metric (CF's definition), \(a=100\). DG's cone term is \(\approx2(D^++D^-)/a\) and no longer \(\approx4b_n/a\), so the trade-off between \(a\), the block \(n\) and the joint term \(W\) changed. Theorem DH keeps \(a=100\) and lengthens the block from \(\tilde L^8\) (256 words) to \(\tilde L^9\) (512 words). It also redoes the \(f_0\) term \(\Theta_{100}(f_0,\tilde Lf_0)\) with a factor lemma in which \(u\) and \(v\) carry different slope bounds.
+
+**Assumptions used as stated.** CF.1 (Birkhoff's contraction, elementary). DG.1(i) and DG.1(iii) (proved in Theorem DG; their proofs do not use the block length). DE.1/DF.1(ii) (the joint line programme, valid for every block length). DF.4's proofs of CF.3/CF.5 for \(a=100\). DC.2's numbers \(b_0\le0.77333706\) (\(f_0=\tilde L^4G\in\mathcal C_{b_0}\)), \(B_0=\varphi(b_0)\le1.2791803\) (\(\tilde Lf_0\in\mathcal C_{B_0}\)), \(\log(\sup R_0/\inf R_0)\le0.063592701\). DG.3's \(\theta_G<0.014183\) (comparison and the 8-block form only). CE.4's certificate for \(r\) and CC's level sums are re-run (consistency only).
+
+**THEOREM DH** (`arb` cell tables, float dynamic programmes with outward rounding; every claim checked by the script, exit 1 on any failure).
+1. **DH.1 (proved). Asymmetric factor lemma.** Let \(u,v\in\mathcal C_a\) satisfy, for all \(x>y\), \(-\beta_u(x-y)\le\log\frac{u(x)}{u(y)}\le\alpha_u(x-y)\) and \(-\beta_v(x-y)\le\log\frac{v(x)}{v(y)}\le\alpha_v(x-y)\), with \(\alpha_u,\beta_u,\alpha_v,\beta_v\in[0,a)\). Then
+   \[
+   \Theta_a(u,v)\le\log\frac{\sup(v/u)}{\inf(v/u)}+\log K_{\uparrow}+\log K_{\downarrow},\qquad
+   K_\uparrow=\max\Bigl(\frac{a+\beta_v}{a-\alpha_u},\frac{a+\alpha_v}{a-\beta_u}\Bigr),\quad
+   K_\downarrow=\max\Bigl(\frac{a+\beta_u}{a-\alpha_v},\frac{a+\alpha_u}{a-\beta_v}\Bigr).
+   \]
+   DG.1(ii) is the case of one common pair of bounds (\(K_\uparrow=K_\downarrow=K\)).
+2. **DH.2 (certified). Signed slopes for \(\tilde L^9\).** The \(512\) images \(\sigma_w(X_s)\) are pairwise disjoint and ordered (outward hulls, smallest gap \(1.59\cdot10^{-6}\)). DG.2's certificate with \(n=9\) on \(4096\) cells (about \(70\) s) gives
+   \[
+   D^+\le0.74454753\ldots<0.74455,\qquad D^-\le-0.16327474\ldots<-0.16327 .
+   \]
+   So for every \(f\in\mathcal C_{100}\) and \(x>y\): \(0.16327(x-y)\le\log\tilde L^9f(x)-\log\tilde L^9f(y)\le0.74455(x-y)\). Hence \(\tilde L^9\mathcal C_{100}\subset\mathcal C_{0.74455}\) (CF.2's cone step: \(b_9=1.7587619\ldots\)). *Floor (certified, `arb`).* DF.3's bang-bang construction at the maximising cells (difference quotients with \(x-y=10^{-3},10^{-4},10^{-5}\)) gives explicit \(f\in\mathcal C_{100}\) for which \(\log\tilde L^9f\) has a difference quotient \(\ge0.74356963\ldots\), and others with a difference quotient \(\le0.16375873\ldots\). So the true extreme slopes satisfy \(D^+_{\rm true}\ge0.74356\) and \(D^-_{\rm true}\ge-0.16376\): \(D^+/D^+_{\rm true}\le1.0013\), and the gap in \(D^-\) is \(\le0.00049\).
+3. **DH.3 (certified). Joint term for \(\tilde L^9\).** DF.2's adaptive outward cover (128-grid to 8192-grid, squares above \(0.0142\) split \(2\times2\); \(1024\)-point line DP at the centres). The Lipschitz pad is \(2D^+(H+\text{pad})\) in place of DF's \(2b_n(H+\text{pad})\), since \(\log\tilde L^9f\) is \(D^+\)-Lipschitz by DH.2 (about \(260\) s). The result is
+   \[
+   \log\frac{\sup(v/u)}{\inf(v/u)}\le W_H=0.01419998\ldots<0.0142\qquad(u,v\in\tilde L^9\mathcal C_{100};\ \text{DF.2 for }\tilde L^8:\ 0.04451).
+   \]
+   *Floor (certified, `arb`):* explicit bang-bang \(f,g\in\mathcal C_{100}\) give \(\ge0.013764988\ldots\), so \(W_H/W_{\rm low}\le1.0316\).
+4. **DH.4 (certified; `arb`).** DG.1's hypotheses hold for \(\tilde L^9\) (\(D^++D^->0\), \(D^+\le a/2\)). Then
+   \[
+   2\log K\le0.011678499\ldots<0.011679\quad(\text{DG, }\tilde L^8:\ 0.012225),\qquad\Delta_H=2\log K+W_H<0.025879\quad(\text{DG: }0.056735),
+   \]
+   \[
+   \theta_H=\tanh\frac{\Delta_H}4<0.0064696\quad(\text{DG: }0.014183),\qquad\theta_H^{1/9}<0.57117\quad(\text{DG: }\theta_G^{1/8}<0.58745).
+   \]
+5. **DH.5 (proved from DH.1–DH.4 with CF.1, DF.4's proofs for \((a,n)=(100,9)\) and DC.2's numbers as stated).**
+   - For \(f\in\mathcal C_b\), \(b<100\), \(m\ge0\): \(|\log(\tilde L^{m+1}f/\tilde L^mf)-\log r|\le\theta_H^{\lfloor m/9\rfloor}\Theta_{100}(f,\tilde Lf)\). Every eigenvalue \(\mu\ne r\) of \(\tilde L\) with a \(C^1\) eigenfunction has \(|\mu|\le\theta_H^{1/9}r<0.24203\) (DG.4: \(0.24893\)).
+   - DH.1 with \(u=f_0\) (\(\alpha_u=\beta_u=b_0\)) and \(v=\tilde Lf_0\) (\(\alpha_v=\beta_v=B_0\)): \(\Theta_{100}(f_0,\tilde Lf_0)\le\Theta_H'=\log\frac{100+B_0}{100-b_0}+\log\frac{100+b_0}{100-B_0}+0.063592701=0.10464475\ldots<0.10465\). The cone part is \(0.0410521\); in DF.4/DG.4 it was \(2\log\frac{100+B_0}{100-B_0}=0.0511700\), giving \(\Theta_G'=0.1147627\).
+   - For every \(k\ge4\),
+   \[
+   \Bigl|\log\frac{s_{k+1}}{r\,s_k}\Bigr|\le\Theta_H'\,\min\bigl(\theta_G^{\lfloor(k-4)/8\rfloor},\,\theta_H^{\lfloor(k-4)/9\rfloor}\bigr).
+   \]
+   Both forms hold. The 8-block form alone is DG.4's bound divided by \(\Theta_G'/\Theta_H'=1.0967\) at every \(k\). The 9-block form is the smaller one for \(160\) of the \(k\) in \(4..199\) and for every \(k\ge200\), by the decreasing majorant \(\theta_H^{(k-12)/9}\theta_G^{-(k-4)/8}\). DG.4/DH.5 \(=1.097\), \(1.097\), \(2.404\), \(1.097\), \(5.271\), \(1.097\), \(87.44\) at \(k=4,12,13,20,22,52,104\). *Consistency (certified):* CF.4's check with \(f=\mathbf1\), \(\Theta_0(100)=0.643470\ldots\) and \(\theta_H^{\lfloor m/9\rfloor}\) for \(m<12\) (largest used fraction \(0.704\)). On CC's \(s_4..s_{13}\), every deviation is below both forms (largest ratio \(0.1236\)).
+
+*Proof.* DH.1: by CF's definition, \(v-tu\in\overline{\mathcal C_a}\) iff \(t\le v/u\) and \(t\le\Phi_v(x,y)/\Phi_u(x,y)\) for all \(x\ne y\), where \(\Phi_u(x,y)=e^{a|x-y|}u(y)-u(x)>0\). Likewise \(tu-v\in\overline{\mathcal C_a}\) iff \(t\ge v/u\) and \(t\ge\Phi_v/\Phi_u\). DG.1(i) uses only the two one-sided bounds \(\log u(x)/u(y)\le\alpha d\) and \(\log v(x)/v(y)\ge-\beta d\) at the given pair, with \(d=|x-y|\). For \(x>y\) these are \(\alpha=\alpha_u\), \(\beta=\beta_v\); for \(x<y\) they are \(\alpha=\beta_u\), \(\beta=\alpha_v\). All four are \(\ge0\), which is the case \(\alpha,\beta\ge0\) of DG.1(i)'s proof (\(F(0)=0\), \(F'\ge0\)). So \(\Phi_v/\Phi_u\le\frac{v(y)}{u(y)}K_\uparrow\), and \(\beta_{\rm H}\le K_\uparrow\sup(v/u)\). Exchanging the roles of \(u\) and \(v\) gives \(\Phi_u/\Phi_v\le\frac{u(y)}{v(y)}K_\downarrow\), and so \(\alpha_{\rm H}\ge\inf(v/u)/K_\downarrow\). DH.2 is DG.1(iii) and DG.2's certificate with \(n=9\). The prefix tree, the chain rule and the separation of the images are all checked for \(512\) words. The floor holds because any \(f\in\mathcal C_{100}\) and any \(x>y\) bound the true extreme slopes, by the mean value theorem for the absolutely continuous \(\log\tilde L^9f\). The functions are DF.3's: slopes \(\pm a(1-10^{-6})\) between consecutive sorted points, with the point order certified. DH.3 is DF.1(ii)–(iii) and DF.2 with \(n=9\); the Lipschitz reduction needs only some Lipschitz constant for \(\log\tilde L^9f\), and DH.2 gives \(D^+\) (\(\ge|D^-|\)). DH.4 is `arb` arithmetic with DG.1(ii) for \(\tilde L^9\mathcal C_{100}\). DH.5 is DF.4's proof with \((\theta_F,8)\) replaced by \((\theta_H,9)\). CF.1 needs only some \(\Delta\ge\operatorname{diam}_{\Theta_{100}}\tilde L^9\mathcal C_{100}\), and CF.3's proof needs \(\tilde L\mathcal C_{100}\subset\mathcal C_{100}\) (DF.1(i)). CF.3 holds with any valid contraction pair \((\theta,n)\) and any upper bound for \(\Theta_{100}(f_0,\tilde Lf_0)\); so it holds with \((\theta_G,8)\) and with \((\theta_H,9)\), each paired with \(\Theta_H'\). \(\square\)
+
+**Observation (floats, no claim).** We scanned \((a,n)\) on point grids with DG.1's cone term (65-point float DP for \(D^\pm\), DE's 33-point \(W\)). The estimated rate \(\tanh(\Delta/4)^{1/n}\) was \(\approx0.5854\) at \((100,8)\), \(0.5701\) at \((50,8)\), \(0.5700\) at \((100,9)\), \(0.5696\) at \((90,9)\), \(0.5819\) at \((80,10)\) and \(0.5715\) at \((120,10)\). In this decoupled family the cone term stays near \(2(D^++D^-)/a\approx1.16/a\), while \(W\) grows roughly linearly in \(a\). The scan plateaus near \(0.570\), so DH's \((100,9)\) is within \(0.002\) of the best float value found. A further gain needs a different bound, not another \((a,n)\).
+
+**Kept limits (what DH does not claim).** The diameter bound is still decoupled: the diagonal ratio and the factors are bounded separately. It is an upper bound for the true Hilbert diameter of \(\tilde L^9\mathcal C_{100}\), not its value, and there is no floor for the cone term itself. \((a,n)\) is chosen from a float scan; it is not certified optimal. \(\Theta_H'\) uses DC.2's symmetric slope bounds \(b_0\), \(B_0\) as stated; signed slopes of \(f_0\) and \(\tilde Lf_0\) are not computed. The rate \(0.57117\) is still far from the spectral \(|\lambda_2|/r=0.1725\) (CG). DC.1's \(K(\beta)\) is not recomputed for \(a=100\). The DP certificates are float arithmetic with outward rounding and padded library exponentials, at DE.2/DF.2/DG.2's level of rigour.
+
+**What stays open.**
+- *From CA–DH.* The joint (coupled) Hilbert diameter. Signed slopes of \(f_0\), \(\tilde Lf_0\). A cone family whose Birkhoff rate approaches \(0.1725\); the decoupled DG/DH family plateaus near \(0.570\) in floats. DC.1's \(K(\beta)\) in \(\mathcal C_{100}\). The second-order terms of \(\Gamma_\pm^{(k)}-\tfrac{2k+3}{12}\kappa_\mp\) and of \(q^{(k)}+\tfrac13\). Eigenvalues on \(|z|=\rho(L_k)\). \(\lambda_6\), \(a_6\). The fractional/weighted refinement limit. Closed forms.
+- *Carried over.* As in Theorem DG, including the Stage 2 question.
+
+**NOT THIS.** Theorem DH sharpens a contraction rate and one constant for a positive transfer operator. That operator governs how the spectral mass of one scaled corner resolvent on the combinatorial gasket is spread over levels. A contraction rate is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\) (Stage-1 symbol), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN (BLOCKED), because the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_reopt.py`** (about 6 min, peak memory under 200 MB; needs python-flint, numpy, sympy). It imports DG's script, and through it DF's, DE's, DD's and CF's, unchanged, and sets their block length to \(9\). It also uses CE's script for \(r\) and CC's script for the level sums. `DH_CELLS`, `DH_TARGET`, `DH_LEVELS`, `DH_CHUNK` override the defaults.
+- *Interval (`arb`):* the cell and point tables of \(\tilde w_w\), \((\log\tilde w_w)'\), \(\sigma_w'\), \(\sigma_w\) for \(512\) words; the separation of the images; \(b_9\), \(K\), \(2\log K\), \(\Delta_H\), \(\theta_H\), \(\theta_H^{1/9}\), \(|\mu|\), \(\Theta_H'\); the floors for \(D^\pm\) and \(W_H\); CF.4's check; the level-sum consistency; a sanity grid of DH.1's factor bounds (\(d=10^{-12}..30\); not part of the proof).
+- *Floats with outward rounding:* the DP certificates per cell and per square.
+- *Floats:* the bisections, the \((a,n)\) scan (observation, no claim).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

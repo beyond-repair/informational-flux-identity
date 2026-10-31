@@ -1513,6 +1513,41 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DG", (ROOT / doc).read_text())
 
+    def test_theorem_dh_profile_level_reopt(self):
+        """Theorem DH: block Lt^9 under DG.1: slopes in [0.16327, 0.74455] (floors 0.74356, 0.16376), W_H < 0.0142, Delta_H <=
+        0.025879, theta_H <= 0.0064696, rate theta_H^(1/9) < 0.57117, |mu| < 0.24203, Theta_H' < 0.10465 (about 6 min; needs
+        python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_reopt as dh
+
+        for mod in (dh, dh.dg, dh.df, dh.de, dh.cf, dh.dd):
+            mod.FAILS.clear()
+        try:
+            self.assertEqual(dh.main(), 0)
+        finally:
+            for mod in (dh.dg, dh.df):        # restore DG's/DF's block length for other tests in the same process
+                mod.N = 8
+            dh.df.W_TARGET, dh.df.CELLS, dh.df.LEVELS, dh.df.CH = "0.0445", 128, 6, 1024
+        self.assertEqual(dh.FAILS, [])
+        r = dh.RESULT
+        self.assertLess(float(r["Dp"].upper()), 0.74455)
+        self.assertLess(float(r["Dm"].upper()), -0.16327)
+        self.assertGreater(float(r["Dplow"].lower()), 0.74356)
+        self.assertGreater(float(r["Dmlow"].lower()), -0.16376)
+        self.assertLess(float(r["W"].upper()), 0.0142)
+        self.assertGreater(float(r["Wlow"].lower()), 0.013764)
+        self.assertLess(float(r["cone"].upper()), 0.011679)
+        self.assertLess(float(r["Delta"].upper()), 0.025879)
+        self.assertLess(float(r["theta"].upper()), 0.0064696)
+        self.assertLess(float(r["rate"].upper()), 0.57117)
+        self.assertLess(float(r["mu"].upper()), 0.24203)
+        self.assertLess(float(r["TH"].upper()), 0.10465)
+        self.assertLess(float(r["worst"].upper()), 0.2)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_reopt.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DH", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

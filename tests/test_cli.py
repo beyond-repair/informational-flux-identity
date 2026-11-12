@@ -1725,6 +1725,41 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DN", (ROOT / doc).read_text())
 
+    def test_theorem_do_profile_level_f0_shift(self):
+        """Theorem DO: direct f_m terms Theta_a(Lt^m f_0, Lt^(m+1) f_0), m = 0..5, a = 2, 100 (arb jets, DI.1/DI.4 with a
+        corner pass); level sums B(k) beat min(DN.3, DK.4) for every k >= 5; kept failure DO.4 (no cone beats DI.4 at k = 4 by
+        more than 1.0252) (local only, about 4 min plus CO's Taylor data; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_f0_shift as do
+
+        for mod in (do, do.di, do.di.bk, do.di.bk.co, do.di.bk.cn):
+            mod.FAILS.clear()
+        do.RESULT.clear()
+        self.assertEqual(do.NC, 4096)
+        self.assertEqual(do.main(), 0)
+        self.assertEqual(do.FAILS, [])
+        r = do.RESULT
+        self.assertGreater(r["slo"], 0.03529)
+        self.assertLess(r["shi"], 0.79032)
+        t = r["tab"]
+        self.assertLess(float(t[0]["up"][2].upper()), 0.14473)
+        self.assertLess(float(t[1]["up"][100].upper()), 0.0375169)
+        self.assertLess(float(t[5]["up"][2].upper()), 0.000029590)
+        self.assertGreater(float(t[5]["low"][100].lower()), 0.000017410)
+        for m in range(6):
+            self.assertLess(float(t[m]["osc"].upper()), float(t[m]["low"][100].lower()))
+            self.assertLess(float(t[m]["up"][100].upper()), float(t[m]["low"][2].lower()))
+        self.assertLess(float(r["B"][5].upper()), 0.037518)
+        self.assertGreater(float(r["facs"][8].lower()), 636)
+        self.assertGreater(float(r["fmin_tail"].lower()), 8.88)
+        self.assertGreater(float(r["fmin"].lower()), 1.73)
+        self.assertLess(float(r["worst"].upper()), 1)
+        self.assertLess(float(r["r0"].upper()), 1.0252)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_f0_shift.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DO", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

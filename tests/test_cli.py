@@ -1760,6 +1760,33 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DO", (ROOT / doc).read_text())
 
+    def test_theorem_dp_profile_level_birkhoff_cap(self):
+        """Theorem DP: exact Hilbert metric along h + t phi, tau(T; K) >= |mu|/rho; kept failure DP.3 (every CF.1-form
+        per-level rate on a C^1-open cone is >= rho(L_1)/r > 0.3170757); DP.4 (C^2-type cones: floor |l_2|/r)
+        (local only, about 1 s; needs python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_birkhoff_cap as dp
+
+        for mod in (dp, dp.ci, dp.cl):
+            mod.FAILS.clear()
+        dp.RESULT.clear()
+        self.assertEqual(dp.main(), 0)
+        self.assertEqual(dp.FAILS, [])
+        r = dp.RESULT
+        self.assertGreater(float(r["q_w"].lower()), 0.3170752)
+        self.assertGreater(float(r["q1"].lower()), 0.3170757)
+        self.assertLess(float(r["q1_up"].upper()), 0.3170762)
+        self.assertLess(float(r["rat"]["DM.5 (C_2, n=9)"].upper()), 1.1470)
+        self.assertGreater(float(r["rat"]["DM.5 (C_2, n=9)"].lower()), 1)
+        self.assertLess(float(r["floors"][9].upper()), 0.00044485)
+        self.assertGreater(float(r["gap"].lower()), 1.8375)
+        self.assertLess(float(r["l2r"].upper()), 0.101646)
+        self.assertGreater(float(r["rr97"][0].lower()), float(r["q1_up"].upper()))
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_birkhoff_cap.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DP", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

@@ -1624,6 +1624,36 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DK", (ROOT / doc).read_text())
 
+    def test_theorem_dl_profile_level_small_cone(self):
+        """Theorem DL: on C_2 with Lt^5, 0.0435818 < diam <= 0.043583; theta_L < 0.0108954, per-level rate < 0.404994
+        (below DJ.3's cap 0.53342), every CF.1-form rate on (C_2, Lt^5) > 0.404991, |mu| < 0.17161 (local only, about 12 s;
+        needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_small_cone as dl
+
+        dl.FAILS.clear()
+        dl.RESULT.clear()
+        self.assertEqual(dl.main(), 0)
+        self.assertEqual(dl.FAILS, [])
+        r = dl.RESULT
+        self.assertLessEqual(r["D"], 0.043583)
+        self.assertGreater(float(r["low"].lower()), 0.0435818)
+        self.assertLess(float(r["low"].upper()), r["D"])
+        self.assertLess(float(r["theta"].upper()), 0.0108954)
+        self.assertLess(float(r["rate"].upper()), 0.404994)
+        self.assertLess(float(r["rate"].upper()), 0.53342)
+        self.assertGreater(float(r["rate_low"].lower()), 0.404991)
+        self.assertLess(float(r["mu"].upper()), 0.17161)
+        self.assertLess(r["sb"], 5.224e-3)
+        self.assertGreater(r["qmin"], 1.074)
+        self.assertLessEqual(r["obs"][(-1, -1)], r["D"])
+        self.assertGreater(r["obs"][(-1, -1)], 0.0435818)
+        self.assertLess(abs(r["r12"] + r["r21"] - float(r["low"].mid())), 1e-6)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_small_cone.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DL", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

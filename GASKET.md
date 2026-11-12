@@ -5317,6 +5317,47 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem DR. DQ.5's threshold made effective: certified Hilbert diameters \(D_n=\operatorname{diam}\tilde L^n\mathcal K_{2,6}\) for \(n=3,\ldots,8\), and \(\tanh(D_n/4)^{1/n}\le0.3135158<0.3170757\le\rho(L_1)/r\) for every \(n\ge5\), so DQ.4's threshold is \(n_0\in\{4,5\}\); \(n=4\) stays open (DQ's kept failure DQ.5 "\(n_0\) is not effective; no certified \(D_n\) on \(\mathcal K_{2,6}\)")
+
+**Setting.** As in Theorems CF, CI–CM, DP, DQ: \(s\in X=[\sqrt5/2,\tfrac52]\), \(\tilde L^nf(s)=\sum_wW_w(s)f(y_w(s))\) over the \(2^n\) words (\(W_w\) products of the weights, \(y_w\) compositions of \(\sigma_{1,2}=\sqrt{15/4\mp s}\)). \(\mathcal K=\mathcal K_{2,6}=\{f>0:|f'|\le2f,|f''|\le6f\}\) (DQ.1, invariant). Its Hilbert metric is read through the functionals \(\ell\in\Lambda=\{2\delta_s\pm\delta_s',\ 6\delta_s\pm\delta_s'':s\in X\}\), \(\Phi_\ell(f)=\ell(\tilde L^nf)\).
+
+**Assumptions used as stated.** CF.1 (Birkhoff's contraction: \(\operatorname{diam}TS\mathcal K\le\tanh(\operatorname{diam}T\mathcal K/4)\operatorname{diam}S\mathcal K\)), DQ.1 (invariance of \(\mathcal K_{2,6}\)), DQ.3/DQ.5 (the cap \(\rho(L_1)/r\ge0.3170757\) via CI.1, CG.3; per level \(>0.3170762\) for \(n=1,2,3\)). Textbook: Taylor's formula with integral remainder.
+
+**THEOREM DR** (every computed claim checked by the script, exit 1 on any failure).
+1. **DR.1 (proved; sympy identities). Chain lemma.** For \(f\in\mathcal K\), \(y,z\in X\), \(d=z-y\):
+   \[
+   mf(y)+\mu f'(y)=mf(z)+(\mu-md)f'(z)+\int_y^z\big(m(x-y)-\mu\big)f''(x)\,dx,
+   \]
+   and \(|f''|\le6f\), \(f(x)\le f(z)e^{2|z-x|}\) give \(mf(y)+\mu f'(y)\ge mf(z)+(\mu-md)f'(z)-6\big(|m|I_1(|d|)+|\mu|I_0(|d|)\big)f(z)\), \(I_0=(e^{2d}-1)/2\), \(I_1=(e^{2d}-1-2d)/4\); also \(mf(y)+\mu f'(y)\ge cf(y)\ge ce^{\mp2|d|}f(z)\), \(c=m-2|\mu|\). Hence a finite point-jet functional \(\Psi=\sum_ka_k\delta_{y_k}+b_k\delta'_{y_k}\) is \(\ge0\) on \(\mathcal K\) whenever a chain (at each \(y_k\) split the carried \((m,\mu)\) into a Taylor part and a collapsed part, move both to \(y_{k+1}\), add \((a_k,b_k)\)) ends with \(m-2|\mu|\ge0\). Unlike a pointwise bound, the Taylor move keeps the sign cancellation of \(M_1\) that DQ named as the obstruction.
+2. **DR.2 (proved). Cell lemma.** For \(s=s_c+\tau\), \(|\tau|\le\Delta\), and \(|\kappa|\Delta<1\), \(\ell_s(\tilde L^nf)/(1+\kappa\tau)\) lies between \(G_\tau\mp E\) as functionals on \(\mathcal K\), with \(G_\tau\) affine in \(\tau\) (coefficients from `arb` jets of \(W_w,y_w\) at \(s_c\)) and \(E=\sum_wE_w\delta_{y_w(s_c)}\) (Taylor remainders from `arb` enclosures of derivatives to order \(4\) on the cell, \(f''\) terms bounded by \(6f\), and the quadratic part of the rescaling). Since \(R(\ell,\ell')=\sup_{\mathcal K}\Phi_\ell/\Phi_{\ell'}\) is convex along affine families, chains at \(\tau=\pm\Delta\) cover the cell; with the reference \(\ell_0=\delta_{9/5}\), \(R(\ell,\ell')\le R(\ell,\ell_0)R(\ell_0,\ell')\), so \(D_n\le2\max_{\text{cells}}\log(t_1t_2)\), \(t_1\ge R(\ell_s,\ell_0)\), \(t_2\ge R(\ell_0,\ell_s)\).
+3. **DR.3 (certified; `arb` replay of float LP chains; 200 cells \(\times\) 4 functional types, 3200 chains per \(n\)).**
+
+   | \(n\) | \(D_n\le\) | \(\tanh(D_n/4)\le\) | per level \(\le\) | vs cap \(0.3170757\) |
+   |---|---|---|---|---|
+   | 3 | 0.25513308 | 0.063696914 | 0.3993676 | above |
+   | 4 | 0.055511088 | 0.013876881 | 0.3432203 | above (upper bound only) |
+   | 5 | 0.0098239159 | 0.0024559740 | 0.3006386 | below |
+   | 6 | 0.0018377053 | 0.00045942629 | 0.2777811 | below |
+   | 7 | 0.00041194852 | 0.00010298713 | 0.2694000 | below |
+   | 8 | 0.00017542239 | 4.3855597e-5 | 0.2852680 | below |
+
+4. **DR.4 (proved from DR.3 and CF.1).** For every \(n\ge5\), \(\tanh(D_n/4)^{1/n}\le0.3135158<0.3170757\) (\(n=5q+j\), \(j\in\{5,\ldots,9\}\), \(D_n\le\theta_5^qD_j\), \(D_9\le\theta_3\bar D_6\), \(\theta_n=\tanh(\bar D_n/4)\)). Explicit envelope: \(\tanh(D_n/4)\le C\rho^n\) for \(n\ge5\), \(\rho=\theta_8^{1/8}\le0.2852680\), \(C\le2.33914\). With DQ.5, the threshold of DQ.4 is \(n_0\in\{4,5\}\): every CF.1-form per-level rate on \(\mathcal K_{2,6}\) with block length \(\ge5\) beats DP.3's \(C^1\) cap.
+
+**Attempts to break it.** (i) *Float chains.* The LP only proposes the splitting weights; each chain is replayed in `arb` and must end with \(m-2|\mu|\ge0\), and the \(t\)-values are bumped until it does (13, 547, 1544, 3092 bumps at \(n=5..8\)). (ii) *Cover.* DR.2 checks that the 200 cell balls overlap consecutively and that the end cells reach outside \(X\). (iii) *Consistency with DQ.5.* The certified \(n=3\) upper bound \(0.39937\) is above DQ.5's lower bound \(0.3221097\), as it must be, and the \(n=5..8\) rates sit above DQ.4's limit \(0.1725476\). (iv) *Monotonicity.* The per-level rate rises from \(n=7\) to \(n=8\) (\(0.2694\to0.2853\)); that is the cost of the \(\ell_0\) relaxation at fixed 200 cells, not a contradiction, since DR.3 only gives upper bounds.
+
+**Kept limits (what DR does not claim).** The chain is a relaxation (the \(\ell_0\) reference can cost up to a factor \(2\) in \(D_n\)); the bounds are not the true diameters, and the envelope rate \(0.2853\) is far from DQ.4's limit \(0.1725\). The level-sum bound of CF.3/DN.3/DO.3 form on \(\mathcal K_{2,6}\) is still not computed (it also needs \(f_0\in\mathcal K_{2,6}\) and \(\Theta(f_0,\tilde Lf_0)\)).
+
+**What stays open.** \(n=4\): the certified upper bound is \(0.3433\) per level, above the cap; floats (a pairwise chain \(0.04170\), a float primal \(0.03638\) at the worst pair, against the cap's \(4\operatorname{artanh}(q^4)=0.040432\)) fall on both sides, so \(n_0=4\) versus \(n_0=5\) is undecided.
+
+**NOT THIS.** Theorem DR is about Hilbert-metric diameters of a positive transfer operator's images of a cone of functions on an interval attached to the combinatorial gasket. That is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN (BLOCKED): the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_effective_threshold.py`** (default \(n=3,5,6\), about \(2.5\) min; `DR_FULL=1` certifies \(n=3..8\) and DR.4, about \(66\) min; needs python-flint, sympy, scipy). It imports Theorem CI's script for \(r\) and \(\rho(L_1)\).
+- *Exact (sympy):* DR.1's Taylor identity and the two exponential integrals; DR.2's second-derivative and rescaling identities.
+- *Interval (`arb`):* jets of \(W_w,y_w\) to order 4 on every cell, the remainder \(E\), every chain replay, \(\bar D_n\), \(\theta_n\), the per-level rates, DR.4's composition bound and envelope.
+- *Floats:* the LP chain proposals (no claim).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

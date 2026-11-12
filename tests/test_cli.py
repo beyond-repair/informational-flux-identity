@@ -1813,6 +1813,28 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DQ", (ROOT / doc).read_text())
 
+    def test_theorem_dr_profile_level_effective_threshold(self):
+        """Theorem DR: certified D_n = diam Lt^n K_(2,6) for n = 3, 5, 6 (DR_NS default), per level below DP's cap for
+        n = 5, 6 (local only, about 2.5 min; needs python-flint, sympy, scipy; DR_FULL=1 certifies n = 3..8 and DR.4)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_effective_threshold as dr
+
+        dr.FAILS.clear()
+        dr.RESULT.clear()
+        self.assertEqual(dr.main(), 0)
+        self.assertEqual(dr.FAILS, [])
+        D = dr.RESULT["D"]
+        cap = 0.3170757
+        self.assertGreater(float(D[3]["per"].upper()), cap)          # consistent with DQ.5 (n <= 3 above the cap)
+        self.assertLess(float(D[5]["D"].upper()), 0.0098240)
+        self.assertLess(float(D[5]["per"].upper()), 0.30064)
+        self.assertLess(float(D[6]["D"].upper()), 0.0018378)
+        self.assertLess(float(D[6]["per"].upper()), 0.27779)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_effective_threshold.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DR", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

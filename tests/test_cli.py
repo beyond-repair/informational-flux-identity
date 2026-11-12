@@ -1599,6 +1599,31 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DJ", (ROOT / doc).read_text())
 
+    def test_theorem_dk_profile_level_diameter_cover(self):
+        """Theorem DK: certified upper bound diam Lt^9 C_100 <= 0.014000 (DJ.2 floor 0.013997); theta_K < 0.0035000,
+        per-level rate < 0.53349, |mu| < 0.22606 (local only, about 10 min, ~600 MB; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_diameter_cover as dk
+
+        dk.FAILS.clear()
+        dk.RESULT.clear()
+        self.assertEqual(dk.main(), 0)
+        self.assertEqual(dk.FAILS, [])
+        r = dk.RESULT
+        self.assertLessEqual(r["D"], 0.014)
+        self.assertGreater(r["D"], 0.013997)
+        self.assertLess(r["D"], 0.025879)
+        self.assertLess(float(r["theta"].upper()), 0.0035)
+        self.assertLess(float(r["rate"].upper()), 0.53349)
+        self.assertGreater(float(r["rate"].lower()), 0.53342)
+        self.assertLess(float(r["mu"].upper()), 0.22606)
+        self.assertGreater(r["obs"][(1, 1)], 0.013997)
+        self.assertLessEqual(r["obs"][(1, 1)], r["D"])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_diameter_cover.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DK", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

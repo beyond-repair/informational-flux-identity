@@ -1787,6 +1787,32 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DP", (ROOT / doc).read_text())
 
+    def test_theorem_dq_profile_level_second_order_cone(self):
+        """Theorem DQ: K_(2,6) invariant (a' < 1.8280, b' < 5.149); lim rates rho(L_1)/r on C_a and |l_2|/r on K_(2,6);
+        kept failure DQ.5: blocks 1..3 on K_(2,6) above the cap (local only, about 8 s; needs python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_second_order_cone as dq
+
+        for mod in (dq, dq.ci, dq.cl):
+            mod.FAILS.clear()
+        dq.RESULT.clear()
+        self.assertEqual(dq.main(), 0)
+        self.assertEqual(dq.FAILS, [])
+        r = dq.RESULT
+        self.assertLess(float(r["a1"].upper()), 1.8280)
+        self.assertLess(float(r["b1"].upper()), 5.149)
+        self.assertLess(float(r["bmin"].upper()), 4.936)
+        self.assertGreater(float(r["q1"].lower()), 0.3170757)
+        self.assertLess(float(r["q2"][1].upper()), 0.1725477)
+        cap = float(r["q1_up"].upper())
+        for n, lo in ((1, 0.5523), (2, 0.3922), (3, 0.3221)):
+            self.assertGreater(float(r["wit"][n]["per"].lower()), lo)
+            self.assertGreater(float(r["wit"][n]["per"].lower()), cap)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_second_order_cone.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DQ", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

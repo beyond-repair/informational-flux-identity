@@ -1654,6 +1654,48 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DL", (ROOT / doc).read_text())
 
+    def test_theorem_dm_profile_level_chord_cover(self):
+        """Theorem DM: DM.1's corner box bound; on C_2, 0.0044106 < diam Lt^7 C_2 <= 0.004411, rate < 0.378005, every
+        CF.1-form rate on (C_2, Lt^7) > 0.377999, |mu| < 0.16018 (local only, about 1 min; needs python-flint).
+        The n = 9 part (rate < 0.363655, |mu| < 0.15410) runs only with DM_SLOW=1 (about 35 min)."""
+        import os
+
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_chord_cover as dm
+        import gasket_fractional_profile_level_small_cone as dl
+
+        self.assertEqual(dm.N, 7)
+        dm.FAILS.clear()
+        dm.RESULT.clear()
+        self.assertEqual(dm.main(), 0)
+        self.assertEqual(dm.FAILS, [])
+        self.assertEqual(dl.N, 5)                       # DL's settings restored
+        r = dm.RESULT
+        self.assertLessEqual(r["D"], 0.004411)
+        self.assertGreater(float(r["low"].lower()), 0.0044106)
+        self.assertLess(float(r["low"].upper()), r["D"])
+        self.assertLess(float(r["theta"].upper()), 0.0011028)
+        self.assertLess(float(r["rate"].upper()), 0.378005)
+        self.assertLess(float(r["rate"].upper()), 0.404994)
+        self.assertGreater(float(r["rate_low"].lower()), 0.377999)
+        self.assertLess(float(r["mu"].upper()), 0.16018)
+        self.assertLess(r["sb"], 5.80e-4)
+        self.assertGreater(r["qmin"], 1.081)
+        self.assertLess(r["nbox"], 100000)
+        for h, e_dk, e_dm in r["pad_obs"]:
+            self.assertLess(e_dm, e_dk)
+        self.assertLessEqual(r["obs"][(-1, -1)], r["D"])
+        self.assertLess(abs(r["r12"] + r["r21"] - float(r["low"].mid())), 1e-7)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_chord_cover.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DM", (ROOT / doc).read_text())
+        if os.environ.get("DM_SLOW") == "1":
+            p = subprocess.run([sys.executable, str(ROOT / "scripts" / "gasket_fractional_profile_level_chord_cover.py")],
+                               env={**os.environ, "DM_N": "9"}, capture_output=True, text=True)
+            self.assertEqual(p.returncode, 0, p.stdout[-2000:])
+            self.assertIn("all Theorem DM checks passed", p.stdout)
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

@@ -1858,6 +1858,43 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DS", (ROOT / doc).read_text())
 
+    def test_theorem_dt_profile_level_second_order_sums(self):
+        """Theorem DT: the CF.3/DO.3 level-sum bound on K_(2,6): Theta_K(F_m, F_(m+1)), m = 0..5 (arb jets of order 4, 1024
+        cells by default; DT_FULL=1 uses 4096 cells and 4097 floor points), B_K(k) with DR/DS's factors beats DO.3 for every
+        k >= 11, per-level rate theta_7^(1/7) <= 0.2694; kept failure DT.4 for k = 4..10 (local only, about 2 min plus CO's
+        Taylor data; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_second_order_sums as dt
+
+        for mod in (dt, dt.di, dt.di.bk, dt.di.bk.co, dt.di.bk.cn):
+            mod.FAILS.clear()
+        dt.RESULT.clear()
+        self.assertEqual(dt.main(), 0)
+        self.assertEqual(dt.FAILS, [])
+        r = dt.RESULT
+        self.assertLess(float(r["q1max"].upper()), 0.80)
+        self.assertGreater(float(r["q2lo"].lower()), 0.20)
+        self.assertLess(float(r["q2hi"].upper()), 1.69)
+        t = r["tab"]
+        self.assertLess(float(t[0]["up"].upper()), 0.147314)
+        self.assertGreater(float(t[0]["low"].lower()), 0.147313)
+        self.assertLess(float(t[5]["up"].upper()), 0.000028163)
+        self.assertGreater(float(t[5]["low"].lower()), 0.000028125)
+        for m in range(6):
+            self.assertLessEqual(float(t[m]["osc"].upper()), float(t[m]["low"].lower()))
+        self.assertLess(float(r["rate"].upper()), 0.2694000)
+        self.assertEqual(r["nbest"], 7)
+        self.assertEqual(r["kstar"], 11)
+        self.assertGreater(float(r["facs"][11].lower()), 1.81)
+        self.assertGreater(float(r["facs"][103].lower()), 3.1e12)
+        self.assertLess(float(r["facs"][10].upper()), 1)
+        self.assertLess(float(r["worst"].upper()), 1)
+        self.assertEqual(r["sharper"], [2, 3, 4, 5])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_second_order_sums.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DT", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

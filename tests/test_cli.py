@@ -1696,6 +1696,35 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
             self.assertEqual(p.returncode, 0, p.stdout[-2000:])
             self.assertIn("all Theorem DM checks passed", p.stdout)
 
+    def test_theorem_dn_profile_level_f0_small_cone(self):
+        """Theorem DN: 0.14444 < Theta_2(f_0, Lt f_0) < 0.14473; level sums on C_2 with DL.5/DM.5's thetas, per-level rate
+        < 0.363657; kept failure DN.4 (C_2 constant > 2.22 x Theta_I') (local only, about 2 min; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_f0_small_cone as dn
+
+        for mod in (dn, dn.di, dn.di.bk, dn.di.bk.co, dn.di.bk.cn):
+            mod.FAILS.clear()
+        dn.RESULT.clear()
+        self.assertEqual(dn.NC, 16384)
+        self.assertEqual(dn.main(), 0)
+        self.assertEqual(dn.FAILS, [])
+        r = dn.RESULT
+        self.assertLess(r["d0"], 0.77334)
+        self.assertLess(r["d1"], 0.79038)
+        self.assertGreater(r["c0"], 0.035291)
+        self.assertLess(float(r["TN"].upper()), 0.14473)
+        self.assertGreater(float(r["floor"].lower()), 0.14444)
+        self.assertLess(float(r["floor"].upper()), float(r["TN"].lower()))
+        self.assertGreater(float(r["TS"].lower()), 0.9)
+        self.assertLess(float(r["rate9"].upper()), 0.363657)
+        self.assertGreater(float(r["facs"][13].lower()), 14.1)
+        self.assertGreater(float(r["facs"][49].lower()), 1.38e7)
+        self.assertLess(float(r["worst"].upper()), 1)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_f0_small_cone.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DN", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

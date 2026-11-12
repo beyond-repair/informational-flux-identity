@@ -5358,6 +5358,31 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem DS. DR's open case \(n=4\) settled: \(0.0360461\le D_4=\operatorname{diam}\tilde L^4\mathcal K_{2,6}\le0.0383859<4\operatorname{artanh}(q^4)=0.0404321\), so \(\tanh(D_4/4)^{1/4}\in[0.3081036,0.3129858]\) is below DP's cap \(q=0.3170757\) and DQ.4's threshold is \(n_0=4\) exactly (DR's open item "\(n=4\): certified upper bound \(0.3433\) per level, floats on both sides of the cap")
+
+**Setting.** As in Theorem DR: \(s\in X=[\sqrt5/2,\tfrac52]\), \(\tilde L^4f(s)=\sum_wW_w(s)f(y_w(s))\) over the \(16\) words, \(\mathcal K=\mathcal K_{2,6}=\{f>0:|f'|\le2f,|f''|\le6f\}\), Hilbert metric read through \(\Lambda=\{2\delta_s\pm\delta_s',\ 6\delta_s\pm\delta_s''\}\). For \(f\in\mathcal K\) put \(v=f'/f\); then \(|v|\le2\) and \(v'=f''/f-v^2\in[-6-v^2,\,6-v^2]\).
+
+**Assumptions used as stated.** CF.1 (Birkhoff), DQ.1 (invariance of \(\mathcal K_{2,6}\)), DQ.5 (per level \(>0.3170762\) for \(n=1,2,3\)), DR.2 (cell lemma, unchanged), DR.4 (every \(n\ge5\) below the cap), the cap \(\rho(L_1)/r\ge0.3170757\) (CI.1, CG.3). Textbook: comparison for scalar ODEs.
+
+**THEOREM DS** (every computed claim checked by the script, exit 1 on any failure).
+1. **DS.1 (proved; sympy identities). Comparison lemma.** \(U_a=\sqrt6\tanh(\sqrt6t+\operatorname{artanh}(a/\sqrt6))\) solves \(U'=6-U^2\), \(U(0)=a\); \(W_b=\sqrt6\tan(\sqrt6t+\arctan(b/\sqrt6))\) solves \(W'=6+W^2\), \(W(0)=b\). For \(y<z\) in \(X\), \(d=z-y\), \(a=v(y)\), \(b=v(z)\): \(v(y+t)\le\min(2,U_a(t))\), \(v(z-t)\le\min(2,W_b(t))\), so \(\log f(z)-\log f(y)\le B(a,b,d)=\int_0^{t_0}\min(2,U_a)+\int_0^{d-t_0}\min(2,W_b)\) for every \(t_0\in[0,d]\); \(B\) is nondecreasing in \(a,b\), and the reversal \(v(t)\mapsto-v(d-t)\) preserves the constraint set, giving the lower bound \(-B(-b,-a,d)\).
+2. **DS.2 (proved). Value-function certificate.** For a point-jet functional \(\Psi=\sum_k\alpha_k\delta_{y_k}+\beta_k\delta'_{y_k}+\gamma_k\delta''_{y_k}\) and a cut of \([-2,2]\) into \(v\)-cells, a backward recursion \(L_k(i)\) (using DS.1 on each gap between consecutive \(y_k\)) with \(\min_iL_0(i)\ge0\) proves \(\Psi\ge0\) on \(\mathcal K\). \(B\) comes from `arb` tables on a \(t\)-grid of step \(2^{-15}\) (slack \(4h\)); the recursion runs in doubles rounded outward at every operation, so it is a rigorous lower bound. It replaces DR.1's chain, which loses a factor about \(1.5\) at \(n=4\).
+3. **DS.3 (certified; DR.2's 200 cells \(\times\) 4 types, 3200 certificates, reference \(\ell_0=\delta_{21/10}\), 256 \(v\)-cells, 0 bumps).** \(D_4\le2\max_{\text{cells}}\log(t_1t_2)\le0.03838589<0.04043213\), so \(\tanh(D_4/4)^{1/4}\le0.3129858<0.3170757\). With DQ.5 and DR.4: \(\tanh(D_n/4)^{1/n}<0.3170757\) for every \(n\ge4\) and \(>0.3170762\) for \(n=1,2,3\); **\(n_0=4\) exactly.**
+4. **DS.4 (certified lower bound, `arb`).** Explicit \(f,g\in\mathcal K\) (64 and 63 breakpoints; pieces with \(f''=\pm6f\) or constant log-slope, \(C^1\), \(|f'/f|\le2\) checked at every breakpoint, monotone Riccati in between, positivity of the cosine pieces checked) give, with \(\ell=2\delta_s-\delta_s'\) at \(s=\sqrt5/2\) and \(\ell'=2\delta_s+\delta_s'\) at \(s=5/2\), \(D_4\ge\Theta(\tilde L^4f,\tilde L^4g)\ge0.03604618\), so \(\tanh(D_4/4)^{1/4}\ge0.3081037\).
+
+**Attempts to break it.** (i) *Float proposals.* The \(v\)-cell recursion and the witnesses \(f,g\) start as floats; only outward-rounded and `arb` evaluations are claimed. (ii) *Consistency.* DS.4 \(\le\) DS.3 (\(0.03604618\le0.03838589\)), DS.3 is below DR.3's \(n=4\) upper bound \(0.055511\), and the per-level interval \([0.3081,0.3130]\) sits above DQ.4's limit \(0.1725\) and below DQ.5's \(n=3\) floor \(0.3221\). (iii) *Grid.* The float recursion at the worst pair gives \(0.03749\) at 256 \(v\)-cells and \(0.03849\) at 128, refining toward the lower witness, not away from it. (iv) *Cover.* DR.2's overlap and end checks rerun unchanged.
+
+**Kept limits (what DS does not claim).** \(D_4\) is enclosed to within \(6.5\%\), not computed. The margin below the cap is real but small: per level \(\le0.3129858\) against \(0.3170757\) (factor \(1.0131\)), and the lower witness shows no cone-diameter bound at \(n=4\) can do better than \(0.3081\) per level. The level-sum bound of CF.3/DN.3/DO.3 form on \(\mathcal K_{2,6}\) is still not computed.
+
+**NOT THIS.** Theorem DS is about Hilbert-metric diameters of a positive transfer operator's images of a cone of functions on an interval attached to the combinatorial gasket. That is not a flux, and nothing here is a force. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN (BLOCKED): the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_threshold_four.py`** (default 8 cells including the two worst, about \(1.5\) min; `DS_FULL=1` runs all 200 cells, about \(2.4\) h; needs python-flint, sympy). It imports Theorem CI's script for \(r\), \(\rho(L_1)\) and Theorem DR's script for the word jets and cell lemma.
+- *Exact (sympy):* DS.1's ODE solutions and antiderivatives, the Riccati and reversal identities.
+- *Interval (`arb`, outward-rounded doubles):* the \(B\) tables, every certificate, \(D_4\), the per-level rates, the lower witness.
+- *Floats:* the \(v\)-cell recursion proposals and the witness shapes (no claim).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

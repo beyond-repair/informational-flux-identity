@@ -1835,6 +1835,29 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DR", (ROOT / doc).read_text())
 
+    def test_theorem_ds_profile_level_threshold_four(self):
+        """Theorem DS: D_4 = diam Lt^4 K_(2,6) below DP's cap on 8 cells including the two worst (default; DS_FULL=1 runs all
+        200 cells), and the explicit lower witness D_4 >= 0.0360461 (local only, about 1.5 min; needs python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_threshold_four as ds
+
+        ds.FAILS.clear()
+        ds.RESULT.clear()
+        self.assertEqual(ds.main(), 0)
+        self.assertEqual(ds.FAILS, [])
+        r = ds.RESULT
+        cap = 0.3170757
+        self.assertLess(float(r["D"].upper()), 0.0383860)
+        self.assertLess(float(r["per"].upper()), 0.3129859)
+        self.assertLess(float(r["per"].upper()), cap)
+        self.assertGreater(float(r["Dlow"].lower()), 0.0360461)
+        self.assertGreater(float(r["perlow"].lower()), 0.3081036)
+        self.assertEqual(r["worst"][:2], (199, "1+"))
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_threshold_four.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DS", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

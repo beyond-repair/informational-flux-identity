@@ -5530,6 +5530,54 @@ The script exits nonzero if any check fails.
 
 The script exits nonzero if any check fails.
 
+## Theorem DW. The direct bound carried to \(k=12..16\): fourth-order centred forms of \(R_m=F_{m+1}/F_m\) give two-sided `arb` enclosures of \(\operatorname{osc}\log R_m\) for \(m=8..12\); the cone-free direct bound \(|\log(s_{k+1}/(r\,s_k))|\le\operatorname{osc}\log R_{k-4}\) beats DV's \(B_V\) at \(k=12..16\) (factors \(9.594,\,17.836,\,17.925,\,17.922,\,21.222\)) and is within \(0.13\%\) of DO.4's floor there; the combined bound \(B_W<\min(B_{\rm DO},B_U)\) strictly for every \(k\ge4\), so DV's Rejected Claim DV.3' (the strict form, false for \(B_V\) at \(k=13,16\)) holds for \(B_W\) (DV's open item "direct constants for \(m\ge8\)")
+
+**Setting.** As in Theorems DO and DT–DV: \(s\in X=[\sqrt5/2,\tfrac52]\), \(\tilde Lf=\tilde w_1f\circ\sigma_1+\tilde w_2f\circ\sigma_2\), \(f_0=F_0=\tilde L^4G\) (DC.2), \(F_m=\tilde L^mF_0\), \(R_m=F_{m+1}/F_m\), \(\operatorname{osc}\log R_m=\log(\sup_XR_m/\inf_XR_m)\), \(s_{4+m}=c_0F_m(x_0)\), so \(s_{k+1}/s_k=R_{k-4}(x_0)\) (DI.5's consistency). DV certified \(\operatorname{osc}\log R_m\) for \(m\le7\) only (DV.1's second-order centred forms cost \(\sim|J|^3\) in width, too expensive at \(m\ge8\)), so DV.3 had equality with \(\min(B_{\rm DO},B_U)\) at \(k=13,16\) and DV.3' (strict) was rejected.
+
+**Assumptions used as stated (ASSUMPTION).** The inclusion \(r\in[\inf R_m,\sup R_m]\) from CF.3's proof (as in DV.2); DO.4 (floor of every CF.3-form bound at \(k=4+m\) is \(\operatorname{osc}\log R_m\)); for the comparison DW.3 only, DV's stated constants (DV.1's \(\Theta_{\mathcal K}\) and \(\operatorname{osc}\) uppers, DT.2's uppers, DU.3's \(\theta_n=\tanh(\bar D_n/4)\), DO.3's \(B_{\rm DO}\)), i.e. \(B_V\), \(B_U\), \(B_{\rm DO}\) exactly as in DV.3. CO.1/CO.2's Taylor data for \(F_0\) (re-run unchanged), CE.4's certificate for \(r\), CC's level sums (consistency only). DV's jets (`Fjet`, order 4) are imported unchanged.
+
+**THEOREM DW** (every claim checked by `scripts/gasket_fractional_profile_level_direct_tail.py`, exit 1 on any failure; \(64\) initial cells, adaptive bisection to depth \(\le8\), splitting tolerance \(0.002\), \(33\) floor points).
+1. **DW.1 (THEOREM, computer-assisted, `arb`-rigorous; jets of order \(4\) through \(m+1\le13\) layers of \(\tilde L\)).** On each cell \(J\) with midpoint \(c\), \(R_m(x)\in\sum_{i<4}R_m^{(i)}(c)(x-c)^i/i!+[R_m^{(4)}(J)/4!](x-c)^4\) (point jets at \(c\), hull jets on \(J\); powers of \(x-c\) as products), intersected with \(F_{m+1}(J)/F_m(J)\); a cell is accepted only with \(F_m,F_{m+1}>0\) certified on it, and the accepted cells tile \(X\) in dyadic index space (endpoints outward). Floors are `arb` point values of \(R_m\) at \(33\) points, endpoints included. Then \(F_m>0\) on \(X\) and
+
+   | \(m\) | \(k=m+4\) | \(\operatorname{osc}\log R_m\) | cells (max depth) | time |
+   |---|---|---|---|---|
+   | 8 | 12 | \([8.77884,\,8.78161]\cdot10^{-8}\) | 79 (2) | 10 s |
+   | 9 | 13 | \([1.51472,\,1.51524]\cdot10^{-8}\) | 111 (3) | 32 s |
+   | 10 | 14 | \([2.61359,\,2.61600]\cdot10^{-9}\) | 155 (3) | 357 s |
+   | 11 | 15 | \([4.50968,\,4.51126]\cdot10^{-10}\) | 214 (4) | 530 s |
+   | 12 | 16 | \([7.78134,\,7.79092]\cdot10^{-11}\) | 307 (4) | 1606 s |
+
+   (times from the `DW_FULL=1` run, 4 worker processes on a shared box). The stated targets checked by the script are uppers \(8.80\cdot10^{-8},\,1.519\cdot10^{-8},\,2.621\cdot10^{-9},\,4.523\cdot10^{-10},\,7.805\cdot10^{-11}\) and lowers \(8.70\cdot10^{-8},\,1.500\cdot10^{-8},\,2.588\cdot10^{-9},\,4.465\cdot10^{-10},\,7.703\cdot10^{-11}\). *Cross-check:* rows \(m=6,7\) recomputed the same way give \([2.95072,\,2.95167]\cdot10^{-6}\) and \([5.08846,\,5.09024]\cdot10^{-7}\), which meet DV.1's \((2.9507,2.9652)\cdot10^{-6}\) and \((5.0884,5.1065)\cdot10^{-7}\) (and sharpen their uppers). No cone membership of \(F_m\) is claimed or needed for \(m\ge8\).
+2. **DW.2 (THEOREM, proved from DW.1 and \(r\in[\inf R_m,\sup R_m]\), as DV.2).** For \(k=12..16\),
+   \[
+   \Bigl|\log\frac{s_{k+1}}{r\,s_k}\Bigr|\le\operatorname{osc}\log R_{k-4}<8.7817\cdot10^{-8},\ 1.5153\cdot10^{-8},\ 2.6160\cdot10^{-9},\ 4.5113\cdot10^{-10},\ 7.7910\cdot10^{-11}.
+   \]
+   This is the minimum of \(B_W(k)\) at each \(k=12..16\) and is strictly below DV's \(B_V(k)\), by the factors \(9.5940,\,17.836,\,17.925,\,17.922,\,21.222\) (exact rational comparison of outward-rounded inputs). *Optimality (from DO.4):* the uppers are within the factors \(1.00032,\,1.00034,\,1.00092,\,1.00035,\,1.00123\) of the certified floors, so for \(k=12..16\) no CF.3-form bound improves DW.2 by more than \(0.13\%\).
+3. **DW.3 (THEOREM, exact rationals, with DV's constants as stated).** With \(B_W(k):=\min\bigl(B_V(k),\ \operatorname{osc}\log R_{k-4}\,[12\le k\le16]\bigr)\), \(B_W=B_V\) for \(k\notin\{12,..,16\}\) and
+   \[
+   B_W(k)<\min\bigl(B_{\rm DO}(k),B_U(k)\bigr)\qquad\text{for every }k\ge4
+   \]
+   (checked directly for \(k<390\); \(G_U(j+8)=\theta_8G_U(j)\) exactly for \(j\ge14\), so for \(k\ge25\) the ratio is 8-periodic, in \([1.0296,\,10.265]\)). Ratios \(\min(B_{\rm DO},B_U)/B_W\): \(1.0246\) (\(k=4\)), \(5.8836\) (\(10\)), \(16.936\) (\(11\)), \(17.284\) (\(12\)), \(17.836\) (\(13\)), \(22.462\) (\(14\)), \(21.458\) (\(15\)), \(21.222\) (\(16\)), \(1.0115\) (\(17\), the smallest), \(1.1973\) (\(22\)), \(1.0296\) (\(49\)), \(1.1652\) (\(103\)). So DV.3' — "the combined bound is strictly below \(\min(B_{\rm DO},B_U)\) for every \(k\ge4\)" — is true for \(B_W\) (it stays false for \(B_V\), as DV recorded). *Consistency (certified):* on CC's \(s_4..s_{13}\), with \(r\) at either end of CE.4's interval, every deviation is below \(B_W(k)\) (largest ratio \(0.2040\), at \(k=4\); \(k=12\) uses the new row \(m=8\)).
+
+*Proof.* DW.1: as DV.1 (inclusion-monotone jet arithmetic, CO.2's Cauchy tails differentiated term by term), with the quotient jet \(R=v\cdot(1/u)\) and Taylor's theorem with Lagrange remainder at order \(4\) on each cell; the accepted cells tile \(X\), so the extremes of the cell enclosures bound \(\sup R_m\) above and \(\inf R_m\) below, and the floors are values of \(R_m\) on \(X\); positivity of \(F_m\) on every cell is part of acceptance. DW.2: \(s_{k+1}/s_k=R_{k-4}(x_0)\) and \(r\in[\inf R_{k-4},\sup R_{k-4}]\), so \(|\log(s_{k+1}/(rs_k))|\le\log(\sup R/\inf R)\); this uses only \(F_m>0\) and the inclusion, not \(F_m\in\mathcal K\). DW.3: the minimum over more candidates is \(\le\) each; strictness is decided in exact rationals on outward-rounded inputs; periodicity as in DV.3 (every candidate has \(k-4-m\ge14\) once \(k\ge25\), and the direct rows end at \(k=16\)). \(\square\)
+
+**Attempts to break it.** (i) *Agreement with DV.1.* The fourth-order rows at \(m=6,7\) meet DV.1's second-order rows (same numbers, two methods). (ii) *Is DW.2 just DO.4?* No: DO.4 is a floor; DW.2 is a certified upper bound attaining it within \(0.13\%\). (iii) *The ties at \(k=13,16\).* The new direct terms beat DU.3's minimum there by \(17.8\times\) and \(21.2\times\); the smallest strict ratio overall, \(1.0115\) at \(k=17\), is outside the new rows (an \(m=6,7\) term from DV). (iv) *Consistency.* CC's actual deviations sit below \(B_W\) (ratio \(\le0.204\)).
+
+**Kept limits (what DW does not claim).** DW changes no diameter, no contraction factor and **no rate**: the proved per-level rate is still DU's \(\theta_8^{1/8}\le0.2380\). The consecutive ratios \(\operatorname{osc}\log R_{m+1}/\operatorname{osc}\log R_m\) enclosed for \(m=6..11\) all lie in \([0.17239,\,0.17276]\), matching DQ.4's spectral \(0.1725\) — this is an **observation** on six rows, **not a proved rate**, and nothing beyond \(k=16\) follows from it. Rows \(m\le12\) only (the \(m=12\) row alone takes about \(27\) min). For \(k\ge17\) the bound is DV's \(B_V\) unchanged (gain over \(\min(B_{\rm DO},B_U)\) as small as \(1.0115\)). DW.2 is optimal only among CF.3-form bounds; a bound not of this form is not excluded. DV's, DU.3's, DT.2's and DO.3's constants are used as stated.
+
+**What stays open.** A proved rate near \(0.1725\) (sharper \(D_n\), \(n\ge9\), or a non-cone spectral argument); direct rows beyond \(m=12\); whether a bound not of CF.3 form beats \(\operatorname{osc}\log R_{k-4}\). The Stage 2 question.
+
+**NOT THIS.** Theorem DW bounds oscillations of ratios of functions on an interval attached to the combinatorial gasket, and the convergence of the level sums of the positive transfer operator that maps them. These are functions on a graph, not a flux, and nothing here is a force or thrust. Stage 1 is not touched, and no \(W\), \(0.08\), \(0.23\) or \(30\,\mu\)N/kW enters or is fitted. The Stage 2 question stays OPEN (BLOCKED): the repository still has no \(\Psi_{\mathrm{info}}\) field or data on the frozen \(0.45\) mesh. Functions on a graph, not a flux. Not thrust.
+
+**Local runs (4 worker processes, shared 8-core box).** `DW_FULL=1` (rows \(m=6..12\)): all DW checks pass in \(2650\) s (about \(44\) min; log `/tmp/dw_run1.log`, not in the repository). Default (rows \(m=6..9\); DW.2/DW.3 use the stated uppers above for \(m=10..12\), certified by the full run): all checks pass in \(136\) s (log `/tmp/dw_default.log`); the unit test `test_theorem_dw_profile_level_direct_tail` (default) passes in \(143\) s, DV's test still passes.
+
+**Witness, computed by `scripts/gasket_fractional_profile_level_direct_tail.py`** (default: rows \(m=6..9\); `DW_FULL=1` rows \(m=6..12\); `DW_MMAX`, `DW_CELLS0`, `DW_DEPTH`, `DW_TOL`, `DW_FLOOR_PTS`, `DW_WORKERS`, `DW_PREC` adjust it; needs python-flint). It imports Theorem DV's script (jets, cells, stated constants, which import DT's, DI's, DO's, CE's and CC's scripts).
+- *Interval (`arb`):* the jets, per-cell fourth-order centred forms, the direct quotients, the floors, the cell enclosures (converted exactly to rationals), the consistency ratios.
+- *Exact rationals:* \(G_U\), \(B_W\), \(B_V\), \(B_U\), \(B_{\rm DO}\), the ratios, strictness and the periodicity.
+- *Floats:* the splitting tolerance only (it decides where to bisect, not what is claimed).
+
+The script exits nonzero if any check fails.
+
 ## Conjecture J.1
 
 **Status: PROVED by Theorem AQ (formerly a conjecture; the text below records it as first stated).** For \(\alpha=0.45\) and these corner data, \(\|F(n)\|\) decreases for every \(n\ge 1\) and

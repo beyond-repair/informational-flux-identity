@@ -1965,6 +1965,50 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DV", (ROOT / doc).read_text())
 
+    def test_theorem_dw_profile_level_direct_tail(self):
+        """Theorem DW: two-sided osc log R_m for m = 8..12 by fourth-order centred forms (default: rows m = 6..9 only,
+        stated uppers for m = 10..12; DW_FULL=1 recomputes m = 10..12, ~44 min); the direct bound beats B_V at k = 12..16
+        and B_W < min(B_DO, B_U) strictly for every k >= 4 (DV.3' holds for B_W) (local only, about 2.5 min; needs
+        python-flint). Ratios ~0.1725 observed, rate not proved."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_direct_tail as dw
+
+        dw.FAILS.clear()
+        dw.RESULT.clear()
+        self.assertEqual(dw.main(), 0)
+        self.assertEqual(dw.FAILS, [])
+        r = dw.RESULT
+        t = r["tab"]
+        self.assertTrue({6, 7, 8, 9} <= set(t))
+        self.assertLess(float(t[8]["up"].upper()), 8.7817e-8)
+        self.assertGreater(float(t[8]["low"].lower()), 8.7788e-8)
+        self.assertLess(float(t[9]["up"].upper()), 1.5153e-8)
+        self.assertGreater(float(t[9]["low"].lower()), 1.5147e-8)
+        if dw.FULL:
+            for m, lo, hi in ((10, 2.6135e-9, 2.6160e-9), (11, 4.5096e-10, 4.5113e-10), (12, 7.7813e-11, 7.7910e-11)):
+                self.assertLess(float(t[m]["up"].upper()), hi)
+                self.assertGreater(float(t[m]["low"].lower()), lo)
+        for m, (a, b) in r["rat"].items():
+            self.assertGreater(float(a.lower()), 0.172)
+            self.assertLess(float(b.upper()), 0.173)
+        self.assertEqual(r["used"], [12, 13, 14, 15, 16])
+        self.assertGreater(float(r["gainV"][12].lower()), 9.59)
+        self.assertGreater(float(r["gainV"][13].lower()), 17.8)
+        for k in (14, 15, 16):
+            self.assertGreater(float(r["gainV"][k].lower()), 17.8)
+        for k, v in r["floor"].items():
+            self.assertLess(float(v.upper()), 1.0013)
+        self.assertEqual(r["J"], 14)
+        self.assertGreater(float(r["facmin"].lower()), 1.0114)
+        self.assertGreater(float(r["fac"][13].lower()), 17.8)
+        self.assertGreater(float(r["fac"][16].lower()), 21.1)
+        self.assertGreater(float(r["permin"].lower()), 1.0295)
+        self.assertLess(float(r["worst"].upper()), 1)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_direct_tail.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DW", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

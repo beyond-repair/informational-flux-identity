@@ -2102,6 +2102,40 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DY", (ROOT / doc).read_text())
 
+    def test_theorem_dz_corner_limit(self):
+        """Theorem DZ: rho^n (delta_N - delta_N^(n)) -> -nu_alpha (1 - delta_N) (Conjecture BL.6's limit part, identified);
+        BL.6's 'independent of N' false (certified at alpha = 0.8); C_alpha < 0 on (gamma, 1) (local only, ~10 s; python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_limit as dz
+
+        dz.FAILS.clear()
+        dz.RESULT.clear()
+        self.assertEqual(dz.main(), 0)
+        self.assertEqual(dz.FAILS, [])
+        r = dz.RESULT
+        self.assertLess(float(r["dz1"]["K1"].upper()), 1.34)
+        self.assertGreater(float(r["dz1"]["m0"].lower()), 0.6416)
+        tab = r["dz4"]["tab"]
+        Ns = sorted(tab)
+        self.assertEqual(Ns, [1, 2, 3, 6, 10])
+        for a, b in zip(Ns, Ns[1:]):
+            self.assertLess(float(tab[a][3].upper()), float(tab[b][3].lower()))   # DZ.4: C_delta depends on N
+        self.assertGreater(float(tab[1][3].lower()), 0.0307)
+        self.assertLess(float(tab[1][3].upper()), 0.0319)
+        self.assertGreater(float(tab[10][3].lower()), 0.6024)
+        self.assertLess(float(tab[10][3].upper()), 0.6027)
+        self.assertTrue(float(tab[10][3].lower()) <= 0.6025 <= float(tab[10][3].upper()))   # BL.6's float
+        self.assertLess(float(tab[10][3].upper()), -float(r["dz4"]["nu"].upper()))
+        for N in Ns:
+            self.assertLess(float(r["dz4"]["rate"][N].upper()), 1e-5)
+        fl = r["floats"]
+        self.assertLess(abs(fl[0.9]["bm20"] - 0.3643), 5e-4)
+        self.assertLess(fl[0.9]["nu"], 0)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_limit.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DZ", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

@@ -2009,6 +2009,55 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DW", (ROOT / doc).read_text())
 
+    def test_theorem_dx_profile_level_spectral_osc(self):
+        """Theorem DX: the exact rate |l_2|/r of osc log R_m by a spectral (non-cone) route: L_5 |q|^m <= osc log R_m <=
+        U_5 |q|^m for every m >= 5, limit (1+|q|) osc(A_2/A_1); B_X < B_W for every k >= 10; every CF.3-form bound is
+        >= 8.07 times CS.2's (local only, about 3.3 min; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_spectral_osc as dx
+
+        dx.FAILS.clear()
+        dx.RESULT.clear()
+        self.assertEqual(dx.main(), 0)
+        self.assertEqual(dx.FAILS, [])
+        r = dx.RESULT
+        cx, rb, ls = r["cx"], r["rb"], r["ls"]
+        self.assertGreater(float(cx["infA1"].lower()), 0.00287)
+        self.assertGreater(float(cx["osc_lo"].lower()), 0.0952833)
+        self.assertLess(float(cx["osc_hi"].upper()), 0.0952835)
+        self.assertLess(float(cx["sup_psi"].upper()), 0.4062)
+        q = rb["q"]
+        self.assertGreater(float(q.lower()), 0.172547)
+        self.assertLess(float(q.upper()), 0.172548)
+        self.assertEqual(rb["first"], 5)
+        U5, L5 = rb["tab"][5]
+        self.assertGreater(float(L5.lower()), 0.1044)
+        self.assertLess(float(U5.upper()), 0.11904)
+        lo, hi = rb["Om"]
+        self.assertGreater(float(lo.lower()), 0.11172428)
+        self.assertLess(float(hi.upper()), 0.11172433)
+        for m in range(5, 40):
+            self.assertLessEqual(float(rb["tab"][m + 1][0].upper()), float(rb["tab"][m][0].upper()))
+            self.assertGreaterEqual(float(rb["tab"][m + 1][1].lower()), float(rb["tab"][m][1].lower()))
+        # DW.1's row m = 12 (stated) contains DX's interval
+        U12, L12 = rb["tab"][12]
+        self.assertGreater(float((L12 * q ** 12).lower()), 7.78134e-11)
+        self.assertLess(float((U12 * q ** 12).upper()), 7.79092e-11)
+        for m in range(6, 16):
+            a, b = rb["rat"][m]
+            self.assertGreater(float(a.lower()), 0.1721)
+            self.assertLess(float(b.upper()), 0.17296)
+        self.assertEqual(ls["better"], list(range(10, dx.KMX)))
+        self.assertLess(ls["facW"][9], 1)
+        self.assertGreater(ls["facW"][17], 21.3)
+        self.assertEqual(ls["J"], 14)
+        self.assertGreater(float(ls["ratio"].lower()), 8.07)
+        self.assertGreater(float(ls["rlim"].lower()), 8.63)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_spectral_osc.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DX", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

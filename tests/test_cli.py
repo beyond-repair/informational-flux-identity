@@ -2200,6 +2200,33 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_ed_corner_remainder_lower(self):
+        """Theorem ED: eps_n >= L_alpha (rho/3)^n > 0 (Mt_k increasing), R_n = Theta(3^-n), J-term thresholds rho^J < 3 sharp;
+        at 0.8 two-sided 3^n R_n brackets for every n >= 60 (local only, ~1 s; python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_remainder_lower as ed
+
+        ed.FAILS.clear()
+        ed.RESULT.clear()
+        self.assertEqual(ed.main(), 0)
+        self.assertEqual(ed.FAILS, [])
+        self.assertAlmostEqual(ed.RESULT["alpha3"], 0.91014159, places=7)
+        c = ed.RESULT["const"]
+        self.assertGreater(float(c["gamma"]["ell"].lower()), 0.0016681)
+        self.assertGreater(float(c["0.8"]["L"].lower()), 0.0055320)
+        self.assertGreater(float(c["0.95"]["L"].lower()), 0.0098674)
+        for a in ("0.7", "0.8", "0.9", "0.95"):
+            self.assertLess(float(c[a]["L"].upper()), float(c[a]["B"].lower()))
+        tab = ed.RESULT["ed4"]
+        self.assertEqual(sorted(tab), [1, 2, 3, 6, 10])
+        self.assertGreater(float(tab[1][0].lower()), 3.7e-5)
+        self.assertLess(float(tab[1][1].upper()), 13.97)
+        self.assertGreater(ed.RESULT["spot_worst"], 1.0)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_remainder_lower.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem ED", (ROOT / doc).read_text())
+
     def test_theorem_ec_corner_remainder_sharp(self):
         """Theorem EC: |eps_k| <= B (rho/3)^k (BI.4's ceiling in AT's weight), R_n = O(3^-n), third term to 4 gamma/3;
         at 0.8 EB.3's windows become every k >= 60 (local only, ~1 s; python-flint, sympy)."""

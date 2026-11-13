@@ -82,5 +82,34 @@ class CornerRemainderFloatTests(unittest.TestCase):
             self.assertLess(abs(rows[-1][1] - 1 / 3), abs(5**al / 9 - 1 / 3))  # not rho/3: the Moebius part is gone
 
 
+class CornerRemainderLowerFloatTests(unittest.TestCase):
+    def test_theorem_ed_remainder_lower_floats(self):
+        """Theorem ED (numpy only): ED.2's constant ell_alpha (lower Riemann sum, floats) is positive and increasing in alpha,
+        U(x1) = 2, the J-term thresholds rho^J < 3 <=> alpha < (J+1) gamma/J, and the floats of ED.5 sit above ED.2's bounds
+        (Mt-increments (3/rho)^k (Mt_(k+1) - Mt_k) ~ 0.295 >= ell_0.8, (3/rho)^n eps_n ~ 0.74 >= L_0.8 > 0)."""
+        import math
+        import gasket_fractional_corner_remainder_lower as ed
+
+        g = math.log(3) / math.log(5)
+        x1 = 0.4 * math.exp(-0.1)
+        self.assertAlmostEqual(5 * x1 * math.exp(5 * x1 * math.exp(0.1) / 20), 2.0, places=12)
+        for J, thr in ((3, 4 * g / 3), (4, 5 * g / 4)):
+            self.assertLess((5 ** (thr - 1e-9) / 3) ** J, 3)
+            self.assertGreater((5 ** (thr + 1e-9) / 3) ** J, 3)
+        lg, l8, l95 = ed.ell_float(g), ed.ell_float(0.8), ed.ell_float(0.95)
+        self.assertGreater(lg, 0.0016681)
+        self.assertLess(lg, l8)
+        self.assertLess(l8, l95)
+        L8 = 3 * l8 / (2 * (1 - 5**0.8 / 9))
+        self.assertGreater(L8, 0.005532)
+        rows, Cp = ed.float_increments(0.8, (4, 6))
+        self.assertLess(abs(Cp + 4.658677573), 2e-5)            # C' = -Mt_oo rho/(rho-1) (ED.1) vs AZ (3)
+        for n, d, e in rows:
+            self.assertGreater(d, l8)
+            self.assertGreater(e, L8)
+            self.assertLess(abs(d - 0.297), 0.01)
+            self.assertLess(abs(e - 0.746), 0.01)
+
+
 if __name__ == "__main__":
     unittest.main()

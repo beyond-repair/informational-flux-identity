@@ -48,5 +48,19 @@ class RectangleIdentityTests(unittest.TestCase):
         self.assertEqual(sourced["net"], 17)
 
 
+
+class CornerMobiusFloatTests(unittest.TestCase):
+    def test_theorem_eb_mobius_floats(self):
+        """Theorem EB (OBSERVED part, numpy only): u_k = 1/(1 - delta_N^(k)) is linear in rho^-k up to O(5^-0.65k), so
+        rho^k (u_k - u_(k+1)) / ((1 - 1/rho) u_oo) -> nu_0.8 (AZ (3): -0.72744538...) for N = 1 and N = 2 alike."""
+        import gasket_fractional_corner_limit_mobius as eb
+
+        rows = eb.nu_from_levels(0.8, (1, 2), (16, 22), 120)
+        v1, v2 = rows[1][-1][1], rows[2][-1][1]
+        self.assertLess(abs(v1 - v2), 1e-8)                      # N-independent
+        self.assertLess(abs(v1 - (-0.7274453844421553)), 2e-6)  # AZ's nu (float quadrature bias ~5e-7)
+        self.assertLess(abs(rows[1][-1][1] - v1), abs(rows[1][0][1] - v1) + 1e-15)
+        self.assertLess(abs(rows[1][0][1] - v1), 2e-6)
+
 if __name__ == "__main__":
     unittest.main()

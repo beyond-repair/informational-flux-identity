@@ -2172,6 +2172,34 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EA", (ROOT / doc).read_text())
 
+    def test_theorem_eb_corner_limit_mobius(self):
+        """Theorem EB: delta_N^(n) = (delta_N + nu rho^-n)/(1 + nu rho^-n) + O(5^-0.65n); rho^n (X_n - C_delta) -> nu^2 (1 - delta_N);
+        certified at 0.8 (local only, ~5 s; python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_limit_mobius as eb
+
+        eb.FAILS.clear()
+        eb.RESULT.clear()
+        self.assertEqual(eb.main(), 0)
+        self.assertEqual(eb.FAILS, [])
+        self.assertAlmostEqual(eb.RESULT["alpha_star"], 0.89927286, places=7)
+        tab = eb.RESULT["eb3"]
+        self.assertEqual(sorted(tab), [1, 2, 3, 6, 10])
+        for N, row in tab.items():
+            self.assertLess(float(row["L"]), 6.7e-21)
+            self.assertLess(float(row["U"]), 8.7e-35)
+            self.assertGreaterEqual(min(row["Kpos"], row["Kmono"]), 200)
+            self.assertGreaterEqual(row["KY"], 100)
+            self.assertGreater(float(row["Yoo"].lower()), 0)
+        self.assertGreater(float(tab[1]["Yoo"].lower()), 0.02276)
+        self.assertLess(float(tab[1]["Yoo"].upper()), 0.02279)
+        self.assertGreater(float(tab[10]["Yoo"].lower()), 0.43830)
+        self.assertLess(float(tab[10]["Yoo"].upper()), 0.43832)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_limit_mobius.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EB", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

@@ -2058,6 +2058,50 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DX", (ROOT / doc).read_text())
 
+    def test_theorem_dy_profile_level_spectral_inner(self):
+        """Theorem DY: lambda_4 split off and CQ.2's |z| = 1/20000 circle in DX.2's remainder: L_4 |q|^m <= osc log R_m <=
+        U_4 |q|^m for every m >= 4, sharper constants for m >= 5, the level-sum bound at k = 9 beats DV.1's row, m_0 = 3 out of
+        reach with this circle (local only, about 5 min; needs python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_spectral_inner as dy
+
+        dy.FAILS.clear()
+        dy.RESULT.clear()
+        self.assertEqual(dy.main(), 0)
+        self.assertEqual(dy.FAILS, [])
+        r = dy.RESULT
+        cx, tb, ls = r["cx"], r["tb"], r["ls"]
+        self.assertLess(float(cx["beta4"].upper()), 378.31)
+        self.assertLess(float(tb["beta_p"].upper()), 2.384e10)
+        self.assertEqual(tb["firstX"], 5)
+        self.assertEqual(tb["firstY"], 4)
+        U4, L4 = tb["tabY"][4]
+        self.assertGreater(float(L4.lower()), 0.09878)
+        self.assertLess(float(U4.upper()), 0.124667)
+        U5, L5 = tb["tabY"][5]
+        self.assertGreater(float(L5.lower()), 0.111129)
+        self.assertLess(float(U5.upper()), 0.112319)
+        for m in range(4, 40):
+            self.assertLessEqual(float(tb["tabY"][m + 1][0].upper()), float(tb["tabY"][m][0].upper()))
+            self.assertGreaterEqual(float(tb["tabY"][m + 1][1].lower()), float(tb["tabY"][m][1].lower()))
+        for m in range(5, 41):
+            self.assertLessEqual(float(tb["tabY"][m][0].upper()), float(tb["tabX"][m][0].upper()))
+            self.assertGreaterEqual(float(tb["tabY"][m][1].lower()), float(tb["tabX"][m][1].lower()))
+        self.assertEqual(tb["strict"][:17], list(range(5, 22)))
+        q = tb["q"]
+        self.assertLess(float((U5 * q ** 5).upper()), 1.7204e-5)       # DV.1's row m = 5 (stated upper)
+        self.assertGreater(float(tb["inner3"].lower()), float(tb["main3"].upper()))   # DY.6
+        self.assertLess(ls["fac9"], 1)
+        self.assertGreater(ls["fac8"], 1)
+        self.assertGreater(float(ls["fac"][9]), 1.0014)
+        self.assertEqual(ls["better"][:17], list(range(9, 26)))
+        self.assertGreater(float(ls["r5"].lower()), 8.5899)
+        self.assertGreater(float(ls["r4"].lower()), 7.635)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_spectral_inner.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DY", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

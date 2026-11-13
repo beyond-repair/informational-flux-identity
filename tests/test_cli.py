@@ -2136,6 +2136,42 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DZ", (ROOT / doc).read_text())
 
+    def test_theorem_ea_corner_second_order(self):
+        """Theorem EA: rho^N delta_N = c_corner + E_N with E_N > 0 exactly and E_N (5/rho)^N -> K_corner; rho^N delta_N(0.8)
+        strictly decreasing for every N; C_delta(0.8, N) brackets meet DZ.4's (local only, ~10 s; python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_second_order as ea
+
+        ea.FAILS.clear()
+        ea.RESULT.clear()
+        self.assertEqual(ea.main(), 0)
+        self.assertEqual(ea.FAILS, [])
+        r = ea.RESULT["ea"]
+        K = r["K"]
+        self.assertGreater(float(K.lower()), 0.07479)
+        self.assertLess(float(K.upper()), 0.07483)
+        self.assertTrue(r["mono"])                                   # (rho/5) K^+_1 < K^-_1
+        self.assertLess(r["worst"], 1e-20)                           # EA.1 pointwise
+        tab = r["tab"]
+        for N, (lo, hi) in ea.DZ4.items():
+            Cd = tab[N][3]
+            self.assertLessEqual(float(Cd.lower()), float(hi))      # meets DZ.4
+            self.assertLessEqual(float(lo), float(Cd.upper()))
+            self.assertLess(float(Cd.upper() - Cd.lower()), (float(hi) - float(lo)) / 30)
+        Ns = sorted(tab)
+        for a, b in zip(Ns, Ns[1:]):
+            self.assertGreater(float(tab[a][1].lower()), float(tab[b][1].lower()) - 1e-12)
+            self.assertGreater(float(tab[a][0].lower()), float(tab[b][0].upper()))   # E_N decreasing
+        self.assertGreater(float(tab[10][3].lower()), 0.60253)
+        self.assertLess(float(tab[10][3].upper()), 0.60254)
+        fl = ea.RESULT["floats"]
+        self.assertLess(abs(fl["c"] - 1.1359144728), 1e-8)
+        self.assertLess(abs(fl["K"] - 0.0748099777), 1e-8)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_second_order.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EA", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

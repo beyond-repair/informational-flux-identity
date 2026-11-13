@@ -1895,6 +1895,37 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem DT", (ROOT / doc).read_text())
 
+    def test_theorem_du_profile_level_fine_diameters(self):
+        """Theorem DU: sharper D_7, D_8 on K_(2,6) (two references, 800/1600 cells; default: the end and middle cells, which
+        carry the worst pair; DU_FULL=1 certifies all cells, about 4.5 h on 6 processes), explicit lower witnesses, and DT.3's
+        level-sum bound re-derived with per-level rate theta_8^(1/8) <= 0.2380246 (local only, about 1.5 min; needs
+        python-flint, scipy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_profile_level_fine_diameters as du
+
+        du.FAILS.clear()
+        du.RESULT.clear()
+        self.assertEqual(du.main(), 0)
+        self.assertEqual(du.FAILS, [])
+        r = du.RESULT
+        c = r["cells"]
+        self.assertLessEqual(float(c[7]["D"].upper()), 0.00023483)
+        self.assertLessEqual(float(c[8]["D"].upper()), 0.000041213)
+        self.assertEqual(c[8]["worst"], ((0, "1-"), (1599, "1+")))
+        self.assertLess(float(r["rho"].upper()), 0.2380246)
+        self.assertLess(float(r["per"][7].upper()), 0.2486152)
+        self.assertGreater(float(r["low7"]["low"].lower()), 6.428e-5)
+        self.assertGreater(float(r["low8"]["low"].lower()), 1.109e-5)
+        self.assertEqual(r["first_strict"], 11)
+        self.assertEqual(r["kstar"], 11)
+        self.assertGreater(float(r["fac"][22].lower()), 2.34)
+        self.assertGreater(float(r["fac"][103].lower()), 1.28e5)
+        self.assertLess(float(r["worst_cc"].upper()), 1)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_profile_level_fine_diameters.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem DU", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

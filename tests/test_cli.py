@@ -2200,6 +2200,39 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_ec_corner_remainder_sharp(self):
+        """Theorem EC: |eps_k| <= B (rho/3)^k (BI.4's ceiling in AT's weight), R_n = O(3^-n), third term to 4 gamma/3;
+        at 0.8 EB.3's windows become every k >= 60 (local only, ~1 s; python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_remainder_sharp as ec
+
+        ec.FAILS.clear()
+        ec.RESULT.clear()
+        self.assertEqual(ec.main(), 0)
+        self.assertEqual(ec.FAILS, [])
+        self.assertAlmostEqual(ec.RESULT["alpha3"], 0.91014159, places=7)
+        c = ec.RESULT["const"]
+        self.assertLess(float(c["0.8"]["K1"].upper()), 1.8934)
+        self.assertLess(float(c["0.8"]["K"].upper()), 1.7823)
+        self.assertLess(float(c["0.8"]["B"].upper()), 2.0e3)
+        for a in ("0.7", "0.9", "0.95", "1"):
+            self.assertLess(float(c[a]["rp"].upper()), 1)
+        tab = ec.RESULT["ec4"]
+        self.assertEqual(sorted(tab), [1, 2, 3, 6, 10])
+        for N, row in tab.items():
+            self.assertTrue(row["pos"] and row["mono"] and row["ygt"] and row["ydec"])
+            self.assertLess(float(row["env60"]), 1.4e-20)
+            self.assertLess(float(row["third60"]), 2e-10)
+        self.assertGreater(float(tab[1]["Zoo"].lower()), 0.01655)
+        self.assertLess(float(tab[1]["Zoo"].upper()), 0.01658)
+        self.assertLessEqual(ec.RESULT["kE"], 70)
+        for al, rows in ec.RESULT["floats"].items():
+            self.assertLess(abs(rows[-1][1] - 1 / 3), 3e-3)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_remainder_sharp.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EC", (ROOT / doc).read_text())
+
     def test_theorem_cy_profile_level_ratio_k(self):
         """Theorem CY: q^(k) = nu_2^(k)/rho(L_k) -> -1/3 (|q + 1/3| <= 4.83*0.8529^k + 0.0958*0.8352^k, k >= 24); CU's routine k = 13..23."""
         sys.path.insert(0, str(ROOT / "scripts"))

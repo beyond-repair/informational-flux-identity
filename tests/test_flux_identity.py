@@ -221,5 +221,32 @@ class CornerUniformThresholdFloatTests(unittest.TestCase):
         self.assertGreater(g**12 * r9["T"], 0.7380)                          # beyond EE.4's e*(0.9) upper end: no window there
 
 
+class CornerOnsetLevelFloatTests(unittest.TestCase):
+    def test_theorem_ei_onset_level_floats(self):
+        """Theorem EI (numpy only): EC.2's B_alpha and DZ.1's 3^k etabar_k in floats; EI.1's criterion Phi_N(k) with EF's float
+        D'_oo, nu, 1-delta_N is increasing in k and first positive at the levels n1 the script certifies with arb (floats may only be
+        smaller); below 4gamma/3 the onset grows as g = 3/rho^3 -> 1, and every n1 exceeds EH.4's window end."""
+        import gasket_fractional_corner_onset_level as ei
+
+        self.assertTrue(1937.0 < ei.B_float(0.8) < 1938.0)                  # EC.2: B_0.8 <= 1.94e3 (1.9375e3)
+        self.assertTrue(1028.0 < ei.B_float(0.9) < 1029.0)                  # EC.2: B_0.9 <= 1.03e3
+        self.assertGreater(ei.H_float(0.9, 1, 6), ei.H_float(0.9, 1, 7))   # H_k decreasing in k
+        cert = {0.8: [13, 13, 13, 14, 18], 0.9: [159, 158, 159, 162, 191]}   # EI.2 (arb, --full; default: 0.9 one level later)
+        prev = None
+        for al in (0.8, 0.9):
+            s = ei.onset_float(al)
+            self.assertGreater(s["g"], 1.0)
+            n1 = [s["n1"][N] for N in ei.NS]
+            for a, b in zip(n1, cert[al]):
+                self.assertLessEqual(a, b)
+                self.assertGreaterEqual(a, b - 1)
+            if prev is not None:
+                self.assertTrue(all(a > b for a, b in zip(n1, prev)))
+            prev = n1
+        self.assertGreater(min(n1[:4]), 8)                                   # beyond EH.4's window end 8 at 0.9
+        self.assertTrue(all(s["nas"][N] > 8 for N in (1, 2, 3, 6)))         # limit-substituted crossing after the window (OBSERVED)
+        self.assertTrue(all(s["nas"][N] < s["n1"][N] for N in ei.NS))
+
+
 if __name__ == "__main__":
     unittest.main()

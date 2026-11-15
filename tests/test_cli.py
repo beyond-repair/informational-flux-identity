@@ -2200,6 +2200,24 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_ei_corner_onset_level(self):
+        """Theorem EI: explicit onset levels n1 with Y_n > Y_oo for every n >= n1 below 4gamma/3 (local only, ~36 s; python-flint,
+        sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_onset_level as ei
+
+        ei.FAILS.clear()
+        ei.RESULT.clear()
+        self.assertEqual(ei.main(), 0)
+        self.assertEqual(ei.FAILS, [])
+        by = {r["alpha"]: r for r in ei.RESULT["rows"]}
+        self.assertEqual([by["0.8"]["n1"][N] for N in ei.NS], [13, 13, 13, 14, 18])
+        self.assertTrue(all(by[a]["n1"][N] > w for a, w in ei.EH4_WINDOW_END.items() for N in ei.NS))
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_onset_level.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EI", (ROOT / doc).read_text())
+
     def test_theorem_eh_corner_uniform_threshold(self):
         """Theorem EH: Y_n < Y_oo for every alpha in [4gamma/3, 1), every N >= 1 and every n >= N (alpha-cells; local only,
         ~15 s; python-flint, sympy)."""

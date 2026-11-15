@@ -288,5 +288,38 @@ class CornerExact0905FloatTests(unittest.TestCase):
             self.assertTrue(ek.EJ_BRACKET[N][0] <= ek.EXPECT[N][0] <= ek.EJ_BRACKET[N][1])
 
 
+class CornerExact0905N3FloatTests(unittest.TestCase):
+    def test_theorem_el_exact_0905_n3_floats(self):
+        """Theorem EL (numpy only): EL.1's left-node cell bound in floats -- on cells [a, a 5^(1/1600)] the exact R_k (affine recursion,
+        k = 26..41) never exceeds EJ.1's ceiling R^hi(a) at the left node, and R_k is nonincreasing across the cell; EE's float limits
+        e*, kappa_N put the first positive level at 68, 84, 103 for N = 1, 2, 3 at 0.905 (EL.2 certifies 103 with arb) and at 2586
+        at 0.91 (EL.3 certifies every n >= 2587); EL's certified U(26) <= 0.739060, kappa_hi(3, 26) <= 1.722784 sit above the float
+        limits and still give onset 103 in floats."""
+        import numpy as np
+        import gasket_fractional_corner_exact_0905_n3 as el
+        import gasket_fractional_corner_two_sided_rate as ej
+
+        self.assertEqual(el.EXPECT, {1: 68, 2: 84, 3: 103})
+        self.assertEqual((el.EXPECT_091, el.EJ_091), (2587, (2564, 2616)))
+        self.assertEqual(el.EK_LAST[3] + 1, el.EXPECT[3])          # with EK.1: one sign change 102 -> 103
+        for t in (1.0, 2.5, 4.0, 5.0):
+            a = 5.0**t
+            x = a * 5.0 ** (np.linspace(0.0, 1.0, 6) / 1600)
+            Ra = ej.rhi_float(np.array([a]), 26)[0][0]
+            for k in range(26, 42):
+                r = ej.rk_float(x, k)
+                self.assertTrue(np.all(r <= Ra * (1 + 1e-12)))
+                self.assertTrue(np.all(np.diff(r) <= 1e-15 * r[0]))
+        ef, _ = ej._mods()
+        c = ef.critical_floats(0.905, Ns=(1, 2, 3))
+        for N in ej.NS:
+            self.assertEqual(ej.crossing_float(0.905, c["e"], c["kappa"][N], N=N)[0], el.EXPECT[N])
+        self.assertTrue(c["e"] < 0.739060 and c["kappa"][3] < 1.722784)
+        self.assertEqual(ej.crossing_float(0.905, 0.739060, 1.722784, N=3)[0], 103)
+        c91 = ef.critical_floats(0.91, Ns=(1,))
+        n91 = ej.crossing_float(0.91, c91["e"], c91["kappa"][1], N=1)[0]
+        self.assertTrue(el.EJ_091[0] < n91 < el.EXPECT_091)
+
+
 if __name__ == "__main__":
     unittest.main()

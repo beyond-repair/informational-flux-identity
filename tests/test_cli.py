@@ -2200,6 +2200,21 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_el_corner_exact_0905_n3(self):
+        """Theorem EL: at 0.905 EJ.1's upper integrals with EL.1's left-node cell bound (k0 = 26, 1600 cells/unit, point cells
+        2000/16000) give Y_n > Y_oo for every n >= 103 at N = 3 (and 68, 84 for N = 1, 2) (local only, ~1 min with 4 workers;
+        python-flint). --full (3200/unit, 4000/32000) also certifies 0.91."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_exact_0905_n3 as el
+
+        el.FAILS.clear()
+        self.assertEqual(el.main(), 0)
+        self.assertEqual(el.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_exact_0905_n3.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EL", (ROOT / doc).read_text())
+
     def test_theorem_ek_corner_exact_0905(self):
         """Theorem EK: at 0.905 the EJ.2 lower-side certificates on the 4000/unit grid give Y_n < Y_oo at N = 2, n = 82, 83 and
         N = 3, n = 102, and leave N = 3, n = 103 undecided (local only, ~3 min; python-flint). The onsets 84, 104 need --full."""

@@ -2200,6 +2200,25 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_eh_corner_uniform_threshold(self):
+        """Theorem EH: Y_n < Y_oo for every alpha in [4gamma/3, 1), every N >= 1 and every n >= N (alpha-cells; local only,
+        ~15 s; python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_uniform_threshold as eh
+
+        eh.FAILS.clear()
+        eh.RESULT.clear()
+        self.assertEqual(eh.main(), 0)
+        self.assertEqual(eh.FAILS, [])
+        self.assertTrue(eh.RESULT["allok"])
+        rows = eh.RESULT["rows"]
+        self.assertLess(abs(rows[0][0] - 4 * eh.GAMMA / 3), 1e-12)
+        self.assertEqual(rows[-1][1], 1.0)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_uniform_threshold.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EH", (ROOT / doc).read_text())
+
     def test_theorem_eg_corner_explicit_threshold(self):
         """Theorem EG: every-n lower bounds for EE's coefficients; at alpha = 4gamma/3, Y_n < Y_oo for every N >= 1 and every
         n >= N (explicit n_0 = N) (local only, ~16 s; python-flint, sympy)."""

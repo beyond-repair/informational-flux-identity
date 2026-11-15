@@ -192,5 +192,34 @@ class CornerExplicitThresholdFloatTests(unittest.TestCase):
             self.assertLess(eg.lower_float(0.8, k, n=60)["c"], ee.direct_increment_float(0.8, k, h=4e-3))
 
 
+class CornerUniformThresholdFloatTests(unittest.TestCase):
+    def test_theorem_eh_uniform_threshold_floats(self):
+        """Theorem EH (numpy only): on a grid of [4gamma/3, 1) EF/EG's float routines give (3/rho^3)^2 |nu|^3 D'_oo < L(2) and an
+        n = 1 bound < 0 (L(1) alone from about 0.92 on, the eta route below), |nu| decreasing to 0 as alpha -> 1, inside the
+        arb cell brackets the script certifies."""
+        import gasket_fractional_corner_uniform_threshold as eh
+
+        al = [4 * eh.GAMMA / 3 + 1e-9, 0.92, 0.94, 0.96, 0.98, 0.995]
+        rows = eh.survey_float(al)
+        for r in rows:
+            self.assertLess(r["f"] ** 2 * r["T"], r["L2"] - 0.1)
+            self.assertLess(r["S11"], 0)
+            self.assertLess(r["nu"], 0)
+            self.assertLess(-r["nu"], r["rho"])
+        self.assertGreater(rows[0]["f"] * rows[0]["T"], rows[0]["L1"])      # at 4gamma/3, n = 1 needs the eta term
+        for r in rows[2:]:
+            self.assertLess(r["f"] * r["T"], r["L1"])                       # from 0.94 on L(1) alone suffices
+        self.assertTrue(all(rows[i + 1]["nu"] > rows[i]["nu"] for i in range(len(rows) - 1)))
+        self.assertTrue(0.36830 < -rows[0]["nu"] < 0.40822)                 # EH.3's first-cell |nu| bracket
+        self.assertTrue(0.02631 < -eh.survey_float([0.9925])[0]["nu"] < 0.05411)   # EH.3's cell [0.99, 0.995]
+        # EH.5 below 4gamma/3: (3/rho^3)^n |nu|^3 D'_oo < L(8) on the certified window n = 3..8 at 0.9, and it fails for large n
+        r9 = eh.survey_float([0.9])[0]
+        L8 = eh._mods()[1].lower_float(0.9, 8, n=60)["L"]
+        g = 3 / r9["rho"] ** 3
+        self.assertGreater(g, 1)
+        self.assertTrue(all(g**n * r9["T"] < L8 for n in range(3, 9)))
+        self.assertGreater(g**12 * r9["T"], 0.7380)                          # beyond EE.4's e*(0.9) upper end: no window there
+
+
 if __name__ == "__main__":
     unittest.main()

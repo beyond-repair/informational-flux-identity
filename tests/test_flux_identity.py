@@ -141,5 +141,32 @@ class CornerRemainderLimitFloatTests(unittest.TestCase):
         self.assertLess(abs(mod[-1][2] + 5.04), 0.05)
 
 
+class CornerCriticalSignFloatTests(unittest.TestCase):
+    def test_theorem_ef_critical_sign_floats(self):
+        """Theorem EF (numpy only): EF.1's formulas D'_oo = int x^-a G, nu = -rho Mt_oo/((rho-1) D'_oo), 1 - delta_N = h_oo/D'_oo
+        reproduce AZ (3)'s A_0.8, C_0.8, nu_0.8 and EA.4's C_delta(0.8, 1) in floats; at alpha = 4gamma/3 the floats of nu and
+        S_N = -nu^3(1-delta_N) - varrho_N sit inside EF.3's arb brackets and |nu|^3 < e*/D'_oo (S_N < 0 for every N)."""
+        import math
+        import gasket_fractional_corner_critical_sign as ef
+
+        q = np.array([0.0, 0.01, 1.0, 30.0, 1e4])
+        self.assertTrue(np.all((1 + q / 5) * (1 + q / 2) >= (1 + 2 * q / 5) * (1 + q / 6)))     # omega^0 >= 1
+        t = np.array([1e-9, 0.3, 7.0, 1e6])
+        qq = 2 * t / (5 + np.sqrt(25 + 4 * t))
+        self.assertTrue(np.allclose(qq * (qq + 5), t, rtol=1e-12))
+        f8 = ef.critical_floats(0.8, Ns=(1,), n_per=40)
+        kap = 2 * math.sin(math.pi * 0.8) / math.pi
+        self.assertLess(abs(f8["nu"] + 0.7274453844421553), 1e-7)           # AZ (3)
+        self.assertLess(abs(kap * f8["Dp"] - 2.3964097039792205), 1e-7)
+        self.assertLess(abs(kap * f8["Cp"] + 1.7432571783920757), 1e-7)
+        self.assertTrue(0.031293 < -f8["nu"] * f8["om"][1] < 0.031327)      # EA.4: C_delta = -nu (1 - delta_1)
+        fc = ef.critical_floats(4 * ef.GAMMA / 3, n_per=40)
+        self.assertTrue(-0.396698 < fc["nu"] < -0.3965332)
+        self.assertGreater(fc["e"] / fc["Dp"], -fc["nu"] ** 3)
+        for N, (lo, hi) in {1: (-0.0233127, -0.0232863), 2: (-0.174681, -0.174497), 3: (-0.454529, -0.454077),
+                            6: (-4.69362, -4.68928), 10: (-89.0757, -88.9943)}.items():
+            self.assertTrue(lo < fc["S"][N] < hi)
+
+
 if __name__ == "__main__":
     unittest.main()

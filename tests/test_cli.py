@@ -2200,6 +2200,20 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_ek_corner_exact_0905(self):
+        """Theorem EK: at 0.905 the EJ.2 lower-side certificates on the 4000/unit grid give Y_n < Y_oo at N = 2, n = 82, 83 and
+        N = 3, n = 102, and leave N = 3, n = 103 undecided (local only, ~3 min; python-flint). The onsets 84, 104 need --full."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_exact_0905 as ek
+
+        ek.FAILS.clear()
+        self.assertEqual(ek.main(), 0)
+        self.assertEqual(ek.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_exact_0905.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EK", (ROOT / doc).read_text())
+
     def test_theorem_ej_corner_two_sided_rate(self):
         """Theorem EJ: two-sided every-level rate; at 0.9 the last level with Y_n < Y_oo is bracketed to a few levels on the default
         grid (exactly 32 on --full) (local only, ~170 s; python-flint, sympy)."""

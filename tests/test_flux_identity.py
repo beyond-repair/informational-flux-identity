@@ -268,5 +268,25 @@ class CornerTwoSidedRateFloatTests(unittest.TestCase):
         self.assertTrue(c["kappa"][1] < uf["kappa"][1] < 1.03 * c["kappa"][1])
         self.assertEqual(n, 33)
 
+class CornerExact0905FloatTests(unittest.TestCase):
+    def test_theorem_ek_exact_0905_floats(self):
+        """Theorem EK (numpy only): at alpha = 0.905 the float version of EJ.2's criterion with EJ.1's float upper integrals (k0 = 14)
+        first holds at n = 68, 84, 104 for N = 1, 2, 3 -- the onset levels EK.1 certifies with arb on --full -- and the float U(14),
+        kappa_hi(2), kappa_hi(3) lie above EK's certified lower bounds L(12) >= 0.73421, kappa_lo(2, 14) >= 0.618019,
+        kappa_lo(3, 14) >= 1.70926 and U below EK's certified U(14) <= 0.740363."""
+        import gasket_fractional_corner_exact_0905 as ek
+        import gasket_fractional_corner_two_sided_rate as ej
+
+        self.assertEqual(ek.A_S, "0.905")
+        self.assertEqual(ek.EXPECT, {1: (67, 68), 2: (83, 84), 3: (102, 104)})
+        uf = ej.upper_float(0.905, 14, n=40)
+        self.assertTrue(0.73421 < uf["U"] < 0.740363)
+        self.assertTrue(uf["kappa"][2] > 0.618019 and uf["kappa"][3] > 1.70926)
+        for N in ej.NS:
+            n, _ = ej.crossing_float(0.905, uf["U"], uf["kappa"][N], N=N)
+            self.assertEqual(n, ek.EXPECT[N][1])
+            self.assertTrue(ek.EJ_BRACKET[N][0] <= ek.EXPECT[N][0] <= ek.EJ_BRACKET[N][1])
+
+
 if __name__ == "__main__":
     unittest.main()

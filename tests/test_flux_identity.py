@@ -248,5 +248,25 @@ class CornerOnsetLevelFloatTests(unittest.TestCase):
         self.assertTrue(all(s["nas"][N] < s["n1"][N] for N in ei.NS))
 
 
+
+class CornerTwoSidedRateFloatTests(unittest.TestCase):
+    def test_theorem_ej_two_sided_rate_floats(self):
+        """Theorem EJ (numpy only): EJ.1's every-level profile ceiling R^hi(x) = min(1/3, G x^(gamma-1), 1/V^lo) lies above the exact
+        R_k(x) (affine recursion) for k = k0..k0+15; the float upper integrals U(14), kappa_hi(1, 14) sit just above EE's e*, kappa_1
+        at 0.9, and EJ.2's criterion with them first holds at n = 33 (the level the script certifies with arb on --full)."""
+        import numpy as np
+        import gasket_fractional_corner_two_sided_rate as ej
+
+        x = np.array([1e-3, 0.3, 1.0, 4.0, 20.0, 150.0, 3000.0])
+        for k0 in (2, 6):
+            R = ej.rhi_float(x, k0)[0]
+            for k in range(k0, k0 + 16):
+                self.assertTrue(np.all(ej.rk_float(x, k) <= R * (1 + 1e-12)))
+        uf = ej.upper_float(0.9, 14, Ns=(1,), n=40)
+        n, c = ej.crossing_float(0.9, uf["U"], uf["kappa"][1])
+        self.assertTrue(c["e"] < uf["U"] < 1.03 * c["e"])
+        self.assertTrue(c["kappa"][1] < uf["kappa"][1] < 1.03 * c["kappa"][1])
+        self.assertEqual(n, 33)
+
 if __name__ == "__main__":
     unittest.main()

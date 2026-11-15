@@ -2200,6 +2200,24 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_ej_corner_two_sided_rate(self):
+        """Theorem EJ: two-sided every-level rate; at 0.9 the last level with Y_n < Y_oo is bracketed to a few levels on the default
+        grid (exactly 32 on --full) (local only, ~170 s; python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_two_sided_rate as ej
+
+        ej.FAILS.clear()
+        ej.RESULT.clear()
+        self.assertEqual(ej.main(), 0)
+        self.assertEqual(ej.FAILS, [])
+        r = ej.RESULT["exact"]["0.9"]["res"][1]
+        self.assertTrue(r["win"][-1] <= 32 < 33 <= r["n1"] <= 35)
+        self.assertTrue(all(ej.RESULT["n1"][a] <= ej.EI_N1[a] + 2 for a in ej.ALPHAS))
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_two_sided_rate.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EJ", (ROOT / doc).read_text())
+
     def test_theorem_ei_corner_onset_level(self):
         """Theorem EI: explicit onset levels n1 with Y_n > Y_oo for every n >= n1 below 4gamma/3 (local only, ~36 s; python-flint,
         sympy)."""

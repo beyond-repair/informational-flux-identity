@@ -2200,6 +2200,26 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_eg_corner_explicit_threshold(self):
+        """Theorem EG: every-n lower bounds for EE's coefficients; at alpha = 4gamma/3, Y_n < Y_oo for every N >= 1 and every
+        n >= N (explicit n_0 = N) (local only, ~16 s; python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_explicit_threshold as eg
+
+        eg.FAILS.clear()
+        eg.RESULT.clear()
+        self.assertEqual(eg.main(), 0)
+        self.assertEqual(eg.FAILS, [])
+        c = eg.RESULT["crit"]
+        self.assertTrue(bool(c["L"][2] > c["thr"]))
+        self.assertLess(float(c["S11"].upper()), 0)
+        for N in (1, 2, 3, 6, 10):
+            self.assertLess(float(c["Splus"][N].upper()), 0)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_explicit_threshold.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EG", (ROOT / doc).read_text())
+
     def test_theorem_ef_corner_critical_sign(self):
         """Theorem EF: at alpha = 4gamma/3, S_N = -nu^3(1-delta_N) - varrho_N < 0 for every N >= 1 (|nu|^3 < e*/D'_oo);
         EF.1's formulas agree with AZ (3) at 0.8 (local only, ~25 s; python-flint, sympy)."""

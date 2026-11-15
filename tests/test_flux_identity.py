@@ -168,5 +168,29 @@ class CornerCriticalSignFloatTests(unittest.TestCase):
             self.assertTrue(lo < fc["S"][N] < hi)
 
 
+class CornerExplicitThresholdFloatTests(unittest.TestCase):
+    def test_theorem_eg_explicit_threshold_floats(self):
+        """Theorem EG (numpy only): the every-n lower bound 1/V_k0 <= R_k (k >= k0) holds against the exact recursion, c_lo(k0)
+        sits below the direct quadrature of c_k at 0.8 and increases to EE's d*, and at alpha = 4gamma/3 the float L(2) clears
+        |nu|^3 D'_oo (EF.3's upper end 0.06243 * 6.005766) with the margin the arb run certifies."""
+        import math
+        import gasket_fractional_corner_explicit_threshold as eg
+        import gasket_fractional_corner_remainder_limit as ee
+
+        x = np.array([1e-3, 0.3, 1.0, 4.0, 20.0, 150.0])
+        for k0 in (1, 2, 4):
+            V = eg.vplus_float(x, k0)[0]
+            for k in (k0, k0 + 1, k0 + 5, k0 + 15):
+                self.assertTrue(np.all(1 / V <= eg.rk_float(x, k) * (1 + 1e-12)))
+        al = 4 * eg.GAMMA / 3
+        L = {k0: eg.lower_float(al, k0, n=60)["L"] for k0 in (1, 2, 4, 8)}
+        self.assertTrue(L[1] < L[2] < L[4] < L[8] < 0.7399065)             # below EF.3's e*(4gamma/3)
+        self.assertGreater(L[2], 0.06243 * 6.005766 + 0.08)                  # L(2) > |nu|^3 D'_oo with margin
+        self.assertLess(L[1], 0.06235 * 6.005548)                            # k0 = 1 alone does not suffice
+        self.assertGreater(L[8], 0.739)
+        for k in (2, 4):
+            self.assertLess(eg.lower_float(0.8, k, n=60)["c"], ee.direct_increment_float(0.8, k, h=4e-3))
+
+
 if __name__ == "__main__":
     unittest.main()

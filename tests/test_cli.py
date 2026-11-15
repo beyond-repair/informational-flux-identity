@@ -2200,6 +2200,30 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_ee_corner_remainder_limit(self):
+        """Theorem EE: (3/rho)^n eps_n -> e*, 3^n R_n -> varrho_N > 0 (limits exist); arb brackets at 0.8
+        (local only, ~40 s; python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_remainder_limit as ee
+
+        ee.FAILS.clear()
+        ee.RESULT.clear()
+        self.assertEqual(ee.main(), 0)
+        self.assertEqual(ee.FAILS, [])
+        c8 = ee.RESULT["c8"]
+        self.assertGreater(float(c8["d"].lower()), 0.29500)
+        self.assertLess(float(c8["d"].upper()), 0.29516)
+        self.assertGreater(float(c8["e"].lower()), 0.74077)
+        self.assertLess(float(c8["e"].upper()), 0.74118)
+        self.assertEqual(sorted(c8["varrho"]), [1, 2, 3, 6, 10])
+        self.assertGreater(float(c8["varrho"][1].lower()), 0.0287)
+        self.assertLess(float(c8["varrho"][1].upper()), 0.0289)
+        self.assertLess(float(c8["w"][1].upper()), 0)
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_remainder_limit.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EE", (ROOT / doc).read_text())
+
     def test_theorem_ed_corner_remainder_lower(self):
         """Theorem ED: eps_n >= L_alpha (rho/3)^n > 0 (Mt_k increasing), R_n = Theta(3^-n), J-term thresholds rho^J < 3 sharp;
         at 0.8 two-sided 3^n R_n brackets for every n >= 60 (local only, ~1 s; python-flint, sympy)."""

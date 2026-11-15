@@ -111,5 +111,35 @@ class CornerRemainderLowerFloatTests(unittest.TestCase):
             self.assertLess(abs(e - 0.746), 0.01)
 
 
+class CornerRemainderLimitFloatTests(unittest.TestCase):
+    def test_theorem_ee_remainder_limit_floats(self):
+        """Theorem EE (numpy only): the limit formulas d* = (1/3) int x^(1-a) D (G + Gh), e* = 3 d*/(2(1-rho/3)) and kappa_N
+        (floats, trapezoid in log x) sit inside EE.4's arb brackets at 0.8; the direct quadrature of (3/rho)^k (Mt_(k+1) - Mt_k)
+        approaches d*; u_0 - u_1 = (s+6)/(s+5); EB.1 + EE.3 reproduce EC.5's observed w_(k+1)/w_k."""
+        import math
+        import gasket_fractional_corner_remainder_limit as ee
+
+        s = np.array([0.0, 0.3, 2.0, 50.0])
+        beta = (s + 6) / ((s + 2) * (s + 5))
+        u1 = beta * (3 + s * (s + 5)) - 2 * s / (2 + s)
+        self.assertTrue(np.allclose(3 + s - u1, (s + 6) / (s + 5)))
+        lf = ee.limits_float(0.8, Ns=(1, 2, 3), n_per=40)
+        self.assertTrue(0.2950346 < lf["d"] < 0.2951296)
+        self.assertTrue(0.7408653 < lf["e"] < 0.7411039)
+        self.assertAlmostEqual(lf["e"], 3 * lf["d"] / (2 * (1 - 5**0.8 / 9)), places=14)
+        for N, (lo, hi) in {1: (0.101641, 0.101739), 2: (0.91313, 0.914013), 3: (2.83752, 2.84026)}.items():
+            self.assertTrue(lo < lf["kappa"][N] < hi)
+        c8, c12 = ee.direct_increment_float(0.8, 8), ee.direct_increment_float(0.8, 12)
+        self.assertLess(abs(c12 - lf["d"]), abs(c8 - lf["d"]))
+        self.assertLess(abs(c12 - lf["d"]), 3e-4)
+        self.assertGreater(c12, 0.005532 * 2 * (1 - 5**0.8 / 9) / 3)          # above ED.2's ell_0.8 bound
+        al, nu = 0.8, -0.7274453844421553
+        Dinf = 2.3964097039792205 / (2 * math.sin(math.pi * al) / math.pi)
+        mod = ee.ec5_model(al, nu, Dinf, 0.03131 / -nu, lf["e"], lf["kappa"][1], (14, 16, 18, 20))
+        for (_, r, _), o in zip(mod, (0.33637, 0.33541, 0.33475, 0.33426)):
+            self.assertLess(abs(r - o), 3e-4)
+        self.assertLess(abs(mod[-1][2] + 5.04), 0.05)
+
+
 if __name__ == "__main__":
     unittest.main()

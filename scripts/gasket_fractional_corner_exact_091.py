@@ -11,8 +11,9 @@ the same way) is unchanged", "0.88, 0.89 brackets unchanged", and left open "the
        already taken at b by EG (2/(6 + 5^(-k0-1) x), A, (Phi+6)/(Phi+5), eta_N(Phi(5^-N x)) are nonincreasing in x).  So EG.1's cell
        sums for c_lo(k0), kappa_lo(N, k0) stay lower bounds with R, Rh at the right node.  (EG's vcell takes A_k0, e_m at a and Phi,
        P_m at b: the two large terms come from opposite ends.  OBSERVED: at 0.905, k0 = 12, 200 cells/unit, L = 0.696283 with EG's
-       cell vs 0.735421 with EM.1; with EM.1, L(14) = 0.735421, 0.737856, 0.738466 on 200, 800, 3200 cells/unit -> EE's float
-       e* = 0.738670 at rate O(1/n).)
+       cell vs 0.735421 with EM.1; with EM.1, L(12) >= 0.735421, 0.737853, 0.738463 on 200, 800, 3200 cells/unit (the 800/3200
+       values logged by Theorem EN's script, EN.4; this line earlier said L(14) and quoted unlogged 0.737856, 0.738466) -> EE's float
+       e* = 0.738670, consistent with O(1/n).)
   EM.2 (arb, 128 bits; --full; EF.1 point cells n_p = 16000, n_m = 256000 (EF's certify_mt cell bound, cells split into parallel
        chunks); EM.1 lower k0 in {14, 20, 26} on 12800 cells/unit; EL.1 upper k0 = 26 on 12800 cells/unit): at alpha = 0.91, N = 1:
        EJ.2 (b) gives Y_n < Y_oo for n = 2565..2585 (with EJ.4: for n = 1..2585), and EJ.2 (a) holds at n1 = 2586, so Y_n > Y_oo for

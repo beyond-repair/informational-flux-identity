@@ -353,5 +353,45 @@ class CornerExact091FloatTests(unittest.TestCase):
         self.assertEqual(ej.crossing_float(0.89, 0.737190, 0.079005, N=1)[0], em.EXPECT89[1])
 
 
+class CornerExact088FloatTests(unittest.TestCase):
+    def test_theorem_en_exact_088_floats(self):
+        """Theorem EN (numpy only): EN.1's two-sided D'_n in floats at alpha = 0.88, n = k0 = 9.  The scaled recursion w_j = u_j/s_j
+        reproduces EJ's R_k where both are finite; the trapezoid D'_9 = int x^-a R_9 lies inside EN.1's bracket rebuilt from the
+        certified D'_oo, Mt_oo, L(9), U(9) of EN.2 (and well below D'_oo); EJ.2 (b)'s braces bound at n = 9 recomputed from the certified
+        endpoints is > 0 with D'_9 <= D'_oo (EM.4: undecided) and < 0 with EN.1's D_9^hi (EN.2: Y_9 < Y_oo); the float crossing is 10."""
+        import numpy as np
+        import gasket_fractional_corner_exact_088 as en
+        import gasket_fractional_corner_two_sided_rate as ej
+
+        self.assertEqual((en.EXPECT, en.ONSET, en.EJ4_WINDOW, en.K0), ((9, 10), 10, (2, 8), 9))
+        x = 5.0 ** np.linspace(-6.0, 4.0, 41)
+        for k in (1, 5, 9, 14):
+            a, b = en.rk_scaled_float(x, k), ej.rk_float(x, k)
+            self.assertTrue(np.all(np.abs(a - b) <= 1e-9 * np.abs(b)))
+        al, n = 0.88, 9
+        D = (5.4676986, 5.4679626)          # EN.2: D'_oo (rounded outward)
+        M = (0.74287912, 0.74306202)        # EN.2: Mt_oo
+        L, U = 0.73446007, 0.74222855       # EN.2: L(9) (lower), U(9) (upper)
+        nu_hi, om = 0.4993144, (0.068040179, 0.06804675)
+        klo = 0.08095188
+        d9lo, d9hi = en.dn_bounds_float(D[0], D[1], M[0], M[1], L, U, al, n)
+        self.assertTrue(abs(d9lo - 5.31126720) < 2e-8 and abs(d9hi - 5.31157011) < 2e-8)
+        d9 = en.dprime_float(al, n)
+        self.assertTrue(d9lo < d9 < d9hi < D[0])
+        rho = 5**al / 3
+        g = 3 / rho**3
+
+        def braces(Dh):
+            X = nu_hi**3 * g**n - L / Dh
+            return (om[0] * X if X < 0 else om[1] / (1 - nu_hi * rho ** (-n)) * X) - 1.5 * klo / Dh
+
+        self.assertGreater(braces(D[1]), 5e-4)     # EJ.2 (b) with D'_9 <= D'_oo: +6.965e-4, undecided
+        self.assertLess(braces(d9hi), -2e-4)       # EN.1: -2.344e-4 < 0
+        ef, _ = ej._mods()
+        c = ef.critical_floats(al, Ns=(1,))
+        self.assertTrue(L < c["e"] < U and klo < c["kappa"][1] < 0.08322902)
+        self.assertEqual(ej.crossing_float(al, c["e"], c["kappa"][1], N=1)[0], en.EXPECT[1])
+
+
 if __name__ == "__main__":
     unittest.main()

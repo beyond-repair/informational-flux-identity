@@ -2200,6 +2200,20 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_en_corner_exact_088(self):
+        """Theorem EN: EN.1's two-sided D'_n at alpha = 0.88, k0 = 9 (point 4000/32000, 1600 cells/unit) gives Y_9 < Y_oo, so with EJ.4's
+        window and EL.1's onset exactly one sign change 9 -> 10 for n >= 2 (local only, ~7.5 min with 4 workers on a loaded box; python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_exact_088 as en
+
+        en.FAILS.clear()
+        self.assertEqual(en.main(), 0)
+        self.assertEqual(en.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_exact_088.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EN", (ROOT / doc).read_text())
+
     def test_theorem_em_corner_exact_091(self):
         """Theorem EM: EM.1's right-node lower cell bound; at 0.89 (N = 1) Y_n < Y_oo for n = 2..14 and Y_n > Y_oo for every n >= 15;
         0.88 level 9 stays undecided; at 0.91 the lower side gives Y_n < Y_oo up to 2584 on the default grid (local only, ~6.5 min with

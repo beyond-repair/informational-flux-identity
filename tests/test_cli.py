@@ -2200,6 +2200,21 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_em_corner_exact_091(self):
+        """Theorem EM: EM.1's right-node lower cell bound; at 0.89 (N = 1) Y_n < Y_oo for n = 2..14 and Y_n > Y_oo for every n >= 15;
+        0.88 level 9 stays undecided; at 0.91 the lower side gives Y_n < Y_oo up to 2584 on the default grid (local only, ~6.5 min with
+        4 workers; python-flint). --full (point 16000/256000, 12800 cells/unit, ~15.5 min) closes 0.91 at 2585 -> 2586."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_exact_091 as em
+
+        em.FAILS.clear()
+        self.assertEqual(em.main(), 0)
+        self.assertEqual(em.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_exact_091.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EM", (ROOT / doc).read_text())
+
     def test_theorem_el_corner_exact_0905_n3(self):
         """Theorem EL: at 0.905 EJ.1's upper integrals with EL.1's left-node cell bound (k0 = 26, 1600 cells/unit, point cells
         2000/16000) give Y_n > Y_oo for every n >= 103 at N = 3 (and 68, 84 for N = 1, 2) (local only, ~1 min with 4 workers;

@@ -321,5 +321,37 @@ class CornerExact0905N3FloatTests(unittest.TestCase):
         self.assertTrue(el.EJ_091[0] < n91 < el.EXPECT_091)
 
 
+class CornerExact091FloatTests(unittest.TestCase):
+    def test_theorem_em_exact_091_floats(self):
+        """Theorem EM (numpy only): EM.1's right-node lower cell bound in floats -- on cells [b 5^(-1/1600), b] the exact R_k (affine
+        recursion, k = 14..29) never falls below EG.1's 1/V_14(b) at the right node, and R_k is nonincreasing across the cell; EE's
+        float limits put the first positive level at 2586 at 0.91 and 15 at 0.89 (N = 1), as EM.2 / EM.3 certify with arb; EM's
+        certified U(26) <= 0.73986384, kappa_hi(1, 26) <= 0.07466495 (0.91) and U(15) <= 0.737190, kappa_hi(1) <= 0.079005 (0.89)
+        sit above the float limits and still give onsets 2586, 15 in floats."""
+        import numpy as np
+        import gasket_fractional_corner_exact_091 as em
+        import gasket_fractional_corner_two_sided_rate as ej
+
+        self.assertEqual((em.EXPECT91, em.EXPECT89), ((2585, 2586), (14, 15)))
+        self.assertEqual((em.EJ4_LAST91, em.EL3_ONSET91), (2564, 2587))
+        for t in (-3.0, 0.0, 2.5, 4.0, 5.0):
+            b = 5.0**t
+            x = b * 5.0 ** (-np.arange(5, -1, -1) / (5 * 1600))
+            Rb = em.vlo_right_float(np.array([b]), 14)[0]
+            for k in range(14, 30):
+                r = ej.rk_float(x, k)
+                self.assertTrue(np.all(r >= Rb * (1 - 1e-12)))
+                self.assertTrue(np.all(np.diff(r) <= 1e-15 * r[0]))
+        ef, _ = ej._mods()
+        c91 = ef.critical_floats(0.91, Ns=(1,))
+        self.assertEqual(ej.crossing_float(0.91, c91["e"], c91["kappa"][1], N=1)[0], em.EXPECT91[1])
+        self.assertTrue(0.73971486 < c91["e"] < 0.73986384 and 0.07464970 < c91["kappa"][1] < 0.07466495)
+        self.assertEqual(ej.crossing_float(0.91, 0.73986384, 0.07466495, N=1)[0], em.EXPECT91[1])
+        c89 = ef.critical_floats(0.89, Ns=(1,))
+        self.assertEqual(ej.crossing_float(0.89, c89["e"], c89["kappa"][1], N=1)[0], em.EXPECT89[1])
+        self.assertTrue(c89["e"] < 0.737190 and c89["kappa"][1] < 0.079005)
+        self.assertEqual(ej.crossing_float(0.89, 0.737190, 0.079005, N=1)[0], em.EXPECT89[1])
+
+
 if __name__ == "__main__":
     unittest.main()

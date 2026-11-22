@@ -393,5 +393,47 @@ class CornerExact088FloatTests(unittest.TestCase):
         self.assertEqual(ej.crossing_float(al, c["e"], c["kappa"][1], N=1)[0], en.EXPECT[1])
 
 
+class CornerLevelOneFloatTests(unittest.TestCase):
+    def test_theorem_eo_level_one_floats(self):
+        """Theorem EO (numpy only): level 1 in closed form.  r_1 from the level-1 gasket Laplacian (6 vertices) equals AQ (1)'s
+        (s + 5)/(s^2 + 7s + 9) and EJ's R_1; EO.1's closed forms of D'_1 and 1 - delta_1^(1) equal the trapezoid of x^-a R_1 and
+        x^-a R_1 eta_1; Y_1 - Y_oo = rho^2 (om_1 - om) - om |nu| (rho + |nu|) recomputed from EN.2's / EO.2's certified om, |nu| endpoints
+        (worst corner) is < 0 at 0.88 and 0.89; float signs of Y_n - Y_oo for n = 1..12 match the certified patterns."""
+        import numpy as np
+        import gasket_fractional_corner_level_one as eo
+        import gasket_fractional_corner_two_sided_rate as ej
+
+        E = [(0, 3), (3, 1), (1, 4), (4, 2), (2, 5), (5, 0), (3, 4), (4, 5), (5, 3)]
+        L = np.zeros((6, 6))
+        for i, j in E:
+            L[i, i] += 1
+            L[j, j] += 1
+            L[i, j] -= 1
+            L[j, i] -= 1
+        v = np.array([1.0, -1.0, 0, 0, 0, 0])
+        for s in (1e-3, 0.3, 1.0, 4.0, 50.0):
+            r = 0.5 * v @ np.linalg.solve(L + s * np.eye(6), v)
+            self.assertAlmostEqual(r, (s + 5) / (s * s + 7 * s + 9), places=13)
+            self.assertAlmostEqual(r, (5 / 3) * float(ej.rk_float(np.array([5 * s]), 1)[0]), places=12)
+        for al in (0.7, 0.8, 0.85, 0.88, 0.89, 0.9, 0.905, 0.91):
+            rho = 5**al / 3
+            D, om1 = eo.level_quad_float(al, 1)
+            self.assertLess(abs(D - eo.j1_float(al) / rho), 1e-8)
+            self.assertLess(abs(om1 - eo.om1_float(al)), 1e-10)
+        # EO.2 recomputed from the certified endpoints (outward-rounded brackets; gap decreasing in om and |nu|)
+        for al, om, nab, om1, ub in ((0.88, (0.068040179, 0.06804675), (0.49916739, 0.4993144), 0.0927170037, -1.703396e-02),
+                                     (0.89, (0.070945361, 0.070951642), (0.46638151, 0.46651559), 0.0933602177, -1.793204e-02)):
+            self.assertAlmostEqual(eo.om1_float(al), om1, places=9)
+            worst = eo.level1_gap_float(al, nab[0], om[0])
+            self.assertLess(abs(worst - ub), 1e-7)
+            self.assertLess(worst, -0.017)
+        ef, _ = ej._mods()
+        for al, last in ((0.88, 9), (0.89, 14)):
+            c = ef.critical_floats(al, Ns=(1,))
+            vals = [eo.gap_n_float(al, n, -c["nu"], c["om"][1]) for n in range(1, 13)]
+            self.assertEqual([n for n, x in enumerate(vals, 1) if x < 0], list(range(1, min(last, 12) + 1)))
+            self.assertLess(abs(vals[0] - eo.level1_gap_float(al, -c["nu"], c["om"][1])), 1e-8)
+
+
 if __name__ == "__main__":
     unittest.main()

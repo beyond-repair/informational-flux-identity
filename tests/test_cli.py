@@ -2200,6 +2200,20 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_eo_corner_level_one(self):
+        """Theorem EO: level 1 in closed form; Y_1 < Y_oo at 0.88 and 0.89 (point 4000/32000), so with EJ.4, EM.3 and EN.2 the full sign
+        pattern for all n >= 1 (local only, ~2 min with 4 workers on a loaded box; python-flint, sympy, mpmath)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_level_one as eo
+
+        eo.FAILS.clear()
+        self.assertEqual(eo.main(), 0)
+        self.assertEqual(eo.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_level_one.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EO", (ROOT / doc).read_text())
+
     def test_theorem_en_corner_exact_088(self):
         """Theorem EN: EN.1's two-sided D'_n at alpha = 0.88, k0 = 9 (point 4000/32000, 1600 cells/unit) gives Y_9 < Y_oo, so with EJ.4's
         window and EL.1's onset exactly one sign change 9 -> 10 for n >= 2 (local only, ~7.5 min with 4 workers on a loaded box; python-flint)."""

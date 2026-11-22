@@ -435,5 +435,40 @@ class CornerLevelOneFloatTests(unittest.TestCase):
             self.assertLess(abs(vals[0] - eo.level1_gap_float(al, -c["nu"], c["om"][1])), 1e-8)
 
 
+class CornerExactLevelsFloatTests(unittest.TestCase):
+    def test_theorem_ep_exact_levels_floats(self):
+        """Theorem EP (numpy only): levels n = 1..6 at alpha = 0.85.  The level-n gasket Laplacian (n = 1..3; 6, 15, 42 vertices) gives
+        the same r_n as AQ (1)'s recursion, and its eigen-expansion r_n = sum c_i/(s + lambda_i) (c_i = (v.phi_i)^2/2 >= 0) gives
+        J_n = pi/sin(pi a) sum c_i lambda_i^-a = rho^n x trapezoid D'_n; the trapezoid 1 - delta_1^(n) equals EP.2's exact om_n
+        (n = 1..6); Y_n - Y_oo = rho^(2n) (om_n - om) - om |nu| (rho^n + |nu|) recomputed at the worst corner of EP.2's certified
+        om, |nu| brackets (widened by 1e-8) is < 0 for n = 1, 2, 3 and > 0 for n = 4, 5, 6."""
+        import numpy as np
+        import gasket_fractional_corner_exact_levels as ep
+        import gasket_fractional_corner_level_one as eo
+
+        self.assertEqual((ep.EXPECT85, ep.ONSET85, ep.SIGN85), ((3, 4), 5, {1: -1, 2: -1, 3: -1, 4: 1, 5: 1, 6: 1}))
+        al = 0.85
+        rho = 5**al / 3
+        for n in (1, 2, 3):
+            L, v = ep.gasket_laplacian(n)
+            self.assertEqual(len(v), (3 ** (n + 1) + 3) // 2)
+            for s in (1e-3, 0.3, 1.0, 4.0, 50.0):
+                self.assertLess(abs(ep.r_graph(n, s) - ep.r_recursion(n, s)), 1e-12)
+            lam, phi = np.linalg.eigh(L)
+            c = 0.5 * (phi.T @ v) ** 2
+            keep = lam > 1e-9
+            self.assertLess(float(np.sum(c[~keep])), 1e-20)            # v is orthogonal to the constants
+            J = np.pi / np.sin(np.pi * al) * float(np.sum(c[keep] * lam[keep] ** (-al)))
+            D, _ = eo.level_quad_float(al, n)
+            self.assertLess(abs(J / rho**n - D), 1e-8)
+        om, nab = (0.059038919 - 1e-8, 0.059046046 + 1e-8), (0.59110183 - 1e-8, 0.59128836 + 1e-8)   # EP.2's brackets, widened
+        for n, om_n in ep.OM_EXACT85.items():
+            self.assertLess(abs(eo.level_quad_float(al, n)[1] - om_n), 1e-8)
+            if ep.SIGN85[n] < 0:
+                self.assertLess(ep.gap_float(al, n, nab[0], om[0], om_n), -1.5e-3)
+            else:
+                self.assertGreater(ep.gap_float(al, n, nab[1], om[1], om_n), 4e-4)
+
+
 if __name__ == "__main__":
     unittest.main()

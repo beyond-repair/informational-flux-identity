@@ -2200,6 +2200,21 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EB", (ROOT / doc).read_text())
 
+    def test_theorem_ep_corner_exact_levels(self):
+        """Theorem EP: levels 1..6 by exact residue sums; at 0.85 (point 4000/32000) Y_n < Y_oo for n = 1..3 and > for n = 4..6, EL.1's
+        onset 5, so exactly one sign change 3 -> 4 for all n >= 1; at 0.7, 0.8 none (local only, ~4 min with 4 workers on a loaded box;
+        python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_exact_levels as ep
+
+        ep.FAILS.clear()
+        self.assertEqual(ep.main(), 0)
+        self.assertEqual(ep.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_exact_levels.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EP", (ROOT / doc).read_text())
+
     def test_theorem_eo_corner_level_one(self):
         """Theorem EO: level 1 in closed form; Y_1 < Y_oo at 0.88 and 0.89 (point 4000/32000), so with EJ.4, EM.3 and EN.2 the full sign
         pattern for all n >= 1 (local only, ~2 min with 4 workers on a loaded box; python-flint, sympy, mpmath)."""

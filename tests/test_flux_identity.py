@@ -500,5 +500,29 @@ class CornerPoleStructureTests(unittest.TestCase):
                 self.assertLess(eq.peval(A, lo) * eq.peval(A, hi), 0)
 
 
+class HResidueSignTests(unittest.TestCase):
+    def test_theorem_er_h_residue_signs(self):
+        """Theorem ER (pure-Python rationals and numpy only): at the level-n gasket Laplacian's v-weighted eigenvalues -mu (n = 1..4) the number
+        of mu with q_(n-1)(-mu) = p^(n-1)(-mu) + 5 < 0 is 1 (n = 1) and 2^(n-2) (n >= 2), none with q = 0; p^m(-5) = 0 for m >= 1; and
+        q_(n-1) has 2^(n-1) sign changes on exact rational probes (every interval of {p^(n-1) < -5} is bounded)."""
+        from fractions import Fraction
+        import gasket_fractional_corner_h_residue_signs as er
+        import gasket_fractional_corner_pole_structure as eq
+
+        v = -5
+        for _ in range(6):
+            v = v * (v + 5)
+            self.assertEqual(v, 0)
+        for n in range(1, 5):
+            nv, groups = eq.laplacian_weights(n)
+            w = [g for g in groups if g[1] > 1e-12]
+            qc = er.q_poly(n)
+            vals = [eq.peval(qc, Fraction(-float(mu))) for mu, _ in w]
+            self.assertEqual((len(w), sum(1 for x in vals if x < 0), sum(1 for x in vals if x == 0)), (2**n, er.predicted_neg(n), 0))
+            xs = [Fraction(-int(1000 * 6.3) + i, 1000) for i in range(0, 6300, 1)]
+            sg = [eq.peval(qc, x) > 0 for x in xs]
+            self.assertEqual(sum(1 for a, b in zip(sg, sg[1:]) if a != b), 2 ** (n - 1))
+
+
 if __name__ == "__main__":
     unittest.main()

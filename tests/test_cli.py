@@ -2243,6 +2243,20 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem ER", (ROOT / doc).read_text())
 
+    def test_theorem_es_h_residue_sums(self):
+        """Theorem ES: sum, low moments and magnitude floor of H_n's residues (exact n <= 10, arb n = 1..8, mpmath n <= 4) (local only,
+        a few minutes niced, n = 8 dominates; python-flint, mpmath)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_h_residue_sums as es
+
+        es.FAILS.clear()
+        self.assertEqual(es.main(), 0)
+        self.assertEqual(es.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_h_residue_sums.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem ES", (ROOT / doc).read_text())
+
     def test_theorem_eo_corner_level_one(self):
         """Theorem EO: level 1 in closed form; Y_1 < Y_oo at 0.88 and 0.89 (point 4000/32000), so with EJ.4, EM.3 and EN.2 the full sign
         pattern for all n >= 1 (local only, ~2 min with 4 workers on a loaded box; python-flint, sympy, mpmath)."""

@@ -524,5 +524,40 @@ class HResidueSignTests(unittest.TestCase):
             self.assertEqual(sum(1 for a, b in zip(sg, sg[1:]) if a != b), 2 ** (n - 1))
 
 
+
+class HResidueSumTests(unittest.TestCase):
+    def test_theorem_es_h_residue_sums(self):
+        """Theorem ES (pure-Python integers and numpy only): the Laurent coefficients of h_n = Q_n/(2 A_n) at infinity (residue power sums)
+        vanish for m < 2^(n-1) and equal 1/2 at m = 2^(n-1) (n = 1..8, exact); h_n(0) = 5^(n-1)/(2 3^(n+1)); at the level-n gasket
+        Laplacian's v-weighted eigenvalues (n = 1..4, floats): sum h_j = 0, S^- = S^+, sum h_j/w_j = h_n(0), S^- >= (2/5) C^- (n >= 2),
+        S_1^- = 1/(2 sqrt13)."""
+        from fractions import Fraction
+        import gasket_fractional_corner_h_residue_sums as es
+        import gasket_fractional_corner_h_residue_signs as er
+        import gasket_fractional_corner_pole_structure as eq
+
+        for n in range(1, 9):
+            half = 2 ** (n - 1)
+            ps = es.power_sums_exact(n, half + 1)
+            self.assertTrue(all(x == 0 for x in ps[:half]))
+            self.assertEqual(ps[half], Fraction(1, 2))
+            Q, A = es.q_pair(n)
+            self.assertEqual(Fraction(eq.peval(Q, 0), 2 * eq.peval(A, 0)), Fraction(5 ** (n - 1), 2 * 3 ** (n + 1)))
+        for n in range(1, 5):
+            nv, groups = eq.laplacian_weights(n)
+            w = [g for g in groups if g[1] > 1e-12]
+            qc = er.q_poly(n)
+            h = [c / (2 * float(eq.peval(qc, Fraction(-float(mu))))) for mu, c in w]
+            c_neg = sum(c for (mu, c), hj in zip(w, h) if hj < 0)
+            s_neg = -sum(x for x in h if x < 0)
+            s_pos = sum(x for x in h if x > 0)
+            self.assertLess(abs(sum(h)), 1e-9)
+            self.assertLess(abs(s_neg - s_pos), 1e-9)
+            self.assertLess(abs(sum(hj / mu for (mu, _), hj in zip(w, h)) - 5 ** (n - 1) / (2 * 3 ** (n + 1))), 1e-9)
+            if n == 1:
+                self.assertLess(abs(s_neg - 1 / (2 * 13**0.5)), 1e-9)
+            else:
+                self.assertGreaterEqual(s_neg, 0.4 * c_neg)
+
 if __name__ == "__main__":
     unittest.main()

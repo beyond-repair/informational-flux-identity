@@ -2215,6 +2215,21 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem EP", (ROOT / doc).read_text())
 
+    def test_theorem_eq_corner_pole_structure(self):
+        """Theorem EQ: EP.1's pole structure for every level n (EQ.1 exact recursion and identities n = 0..10, coprime and squarefree,
+        equal to EP's gcd-reduced pair n = 1..7; certified isolation n = 7, 8; Laplacian weights n = 1..5) (local only, ~30 s;
+        python-flint, sympy)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_pole_structure as eq
+
+        eq.FAILS.clear()
+        self.assertEqual(eq.main(), 0)
+        self.assertEqual(eq.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_pole_structure.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EQ", (ROOT / doc).read_text())
+
     def test_theorem_eo_corner_level_one(self):
         """Theorem EO: level 1 in closed form; Y_1 < Y_oo at 0.88 and 0.89 (point 4000/32000), so with EJ.4, EM.3 and EN.2 the full sign
         pattern for all n >= 1 (local only, ~2 min with 4 workers on a loaded box; python-flint, sympy, mpmath)."""

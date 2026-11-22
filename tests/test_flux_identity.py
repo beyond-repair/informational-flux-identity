@@ -470,5 +470,35 @@ class CornerExactLevelsFloatTests(unittest.TestCase):
                 self.assertGreater(ep.gap_float(al, n, nab[1], om[1], om_n), 4e-4)
 
 
+class CornerPoleStructureTests(unittest.TestCase):
+    def test_theorem_eq_pole_structure(self):
+        """Theorem EQ (numpy and pure-Python integers only): EQ.1's recursion A_(n+1) = [(s+6) A_n(p) - 2s(s+5) B_n(p)]/(s+2),
+        B_(n+1) = (s+5) B_n(p) divides exactly and gives monic A_n, B_n of degrees 2^n, 2^n - 1 with A_n(0) = 3^(n+1), B_n(0) = 5^n,
+        A_n(-6) = -3 B_n(-6) != 0, B_n = prod (p^k + 5) (n = 0..7); B_n/A_n equals the float AQ (1) recursion; the level-n gasket
+        Laplacian (n = 1..4) has exactly 2^n distinct eigenvalues carrying v-weight, all > 0, and A_n changes sign (exact rationals) across each -mu -+ 1e-8."""
+        import numpy as np
+        import gasket_fractional_corner_exact_levels as ep
+        import gasket_fractional_corner_pole_structure as eq
+
+        for n in range(8):
+            I = eq.eq1_identities(n)
+            self.assertEqual((I["degA"], I["degB"], I["A0"], I["B0"], I["m6"]), (2**n, 2**n - 1, 3 ** (n + 1), 5**n, 0))
+            self.assertTrue(I["monic"] and I["Bprod"] and I["B6pos"] and I["Am6"] != 0)
+        for n in range(1, 5):
+            A, B = eq.eq1_pair(n)
+            for s in (1e-3, 0.3, 1.0, 4.0):
+                self.assertLess(abs(eq.peval(B, s) / eq.peval(A, s) - ep.r_recursion(n, s)), 1e-12)
+            nv, groups = eq.laplacian_weights(n)
+            w = [g for g in groups if g[1] > 1e-12]
+            self.assertEqual((nv, len(w)), ((3 ** (n + 1) + 3) // 2, 2**n))
+            self.assertLess(max((g[1] for g in groups if g[1] <= 1e-12), default=0.0), 1e-20)
+            self.assertGreater(min(g[0] for g in w), 1e-6)
+            self.assertLess(abs(sum(g[1] for g in w) - 1.0), 1e-12)              # sum of residues = |v|^2/2 = 1
+            from fractions import Fraction
+            for mu, _ in w:                                                      # exact sign change of A_n across -mu -+ 1e-8
+                lo, hi = Fraction(-float(mu) - 1e-8), Fraction(-float(mu) + 1e-8)
+                self.assertLess(eq.peval(A, lo) * eq.peval(A, hi), 0)
+
+
 if __name__ == "__main__":
     unittest.main()

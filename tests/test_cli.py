@@ -2257,6 +2257,20 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem ES", (ROOT / doc).read_text())
 
+    def test_theorem_et_h_zero_limit(self):
+        """Theorem ET: 3^n H_n(0) -> W(0)/2 with a certified uniform bracket (arb), quadrature n <= 24 (local only, a few minutes niced;
+        python-flint, mpmath)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_h_zero_limit as et
+
+        et.FAILS.clear()
+        self.assertEqual(et.main(), 0)
+        self.assertEqual(et.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_h_zero_limit.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem ET", (ROOT / doc).read_text())
+
     def test_theorem_eo_corner_level_one(self):
         """Theorem EO: level 1 in closed form; Y_1 < Y_oo at 0.88 and 0.89 (point 4000/32000), so with EJ.4, EM.3 and EN.2 the full sign
         pattern for all n >= 1 (local only, ~2 min with 4 workers on a loaded box; python-flint, sympy, mpmath)."""

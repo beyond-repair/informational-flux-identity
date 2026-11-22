@@ -559,5 +559,26 @@ class HResidueSumTests(unittest.TestCase):
             else:
                 self.assertGreaterEqual(s_neg, 0.4 * c_neg)
 
+
+class HZeroLimitTests(unittest.TestCase):
+    def test_theorem_et_h_zero_limit(self):
+        """Theorem ET (pure Python and numpy only): the decimation recursion equals EQ.1's B_n/A_n and Q_n/(2A_n) exactly (n <= 5), the
+        exact scaling 3^n 5^-n h_n(5^-n t) = R_n(t)/(2(5 + psi_(n-1)(t/5))); a float log-grid quadrature of ET.1's integral reproduces
+        ES.4's H_n(0) (n = 1..6) and 3^n H_n(0) lies in ET.3's certified [L, U] = [0.19029, 1.93463]."""
+        import numpy as np
+        import gasket_fractional_corner_h_zero_limit as et
+
+        et.FAILS.clear()
+        for n in range(1, 6):
+            et.exact_check(n)
+        self.assertEqual(et.FAILS, [])
+        for n in range(1, 7):
+            u = np.linspace(np.log(1e-12), np.log(1e12 if n <= 3 else 1e6), 4001)  # float range; tails below 1e-10
+            t = np.exp(u)
+            f = np.array([3.0 ** n / 5.0 ** n * et.h_rec(n, float(x) / 5.0 ** n) for x in t]) * t
+            val = float(np.sum((f[1:] + f[:-1]) * np.diff(u)) / 2)
+            self.assertLess(abs(val / 3 ** n - float(et.ES_H0[n - 1])), 1e-6 / 3 ** n + 1e-9)
+            self.assertTrue(0.19029 <= val <= 1.93463)
+
 if __name__ == "__main__":
     unittest.main()

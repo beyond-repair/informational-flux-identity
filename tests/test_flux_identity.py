@@ -715,5 +715,22 @@ class HAlphaRateTests(unittest.TestCase):
         self.assertLess(gap, (C + 1) * 0.4**11)
 
 
+class HAlphaTailTests(unittest.TestCase):
+    def test_theorem_ez_tail_all_n(self):
+        """Theorem EZ (pure Python floats; arb certificates in the script): tail bound <= (2/5)^n for n >= 11, a in [-1, 9/10],
+        monotone decreasing in a, and it fails at n = 10."""
+        import gasket_fractional_corner_h_alpha_tail as ez
+
+        self.assertGreater(ez.L_float(10), 2.0)
+        for n in range(11, 60):
+            prev = None
+            for i in range(20):
+                v = ez.L_float(n, -1 + 1.9 * i / 19)
+                self.assertLess(v, -1.0)
+                if prev is not None:
+                    self.assertLess(v, prev)
+                prev = v
+
+
 if __name__ == "__main__":
     unittest.main()

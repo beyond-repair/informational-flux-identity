@@ -646,5 +646,25 @@ class HZeroRateConstantTests(unittest.TestCase):
         self.assertLess(abs(c - float(lo)), 1e-7)
 
 
+class HZeroMellinTests(unittest.TestCase):
+    def test_theorem_ew_mellin_zeros(self):
+        """Theorem EW (pure Python only): EU.4's partition of unity sum_j F(5^j t) = 1 (F = tR/(5+psi(t/5))) holds in floats, so
+        W(i omega_k) = int F t^(-i omega_k - 1) dt = 0 for omega_k = 2 pi k/ln5, k = 1, 2, 3 (log-grid trapezoid within 1e-9), while
+        W(0) = ln5; psi(1) > 1 gives EW.1's decay (psi(5^m) >= psi(1)^(2^m) in floats, m <= 5)."""
+        import math
+        import gasket_fractional_corner_h_zero_mellin as ew
+        import gasket_fractional_corner_h_zero_rate_constant as ev
+
+        for t in (0.21, 0.5, 0.97):
+            self.assertLess(ew.partition_defect(t), 1e-12)
+        self.assertLess(abs(ew.mellin_float(0, n=3001).real - math.log(5)), 1e-9)
+        for k in (1, 2, 3):
+            self.assertLess(abs(ew.mellin_float(k, n=3001)), 1e-9)
+        p1 = ev.psi_float(1.0)
+        self.assertGreater(p1, 1.0)
+        for m in range(1, 6):
+            self.assertGreaterEqual(ev.psi_float(5.0 ** m), p1 ** (2 ** m) * (1 - 1e-9))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -2257,6 +2257,19 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem ES", (ROOT / doc).read_text())
 
+    def test_theorem_ew_h_zero_mellin(self):
+        """Theorem EW: Mellin zeros of W at 2 pi i k/ln5 (local only, a few minutes niced; python-flint, mpmath)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_h_zero_mellin as ew
+
+        ew.FAILS.clear()
+        self.assertEqual(ew.main(), 0)
+        self.assertEqual(ew.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_h_zero_mellin.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EW", (ROOT / doc).read_text())
+
     def test_theorem_ev_h_zero_rate_constant(self):
         """Theorem EV: certified enclosure of EU's rate constant c (local only, a few minutes niced; python-flint, mpmath)."""
         sys.path.insert(0, str(ROOT / "scripts"))

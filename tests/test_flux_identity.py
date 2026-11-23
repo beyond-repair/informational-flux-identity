@@ -684,5 +684,36 @@ class HAlphaLimitTests(unittest.TestCase):
             self.assertLess(abs(2 * ex.scaled_H_float(8, a, N=2001) / certified[a] - 1), 2e-3)
 
 
+class HAlphaRateTests(unittest.TestCase):
+    def test_theorem_ey_geometric_rate(self):
+        """Theorem EY (pure Python): EY.1 log psi/psi_m <= (t/10)(2/5)^m; EY.2 |f_n/f - 1| <= (t/3)(2/5)^n on t <= (5/2)^n;
+        EY.3 tail bound <= (2/5)^n for n >= 11 on a in [-1, 9/10]; EY.3 itself at alpha = 1/2, n = 11 against a coarse quadrature."""
+        import gasket_fractional_corner_h_alpha_rate as ey
+
+        self.assertTrue(ey.check_eps_lemma())
+        self.assertLessEqual(ey.check_pointwise(ns=range(1, 6), pts=9), 1.0)
+        self.assertTrue(ey.tail_ok(nmax=30))
+        self.assertLess(ey.tail_bound(11, -1.0) / 0.4**11, 0.2)
+        import math
+        h = 0.05
+        lo, hi = math.log(1e-12), math.log(2e8)
+        N = int((hi - lo) / h) // 2 * 2
+        h = (hi - lo) / N
+        a = 0.5
+
+        def I(F, a=a):
+            s = 0.0
+            for i in range(N + 1):
+                t = math.exp(lo + i * h)
+                s += (1 if i in (0, N) else (4 if i % 2 else 2)) * t ** (1 - a) * F(t)
+            return 1e-12 ** (1 - a) / (30 * (1 - a)) + s * h / 3
+
+        W = 2 * I(ey.f_inf)
+        C = 2 * I(ey.f_inf, a - 1) / 6
+        self.assertLess(abs(W - 0.5380024180337537), 1e-4)
+        gap = abs(I(lambda t: ey.f_n(11, t)) - W / 2)
+        self.assertLess(gap, (C + 1) * 0.4**11)
+
+
 if __name__ == "__main__":
     unittest.main()

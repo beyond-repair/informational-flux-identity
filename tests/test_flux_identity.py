@@ -819,5 +819,16 @@ class HAlphaN1CrossingTests(unittest.TestCase):
         self.assertLess(fc.tail_fn_analytic(1, float(fd.A_HI), 60), 1e-8)
 
 
+class HAlphaAnalyticTests(unittest.TestCase):
+    def test_theorem_fe_dominator(self):
+        """Theorem FE: the elementary bound |u|^k e^(-delta|u|) <= (k/(e delta))^k and the resulting dominator on FD.2's interval."""
+        import gasket_fractional_corner_h_alpha_analytic as fe
+
+        for k in (1, 2):
+            self.assertTrue(fe.lemma_grid_ok(k, 0.05, umax=2000.0, N=20000))
+        ts = [5.0 ** (m / 4) for m in range(-120, 121)]
+        self.assertTrue(fe.dominator_ok(1, fe.G0, fe.G1, 0.05, ts))
+
+
 if __name__ == "__main__":
     unittest.main()

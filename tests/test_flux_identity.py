@@ -845,5 +845,21 @@ class HAlphaMonotoneNTests(unittest.TestCase):
         self.assertLess(ff.N1_NEG, ff.N1_POS)
 
 
+class HAlphaN1MonotoneCrossingTests(unittest.TestCase):
+    def test_theorem_fg_n1_crossing(self):
+        """Theorem FG (pure Python floats; arb certificates in the script): G_2 - G_1 changes sign once in (-0.5679, -0.5677),
+        Delta' > 0 on [-13/20, -1/2], Delta > 0 on [-1/2, -3/8]; intervals abut FF.2's certified ranges."""
+        import gasket_fractional_corner_h_alpha_n1_monotone_crossing as fg
+
+        self.assertTrue(fg.D_LO == fg.ff.N1_NEG < fg.B_LO < fg.B_HI < fg.D_HI == fg.P_LO < fg.P_HI == fg.ff.N1_POS)
+        self.assertTrue(all(fg.fc.small_t_ok(n) for n in (1, 2)))
+        self.assertLess(fg.Delta_float(-0.58, N=1200)[0], 0)
+        self.assertGreater(fg.Delta_float(-0.555, N=1200)[0], 0)
+        for a in (-0.65, -0.5675, -0.5):
+            self.assertGreater(fg.Delta_float(a, N=1200)[1], 1)
+        for a in (-0.5, -0.4375, -0.375):
+            self.assertGreater(fg.Delta_float(a, N=1200)[0], 0.1)
+
+
 if __name__ == "__main__":
     unittest.main()

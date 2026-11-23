@@ -861,5 +861,19 @@ class HAlphaN1MonotoneCrossingTests(unittest.TestCase):
             self.assertGreater(fg.Delta_float(a, N=1200)[0], 0.1)
 
 
+class HAlphaMonotoneLargeNTests(unittest.TestCase):
+    def test_theorem_fh_large_n_monotone(self):
+        """Theorem FH (pure Python floats; arb certificates in the script): pointwise L > U/3 with L <= V <= U, so the
+        two-sided bounds L <= 3^n D_n (n >= 11) and 3^m D_m <= U (m >= 12) force G_(n+1) > G_n."""
+        import gasket_fractional_corner_h_alpha_monotone_large_n as fh
+
+        self.assertEqual(len(fh.PART), 41)
+        self.assertEqual((fh.PART[0], fh.PART[-1]), (-1, 1))
+        for a in (-1.0, 0.0, 0.9):
+            L, U, V = fh.float_margin(a, N=600)
+            self.assertLess(L, V)
+            self.assertLess(V, U)
+            self.assertGreater(L, U / 3)
+
 if __name__ == "__main__":
     unittest.main()

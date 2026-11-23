@@ -806,5 +806,18 @@ class HAlphaBelowSmallNTests(unittest.TestCase):
         self.assertLess(fc.tail_fn_analytic(1, float(fc.N1_POS), 60), 1e-8)
 
 
+class HAlphaN1CrossingTests(unittest.TestCase):
+    def test_theorem_fd_n1_crossing_constants(self):
+        """Theorem FD (arb certificates in the script): bracket and gap constants are consistent with FC.3; tail constants are small."""
+        import gasket_fractional_corner_h_alpha_n1_crossing as fd
+        import gasket_fractional_corner_h_alpha_below_small_n as fc
+
+        self.assertLess(fd.A_LO, fd.A_HI)
+        self.assertGreater(fd.A_LO, fc.N1_NEG)
+        self.assertLess(fd.A_HI, fc.N1_POS)
+        self.assertEqual((fd.G0, fd.G1), (fc.N1_NEG, fc.N1_POS))
+        self.assertLess(fc.tail_fn_analytic(1, float(fd.A_HI), 60), 1e-8)
+
+
 if __name__ == "__main__":
     unittest.main()

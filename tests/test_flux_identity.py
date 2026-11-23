@@ -790,5 +790,21 @@ class HAlphaSharpRateTests(unittest.TestCase):
         self.assertLess(abs(fb.V_float(0.0, N=2000) - fb.EV_C), 1e-7)
 
 
+class HAlphaBelowSmallNTests(unittest.TestCase):
+    def test_theorem_fc_below_small_n(self):
+        """Theorem FC (pure Python floats; arb certificates in the script): D_n = W/2 - rho^-n H_n > 0 for n = 2..10 at sample alphas in
+        [-1, 1); KEPT FAILURE FC.3: D_1 < 0 near alpha = -1 (witness alpha = -4/5) and D_1 > 0 at -0.73; FC.2's small-t and tail constants."""
+        import gasket_fractional_corner_h_alpha_below_small_n as fc
+
+        self.assertTrue(all(fc.small_t_ok(n) for n in range(1, 11)))
+        for n in (2, 10):
+            for a in (-1.0, 0.5, 0.999):
+                self.assertGreater(fc.D_float(n, a, N=1200), 0)
+        self.assertLess(fc.D_float(1, -0.8, N=1200), 0)
+        self.assertGreater(fc.D_float(1, -0.73, N=1200), 0)
+        self.assertLess(fc.tail_fn_analytic(2, -1.0, 20), 1e-9)
+        self.assertLess(fc.tail_fn_analytic(1, float(fc.N1_POS), 60), 1e-8)
+
+
 if __name__ == "__main__":
     unittest.main()

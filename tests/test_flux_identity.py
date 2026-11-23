@@ -666,5 +666,23 @@ class HZeroMellinTests(unittest.TestCase):
             self.assertGreaterEqual(ev.psi_float(5.0 ** m), p1 ** (2 ** m) * (1 - 1e-9))
 
 
+class HAlphaLimitTests(unittest.TestCase):
+    def test_theorem_ex_alpha_limit(self):
+        """Theorem EX (pure Python only): EX.1's exact integrand identity and dominator chain psi_k(t) >= (t/5^J)^(2^J) (rationals);
+        float W(alpha) matches EX.3's certified values; W'(3/5) < 0 < W'(7/10); 2 rho^-n H_n(alpha) at n = 8 is within 0.2% of W(alpha)."""
+        from fractions import Fraction
+        import gasket_fractional_corner_h_alpha_limit as ex
+
+        self.assertTrue(ex.dominator_ok(kmax=5))
+        self.assertTrue(all(ex.identity_exact(n, a, Fraction(7)) for n in range(1, 5) for a in (-1, 0, 1)))
+        certified = {-1.0: 71.79566867531049319, -0.5: 8.831549168255568108, 0.5: 0.5380024180337537157, 0.9: 0.8487179806251498868}
+        for a, v in certified.items():
+            self.assertLess(abs(ex.W_float(a, n=3001) - v), 1e-6 * max(1.0, v))
+        self.assertLess(ex.W_float(0.6, n=3001, deriv=True), -0.27)
+        self.assertGreater(ex.W_float(0.7, n=3001, deriv=True), 0.21)
+        for a in (-0.5, 0.5):
+            self.assertLess(abs(2 * ex.scaled_H_float(8, a, N=2001) / certified[a] - 1), 2e-3)
+
+
 if __name__ == "__main__":
     unittest.main()

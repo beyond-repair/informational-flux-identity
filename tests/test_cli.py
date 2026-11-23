@@ -2257,6 +2257,19 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem ES", (ROOT / doc).read_text())
 
+    def test_theorem_ex_h_alpha_limit(self):
+        """Theorem EX: weighted limit on Re alpha < 1 and certified real-axis values of W (local only, a few minutes niced; python-flint)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_h_alpha_limit as ex
+
+        ex.FAILS.clear()
+        self.assertEqual(ex.main(), 0)
+        self.assertEqual(ex.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_h_alpha_limit.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EX", (ROOT / doc).read_text())
+
     def test_theorem_ew_h_zero_mellin(self):
         """Theorem EW: Mellin zeros of W at 2 pi i k/ln5 (local only, a few minutes niced; python-flint, mpmath)."""
         sys.path.insert(0, str(ROOT / "scripts"))

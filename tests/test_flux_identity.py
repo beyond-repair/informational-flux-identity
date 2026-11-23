@@ -760,5 +760,35 @@ class HAlphaConstantsTests(unittest.TestCase):
         self.assertTrue(math.isfinite(w))
 
 
+class HAlphaSharpRateTests(unittest.TestCase):
+    def test_theorem_fb_sharp_rate(self):
+        """Theorem FB (pure Python floats; arb certificates in the script): FB.1's exact split f_n/f = e^Delta/(1+E) with
+        (t/2)3^-n R <= E <= (t/6)3^-n(1+(3/5)^n) and 0 <= Delta <= Lam_n(t); sup_(n>=9) q^n beta_n < 0.24; tail tau_9 < 0.03 and
+        tau_n tiny for n >= 11; the uniform constant C(n>=9) < 1331; V(0) equals EV's rate constant c."""
+        import math
+        import gasket_fractional_corner_h_alpha_sharp_rate as fb
+        import gasket_fractional_corner_h_alpha_limit as ex
+
+        for n in (2, 5, 9, 12):
+            for k in range(9):
+                t = 1e-3 * (3.0 ** n * 1e3) ** (k / 8)
+                E, D, L, ratio, P = fb.split_float(n, t)
+                self.assertAlmostEqual(ratio, math.exp(D) / (1 + E), delta=1e-10 * ratio)
+                self.assertLessEqual(t / 2 * 3.0 ** -n / (3 * P), E * (1 + 1e-12))
+                self.assertLessEqual(E, t / 6 * 3.0 ** -n * (1 + 0.6 ** n) * (1 + 1e-12))
+                self.assertGreaterEqual(D, -1e-12)
+                self.assertLessEqual(D, L)
+        self.assertLess(max(fb.lam_bar_f(n) for n in range(9, 200)), 0.24)
+        self.assertLess(math.exp(fb.best_J(9)[1]), 0.03)
+        self.assertLess(max(fb.best_J(n)[1] for n in range(11, 30)), -40)
+        self.assertTrue(all(fb.tail_log_analytic_ok(n) for n in range(30, 200)))
+        cs, kap, gam, q = fb.fconst()
+        chi = math.expm1(0.24) / 0.24
+        W2, W52 = ex.W_float(-2.0, n=2001), ex.W_float(-2.5, n=2001)
+        C9 = (1 + 0.6 ** 9) * W2 / 12 + 0.6 ** 9 * chi * fb.beta_f(9) * (W2 + W52) / 2 + 0.03
+        self.assertLess(C9, 1331)
+        self.assertLess(abs(fb.V_float(0.0, N=2000) - fb.EV_C), 1e-7)
+
+
 if __name__ == "__main__":
     unittest.main()

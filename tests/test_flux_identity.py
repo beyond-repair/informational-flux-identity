@@ -616,5 +616,35 @@ class HZeroValueTests(unittest.TestCase):
             if n >= 2:
                 self.assertLessEqual(E, 5 ** (5 / 3 - n))
 
+
+class HZeroRateConstantTests(unittest.TestCase):
+    def test_theorem_ev_h_zero_rate_constant(self):
+        """Theorem EV (pure Python and numpy only): EV.1's exact Taylor-coefficient bound 0 <= a_m <= 20^(1-m) for psi (m <= 40);
+        psi(5v) = p(psi(v)) and EU.4's functional equation for R in floats; a float log-grid quadrature of
+        c = (1/4) int t R^2/(5+psi(t/5)) lands inside EV.4's certified enclosure to 1e-7, and the enclosure contains EU's observed digits."""
+        import math
+        from fractions import Fraction
+        import numpy as np
+        import gasket_fractional_corner_h_zero_rate_constant as ev
+
+        self.assertTrue(ev.coeff_bound_ok(40))
+        self.assertEqual(ev.psi_coeffs(3)[2], Fraction(1, 20))
+        for v in (0.01, 0.7, 3.0, 11.0):
+            y = ev.psi_float(v)
+            self.assertLess(abs(ev.psi_float(5 * v) - y * (y + 5)) / (1 + y * (y + 5)), 1e-9)
+            t = 5 * v
+            lhs = ev.R_float(t) * (3 + y)
+            rhs = 0.6 * (5 + y) * ev.R_float(t / 5)
+            self.assertLess(abs(lhs - rhs), 1e-12)
+        lo, hi = Fraction(ev.C_LO), Fraction(ev.C_HI)
+        self.assertLess(hi - lo, Fraction(1, 10 ** 27))
+        self.assertLess(abs(Fraction(ev.C_OBS) - lo), Fraction(1, 10 ** 19))
+        u = np.linspace(math.log(1e-8), math.log(5.0 ** 8), 3001)
+        t = np.exp(u)
+        f = np.array([x * x * ev.R_float(float(x)) ** 2 / (4 * (5 + ev.psi_float(float(x) / 5))) for x in t])
+        c = float(np.sum((f[1:] + f[:-1]) * np.diff(u)) / 2)
+        self.assertLess(abs(c - float(lo)), 1e-7)
+
+
 if __name__ == "__main__":
     unittest.main()

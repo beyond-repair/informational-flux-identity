@@ -2257,6 +2257,19 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem ES", (ROOT / doc).read_text())
 
+    def test_theorem_ev_h_zero_rate_constant(self):
+        """Theorem EV: certified enclosure of EU's rate constant c (local only, a few minutes niced; python-flint, mpmath)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_h_zero_rate_constant as ev
+
+        ev.FAILS.clear()
+        self.assertEqual(ev.main(), 0)
+        self.assertEqual(ev.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_h_zero_rate_constant.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EV", (ROOT / doc).read_text())
+
     def test_theorem_eu_h_zero_value(self):
         """Theorem EU: 3^n H_n(0) -> ln5/2 (Conjecture ET.5) via EU.1's closed form and EU.2's Frullani identity; rate constant c
         (local only, long on a loaded box; mpmath)."""

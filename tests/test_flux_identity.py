@@ -830,5 +830,20 @@ class HAlphaAnalyticTests(unittest.TestCase):
         self.assertTrue(fe.dominator_ok(1, fe.G0, fe.G1, 0.05, ts))
 
 
+class HAlphaMonotoneNTests(unittest.TestCase):
+    def test_theorem_ff_monotone_n(self):
+        """Theorem FF (pure Python floats; arb certificates in the script): G_(n+1) - G_n > 0 for n = 2, 10 at sample alphas in [-1, 1);
+        KEPT FAILURE FF.2: G_2 < G_1 at alpha = -4/5 and G_2 > G_1 at -1/4; FB.1 small-t constants up to n + 1 = 11."""
+        import gasket_fractional_corner_h_alpha_monotone_n as ff
+
+        self.assertTrue(all(ff.fc.small_t_ok(n) for n in range(1, 12)))
+        for n in (2, 10):
+            for a in (-1.0, 0.5, 0.999):
+                self.assertGreater(ff.dG_float(n, a, N=1200), 0)
+        self.assertLess(ff.dG_float(1, float(ff.WITNESS), N=1200), 0)
+        self.assertGreater(ff.dG_float(1, float(ff.N1_POS), N=1200), 0)
+        self.assertLess(ff.N1_NEG, ff.N1_POS)
+
+
 if __name__ == "__main__":
     unittest.main()

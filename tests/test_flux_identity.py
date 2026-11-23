@@ -732,5 +732,33 @@ class HAlphaTailTests(unittest.TestCase):
                 prev = v
 
 
+class HAlphaConstantsTests(unittest.TestCase):
+    def test_theorem_fa_ey_constants(self):
+        """Theorem FA (pure Python; arb certificates in the script): sup d log g/d log y = 4 - sqrt15 > 0.127 (exact SOS identity and
+        rational witness 39/10: KEPT FAILURE of EY's 0.127), tail constant e^(1/100)/30 <= 0.037, e^0.1 - 1 <= 0.106, EV.1 => psi(w) <= w e^(w/10)
+        on (0, 10], and float W(-2) = 11291.83348548... so W(-2)/6 + 1 <= 1882.973."""
+        from fractions import Fraction
+        import math
+        import gasket_fractional_corner_h_alpha_constants as fa
+        import gasket_fractional_corner_h_alpha_limit as ex
+
+        self.assertTrue(fa.sos_identity_ok())
+        self.assertTrue(fa.witness_ok())
+        self.assertGreater(fa.elasticity(Fraction(39, 10)), Fraction(127, 1000))
+        self.assertTrue(fa.elasticity_grid_ok(n=500))
+        self.assertTrue(fa.psi_bound_ok(npts=100))
+        c = fa.float_constants()
+        self.assertGreater(c["cstar"], 0.127)
+        self.assertLess(c["cstar"], 0.12702)
+        self.assertLess(c["tail"], 0.037)
+        self.assertLess(c["logP"], 0.05)
+        self.assertLess(c["exp_chord"], 0.106)
+        w = ex.W_float(-2.0, n=2001)
+        self.assertLess(abs(w - fa.W_M2_FLOAT), 1e-5)
+        self.assertLess(w / 6 + 1, 1882.973)
+        self.assertGreater(w, 71.8)  # W(-2) > W(-1) (EX.2 monotone side)
+        self.assertTrue(math.isfinite(w))
+
+
 if __name__ == "__main__":
     unittest.main()

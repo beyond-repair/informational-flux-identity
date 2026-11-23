@@ -2257,6 +2257,20 @@ class FractionalProfileLevelCoefficientTests(unittest.TestCase):
         for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
             self.assertIn("Theorem ES", (ROOT / doc).read_text())
 
+    def test_theorem_eu_h_zero_value(self):
+        """Theorem EU: 3^n H_n(0) -> ln5/2 (Conjecture ET.5) via EU.1's closed form and EU.2's Frullani identity; rate constant c
+        (local only, long on a loaded box; mpmath)."""
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gasket_fractional_corner_h_zero_value as eu
+
+        eu.FAILS.clear()
+        self.assertEqual(eu.main(), 0)
+        self.assertEqual(eu.FAILS, [])
+        names = [n for n, _, _ in __import__("cli").SCRIPTS]
+        self.assertIn("gasket_fractional_corner_h_zero_value.py", names)
+        for doc in ("README.md", "GASKET.md", "CLAIM_STATUS.md"):
+            self.assertIn("Theorem EU", (ROOT / doc).read_text())
+
     def test_theorem_et_h_zero_limit(self):
         """Theorem ET: 3^n H_n(0) -> W(0)/2 with a certified uniform bracket (arb), quadrature n <= 24 (local only, a few minutes niced;
         python-flint, mpmath)."""

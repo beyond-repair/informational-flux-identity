@@ -580,5 +580,41 @@ class HZeroLimitTests(unittest.TestCase):
             self.assertLess(abs(val / 3 ** n - float(et.ES_H0[n - 1])), 1e-6 / 3 ** n + 1e-9)
             self.assertTrue(0.19029 <= val <= 1.93463)
 
+
+class HZeroValueTests(unittest.TestCase):
+    def test_theorem_eu_h_zero_value(self):
+        """Theorem EU (pure Python and numpy only): EU.1's closed form 2A_n = s B_n + (s+6) prod_(k<n)(p^k+3) as exact integer
+        polynomials (n <= 6) and = AQ's recursion; EU.2's exact identities at rational points (n <= 4); a float log-grid quadrature of
+        2*3^n H_n(0), E_n and D_n confirms 2*3^n H_n(0) = ln5 - E_n - D_n, 3^n H_n(0) <= ln5/2 and EU.3's bounds (n = 1..6)."""
+        import math
+        import numpy as np
+        import gasket_fractional_corner_h_zero_value as eu
+
+        eu.FAILS.clear()
+        for n in range(0, 7):
+            self.assertTrue(eu.poly_identity(n))
+        for n in range(1, 5):
+            eu.exact_checks(n)
+        self.assertEqual(eu.FAILS, [])
+        for n in range(1, 7):
+            u = np.linspace(np.log(1e-12), np.log(1e12 if n <= 3 else 1e6), 4001)
+            t = np.exp(u)
+            fh, fe, fd = [], [], []
+            for x in t:
+                s = float(x) / 5.0 ** n
+                R = (3.0 / 5.0) ** n * eu.r_closed(n, s)
+                Rt = (3.0 / 5.0) ** n * eu.rt(n, s)
+                q = eu.pn(n - 1, s) + 5
+                fh.append(R / q * x)
+                fe.append((s + 4) / (3 * (s + 2) * (s + 5)) * eu.g(n, s) * s)
+                fd.append(x * R * Rt / (2 * q) * x)
+            trap = lambda f: float(np.sum((np.array(f[1:]) + np.array(f[:-1])) * np.diff(u)) / 2)  # noqa: E731
+            two_v, E, D3 = trap(fh), trap(fe), trap(fd)
+            self.assertLess(abs(two_v - (math.log(5) - E - D3 / 3 ** n)), 1e-6)
+            self.assertLess(abs(two_v / 2 / 3 ** n - float(eu.et.ES_H0[n - 1])), 1e-6 / 3 ** n + 1e-9)
+            self.assertLessEqual(two_v / 2, math.log(5) / 2)
+            if n >= 2:
+                self.assertLessEqual(E, 5 ** (5 / 3 - n))
+
 if __name__ == "__main__":
     unittest.main()
